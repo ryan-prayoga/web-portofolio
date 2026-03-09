@@ -1,5 +1,6 @@
 <script lang="ts">
   import { navLinks } from '$lib/data/socials';
+  import logo from '$lib/assets/logo.png';
 
   let scrolled = $state(false);
   let activeSection = $state('');
@@ -76,9 +77,9 @@
       <!-- Logo -->
       <a
         href="/"
-        class="font-heading text-xl font-bold tracking-tight text-accent-cyan transition-opacity duration-200 hover:opacity-80"
+        class="transition-opacity duration-200 hover:opacity-80"
       >
-        RP
+        <img src={logo} alt="RP Logo" class="h-10 w-auto object-contain" />
       </a>
 
       <!-- Desktop Navigation -->
