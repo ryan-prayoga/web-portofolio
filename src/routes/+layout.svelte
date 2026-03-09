@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>Ryan Prayoga — Team Leader · Full-Stack Engineer · AI-Driven Developer</title>
+  <title>Ryan Prayoga - Full Stack Engineer</title>
 </svelte:head>
 
 {@render children()}
