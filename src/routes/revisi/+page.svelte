@@ -1,129 +1,576 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import logo from '$lib/assets/logo.png';
   import { profile } from '$lib/data/profile';
   import { projects } from '$lib/data/projects';
   import { socials } from '$lib/data/socials';
   import { techJourney } from '$lib/data/techJourney';
 
-  const proofItems = [
-    {
-      value: profile.experience,
-      label: 'Years Shipping',
-      note: 'Enterprise web dan mobile delivery dengan scope yang nyata.'
+  type Locale = 'id' | 'en';
+
+  let locale = $state<Locale>('id');
+  let workSectionEl = $state<HTMLElement | null>(null);
+  let journeyBlockEl = $state<HTMLElement | null>(null);
+  let workProgress = $state(0);
+  let journeyProgress = $state(0);
+
+  const projectTranslations = {
+    'traffic-attitude-record': {
+      id: {
+        category: 'Government · Enterprise',
+        summary:
+          'Sistem pencatatan dan pelaporan perilaku lalu lintas untuk Korlantas Polri. Platform enterprise yang menangani data operasional skala nasional dengan workflow pelaporan terstruktur.',
+        focus:
+          'Membangun sistem pelaporan yang reliable dengan workflow approval multi-level dan dashboard analitik untuk monitoring nasional.',
+        impact: 'Digunakan dalam operasi pelaporan lalu lintas tingkat nasional',
+        status: 'Operasional pada skala nasional'
+      },
+      en: {
+        category: 'Government · Enterprise',
+        summary:
+          'A traffic behavior reporting system for Korlantas Polri. An enterprise platform handling operational data at national scale with structured reporting workflows.',
+        focus:
+          'Built a reliable reporting system with multi-level approval flow and analytics dashboards for nationwide monitoring.',
+        impact: 'Used in national traffic reporting operations',
+        status: 'Operational at national scale'
+      }
     },
-    {
-      value: `${profile.teamSize}`,
-      label: 'Team in Motion',
-      note: 'Memimpin ritme task, review, dan quality bar secara aktif.'
+    lms: {
+      id: {
+        category: 'Web Platform · Education',
+        summary:
+          'Platform manajemen pembelajaran digital yang mendukung pengelolaan materi, tracking progress peserta, dan sistem evaluasi terintegrasi.',
+        focus:
+          'Membangun arsitektur platform e-learning yang scalable dengan fitur tracking progress dan sistem evaluasi otomatis.',
+        impact: 'Mendukung proses pembelajaran digital secara terstruktur',
+        status: 'Mendukung delivery pembelajaran terstruktur'
+      },
+      en: {
+        category: 'Web Platform · Education',
+        summary:
+          'A digital learning management platform for content administration, learner progress tracking, and integrated evaluation workflows.',
+        focus:
+          'Designed a scalable e-learning architecture with progress tracking and automated evaluation features.',
+        impact: 'Supports structured digital learning delivery',
+        status: 'Structured learning delivery'
+      }
     },
-    {
-      value: 'Multi',
-      label: 'Stack Coverage',
-      note: 'Backend, frontend, mobile, deployment, dan workflow AI.'
+    'disaster-management': {
+      id: {
+        category: 'Government · Operations',
+        summary:
+          'Sistem manajemen bencana untuk monitoring, pelaporan, dan koordinasi respons bencana. Menangani data real-time dari berbagai sumber dan visualisasi peta.',
+        focus:
+          'Integrasi data monitoring real-time, visualisasi peta interaktif, dan sistem koordinasi multi-instansi.',
+        impact: 'Membantu koordinasi dan respons penanganan bencana',
+        status: 'Workflow koordinasi real-time'
+      },
+      en: {
+        category: 'Government · Operations',
+        summary:
+          'A disaster management system for monitoring, reporting, and response coordination. It handles real-time data from multiple sources and map-based visualization.',
+        focus:
+          'Integrated real-time monitoring data, interactive maps, and coordination workflows across multiple agencies.',
+        impact: 'Improves disaster coordination and response handling',
+        status: 'Real-time coordination workflow'
+      }
     },
-    {
-      value: 'Calm',
-      label: 'Under Pressure',
-      note: 'Terbiasa menjaga kualitas ketika project besar bergerak cepat.'
+    'website-komcad': {
+      id: {
+        category: 'Government · Web Platform',
+        summary:
+          'Website resmi Komponen Cadangan pertahanan negara. Portal informasi dan manajemen data dengan standar keamanan tinggi dan arsitektur yang solid.',
+        focus:
+          'Pengembangan portal dengan standar keamanan tinggi, manajemen konten dinamis, dan performa optimal untuk akses publik.',
+        impact: 'Portal informasi resmi dengan standar keamanan pemerintah',
+        status: 'Portal publik dengan standar keamanan tinggi'
+      },
+      en: {
+        category: 'Government · Web Platform',
+        summary:
+          'The official website for the reserve defense component program. An information and data management portal with strict security standards and a solid architecture.',
+        focus:
+          'Delivered a secure portal with dynamic content management and strong public access performance.',
+        impact: 'Official public portal built to government-grade standards',
+        status: 'Secure public-facing registry'
+      }
     }
-  ];
+  } as const;
 
-  const caseStudies = projects.map((project, index) => ({
-    ...project,
-    number: `${index + 1}`.padStart(2, '0'),
-    status:
-      index === 0
-        ? 'Operational at national scale'
-        : index === 1
-          ? 'Structured learning delivery'
-          : index === 2
-            ? 'Real-time coordination workflow'
-            : 'Secure public-facing registry'
-  }));
-
-  const methods = [
-    {
-      title: 'Lead the cadence',
-      body: 'Memimpin tim secara aktif, menjaga prioritas, kapasitas, dan tempo delivery agar tetap sehat.',
-      points: [
-        `Tim aktif ${profile.teamSize} orang`,
-        'Distribusi task berbasis konteks dan urgensi',
-        'Tetap hands-on ketika keputusan teknis perlu dipercepat'
-      ]
+  const translations = {
+    id: {
+      metaTitle: 'Ryan Prayoga — Portfolio',
+      metaDescription:
+        'Portfolio Ryan Prayoga, Full-Stack Engineer dan Team Leader yang fokus pada delivery, systems thinking, dan engineering execution.',
+      skipLink: 'Lewati ke konten',
+      nav: {
+        proof: 'Bukti',
+        work: 'Project',
+        method: 'Cara Kerja',
+        contact: 'Kontak'
+      },
+      languageLabel: 'Pilih bahasa',
+      hero: {
+        eyebrow: 'Full-Stack Engineer / Team Leader',
+        deck:
+          'Membangun sistem enterprise, memimpin tim, dan menjaga delivery tetap tenang di bawah tekanan.',
+        body:
+          'Full-Stack Engineer dengan pengalaman 4+ tahun membangun aplikasi web dan mobile berskala enterprise. Saat ini memimpin tim engineering dan terus mengeksplorasi teknologi modern termasuk AI.',
+        primaryCta: 'Lihat selected work',
+        secondaryCta: 'Mulai percakapan',
+        signals: ['Enterprise delivery', 'Team leadership', 'AI-assisted workflow'],
+        readout: {
+          role: 'Role',
+          roleValue: 'Team Leader',
+          mode: 'Mode',
+          modeValue: 'Hands-on',
+          base: 'Base',
+          baseValue: profile.location
+        }
+      },
+      metrics: [
+        {
+          value: '4+',
+          label: 'Tahun',
+          body: 'Pengalaman profesional membangun aplikasi web dan mobile berskala enterprise.'
+        },
+        {
+          value: '1+',
+          label: 'Tahun Leadership',
+          body: 'Memimpin ritme kerja, task management, dan delivery tim secara konsisten.'
+        },
+        {
+          value: 'Staging',
+          label: '→ Production',
+          body: 'Terbiasa menangani deployment workflow dari development hingga production.'
+        }
+      ],
+      proof: {
+        eyebrow: 'Bukti',
+        title: 'Delivery yang melampaui fase prototype.',
+        body:
+          'Nilai utamanya bukan hanya kemampuan menulis kode, tapi menjaga sistem tetap bergerak saat scope membesar, stakeholder bertambah, dan kualitas harus tetap naik.',
+        items: [
+          {
+            value: '4+ tahun',
+            label: 'Years Shipping',
+            note: 'Enterprise web dan mobile delivery dengan scope yang nyata.'
+          },
+          {
+            value: `${profile.teamSize}`,
+            label: 'Team in Motion',
+            note: 'Memimpin ritme task, review, dan quality bar secara aktif.'
+          },
+          {
+            value: 'Multi',
+            label: 'Stack Coverage',
+            note: 'Backend, frontend, mobile, deployment, dan workflow AI.'
+          },
+          {
+            value: 'Calm',
+            label: 'Under Pressure',
+            note: 'Terbiasa menjaga kualitas ketika project besar bergerak cepat.'
+          }
+        ]
+      },
+      story: {
+        eyebrow: 'Perjalanan',
+        title: 'Berangkat dari coding, lalu tumbuh ke delivery dan leadership.',
+        paragraphs: [
+          'Perjalanan profesional saya dimulai sejak 2021. Sejak saat itu saya aktif membangun aplikasi web dan mobile untuk kebutuhan enterprise dengan standar delivery yang tinggi.',
+          'Dari developer, saya berkembang menjadi Team Leader yang tetap hands-on. Saya mengatur ritme kerja, menjaga kualitas implementasi, dan memastikan setiap project bergerak sesuai target.'
+        ],
+        meta: [
+          {
+            label: 'Experience Window',
+            value: '2021 — Sekarang'
+          },
+          {
+            label: 'Current Base',
+            value: profile.company
+          },
+          {
+            label: 'Education',
+            value: 'Universitas Pasundan — Teknik Informatika · 2021 — Sekarang'
+          },
+          {
+            label: 'Location',
+            value: profile.location
+          }
+        ]
+      },
+      work: {
+        eyebrow: 'Selected Work',
+        title: 'Project besar, kompleks, dan dibangun untuk dipakai sungguhan.',
+        body:
+          'Mayoritas work di bawah ini adalah enterprise delivery, institutional system, atau public-facing platform dengan constraint operasional yang nyata.',
+        role: 'Role',
+        focus: 'Focus',
+        impact: 'Impact',
+        status: 'Status',
+        privateDelivery: 'Private delivery'
+      },
+      method: {
+        eyebrow: 'Cara Kerja',
+        title: 'Pimpin, review, deploy, adapt.',
+        body:
+          'Cara kerja saya dibentuk oleh project yang harus stabil, tim yang perlu ritme, dan kebutuhan untuk tetap relevan terhadap stack yang terus berubah.',
+        items: [
+          {
+            title: 'Lead the cadence',
+            body:
+              'Memimpin tim secara aktif, menjaga prioritas, kapasitas, dan tempo delivery agar tetap sehat.',
+            points: [
+              `Tim aktif ${profile.teamSize} orang`,
+              'Distribusi task berbasis konteks dan urgensi',
+              'Tetap hands-on ketika keputusan teknis perlu dipercepat'
+            ]
+          },
+          {
+            title: 'Review with rigor',
+            body:
+              'Code review dipakai untuk menjaga kualitas sistem, bukan sekadar formalitas pull request.',
+            points: [
+              'Menjaga konsistensi arsitektur dan maintainability',
+              'Mencegah technical debt menumpuk tanpa arah',
+              'Membaca implementasi dengan konteks product dan operasional'
+            ]
+          },
+          {
+            title: 'Ship with operations in mind',
+            body:
+              'Bergerak dari development ke staging lalu production dengan proses yang tenang dan bisa dipercaya.',
+            points: [
+              'Validasi sebelum release dan monitoring setelahnya',
+              'Terbiasa dengan Ubuntu Server, PM2, Supervisor, Nginx, dan SSH',
+              'Fokus pada stabilitas, bukan cuma launch'
+            ]
+          }
+        ]
+      },
+      journey: {
+        eyebrow: 'Stack Arc',
+        title: 'Teknologi berubah, standar kerja tidak.',
+        body:
+          'Dari Laravel sampai SvelteKit, dari web sampai mobile, dan kini workflow berbasis AI. Adaptasi bergerak mengikuti kebutuhan nyata project.',
+        periods: [
+          'Foundation',
+          'Frontend Entry',
+          'Frontend Evolution',
+          'Performance Stack',
+          'Modern Frontend',
+          'Mobile',
+          'Current Evolution'
+        ],
+        categories: ['Backend', 'Frontend', 'Frontend', 'Backend', 'Frontend', 'Mobile', 'Workflow']
+      },
+      contact: {
+        eyebrow: 'Kontak',
+        title: 'Kalau brief-nya kompleks, biasanya itu justru menarik.',
+        body:
+          'Terbuka untuk kolaborasi, diskusi engineering, atau peran yang butuh kombinasi antara teknis, delivery, dan leadership.'
+      }
     },
-    {
-      title: 'Review with rigor',
-      body: 'Code review dipakai untuk menjaga kualitas sistem, bukan sekadar formalitas pull request.',
-      points: [
-        'Menjaga konsistensi arsitektur dan maintainability',
-        'Mencegah technical debt menumpuk tanpa arah',
-        'Membaca implementasi dengan konteks product dan operasional'
-      ]
-    },
-    {
-      title: 'Ship with operations in mind',
-      body: 'Bergerak dari development ke staging lalu production dengan proses yang tenang dan bisa dipercaya.',
-      points: [
-        'Validasi sebelum release dan monitoring setelahnya',
-        'Terbiasa dengan Ubuntu Server, PM2, Supervisor, Nginx, dan SSH',
-        'Fokus pada stabilitas, bukan cuma launch'
-      ]
+    en: {
+      metaTitle: 'Ryan Prayoga — Portfolio',
+      metaDescription:
+        'Portfolio of Ryan Prayoga, a Full-Stack Engineer and Team Leader focused on delivery, systems thinking, and engineering execution.',
+      skipLink: 'Skip to content',
+      nav: {
+        proof: 'Proof',
+        work: 'Work',
+        method: 'Method',
+        contact: 'Contact'
+      },
+      languageLabel: 'Choose language',
+      hero: {
+        eyebrow: 'Full-Stack Engineer / Team Leader',
+        deck:
+          'Building enterprise systems, leading teams, and keeping delivery calm under pressure.',
+        body:
+          'Full-Stack Engineer with 4+ years of experience building enterprise-scale web and mobile products. Currently leading an engineering team while continuously exploring modern technologies, including AI.',
+        primaryCta: 'See selected work',
+        secondaryCta: 'Start a conversation',
+        signals: ['Enterprise delivery', 'Team leadership', 'AI-assisted workflow'],
+        readout: {
+          role: 'Role',
+          roleValue: 'Team Leader',
+          mode: 'Mode',
+          modeValue: 'Hands-on',
+          base: 'Base',
+          baseValue: profile.location
+        }
+      },
+      metrics: [
+        {
+          value: '4+',
+          label: 'Years',
+          body: 'Professional experience building enterprise-scale web and mobile applications.'
+        },
+        {
+          value: '1+',
+          label: 'Years in Leadership',
+          body: 'Leading team cadence, task management, and delivery with consistency.'
+        },
+        {
+          value: 'Staging',
+          label: '→ Production',
+          body: 'Comfortable running deployment workflows from development to production.'
+        }
+      ],
+      proof: {
+        eyebrow: 'Proof',
+        title: 'Delivery beyond the prototype phase.',
+        body:
+          'The real value is not just writing code, but keeping systems moving when scope grows, stakeholders expand, and quality still needs to go up.',
+        items: [
+          {
+            value: '4+ years',
+            label: 'Years Shipping',
+            note: 'Enterprise web and mobile delivery with real operational scope.'
+          },
+          {
+            value: `${profile.teamSize}`,
+            label: 'Team in Motion',
+            note: 'Actively leading team rhythm, reviews, and the quality bar.'
+          },
+          {
+            value: 'Multi',
+            label: 'Stack Coverage',
+            note: 'Backend, frontend, mobile, deployment, and AI-assisted workflows.'
+          },
+          {
+            value: 'Calm',
+            label: 'Under Pressure',
+            note: 'Used to protecting quality when large projects move fast.'
+          }
+        ]
+      },
+      story: {
+        eyebrow: 'Journey',
+        title: 'Started from coding, then grew into delivery and leadership.',
+        paragraphs: [
+          'My professional journey started in 2021. Since then, I have been actively building web and mobile products for enterprise needs with a high delivery standard.',
+          'From developer, I grew into a Team Leader who remains hands-on. I manage team rhythm, maintain implementation quality, and make sure projects move with clarity.'
+        ],
+        meta: [
+          {
+            label: 'Experience Window',
+            value: '2021 — Present'
+          },
+          {
+            label: 'Current Base',
+            value: profile.company
+          },
+          {
+            label: 'Education',
+            value: 'Universitas Pasundan — Informatics Engineering · 2021 — Present'
+          },
+          {
+            label: 'Location',
+            value: profile.location
+          }
+        ]
+      },
+      work: {
+        eyebrow: 'Selected Work',
+        title: 'Large-scale systems built for real use.',
+        body:
+          'Most of the work below sits in enterprise delivery, institutional systems, or public-facing platforms with real operational constraints.',
+        role: 'Role',
+        focus: 'Focus',
+        impact: 'Impact',
+        status: 'Status',
+        privateDelivery: 'Private delivery'
+      },
+      method: {
+        eyebrow: 'Operating Method',
+        title: 'Lead, review, deploy, adapt.',
+        body:
+          'My operating style is shaped by projects that need stability, teams that need cadence, and stacks that keep evolving.',
+        items: [
+          {
+            title: 'Lead the cadence',
+            body:
+              'Actively guiding team priorities, capacity, and delivery rhythm so execution stays healthy.',
+            points: [
+              `Active team of ${profile.teamSize}`,
+              'Task distribution based on urgency and context',
+              'Remaining hands-on when technical decisions need to move faster'
+            ]
+          },
+          {
+            title: 'Review with rigor',
+            body:
+              'Code review is used to protect system quality, not as a formality around pull requests.',
+            points: [
+              'Protecting architectural consistency and maintainability',
+              'Preventing technical debt from growing without intent',
+              'Reading implementation with product and operational context'
+            ]
+          },
+          {
+            title: 'Ship with operations in mind',
+            body:
+              'Moving from development to staging and production with a process that stays calm and trustworthy.',
+            points: [
+              'Validation before release and monitoring after launch',
+              'Comfortable with Ubuntu Server, PM2, Supervisor, Nginx, and SSH',
+              'Focused on stability, not just launch velocity'
+            ]
+          }
+        ]
+      },
+      journey: {
+        eyebrow: 'Stack Arc',
+        title: 'Technology changes. Working standards should not.',
+        body:
+          'From Laravel to SvelteKit, from web to mobile, and now AI-assisted workflows. The adaptation follows real project needs.',
+        periods: [
+          'Foundation',
+          'Frontend Entry',
+          'Frontend Evolution',
+          'Performance Stack',
+          'Modern Frontend',
+          'Mobile',
+          'Current Evolution'
+        ],
+        categories: ['Backend', 'Frontend', 'Frontend', 'Backend', 'Frontend', 'Mobile', 'Workflow']
+      },
+      contact: {
+        eyebrow: 'Contact',
+        title: 'If the brief is complex, that usually makes it more interesting.',
+        body:
+          'Open to collaboration, engineering conversations, or roles that need a mix of technical depth, delivery discipline, and leadership.'
+      }
     }
-  ];
+  } as const;
 
-  const journey = techJourney.map((item, index) => ({
-    ...item,
-    number: `${index + 1}`.padStart(2, '0')
-  }));
+  const copy = $derived(translations[locale]);
+
+  const localizedProjects = $derived(
+    projects.map((project, index) => {
+      const translated = projectTranslations[project.slug as keyof typeof projectTranslations][locale];
+
+      return {
+        ...project,
+        number: `${index + 1}`.padStart(2, '0'),
+        category: translated.category,
+        summary: translated.summary,
+        focus: translated.focus,
+        impact: translated.impact,
+        status: translated.status
+      };
+    })
+  );
+
+  const localizedJourney = $derived(
+    techJourney.map((item, index) => ({
+      ...item,
+      number: `${index + 1}`.padStart(2, '0'),
+      period: copy.journey.periods[index],
+      categoryLabel: copy.journey.categories[index]
+    }))
+  );
+
+  const contactLinks = $derived(
+    socials.map((social) => ({
+      href: social.url,
+      title: social.name,
+      subtitle: social.label
+    }))
+  );
+
+  const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+
+  const getScrollProgress = (element: HTMLElement | null) => {
+    if (!element) return 0;
+
+    const rect = element.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const totalDistance = rect.height + viewportHeight;
+
+    return clamp((viewportHeight - rect.top) / totalDistance);
+  };
+
+  onMount(() => {
+    let frame = 0;
+
+    const syncScrollMotion = () => {
+      frame = 0;
+      workProgress = getScrollProgress(workSectionEl);
+      journeyProgress = getScrollProgress(journeyBlockEl);
+    };
+
+    const queueScrollMotion = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(syncScrollMotion);
+    };
+
+    queueScrollMotion();
+
+    window.addEventListener('scroll', queueScrollMotion, { passive: true });
+    window.addEventListener('resize', queueScrollMotion);
+
+    return () => {
+      if (frame) {
+        window.cancelAnimationFrame(frame);
+      }
+
+      window.removeEventListener('scroll', queueScrollMotion);
+      window.removeEventListener('resize', queueScrollMotion);
+    };
+  });
 </script>
 
 <svelte:head>
-  <title>Ryan Prayoga — Revisi</title>
-  <meta
-    name="description"
-    content="Versi revisi portfolio Ryan Prayoga dengan art direction yang lebih editorial dan fokus pada delivery, leadership, dan selected work."
-  />
+  <title>{copy.metaTitle}</title>
+  <meta name="description" content={copy.metaDescription} />
 </svelte:head>
 
-<div class="revisi-page">
-  <a class="skip-link" href="#content">Skip to content</a>
+<div class="portfolio-page">
+  <a class="skip-link" href="#content">{copy.skipLink}</a>
 
   <header class="topbar">
     <a class="brand" href="/revisi#top" aria-label="Ryan Prayoga home">
       <img src={logo} alt="RP Logo" />
-      <span>Ryan Prayoga</span>
+      <span>{profile.name}</span>
     </a>
 
     <nav aria-label="Section navigation">
-      <a href="#proof">Proof</a>
-      <a href="#work">Work</a>
-      <a href="#method">Method</a>
-      <a href="#contact">Contact</a>
+      <a href="#proof">{copy.nav.proof}</a>
+      <a href="#work">{copy.nav.work}</a>
+      <a href="#method">{copy.nav.method}</a>
+      <a href="#contact">{copy.nav.contact}</a>
     </nav>
 
-    <a class="topbar-link" href="/">Original</a>
+    <div class="locale-switch" role="group" aria-label={copy.languageLabel}>
+      <button type="button" class:active={locale === 'id'} onclick={() => (locale = 'id')}>
+        ID
+      </button>
+      <button type="button" class:active={locale === 'en'} onclick={() => (locale = 'en')}>
+        EN
+      </button>
+    </div>
   </header>
 
   <main id="content">
     <section class="hero" id="top">
       <div class="hero-copy">
-        <p class="eyebrow">Portfolio Revision / 2026</p>
+        <p class="eyebrow">{copy.hero.eyebrow}</p>
         <h1>{profile.name}</h1>
-        <p class="hero-deck">
-          Enterprise systems builder, team leader, and operator who keeps delivery
-          calm under pressure.
-        </p>
-        <p class="hero-body">{profile.intro}</p>
+        <p class="hero-deck">{copy.hero.deck}</p>
+        <p class="hero-body">{copy.hero.body}</p>
 
         <div class="hero-actions">
-          <a class="button button-solid" href="#work">See selected work</a>
-          <a class="button button-ghost" href="#contact">Start a conversation</a>
+          <a class="button button-solid" href="#work">{copy.hero.primaryCta}</a>
+          <a class="button button-ghost" href="#contact">{copy.hero.secondaryCta}</a>
         </div>
 
         <div class="hero-signals" aria-label="Core strengths">
-          <span>Enterprise delivery</span>
-          <span>Team leadership</span>
-          <span>AI-assisted workflow</span>
+          {#each copy.hero.signals as signal}
+            <span>{signal}</span>
+          {/each}
         </div>
       </div>
 
@@ -140,16 +587,16 @@
 
           <div class="visual-readout">
             <div>
-              <span>Role</span>
-              <strong>Team Leader</strong>
+              <span>{copy.hero.readout.role}</span>
+              <strong>{copy.hero.readout.roleValue}</strong>
             </div>
             <div>
-              <span>Mode</span>
-              <strong>Hands-on</strong>
+              <span>{copy.hero.readout.mode}</span>
+              <strong>{copy.hero.readout.modeValue}</strong>
             </div>
             <div>
-              <span>Base</span>
-              <strong>{profile.location}</strong>
+              <span>{copy.hero.readout.base}</span>
+              <strong>{copy.hero.readout.baseValue}</strong>
             </div>
           </div>
         </div>
@@ -157,37 +604,26 @@
     </section>
 
     <section class="metrics">
-      <article>
-        <strong>4+</strong>
-        <h2>Tahun</h2>
-        <p>Pengalaman profesional membangun aplikasi web dan mobile berskala enterprise.</p>
-      </article>
-      <article>
-        <strong>1+</strong>
-        <h2>Tahun Leadership</h2>
-        <p>Memimpin ritme kerja, task management, dan delivery tim secara konsisten.</p>
-      </article>
-      <article>
-        <strong>Staging</strong>
-        <h2>→ Production</h2>
-        <p>Terbiasa menangani deployment workflow dari development hingga production.</p>
-      </article>
+      {#each copy.metrics as item}
+        <article>
+          <strong>{item.value}</strong>
+          <h2>{item.label}</h2>
+          <p>{item.body}</p>
+        </article>
+      {/each}
     </section>
 
     <section class="section" id="proof">
       <div class="section-heading">
-        <p class="eyebrow">Proof</p>
+        <p class="eyebrow">{copy.proof.eyebrow}</p>
         <div>
-          <h2>Delivery yang melampaui fase prototype.</h2>
-          <p>
-            Nilai utamanya bukan hanya kemampuan menulis kode, tapi menjaga sistem tetap
-            bergerak saat scope membesar, stakeholder bertambah, dan kualitas harus tetap naik.
-          </p>
+          <h2>{copy.proof.title}</h2>
+          <p>{copy.proof.body}</p>
         </div>
       </div>
 
       <div class="proof-grid">
-        {#each proofItems as item}
+        {#each copy.proof.items as item}
           <article class="proof-card">
             <strong>{item.value}</strong>
             <h3>{item.label}</h3>
@@ -198,58 +634,54 @@
 
       <div class="story-grid">
         <div class="story-copy">
-          <p class="eyebrow">Context</p>
-          <h3>Berangkat dari coding, lalu tumbuh ke delivery dan leadership.</h3>
-          <p>{profile.bio[1]}</p>
-          <p>{profile.bio[2]}</p>
+          <p class="eyebrow">{copy.story.eyebrow}</p>
+          <h3>{copy.story.title}</h3>
+          {#each copy.story.paragraphs as paragraph}
+            <p>{paragraph}</p>
+          {/each}
         </div>
 
         <dl class="story-meta">
-          <div>
-            <dt>Current Base</dt>
-            <dd>{profile.company}</dd>
-          </div>
-          <div>
-            <dt>Education</dt>
-            <dd>{profile.education.university}</dd>
-          </div>
-          <div>
-            <dt>Foundation</dt>
-            <dd>{profile.education.smk}</dd>
-          </div>
-          <div>
-            <dt>Location</dt>
-            <dd>{profile.location}</dd>
-          </div>
+          {#each copy.story.meta as item}
+            <div>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          {/each}
         </dl>
       </div>
     </section>
 
-    <section class="section work-section" id="work">
-      <div class="section-heading">
-        <p class="eyebrow">Selected Work</p>
-        <div>
-          <h2>Project besar, kompleks, dan dibangun untuk dipakai sungguhan.</h2>
-          <p>
-            Mayoritas work di bawah ini adalah enterprise delivery, institutional system,
-            atau public-facing platform dengan constraint operasional yang nyata.
-          </p>
+    <section
+      class="section work-section"
+      id="work"
+      bind:this={workSectionEl}
+      style={`--work-progress:${workProgress};`}
+    >
+      <div class="work-shell">
+        <div class="work-intro">
+          <p class="eyebrow">{copy.work.eyebrow}</p>
+          <h2>{copy.work.title}</h2>
+          <p class="work-body">{copy.work.body}</p>
         </div>
-      </div>
 
-      <div class="work-list">
-        {#each caseStudies as item}
-          <article class="work-item" id={`case-${item.slug}`}>
-            <div class="work-head">
-              <strong>{item.number}</strong>
-              <div>
-                <p>{item.category} / {item.year}</p>
-                <h3>{item.name}</h3>
+        <div class="work-list">
+          {#each localizedProjects as item, index}
+            <article
+              class="work-item"
+              id={`case-${item.slug}`}
+              style={`--work-depth:${index % 2 === 0 ? 24 + index * 8 : -(24 + index * 8)}px;`}
+            >
+              <div class="work-head">
+                <strong>{item.number}</strong>
+                <div>
+                  <p>{item.category} / {item.year}</p>
+                  <h3>{item.name}</h3>
+                </div>
               </div>
-            </div>
 
-            <div class="work-layout">
-              <div class={`case-visual case-${item.placeholderType}`} aria-hidden="true">
+              <div class="work-layout">
+                <div class={`case-visual case-${item.placeholderType}`} aria-hidden="true">
                 {#if item.placeholderType === 'dashboard'}
                   <div class="scene dashboard-scene">
                     <div class="scene-topbar"></div>
@@ -304,61 +736,60 @@
                 {/if}
               </div>
 
-              <div class="work-copy">
-                <p class="summary">{item.summary}</p>
+                <div class="work-copy">
+                  <p class="summary">{item.summary}</p>
 
-                <div class="spec-grid">
-                  <div>
-                    <span>Role</span>
-                    <p>{item.role}</p>
+                  <div class="spec-grid">
+                    <div>
+                      <span>{copy.work.role}</span>
+                      <p>{item.role}</p>
+                    </div>
+                    <div>
+                      <span>{copy.work.focus}</span>
+                      <p>{item.focus}</p>
+                    </div>
+                    <div>
+                      <span>{copy.work.impact}</span>
+                      <p>{item.impact}</p>
+                    </div>
+                    <div>
+                      <span>{copy.work.status}</span>
+                      <p>{item.status}</p>
+                    </div>
                   </div>
-                  <div>
-                    <span>Focus</span>
-                    <p>{item.focus}</p>
+
+                  <div class="pill-row pill-row-strong">
+                    {#each item.stack as stack}
+                      <span>{stack}</span>
+                    {/each}
                   </div>
-                  <div>
-                    <span>Impact</span>
-                    <p>{item.impact}</p>
-                  </div>
-                  <div>
-                    <span>Status</span>
-                    <p>{item.status}</p>
+
+                  <div class="pill-row">
+                    <span>{copy.work.privateDelivery}</span>
+                    {#each item.tags as tag}
+                      <span>{tag}</span>
+                    {/each}
                   </div>
                 </div>
 
-                <div class="pill-row pill-row-strong">
-                  {#each item.stack as stack}
-                    <span>{stack}</span>
-                  {/each}
-                </div>
-
-                <div class="pill-row">
-                  <span>Private delivery</span>
-                  {#each item.tags as tag}
-                    <span>{tag}</span>
-                  {/each}
-                </div>
               </div>
-            </div>
-          </article>
-        {/each}
+            </article>
+          {/each}
+        </div>
       </div>
     </section>
 
     <section class="section" id="method">
       <div class="section-heading">
-        <p class="eyebrow">Operating Method</p>
+        <p class="eyebrow">{copy.method.eyebrow}</p>
         <div>
-          <h2>Lead, review, deploy, adapt.</h2>
-          <p>
-            Cara kerja saya dibentuk oleh project yang harus stabil, tim yang perlu ritme,
-            dan kebutuhan untuk tetap relevan terhadap stack yang terus berubah.
-          </p>
+          <h2>{copy.method.title}</h2>
+          <p>{copy.method.body}</p>
         </div>
       </div>
 
       <div class="method-list">
-        {#each methods as item, index}
+        {#each copy.method.items as item, index}
           <article class="method-item">
             <strong>{`${index + 1}`.padStart(2, '0')}</strong>
             <div>
@@ -374,55 +805,52 @@
         {/each}
       </div>
 
-      <div class="journey-block">
-        <div class="journey-copy">
-          <p class="eyebrow">Stack Arc</p>
-          <h3>Teknologi berubah, standar kerja tidak.</h3>
-          <p>
-            Dari Laravel sampai SvelteKit, dari web sampai mobile, dan kini workflow
-            berbasis AI. Adaptasi bergerak mengikuti kebutuhan nyata project.
-          </p>
-        </div>
+      <div
+        class="journey-block"
+        bind:this={journeyBlockEl}
+        style={`--journey-progress:${journeyProgress};`}
+      >
+        <div class="journey-stage">
+          <div class="journey-copy">
+            <p class="eyebrow">{copy.journey.eyebrow}</p>
+            <h3>{copy.journey.title}</h3>
+            <p>{copy.journey.body}</p>
+          </div>
 
-        <div class="journey-track">
-          {#each journey as item}
-            <article class="journey-card">
-              <strong>{item.number}</strong>
-              <p>{item.period}</p>
-              <h4>{item.tech}</h4>
-              <small>{item.category}</small>
-            </article>
-          {/each}
+          <div class="journey-track">
+            {#each localizedJourney as item, index}
+              <article
+                class="journey-card"
+                style={`--journey-depth:${index % 2 === 0 ? 26 + index * 5 : -(26 + index * 5)}px;`}
+              >
+                <strong>{item.number}</strong>
+                <p>{item.period}</p>
+                <h4>{item.tech}</h4>
+                <small>{item.categoryLabel}</small>
+              </article>
+            {/each}
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section contact-section" id="contact">
       <div class="section-heading contact-heading">
-        <p class="eyebrow">Contact</p>
+        <p class="eyebrow">{copy.contact.eyebrow}</p>
         <div>
-          <h2>Kalau brief-nya kompleks, biasanya itu justru menarik.</h2>
-          <p>
-            Terbuka untuk kolaborasi, diskusi engineering, atau peran yang butuh kombinasi
-            antara teknis, delivery, dan leadership.
-          </p>
+          <h2>{copy.contact.title}</h2>
+          <p>{copy.contact.body}</p>
         </div>
       </div>
 
       <div class="contact-grid">
-        {#each socials as social}
-          <a href={social.url} target="_blank" rel="noopener noreferrer">
-            <span>{social.name}</span>
-            <small>{social.label}</small>
+        {#each contactLinks as item}
+          <a href={item.href} target="_blank" rel="noopener noreferrer">
+            <span>{item.title}</span>
+            <small>{item.subtitle}</small>
             <strong>&#8599;</strong>
           </a>
         {/each}
-
-        <a href="/">
-          <span>Open original version</span>
-          <small>Bandingkan dengan halaman lama</small>
-          <strong>&#8599;</strong>
-        </a>
       </div>
     </section>
   </main>
@@ -443,9 +871,7 @@
     scroll-margin-top: 6rem;
   }
 
-  .revisi-page {
-    --bg: #040913;
-    --panel: rgba(10, 18, 33, 0.76);
+  .portfolio-page {
     --border: rgba(157, 181, 206, 0.14);
     --border-strong: rgba(45, 212, 255, 0.28);
     --text: #eef5ff;
@@ -459,6 +885,7 @@
       linear-gradient(90deg, rgba(86, 108, 136, 0.08) 1px, transparent 1px),
       linear-gradient(180deg, rgba(7, 17, 29, 0.25), rgba(4, 9, 19, 0.92));
     background-size: 72px 72px, 72px 72px, auto;
+    overflow-x: clip;
   }
 
   .skip-link {
@@ -527,9 +954,9 @@
   }
 
   .topbar nav a,
-  .topbar-link,
   .button,
-  .contact-grid a {
+  .contact-grid a,
+  .locale-switch button {
     transition:
       color 220ms ease,
       border-color 220ms ease,
@@ -538,18 +965,40 @@
       box-shadow 220ms ease;
   }
 
-  .topbar nav a,
-  .topbar-link {
+  .topbar nav a {
     color: var(--dim);
     text-decoration: none;
     font-size: 0.92rem;
   }
 
   .topbar nav a:hover,
-  .topbar nav a:focus-visible,
-  .topbar-link:hover,
-  .topbar-link:focus-visible {
+  .topbar nav a:focus-visible {
     color: var(--text);
+  }
+
+  .locale-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .locale-switch button {
+    min-width: 2.8rem;
+    min-height: 2.2rem;
+    padding: 0 0.7rem;
+    border-radius: 999px;
+    color: var(--dim);
+    cursor: pointer;
+  }
+
+  .locale-switch button.active {
+    background: var(--accent);
+    color: #04111d;
+    font-weight: 700;
   }
 
   .hero {
@@ -570,7 +1019,8 @@
   }
 
   .hero-copy h1,
-  .section-heading h2 {
+  .section-heading h2,
+  .work-intro h2 {
     margin: 0;
     font-family: var(--font-heading);
     letter-spacing: -0.07em;
@@ -593,6 +1043,7 @@
 
   .hero-body,
   .section-heading p,
+  .work-body,
   .story-copy p,
   .proof-card p,
   .summary,
@@ -915,7 +1366,31 @@
   .work-list {
     display: grid;
     gap: 3.5rem;
-    margin-top: 2.4rem;
+    margin-top: 0;
+  }
+
+  .work-shell {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.38fr) minmax(0, 0.62fr);
+    gap: 2rem;
+    align-items: start;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .work-intro {
+    position: sticky;
+    top: 7rem;
+    align-self: start;
+  }
+
+  .work-intro h2 {
+    font-size: clamp(2.3rem, 5vw, 4.6rem);
+  }
+
+  .work-body {
+    max-width: 25rem;
+    margin: 1rem 0 0;
   }
 
   .work-head {
@@ -934,6 +1409,18 @@
     grid-template-columns: minmax(260px, 0.4fr) minmax(0, 0.6fr);
     gap: 1.6rem;
     margin-top: 1.5rem;
+  }
+
+  .work-item {
+    transform: translate3d(0, calc((0.5 - var(--work-progress)) * var(--work-depth, 0px)), 0);
+    transition:
+      transform 260ms ease,
+      border-color 220ms ease;
+    will-change: transform;
+  }
+
+  .work-item:hover {
+    border-color: rgba(45, 212, 255, 0.24);
   }
 
   .case-visual {
@@ -1196,17 +1683,26 @@
     border-top: 1px solid var(--border);
   }
 
+  .journey-stage {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.34fr) minmax(0, 0.66fr);
+    gap: 2rem;
+    align-items: start;
+  }
+
   .journey-copy {
-    max-width: 38rem;
+    position: sticky;
+    top: 7rem;
+    max-width: 22rem;
   }
 
   .journey-track {
     display: grid;
-    grid-template-columns: repeat(7, minmax(14rem, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem;
-    overflow-x: auto;
-    margin-top: 2rem;
-    padding-bottom: 0.25rem;
+    margin-top: 0;
+    align-items: stretch;
+    overflow: visible;
   }
 
   .journey-card {
@@ -1215,6 +1711,19 @@
     border: 1px solid var(--border);
     border-radius: 1.5rem;
     background: linear-gradient(180deg, rgba(10, 18, 33, 0.88), rgba(4, 9, 19, 0.66));
+    transform: translate3d(
+      0,
+      calc((0.5 - var(--journey-progress)) * var(--journey-depth, 0px)),
+      0
+    );
+    transition:
+      transform 260ms ease,
+      border-color 220ms ease;
+    will-change: transform;
+  }
+
+  .journey-card:hover {
+    border-color: rgba(45, 212, 255, 0.24);
   }
 
   .journey-card h4 {
@@ -1256,7 +1765,7 @@
 
   .contact-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
     gap: 1rem;
     margin-top: 2.4rem;
   }
@@ -1315,20 +1824,11 @@
   }
 
   @media (max-width: 1024px) {
-    .topbar {
-      grid-template-columns: auto auto;
-    }
-
-    .topbar nav {
-      display: none;
-    }
-
     .hero,
     .section-heading,
     .story-grid,
     .work-layout,
-    .method-item,
-    .contact-grid {
+    .method-item {
       grid-template-columns: 1fr;
     }
 
@@ -1345,6 +1845,30 @@
     .proof-grid {
       grid-template-columns: 1fr 1fr;
     }
+
+    .work-shell,
+    .journey-stage {
+      grid-template-columns: 1fr;
+    }
+
+    .work-intro,
+    .journey-copy {
+      position: static;
+      max-width: none;
+    }
+
+    .work-list {
+      margin-top: 2.4rem;
+    }
+
+    .work-item,
+    .journey-card {
+      transform: none;
+    }
+
+    .journey-track {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 
   @media (max-width: 720px) {
@@ -1358,12 +1882,17 @@
     .topbar {
       top: 0.8rem;
       margin-top: 0.8rem;
+      grid-template-columns: auto auto;
+      justify-content: space-between;
       padding: 0.85rem 1rem;
       border-radius: 1.5rem;
     }
 
-    .brand span,
-    .topbar-link {
+    .topbar nav {
+      display: none;
+    }
+
+    .brand span {
       font-size: 0.88rem;
     }
 
@@ -1392,6 +1921,10 @@
       grid-template-columns: 1fr;
     }
 
+    .journey-track {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .metrics article {
       border-right: none;
       border-bottom: 1px solid var(--border);
@@ -1404,12 +1937,14 @@
       border-bottom: none;
     }
 
-    .journey-track {
-      grid-template-columns: repeat(7, minmax(11.8rem, 1fr));
-    }
-
     .contact-grid a {
       min-height: auto;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .journey-track {
+      grid-template-columns: 1fr;
     }
   }
 
@@ -1417,12 +1952,23 @@
     .button,
     .contact-grid a,
     .topbar nav a,
-    .topbar-link {
+    .locale-switch button {
       transition: none;
     }
 
     .visual-pulse {
       animation: none;
+    }
+
+    .work-intro,
+    .journey-copy {
+      position: static;
+    }
+
+    .work-item,
+    .journey-card {
+      transform: none;
+      transition: none;
     }
   }
 </style>
