@@ -1,0 +1,49 @@
+name: Deploy web-portofolio
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "static/**"
+      - "package.json"
+      - "package-lock.json"
+      - "svelte.config.js"
+      - "vite.config.ts"
+      - "tsconfig.json"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_DEPLOY_KEY }}
+          script: |
+            set -e
+
+            # Load nvm
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+            cd /home/ubuntu/projects/web-portofolio
+
+            echo "Pulling latest code..."
+            git fetch origin
+            git reset --hard origin/main
+
+            echo "Installing dependencies..."
+            npm install
+
+            echo "Building..."
+            npm run build
+
+            echo "Restarting PM2..."
+            pm2 restart web-portofolio
+            pm2 save
+
+            echo "Deployed successfully!"
