@@ -1,46 +1,14 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { t } from '../i18n';
   import { v3projects } from '../data/v3projects';
   import { scrollReveal } from '../actions/scrollReveal';
 
-  let sectionEl: HTMLElement;
-
-  onMount(async () => {
-    const { gsap } = await import('gsap');
-    const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-    gsap.registerPlugin(ScrollTrigger);
-
-    const cards = sectionEl.querySelectorAll<HTMLElement>('[data-project-card]');
-    cards.forEach((card) => {
-      const img = card.querySelector<HTMLElement>('[data-thumb]');
-      if (!img) return;
-
-      gsap.fromTo(
-        img,
-        { y: 60, scale: 0.95 },
-        {
-          y: -60,
-          scale: 1,
-          ease: 'none',
-          scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true },
-        }
-      );
-    });
-  });
-
-  $effect(() => {
-    return () => {
-      if (typeof window !== 'undefined') {
-        import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
-          ScrollTrigger.getAll().forEach((st) => st.kill());
-        });
-      }
-    };
-  });
+  // Pin-style showcase: image column uses CSS position:sticky (md+) while the
+  // text column scrolls past. No GSAP parallax here — a transform on any
+  // ancestor of a sticky element breaks sticky, so we keep this transform-free.
 </script>
 
-<section id="projects" class="px-6 py-24 md:py-32" bind:this={sectionEl}>
+<section id="projects" class="px-6 py-24 md:py-32">
   <div class="mx-auto max-w-5xl">
     <h2
       class="mb-4 text-center font-heading text-3xl font-bold tracking-tight text-primary md:text-4xl"
@@ -59,11 +27,12 @@
       {@const isEven = i % 2 === 0}
       <article
         data-project-card
-        class="grid items-center gap-8 md:grid-cols-2 md:gap-16"
-        use:scrollReveal={{ delay: 0.1, y: 50 }}
+        class="grid gap-8 md:grid-cols-2 md:gap-16"
       >
-        <!-- Thumbnail / Fallback -->
+        <!-- Thumbnail / Fallback — grid cell is stretched to full article height,
+             inner sticky div is only image-height → sticky has travel room -->
         <div class={`relative ${isEven ? '' : 'md:order-2'}`}>
+          <div class="md:sticky md:top-24">
           {#if proj.thumbnail}
             <div data-thumb class="overflow-hidden rounded-xl border border-border bg-surface">
               <img
@@ -81,10 +50,14 @@
               <span class="font-heading text-4xl font-bold text-muted/40">{proj.name}</span>
             </div>
           {/if}
+          </div>
         </div>
 
         <!-- Text Content -->
-        <div class={isEven ? '' : 'md:order-1'}>
+        <div class={`${isEven ? '' : 'md:order-1'} min-h-0 md:min-h-[70vh] md:flex md:flex-col md:justify-center`} use:scrollReveal={{ delay: 0.1, y: 40 }}>
+          <p class="mb-4 font-mono text-xs tracking-widest text-muted/60">
+            {String(i + 1).padStart(2, '0')} / {String(v3projects.length).padStart(2, '0')}
+          </p>
           <p class="mb-2 text-xs font-semibold tracking-widest text-accent-cyan uppercase">
             {proj.category} · {proj.year}
           </p>

@@ -1,7 +1,15 @@
 import * as THREE from 'three';
 import { disposeThree } from './disposer';
 
-const PARTICLE_COUNT = 4000;
+// Adaptive particle budget: phones get a lighter field for perf/battery,
+// desktops get the full dense sphere. Resolved once at construction.
+function resolveParticleCount(): number {
+  if (typeof window === 'undefined') return 4000;
+  const w = window.innerWidth;
+  if (w < 480) return 1500;
+  if (w < 768) return 2200;
+  return 4000;
+}
 const RADIUS = 1.6;
 
 function sampleSphere(n: number, r: number): Float32Array {
@@ -61,8 +69,9 @@ export class HeroScene {
   private clock = new THREE.Clock();
 
   constructor() {
-    this.morphA = sampleSphere(PARTICLE_COUNT, RADIUS);
-    this.morphB = sampleTorus(PARTICLE_COUNT, RADIUS, RADIUS * 0.45);
+    const count = resolveParticleCount();
+    this.morphA = sampleSphere(count, RADIUS);
+    this.morphB = sampleTorus(count, RADIUS, RADIUS * 0.45);
     this.basePositions = new Float32Array(this.morphA);
   }
 

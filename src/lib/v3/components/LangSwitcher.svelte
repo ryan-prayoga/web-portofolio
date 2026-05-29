@@ -11,7 +11,7 @@
 
 <button
   onclick={toggle}
-  class="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-secondary transition hover:border-border-light hover:text-primary"
+  class="inline-flex min-h-[2.75rem] items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-secondary transition hover:border-border-light hover:text-primary md:min-h-0"
   aria-label="Switch language"
 >
   <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

@@ -61,7 +61,7 @@
     <LangSwitcher />
     <!-- Hamburger: mobile only -->
     <button
-      class="flex h-8 w-8 items-center justify-center rounded-md border border-border md:hidden"
+      class="flex h-11 w-11 items-center justify-center rounded-md border border-border md:hidden"
       onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
       aria-label="Toggle menu"
       aria-expanded={mobileMenuOpen}
