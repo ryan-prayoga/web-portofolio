@@ -7,6 +7,12 @@ export interface Social {
 
 export const socials: Social[] = [
   {
+    name: "Email",
+    url: "mailto:developer@ryanprayoga.dev",
+    icon: "email",
+    label: "developer@ryanprayoga.dev",
+  },
+  {
     name: "GitHub",
     url: "https://github.com/ryan-prayoga",
     icon: "github",
@@ -21,11 +27,9 @@ export const socials: Social[] = [
 ];
 
 export const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Tech Stack", href: "#tech-journey" },
+  { label: "Proof", href: "#proof" },
   { label: "Projects", href: "#projects" },
-  { label: "Leadership", href: "#leadership" },
-  { label: "Operations", href: "#operations" },
+  { label: "Enterprise", href: "#enterprise" },
+  { label: "Stack", href: "#tech-journey" },
   { label: "Contact", href: "#contact" },
 ];

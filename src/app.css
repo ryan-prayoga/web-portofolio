@@ -6,19 +6,19 @@
 
 @theme {
   /* Background & Surface */
-  --color-base: #081120;
-  --color-surface: #0f172a;
-  --color-surface-secondary: #111827;
-  --color-surface-elevated: #1a2332;
+  --color-base: #07090d;
+  --color-surface: #10131a;
+  --color-surface-secondary: #151922;
+  --color-surface-elevated: #1b202b;
 
   /* Borders */
-  --color-border: #1f2937;
-  --color-border-light: #374151;
+  --color-border: #252b36;
+  --color-border-light: #3a4352;
 
   /* Text */
-  --color-primary: #e5eef8;
-  --color-secondary: #94a3b8;
-  --color-muted: #64748b;
+  --color-primary: #f2f5f8;
+  --color-secondary: #a5afbd;
+  --color-muted: #7c8797;
 
   /* Accents */
   --color-accent-cyan: #22d3ee;
@@ -91,8 +91,8 @@ body {
 
 .bg-grid {
   background-image:
-    linear-gradient(to right, rgba(31, 41, 55, 0.3) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(31, 41, 55, 0.3) 1px, transparent 1px);
+    linear-gradient(to right, rgba(58, 67, 82, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(58, 67, 82, 0.22) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 

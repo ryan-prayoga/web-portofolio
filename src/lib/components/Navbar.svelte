@@ -101,6 +101,13 @@
             {/if}
           </a>
         {/each}
+        <a
+          href="/cv/Ryan-Prayoga-CV.pdf"
+          download
+          class="ml-2 inline-flex items-center justify-center rounded-md border border-accent-success/30 bg-accent-success/10 px-3.5 py-2 font-heading text-sm font-semibold text-accent-success transition hover:border-accent-success hover:bg-accent-success/15"
+        >
+          Download CV
+        </a>
       </div>
 
       <!-- Mobile Hamburger Button -->
@@ -139,23 +146,32 @@
 {/if}
 
 <!-- Mobile Slide-in Panel -->
-<div
-  class="fixed top-0 right-0 z-40 flex h-full w-72 flex-col border-l border-border/50 bg-surface/95 backdrop-blur-xl transition-transform duration-300 ease-out md:hidden
-    {mobileOpen ? 'translate-x-0' : 'translate-x-full'}"
->
-  <div class="flex flex-col gap-1 px-6 pt-24 pb-8">
-    {#each navLinks as link, i}
+{#if mobileOpen}
+  <div
+    class="fixed top-0 right-0 z-40 flex h-full w-72 flex-col border-l border-border/50 bg-surface/95 backdrop-blur-xl transition-transform duration-300 ease-out md:hidden"
+  >
+    <div class="flex flex-col gap-1 px-6 pt-24 pb-8">
+      {#each navLinks as link, i}
+        <a
+          href={link.href}
+          onclick={() => handleNavClick(link.href)}
+          class="font-body rounded-lg px-4 py-3 text-base transition-all duration-200
+            {activeSection === link.href
+            ? 'bg-accent-cyan/10 text-accent-cyan'
+            : 'text-secondary hover:bg-surface-elevated hover:text-primary'}"
+          style="transition-delay: {i * 50}ms;"
+        >
+          {link.label}
+        </a>
+      {/each}
       <a
-        href={link.href}
-        onclick={() => handleNavClick(link.href)}
-        class="font-body rounded-lg px-4 py-3 text-base transition-all duration-200
-          {activeSection === link.href
-          ? 'bg-accent-cyan/10 text-accent-cyan'
-          : 'text-secondary hover:bg-surface-elevated hover:text-primary'}"
-        style="transition-delay: {mobileOpen ? i * 50 : 0}ms;"
+        href="/cv/Ryan-Prayoga-CV.pdf"
+        download
+        onclick={closeMobile}
+        class="mt-4 rounded-lg border border-accent-success/30 bg-accent-success/10 px-4 py-3 font-heading text-base font-semibold text-accent-success transition-all duration-200 hover:bg-accent-success/15"
       >
-        {link.label}
+        Download CV
       </a>
-    {/each}
+    </div>
   </div>
-</div>
+{/if}

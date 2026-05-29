@@ -4,6 +4,18 @@
 
   let sectionEl = $state<HTMLElement | null>(null);
 
+  function accent(icon: string) {
+    if (icon === 'email') return 'cyan';
+    if (icon === 'github') return 'success';
+    return 'blue';
+  }
+
+  function actionLabel(icon: string) {
+    if (icon === 'email') return 'Kirim Email';
+    if (icon === 'github') return 'Lihat Repository';
+    return 'Lihat Profil';
+  }
+
   onMount(() => {
     if (!sectionEl) return;
 
@@ -30,7 +42,7 @@
   class="relative py-32 spotlight-cyan overflow-hidden"
   bind:this={sectionEl}
 >
-  <div class="relative z-10 mx-auto max-w-2xl px-6 lg:px-8 text-center">
+  <div class="relative z-10 mx-auto max-w-4xl px-6 lg:px-8 text-center">
 
     <!-- Section heading -->
     <div class="reveal mb-6">
@@ -40,29 +52,54 @@
         <span class="block h-px w-10 bg-accent-cyan"></span>
       </div>
       <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-primary">
-        Mari <span class="text-accent-cyan">Terhubung</span>
+        Mari <span class="text-accent-cyan">Berdiskusi</span>
       </h2>
     </div>
 
     <!-- CTA paragraph -->
-    <p class="reveal reveal-delay-1 text-lg leading-relaxed text-secondary font-body mb-14 max-w-xl mx-auto">
-      Saya selalu terbuka untuk kolaborasi, diskusi teknologi, atau tantangan baru. Jika Anda memiliki project menarik, ingin berdiskusi tentang engineering, atau sekadar ingin berkenalan — jangan ragu untuk menghubungi saya.
+    <p class="reveal reveal-delay-1 text-lg leading-relaxed text-secondary font-body mb-14 max-w-2xl mx-auto">
+      Saya terbuka untuk peluang Full-Stack, Backend, atau Team Lead yang membutuhkan technical ownership dari discovery sampai production.
     </p>
 
+    <div class="reveal reveal-delay-2 mb-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <a
+        href="/cv/Ryan-Prayoga-CV.pdf"
+        download
+        class="inline-flex items-center justify-center gap-2 rounded-lg bg-accent-cyan px-6 py-3 font-heading text-sm font-bold text-[#07111f] transition hover:bg-accent-blue"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0 4-4m-4 4-4-4" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 21h14" />
+        </svg>
+        Download CV
+      </a>
+      <a
+        href="mailto:developer@ryanprayoga.dev"
+        class="inline-flex items-center justify-center rounded-lg border border-border-light px-6 py-3 font-heading text-sm font-semibold text-primary transition hover:border-accent-cyan hover:text-accent-cyan"
+      >
+        developer@ryanprayoga.dev
+      </a>
+    </div>
+
     <!-- Social link cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-14">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-14">
 
       <!-- GitHub card -->
       {#each socials as social, i}
         <a
           href={social.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="reveal reveal-delay-{i + 2} group glass rounded-2xl p-6 flex flex-col items-center gap-4 transition-all duration-500 hover:-translate-y-2 {social.icon === 'github' ? 'hover:glow-cyan' : 'hover:glow-violet'} cursor-pointer no-underline"
+          target={social.url.startsWith('mailto:') ? undefined : '_blank'}
+          rel={social.url.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+          class="reveal reveal-delay-{i + 2} group glass rounded-2xl p-6 flex flex-col items-center gap-4 transition-all duration-500 hover:-translate-y-2 {accent(social.icon) === 'blue' ? 'hover:glow-violet' : 'hover:glow-cyan'} cursor-pointer no-underline"
         >
           <!-- Icon -->
-          <div class="flex items-center justify-center w-14 h-14 rounded-2xl {social.icon === 'github' ? 'bg-accent-cyan/10' : 'bg-accent-blue/10'} transition-colors duration-300 {social.icon === 'github' ? 'group-hover:bg-accent-cyan/20' : 'group-hover:bg-accent-blue/20'}">
-            {#if social.icon === 'github'}
+          <div class="flex items-center justify-center w-14 h-14 rounded-2xl {accent(social.icon) === 'blue' ? 'bg-accent-blue/10 group-hover:bg-accent-blue/20' : 'bg-accent-cyan/10 group-hover:bg-accent-cyan/20'} transition-colors duration-300">
+            {#if social.icon === 'email'}
+              <svg class="w-7 h-7 text-accent-cyan transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16v12H4z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="m4 7 8 6 8-6" />
+              </svg>
+            {:else if social.icon === 'github'}
               <svg class="w-7 h-7 text-accent-cyan transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
               </svg>
@@ -74,25 +111,25 @@
           </div>
 
           <!-- Name -->
-          <h3 class="font-heading text-lg font-semibold text-primary transition-colors duration-300 {social.icon === 'github' ? 'group-hover:text-accent-cyan' : 'group-hover:text-accent-blue'}">
+          <h3 class="font-heading text-lg font-semibold text-primary transition-colors duration-300 {accent(social.icon) === 'blue' ? 'group-hover:text-accent-blue' : 'group-hover:text-accent-cyan'}">
             {social.name}
           </h3>
 
           <!-- Username / label -->
-          <span class="text-sm text-muted font-body transition-colors duration-300 {social.icon === 'github' ? 'group-hover:text-accent-cyan/70' : 'group-hover:text-accent-blue/70'}">
+          <span class="text-sm text-muted font-body transition-colors duration-300 {accent(social.icon) === 'blue' ? 'group-hover:text-accent-blue/70' : 'group-hover:text-accent-cyan/70'}">
             {social.label}
           </span>
 
           <!-- Subtle arrow indicator -->
-          <div class="flex items-center gap-1.5 text-xs text-muted/60 transition-all duration-300 group-hover:gap-2.5 {social.icon === 'github' ? 'group-hover:text-accent-cyan/60' : 'group-hover:text-accent-blue/60'}">
-            <span class="font-body">Kunjungi Profil</span>
+          <div class="flex items-center gap-1.5 text-xs text-muted/60 transition-all duration-300 group-hover:gap-2.5 {accent(social.icon) === 'blue' ? 'group-hover:text-accent-blue/60' : 'group-hover:text-accent-cyan/60'}">
+            <span class="font-body">{actionLabel(social.icon)}</span>
             <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>
           </div>
 
           <!-- Bottom accent line -->
-          <div class="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent {social.icon === 'github' ? 'via-accent-cyan/15 group-hover:via-accent-cyan/40' : 'via-accent-blue/15 group-hover:via-accent-blue/40'} to-transparent transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent {accent(social.icon) === 'blue' ? 'via-accent-blue/15 group-hover:via-accent-blue/40' : 'via-accent-cyan/15 group-hover:via-accent-cyan/40'} to-transparent transition-all duration-500"></div>
         </a>
       {/each}
 
@@ -100,7 +137,7 @@
 
     <!-- Final engineer statement -->
     <p class="reveal reveal-delay-4 text-sm text-muted font-body leading-relaxed">
-      Engineer yang siap untuk kolaborasi, diskusi, dan tantangan baru.
+      Siap untuk interview, technical discussion, atau eksplorasi kebutuhan produk yang membutuhkan engineer dengan ownership kuat.
     </p>
 
   </div>
