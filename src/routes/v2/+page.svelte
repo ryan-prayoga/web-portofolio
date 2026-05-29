@@ -532,7 +532,7 @@
   <a class="skip-link" href="#content">{copy.skipLink}</a>
 
   <header class="topbar">
-    <a class="brand" href="/revisi#top" aria-label="Ryan Prayoga home">
+    <a class="brand" href="/v2#top" aria-label="Ryan Prayoga home">
       <img src={logo} alt="RP Logo" />
       <span>{profile.name}</span>
     </a>
