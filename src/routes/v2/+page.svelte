@@ -15,84 +15,124 @@
   let journeyProgress = $state(0);
 
   const projectTranslations = {
-    'traffic-attitude-record': {
+    brunogen: {
       id: {
-        category: 'Government · Enterprise',
+        category: 'Developer Tooling',
         summary:
-          'Sistem pencatatan dan pelaporan perilaku lalu lintas untuk Korlantas Polri. Platform enterprise yang menangani data operasional skala nasional dengan workflow pelaporan terstruktur.',
+          'Developer tool yang membaca Laravel, Express, dan Go API lalu menghasilkan OpenAPI dan Bruno collection siap pakai.',
         focus:
-          'Membangun sistem pelaporan yang reliable dengan workflow approval multi-level dan dashboard analitik untuk monitoring nasional.',
-        impact: 'Digunakan dalam operasi pelaporan lalu lintas tingkat nasional',
-        status: 'Operasional pada skala nasional'
+          'Route scanning, request/response inference, regression fixtures, publish workflow, dan package hygiene untuk npm.',
+        impact: 'Public developer tooling dengan release history dan test pipeline yang jelas.',
+        status: 'Public di npm dengan release aktif'
       },
       en: {
-        category: 'Government · Enterprise',
+        category: 'Developer Tooling',
         summary:
-          'A traffic behavior reporting system for Korlantas Polri. An enterprise platform handling operational data at national scale with structured reporting workflows.',
+          'A developer tool that reads Laravel, Express, and Go APIs and generates ready-to-use OpenAPI specs and Bruno collections.',
         focus:
-          'Built a reliable reporting system with multi-level approval flow and analytics dashboards for nationwide monitoring.',
-        impact: 'Used in national traffic reporting operations',
-        status: 'Operational at national scale'
+          'Route scanning, request/response inference, regression fixtures, publish workflow, and package hygiene for npm.',
+        impact: 'Public developer tooling with a clear release history and test pipeline.',
+        status: 'Public on npm with active releases'
       }
     },
-    lms: {
+    jedug: {
       id: {
-        category: 'Web Platform · Education',
+        category: 'Civic Tech',
         summary:
-          'Platform manajemen pembelajaran digital yang mendukung pengelolaan materi, tracking progress peserta, dan sistem evaluasi terintegrasi.',
+          'Platform pelaporan jalan rusak berbasis peta, upload bukti, anonymous device, moderasi admin, dan statistik publik.',
         focus:
-          'Membangun arsitektur platform e-learning yang scalable dengan fitur tracking progress dan sistem evaluasi otomatis.',
-        impact: 'Mendukung proses pembelajaran digital secara terstruktur',
-        status: 'Mendukung delivery pembelajaran terstruktur'
+          'Membangun flow submit laporan, smart merge issue terdekat, storage hardening, map clustering, heatmap, dan admin moderation.',
+        impact: 'Case study civic-tech yang menunjukkan product thinking, geospatial data, dan production hardening.',
+        status: 'Case study civic-tech production-ready'
       },
       en: {
-        category: 'Web Platform · Education',
+        category: 'Civic Tech',
         summary:
-          'A digital learning management platform for content administration, learner progress tracking, and integrated evaluation workflows.',
+          'A map-based road damage reporting platform with evidence upload, anonymous device IDs, admin moderation, and public statistics.',
         focus:
-          'Designed a scalable e-learning architecture with progress tracking and automated evaluation features.',
-        impact: 'Supports structured digital learning delivery',
-        status: 'Structured learning delivery'
+          'Built the report submission flow, smart merging of nearby issues, storage hardening, map clustering, heatmaps, and admin moderation.',
+        impact: 'A civic-tech case study showcasing product thinking, geospatial data, and production hardening.',
+        status: 'Production-ready civic-tech case study'
       }
     },
-    'disaster-management': {
+    'media-sync': {
       id: {
-        category: 'Government · Operations',
+        category: 'Cross-Device System',
         summary:
-          'Sistem manajemen bencana untuk monitoring, pelaporan, dan koordinasi respons bencana. Menangani data real-time dari berbagai sumber dan visualisasi peta.',
+          'Sistem sync media Android ke dashboard web dengan consent, thumbnail-first gallery, original request, dan bulk download.',
         focus:
-          'Integrasi data monitoring real-time, visualisasi peta interaktif, dan sistem koordinasi multi-instansi.',
-        impact: 'Membantu koordinasi dan respons penanganan bencana',
-        status: 'Workflow koordinasi real-time'
+          'Device bootstrap, metadata sync, thumbnail pipeline, request original file, auto-upload dari Android, dan deploy VPS.',
+        impact: 'Membuktikan kemampuan membangun workflow lintas device, backend, web, dan operasi production.',
+        status: 'Berjalan di Android, web, dan VPS'
       },
       en: {
-        category: 'Government · Operations',
+        category: 'Cross-Device System',
         summary:
-          'A disaster management system for monitoring, reporting, and response coordination. It handles real-time data from multiple sources and map-based visualization.',
+          'An Android-to-web media sync system with consent, a thumbnail-first gallery, original-file requests, and bulk download.',
         focus:
-          'Integrated real-time monitoring data, interactive maps, and coordination workflows across multiple agencies.',
-        impact: 'Improves disaster coordination and response handling',
-        status: 'Real-time coordination workflow'
+          'Device bootstrap, metadata sync, thumbnail pipeline, original-file requests, auto-upload from Android, and VPS deployment.',
+        impact: 'Proves the ability to build workflows spanning device, backend, web, and production operations.',
+        status: 'Running across Android, web, and VPS'
       }
     },
-    'website-komcad': {
+    messhub: {
       id: {
-        category: 'Government · Web Platform',
+        category: 'Internal Operations',
         summary:
-          'Website resmi Komponen Cadangan pertahanan negara. Portal informasi dan manajemen data dengan standar keamanan tinggi dan arsitektur yang solid.',
+          'Aplikasi operasional mess untuk kas, WiFi, feed, anggota, proposal, wallet, dan notifikasi internal.',
         focus:
-          'Pengembangan portal dengan standar keamanan tinggi, manajemen konten dinamis, dan performa optimal untuk akses publik.',
-        impact: 'Portal informasi resmi dengan standar keamanan pemerintah',
-        status: 'Portal publik dengan standar keamanan tinggi'
+          'Merapikan kebutuhan operasional harian menjadi dashboard mobile-first dengan auth, role, dan deploy split frontend/backend.',
+        impact: 'Contoh produk internal yang kecil tapi production-minded: jelas domainnya, jelas workflow-nya.',
+        status: 'Produk internal dengan CI/CD'
       },
       en: {
-        category: 'Government · Web Platform',
+        category: 'Internal Operations',
         summary:
-          'The official website for the reserve defense component program. An information and data management portal with strict security standards and a solid architecture.',
+          'An operations app for a shared residence covering cash, WiFi, feed, members, proposals, wallet, and internal notifications.',
         focus:
-          'Delivered a secure portal with dynamic content management and strong public access performance.',
-        impact: 'Official public portal built to government-grade standards',
-        status: 'Secure public-facing registry'
+          'Turned daily operational needs into a mobile-first dashboard with auth, roles, and split frontend/backend deployment.',
+        impact: 'A small but production-minded internal product with a clear domain and workflow.',
+        status: 'Internal product with CI/CD'
+      }
+    },
+    marbot: {
+      id: {
+        category: 'Automation',
+        summary:
+          'Telegram bot dan webview untuk akses layanan SIMPEG seperti absensi, gaji, cuti, laporan, dan direktori pegawai.',
+        focus:
+          'Integrasi layanan pegawai ke interface chat dan webview dengan state management, session, dan formatter output.',
+        impact: 'Menunjukkan kemampuan membuat automation layer di atas sistem existing yang tidak selalu punya API ideal.',
+        status: 'Automation layer di atas SIMPEG'
+      },
+      en: {
+        category: 'Automation',
+        summary:
+          'A Telegram bot and webview for accessing employee services such as attendance, payroll, leave, reports, and the staff directory.',
+        focus:
+          'Integrated employee services into chat and webview interfaces with state management, sessions, and output formatting.',
+        impact: 'Shows the ability to build an automation layer on top of existing systems that lack an ideal API.',
+        status: 'Automation layer over SIMPEG'
+      }
+    },
+    'gas-cli': {
+      id: {
+        category: 'DevOps Tooling',
+        summary:
+          'CLI Bash untuk build dan deploy Go/Node web apps via PM2, Nginx, metadata SQLite, dan mode non-interactive CI.',
+        focus:
+          'Stack detection, build strategy, deploy wizard, preview config, metadata app, dan fallback terminal UX.',
+        impact: 'Mengubah pola deploy VPS yang repetitif menjadi workflow yang lebih cepat dan konsisten.',
+        status: 'Dipakai untuk deploy VPS rutin'
+      },
+      en: {
+        category: 'DevOps Tooling',
+        summary:
+          'A Bash CLI to build and deploy Go/Node web apps via PM2, Nginx, SQLite metadata, and a non-interactive CI mode.',
+        focus:
+          'Stack detection, build strategy, deploy wizard, preview config, app metadata, and a terminal UX fallback.',
+        impact: 'Turns repetitive VPS deploys into a faster, more consistent workflow.',
+        status: 'Used for routine VPS deploys'
       }
     }
   } as const;
@@ -450,7 +490,14 @@
 
   const localizedProjects = $derived(
     projects.map((project, index) => {
-      const translated = projectTranslations[project.slug as keyof typeof projectTranslations][locale];
+      const entry = projectTranslations[project.slug as keyof typeof projectTranslations];
+      const translated = entry?.[locale] ?? {
+        category: project.category,
+        summary: project.summary,
+        focus: project.focus,
+        impact: project.impact,
+        status: project.year
+      };
 
       return {
         ...project,
