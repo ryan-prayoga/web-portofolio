@@ -4,6 +4,8 @@
 
   let sectionEl = $state<HTMLElement | null>(null);
 
+  const emailSocial = socials.find((s) => s.icon === 'email');
+
   function accent(icon: string) {
     if (icon === 'email') return 'cyan';
     if (icon === 'github') return 'success';
@@ -73,12 +75,14 @@
         </svg>
         Download CV
       </a>
-      <a
-        href="mailto:developer@ryanprayoga.dev"
-        class="inline-flex items-center justify-center rounded-lg border border-border-light px-6 py-3 font-heading text-sm font-semibold text-primary transition hover:border-accent-cyan hover:text-accent-cyan"
-      >
-        developer@ryanprayoga.dev
-      </a>
+      {#if emailSocial}
+        <a
+          href={emailSocial.url}
+          class="inline-flex items-center justify-center rounded-lg border border-border-light px-6 py-3 font-heading text-sm font-semibold text-primary transition hover:border-accent-cyan hover:text-accent-cyan"
+        >
+          {emailSocial.label}
+        </a>
+      {/if}
     </div>
 
     <!-- Social link cards -->
