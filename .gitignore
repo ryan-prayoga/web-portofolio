@@ -28,3 +28,7 @@ output/
 .kilo
 .vscode
 .claude
+.opencode
+
+# Debug screenshots
+v3-*.jpeg
