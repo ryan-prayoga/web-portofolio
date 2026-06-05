@@ -11,6 +11,52 @@
   let scrolled = $state(false);
   let mobileMenuOpen = $state(false);
 
+  const SITE_URL = 'https://ryanprayoga.dev';
+  const PAGE_URL = `${SITE_URL}/v3`;
+  const OG_IMAGE = `${SITE_URL}/v3/og-image.png`;
+
+  const ogLocaleMap: Record<string, string> = {
+    id: 'id_ID',
+    en: 'en_US',
+    fr: 'fr_FR',
+  };
+
+  const personJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Ryan Prayoga',
+    url: SITE_URL,
+    image: OG_IMAGE,
+    jobTitle: 'Full-Stack Engineer',
+    worksFor: {
+      '@type': 'Organization',
+      name: 'PT Traspac Makmur Sejahtera',
+    },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Tangerang',
+      addressCountry: 'ID',
+    },
+    sameAs: [
+      'https://github.com/ryan-prayoga',
+      'https://www.linkedin.com/in/ryanprayogaaa',
+    ],
+    email: 'developer@ryanprayoga.dev',
+    knowsAbout: [
+      'Full-Stack Development',
+      'SvelteKit',
+      'Go',
+      'Laravel',
+      'PostgreSQL',
+      'Three.js',
+      'DevOps',
+    ],
+  };
+
+  $effect(() => {
+    document.documentElement.lang = $locale;
+  });
+
   $effect(() => {
     const onScroll = () => {
       scrolled = window.scrollY > 50;
@@ -28,11 +74,39 @@
 </script>
 
 <svelte:head>
-  <title>Ryan Prayoga — Portfolio v3</title>
+  <title>Ryan Prayoga — Full-Stack Engineer & Team Lead</title>
   <meta
     name="description"
-    content="Full-Stack Engineer portfolio — enterprise systems, civic-tech, developer tooling."
+    content={$t.about.paragraphs[0]}
   />
+  <meta name="author" content="Ryan Prayoga" />
+  <meta name="keywords" content="Ryan Prayoga, Full-Stack Engineer, Team Lead, SvelteKit, Go, Laravel, PostgreSQL, Three.js, Civic Tech, Developer Tooling, Indonesia, Tangerang" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href={PAGE_URL} />
+
+  <meta property="og:type" content="profile" />
+  <meta property="og:site_name" content="Ryan Prayoga" />
+  <meta property="og:title" content="Ryan Prayoga — Full-Stack Engineer & Team Lead" />
+  <meta property="og:description" content={$t.about.paragraphs[0]} />
+  <meta property="og:url" content={PAGE_URL} />
+  <meta property="og:image" content={OG_IMAGE} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content={ogLocaleMap[$locale] ?? 'id_ID'} />
+  {#each Object.entries(ogLocaleMap) as [loc, ogLoc]}
+    {#if loc !== $locale}
+      <meta property="og:locale:alternate" content={ogLoc} />
+    {/if}
+  {/each}
+  <meta property="profile:first_name" content="Ryan" />
+  <meta property="profile:last_name" content="Prayoga" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ryan Prayoga — Full-Stack Engineer & Team Lead" />
+  <meta name="twitter:description" content={$t.about.paragraphs[0]} />
+  <meta name="twitter:image" content={OG_IMAGE} />
+
+  {@html `<script type="application/ld+json">${JSON.stringify(personJsonLd)}</` + `script>`}
 </svelte:head>
 
 <!-- Floating Nav -->
