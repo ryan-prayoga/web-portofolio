@@ -99,19 +99,25 @@ uniform float uPixelRatio;
 uniform float uPointSize;
 varying float vDepth;
 varying float vNoise;
+varying float vTwinkle;
 
 ${SIMPLEX_GLSL}
+
+// Cheap deterministic pseudo-random per-particle from its base position.
+float hash(vec3 p) {
+  return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453);
+}
 
 void main() {
   vec3 pos = position;
 
   // Slow, low-frequency noise = gentle breathing/swirl.
-  float n = snoise(pos * 0.9 + vec3(0.0, uTime * 0.12, 0.0));
+  float n = snoise(pos * 0.9 + vec3(0.0, uTime * 0.18, 0.0));
   vNoise = n;
 
   // Radial displacement scales with progress so the morph still reads,
   // but particles never sit perfectly on a smooth surface.
-  float disp = n * (0.12 + uProgress * 0.18);
+  float disp = n * (0.14 + uProgress * 0.22);
   pos += normalize(pos + 0.0001) * disp;
 
   vec4 mv = modelViewMatrix * vec4(pos, 1.0);
@@ -120,33 +126,46 @@ void main() {
 
   gl_Position = projectionMatrix * mv;
 
+  // Per-particle twinkle: phase shift via hash, used for size + alpha so the
+  // field shimmers like a starfield instead of looking like a static sphere.
+  float seed = hash(position);
+  float pulse = 0.55 + 0.45 * sin(uTime * 1.6 + seed * 6.2831);
+  vTwinkle = pulse;
+
   // Size attenuation by view-space distance, multiplied by DPR so HiDPI
   // screens don't render tiny dots.
   float dist = -mv.z;
-  gl_PointSize = uPointSize * uPixelRatio * (1.6 / max(dist, 0.0001));
+  gl_PointSize = uPointSize * uPixelRatio * pulse * (1.6 / max(dist, 0.0001));
 }
 `;
 
 const FRAGMENT_SHADER = /* glsl */ `
 uniform vec3 uColorNear;
 uniform vec3 uColorFar;
+uniform vec3 uColorAccent;
 uniform float uOpacity;
 varying float vDepth;
 varying float vNoise;
+varying float vTwinkle;
 
 void main() {
-  // Soft round sprite: distance from point center -> alpha falloff.
+  // Soft round sprite with bright core: distance from point center -> alpha
+  // falloff with a sharper inner glow so points read as "stars" not flat dots.
   vec2 uv = gl_PointCoord - 0.5;
   float d = length(uv);
   if (d > 0.5) discard;
-  float alpha = smoothstep(0.5, 0.0, d);
+  float core = smoothstep(0.5, 0.0, d);
+  float glow = pow(core, 2.2);
 
-  // Depth-driven color gradient (foreground cyan, background violet),
-  // with a subtle noise tint so particles feel less uniform.
+  // Three-stop gradient: near (cyan) -> far (violet) -> noise tint (magenta).
   vec3 col = mix(uColorNear, uColorFar, vDepth);
-  col += vNoise * 0.08;
+  col = mix(col, uColorAccent, smoothstep(0.2, 0.8, vNoise));
 
-  gl_FragColor = vec4(col, alpha * uOpacity);
+  // Brighten the core; combined with additive blending this gives the field
+  // a glowing, atmospheric feel instead of looking like flat dots.
+  col += glow * 0.4;
+
+  gl_FragColor = vec4(col, core * uOpacity * (0.55 + 0.45 * vTwinkle));
 }
 `;
 
@@ -192,10 +211,11 @@ export class HeroScene {
         uTime: { value: 0 },
         uProgress: { value: 0 },
         uPixelRatio: { value: dpr },
-        uPointSize: { value: 8.0 },
+        uPointSize: { value: 14.0 },
         uColorNear: { value: new THREE.Color(0x22d3ee) }, // cyan-400
-        uColorFar: { value: new THREE.Color(0x8b5cf6) }, // violet-500
-        uOpacity: { value: 0.9 },
+        uColorFar: { value: new THREE.Color(0x6366f1) }, // indigo-500
+        uColorAccent: { value: new THREE.Color(0xec4899) }, // pink-500
+        uOpacity: { value: 1.0 },
       },
       vertexShader: VERTEX_SHADER,
       fragmentShader: FRAGMENT_SHADER,

@@ -7,6 +7,7 @@
   let canvasEl: HTMLCanvasElement;
   let sectionEl: HTMLElement;
   let scene: HeroScene;
+  let heroOpacity = $state(1);
 
   onMount(async () => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -36,6 +37,19 @@
         },
       }
     );
+
+    // Fade backdrop as user scrolls past hero so it doesn't compete with
+    // section content but stays as a faint atmospheric layer.
+    const onScroll = () => {
+      const h = window.innerHeight;
+      const y = window.scrollY;
+      // Full opacity in hero, fade to ~12% by 1.5x viewport, never zero.
+      const k = Math.max(0, Math.min(1, y / (h * 1.5)));
+      heroOpacity = 1 - k * 0.88;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
   });
 
   $effect(() => {
@@ -43,17 +57,23 @@
   });
 </script>
 
+<!-- Persistent backdrop: fixed canvas + radial halo, lives behind everything.
+     Lives outside the section so it doesn't disappear when the hero scrolls
+     out of view. Pointer-events disabled so it never blocks UI. -->
+<div
+  class="pointer-events-none fixed inset-0 -z-10 transition-opacity duration-300"
+  style="opacity: {heroOpacity}"
+  aria-hidden="true"
+>
+  <div class="hero-halo absolute inset-0"></div>
+  <canvas bind:this={canvasEl} class="absolute inset-0 h-full w-full"></canvas>
+</div>
+
 <section
   bind:this={sectionEl}
   class="relative flex min-h-screen items-center justify-center overflow-hidden"
   id="hero"
 >
-  <canvas
-    bind:this={canvasEl}
-    class="pointer-events-none absolute inset-0 h-full w-full"
-    aria-hidden="true"
-  ></canvas>
-
   <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
     <p class="mb-3 text-sm tracking-widest text-secondary uppercase" use:scrollReveal={{ delay: 0 }}>
       {$t.hero.greeting}
@@ -84,3 +104,20 @@
     </div>
   </div>
 </section>
+
+<style>
+  /* Soft radial halo behind the particle field; cyan core, violet mid,
+     transparent edge. Sits between page bg and the canvas, additively
+     blended so the field reads as glowing rather than floating dots. */
+  .hero-halo {
+    background:
+      radial-gradient(
+        ellipse 60% 55% at 50% 45%,
+        rgba(34, 211, 238, 0.18) 0%,
+        rgba(99, 102, 241, 0.12) 35%,
+        rgba(236, 72, 153, 0.06) 60%,
+        transparent 80%
+      );
+    filter: blur(40px);
+  }
+</style>
