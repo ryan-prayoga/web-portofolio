@@ -197,7 +197,14 @@ export class HeroScene {
     const h = canvas.clientHeight;
     const dpr = Math.min(window.devicePixelRatio, 2);
 
-    this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    this.renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+      // Keep the drawing buffer so the frame can be read back (readPixels)
+      // and captured in screenshots. Negligible cost for a sparse point cloud.
+      preserveDrawingBuffer: true,
+    });
     this.renderer.setPixelRatio(dpr);
     this.renderer.setSize(w, h);
     this.renderer.setClearColor(0x000000, 0);
