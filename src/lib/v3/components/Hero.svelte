@@ -92,6 +92,14 @@
 </section>
 
 <style>
+  /* The backdrop sits at z-index:-10. A fixed negative-z layer is painted
+     BEHIND an opaque <body> background, which made the canvas vanish on
+     scroll repaint. We give the backdrop its own base color and make the
+     body transparent (see +page.svelte) so this layer is what shows through. */
+  .hero-backdrop {
+    background-color: #07090d;
+  }
+
   /* Soft radial halo behind the particle field; cyan core, indigo mid,
      pink accent edge. Sits between page bg and the canvas, additively
      blended so the field reads as glowing rather than floating dots. */

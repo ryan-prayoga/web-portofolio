@@ -183,3 +183,13 @@
     </p>
   </footer>
 </main>
+
+<style>
+  /* The fixed particle backdrop lives at z-index:-10. An opaque <body>
+     background paints over a negative-z fixed layer on scroll repaint,
+     which made the canvas disappear. Make the body transparent on /v3 so
+     the backdrop (which carries its own #07090d base) is what shows through. */
+  :global(body) {
+    background-color: transparent;
+  }
+</style>
