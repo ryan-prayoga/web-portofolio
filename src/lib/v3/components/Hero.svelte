@@ -7,7 +7,6 @@
   let canvasEl: HTMLCanvasElement;
   let sectionEl: HTMLElement;
   let scene: HeroScene;
-  let heroOpacity = $state(1);
 
   onMount(async () => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -37,19 +36,6 @@
         },
       }
     );
-
-    // Fade backdrop as user scrolls past hero so it doesn't compete with
-    // section content but stays as a faint atmospheric layer.
-    const onScroll = () => {
-      const h = window.innerHeight;
-      const y = window.scrollY;
-      // Full opacity in hero, fade to ~12% by 1.5x viewport, never zero.
-      const k = Math.max(0, Math.min(1, y / (h * 1.5)));
-      heroOpacity = 1 - k * 0.88;
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
   });
 
   $effect(() => {
@@ -57,12 +43,12 @@
   });
 </script>
 
-<!-- Persistent backdrop: fixed canvas + radial halo, lives behind everything.
-     Lives outside the section so it doesn't disappear when the hero scrolls
-     out of view. Pointer-events disabled so it never blocks UI. -->
+<!-- Persistent backdrop: fixed canvas + radial halo, lives behind everything
+     (z<0) so it stays as atmospheric layer through every section. Pointer
+     events disabled so it never blocks UI. Opacity is constant — no
+     scroll-fade — to match nooma/DRIP/Terminal-style persistent 3D scenes. -->
 <div
-  class="pointer-events-none fixed inset-0 -z-10 transition-opacity duration-300"
-  style="opacity: {heroOpacity}"
+  class="hero-backdrop pointer-events-none fixed inset-0 -z-10"
   aria-hidden="true"
 >
   <div class="hero-halo absolute inset-0"></div>
@@ -88,10 +74,10 @@
       {$t.hero.role}
     </p>
     <span
-      class="mb-8 inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-4 py-1.5 text-sm font-medium text-success"
+      class="mb-8 inline-flex items-center gap-2 rounded-full border border-accent-success/30 bg-accent-success/10 px-4 py-1.5 text-sm font-medium text-accent-success"
       use:scrollReveal={{ delay: 0.3 }}
     >
-      <span class="inline-block h-2 w-2 animate-pulse rounded-full bg-success"></span>
+      <span class="inline-block h-2 w-2 animate-pulse rounded-full bg-accent-success"></span>
       {$t.hero.openToWork}
     </span>
     <div class="mt-4" use:scrollReveal={{ delay: 0.4 }}>
@@ -106,8 +92,8 @@
 </section>
 
 <style>
-  /* Soft radial halo behind the particle field; cyan core, violet mid,
-     transparent edge. Sits between page bg and the canvas, additively
+  /* Soft radial halo behind the particle field; cyan core, indigo mid,
+     pink accent edge. Sits between page bg and the canvas, additively
      blended so the field reads as glowing rather than floating dots. */
   .hero-halo {
     background:
