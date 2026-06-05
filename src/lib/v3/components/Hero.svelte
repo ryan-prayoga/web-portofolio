@@ -1,62 +1,12 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { t } from '../i18n';
   import { scrollReveal } from '../actions/scrollReveal';
-  import type { HeroScene } from '../three/HeroScene';
-
-  let canvasEl: HTMLCanvasElement;
-  let sectionEl: HTMLElement;
-  let scene: HeroScene;
-
-  onMount(async () => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) return;
-
-    const { HeroScene: HS } = await import('../three/HeroScene');
-    scene = new HS();
-    scene.init(canvasEl);
-
-    const { gsap } = await import('gsap');
-    const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-    gsap.registerPlugin(ScrollTrigger);
-
-    gsap.to(
-      { progress: 0 },
-      {
-        progress: 1,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionEl,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-        onUpdate: function (this: { progress: number }) {
-          scene?.updateProgress(this.progress);
-        },
-      }
-    );
-  });
-
-  $effect(() => {
-    return () => scene?.dispose();
-  });
 </script>
 
-<!-- Persistent backdrop: fixed canvas + radial halo, lives behind everything
-     (z<0) so it stays as atmospheric layer through every section. Pointer
-     events disabled so it never blocks UI. Opacity is constant — no
-     scroll-fade — to match nooma/DRIP/Terminal-style persistent 3D scenes. -->
-<div
-  class="hero-backdrop pointer-events-none fixed inset-0 -z-10"
-  aria-hidden="true"
->
-  <div class="hero-halo absolute inset-0"></div>
-  <canvas bind:this={canvasEl} class="absolute inset-0 h-full w-full"></canvas>
-</div>
-
+<!-- The particle backdrop + canvas now live at page level (see +page.svelte)
+     as a fixed sibling of <main>, so it persists across all sections without
+     the negative-z-index scroll repaint bug. This component is text only. -->
 <section
-  bind:this={sectionEl}
   class="relative flex min-h-screen items-center justify-center overflow-hidden"
   id="hero"
 >
@@ -90,28 +40,3 @@
     </div>
   </div>
 </section>
-
-<style>
-  /* The backdrop sits at z-index:-10. A fixed negative-z layer is painted
-     BEHIND an opaque <body> background, which made the canvas vanish on
-     scroll repaint. We give the backdrop its own base color and make the
-     body transparent (see +page.svelte) so this layer is what shows through. */
-  .hero-backdrop {
-    background-color: #07090d;
-  }
-
-  /* Soft radial halo behind the particle field; cyan core, indigo mid,
-     pink accent edge. Sits between page bg and the canvas, additively
-     blended so the field reads as glowing rather than floating dots. */
-  .hero-halo {
-    background:
-      radial-gradient(
-        ellipse 60% 55% at 50% 45%,
-        rgba(34, 211, 238, 0.18) 0%,
-        rgba(99, 102, 241, 0.12) 35%,
-        rgba(236, 72, 153, 0.06) 60%,
-        transparent 80%
-      );
-    filter: blur(40px);
-  }
-</style>

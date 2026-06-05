@@ -7,9 +7,13 @@
   import LangSwitcher from '$lib/v3/components/LangSwitcher.svelte';
   import { t, locale } from '$lib/v3/i18n';
   import { scrollReveal } from '$lib/v3/actions/scrollReveal';
+  import { onMount } from 'svelte';
+  import type { HeroScene } from '$lib/v3/three/HeroScene';
 
   let scrolled = $state(false);
   let mobileMenuOpen = $state(false);
+  let canvasEl: HTMLCanvasElement;
+  let scene: HeroScene | undefined;
 
   const SITE_URL = 'https://ryanprayoga.dev';
   const PAGE_URL = `${SITE_URL}/v3`;
@@ -71,6 +75,48 @@
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     };
   }
+
+  onMount(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
+
+    let cleanup = () => {};
+    (async () => {
+      const { HeroScene } = await import('$lib/v3/three/HeroScene');
+      scene = new HeroScene();
+      scene.init(canvasEl);
+
+      const { gsap } = await import('gsap');
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+      gsap.registerPlugin(ScrollTrigger);
+
+      const tween = gsap.to(
+        { progress: 0 },
+        {
+          progress: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+          onUpdate: function (this: { progress: number }) {
+            scene?.updateProgress(this.progress);
+          },
+        }
+      );
+
+      cleanup = () => {
+        tween.scrollTrigger?.kill();
+        tween.kill();
+        scene?.dispose();
+        scene = undefined;
+      };
+    })();
+
+    return () => cleanup();
+  });
 </script>
 
 <svelte:head>
@@ -168,8 +214,17 @@
   </div>
 {/if}
 
+<!-- Persistent particle backdrop: fixed sibling of <main>, z-0 (NOT negative).
+     A negative z-index here gets painted behind the root/body background on
+     scroll repaint, which is what made the canvas vanish. Sitting at z-0 with
+     its own opaque base, with <main> lifted to z-10, keeps it stable. -->
+<div class="hero-backdrop pointer-events-none fixed inset-0 z-0" aria-hidden="true">
+  <div class="hero-halo absolute inset-0"></div>
+  <canvas bind:this={canvasEl} class="absolute inset-0 h-full w-full"></canvas>
+</div>
+
 <!-- Sections -->
-<main>
+<main class="relative z-10">
   <Hero />
   <About />
   <ProjectShowcase />
@@ -185,11 +240,25 @@
 </main>
 
 <style>
-  /* The fixed particle backdrop lives at z-index:-10. An opaque <body>
-     background paints over a negative-z fixed layer on scroll repaint,
-     which made the canvas disappear. Make the body transparent on /v3 so
-     the backdrop (which carries its own #07090d base) is what shows through. */
+  /* Backdrop carries its own base color so it never depends on body bg.
+     Body is made transparent on /v3 so nothing paints over the backdrop. */
   :global(body) {
     background-color: transparent;
+  }
+  .hero-backdrop {
+    background-color: #07090d;
+  }
+  /* Soft radial halo behind the particle field: cyan core, indigo mid, pink
+     edge. Sits under the canvas for an atmospheric glow. */
+  .hero-halo {
+    background:
+      radial-gradient(
+        ellipse 60% 55% at 50% 45%,
+        rgba(34, 211, 238, 0.18) 0%,
+        rgba(99, 102, 241, 0.12) 35%,
+        rgba(236, 72, 153, 0.06) 60%,
+        transparent 80%
+      );
+    filter: blur(40px);
   }
 </style>
