@@ -126,16 +126,17 @@ void main() {
 
   gl_Position = projectionMatrix * mv;
 
-  // Per-particle twinkle: phase shift via hash, used for size + alpha so the
-  // field shimmers like a starfield instead of looking like a static sphere.
+  // Per-particle twinkle: phase shift via hash, used for alpha only so size
+  // stays consistent and the field always reads as a coherent shape. The
+  // shimmer comes from opacity, not scale.
   float seed = hash(position);
-  float pulse = 0.55 + 0.45 * sin(uTime * 1.6 + seed * 6.2831);
+  float pulse = 0.7 + 0.3 * sin(uTime * 1.6 + seed * 6.2831);
   vTwinkle = pulse;
 
   // Size attenuation by view-space distance, multiplied by DPR so HiDPI
-  // screens don't render tiny dots.
+  // screens don't render tiny dots. Size is steady; only alpha pulses.
   float dist = -mv.z;
-  gl_PointSize = uPointSize * uPixelRatio * pulse * (1.6 / max(dist, 0.0001));
+  gl_PointSize = uPointSize * uPixelRatio * (1.6 / max(dist, 0.0001));
 }
 `;
 
@@ -165,7 +166,9 @@ void main() {
   // a glowing, atmospheric feel instead of looking like flat dots.
   col += glow * 0.4;
 
-  gl_FragColor = vec4(col, core * uOpacity * (0.55 + 0.45 * vTwinkle));
+  // Alpha floor: even at twinkle minimum, particles stay visible. Without
+  // this floor the sphere visually "deflates" and reads as half-empty.
+  gl_FragColor = vec4(col, core * uOpacity * (0.7 + 0.3 * vTwinkle));
 }
 `;
 
