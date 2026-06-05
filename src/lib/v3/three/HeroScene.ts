@@ -260,13 +260,12 @@ export class HeroScene {
 
   updateProgress(progress: number) {
     const p = Math.max(0, Math.min(1, progress));
+    // Scroll only drives a uniform that adds subtle noise expansion in the
+    // vertex shader (a gentle "breathing" as you scroll). We deliberately do
+    // NOT morph the geometry to a torus: that collapsed the field into a ring
+    // with an empty centre and pushed particles off-screen, which read as the
+    // particles "disappearing" on scroll. The sphere stays persistent.
     this.material.uniforms.uProgress.value = p;
-    const pos = this.geo.attributes.position as THREE.BufferAttribute;
-    const arr = pos.array as Float32Array;
-    for (let i = 0; i < arr.length; i++) {
-      arr[i] = this.morphA[i] + (this.morphB[i] - this.morphA[i]) * p;
-    }
-    pos.needsUpdate = true;
   }
 
   dispose() {
