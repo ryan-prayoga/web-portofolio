@@ -7,7 +7,7 @@
   import { reveal } from '$lib/v4/actions/reveal';
 
   const SITE_URL = 'https://ryanprayoga.dev';
-  const PAGE_URL = `${SITE_URL}/v5`;
+  const PAGE_URL = SITE_URL;
   const OG_IMAGE = `${SITE_URL}/v3/og-image.png`;
 
   const academic = 'S1 Informatika - Universitas Pasundan';
@@ -148,10 +148,10 @@
 </script>
 
 <svelte:head>
-  <title>Ryan Prayoga - V5 Portfolio</title>
+  <title>Ryan Prayoga — Full-Stack Engineer & Team Lead</title>
   <meta
     name="description"
-    content="Portfolio Ryan Prayoga versi V5: Full-Stack Engineer dan Team Lead dengan pengalaman enterprise systems, civic-tech, developer tooling, deployment workflow, dan pendidikan S1 Informatika Universitas Pasundan."
+    content="Portfolio Ryan Prayoga: Full-Stack Engineer dan Team Lead dengan pengalaman enterprise systems, civic-tech, developer tooling, deployment workflow, dan pendidikan S1 Informatika Universitas Pasundan."
   />
   <meta name="author" content="Ryan Prayoga" />
   <meta
@@ -166,7 +166,7 @@
   <meta property="og:title" content="Ryan Prayoga - Full-Stack Engineer & Team Lead" />
   <meta
     property="og:description"
-    content="V5 portfolio with selected work, stack, delivery method, and S1 Informatika Universitas Pasundan academic context."
+    content="Portfolio with selected work, stack, delivery method, and S1 Informatika Universitas Pasundan academic context."
   />
   <meta property="og:url" content={PAGE_URL} />
   <meta property="og:image" content={OG_IMAGE} />
@@ -181,12 +181,11 @@
   <div class="grain" aria-hidden="true"></div>
 
   <nav class:scrolled class="site-nav">
-    <a href="#top" class="brand" onclick={goTo('top')} aria-label="Ryan Prayoga V5 home">
+    <a href="#top" class="brand" onclick={goTo('top')} aria-label="Ryan Prayoga home">
       <span>Ryan Prayoga</span>
-      <small>V5</small>
     </a>
 
-    <div class="desktop-links" aria-label="V5 section navigation">
+    <div class="desktop-links" aria-label="Section navigation">
       {#each navItems as item (item.href)}
         <a href={item.href} onclick={goTo(item.href.slice(1))}>{item.label}</a>
       {/each}
