@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 
-export const prerender = true;
+export const prerender = false;
 
 export const load = () => {
 	redirect(308, '/v5');
