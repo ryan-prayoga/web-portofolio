@@ -53,9 +53,9 @@ export const projectCopy: Record<Locale, Record<string, ProjectCopy>> = {
   id: {
     cinematix: {
       summary:
-        "PWA tiket bioskop dengan pemilihan kursi POV 3D realtime — fitur yang belum ada di aplikasi bioskop besar Indonesia.",
+        "PWA tiket bioskop yang bisa pilih kursi pakai POV 3D realtime — fitur yang belum ada di aplikasi bioskop besar mana pun di Indonesia.",
       focus:
-        "Seat locking realtime anti double-book via Socket.IO, App Router Next.js, Prisma + PostgreSQL, dan CI/CD GitHub Actions.",
+        "Kunci kursi realtime biar nggak dobel-booking via Socket.IO, App Router Next.js, Prisma + PostgreSQL, dan CI/CD GitHub Actions.",
     },
     pildun: {
       summary:
@@ -65,15 +65,15 @@ export const projectCopy: Record<Locale, Record<string, ProjectCopy>> = {
     },
     koruptorrank: {
       summary:
-        "Civic-tech peringkat kasus korupsi Indonesia dengan 260+ entri terkurasi dan scoring multi-faktor.",
+        "Civic-tech yang nge-ranking kasus korupsi di Indonesia — 260+ data terkurasi dengan scoring multi-faktor.",
       focus:
-        "Kurasi data dari Wikipedia, scoring multi-faktor, filtering, dan visualisasi ranking interaktif.",
+        "Kurasi data dari Wikipedia, scoring multi-faktor, filtering, dan visualisasi ranking yang interaktif.",
     },
     pantauanggaran: {
       summary:
-        "Platform transparansi pengadaan publik Indonesia. Dashboard real-time dengan deteksi anomali berbasis AI.",
+        "Platform buat mantau transparansi pengadaan publik Indonesia — dashboard real-time plus deteksi anomali berbasis AI.",
       focus:
-        "Scraping data SiRUP, normalisasi, mapping wilayah, scoring anomali, dan visualisasi dashboard interaktif.",
+        "Scraping data SiRUP, normalisasi, pemetaan wilayah, scoring anomali, dan visualisasi dashboard interaktif.",
     },
     jedug: {
       summary:
