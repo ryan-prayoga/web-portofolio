@@ -124,7 +124,7 @@
   };
 
   $effect(() => {
-    document.documentElement.lang = 'id';
+    document.documentElement.lang = 'en';
 
     const onScroll = () => {
       scrolled = window.scrollY > 32;
@@ -226,6 +226,7 @@
 
           <div data-hero class="hero-actions">
             <a href="#work" onclick={goTo('work')} class="button primary">View Work</a>
+            <a href="/cv/cv-en.pdf" download class="button secondary">Download CV</a>
             <a href={email?.url} class="button secondary">Contact</a>
           </div>
         </section>
@@ -362,6 +363,8 @@
         <span data-r>Open for full-stack, backend, and team lead roles.</span>
         <div data-r class="contact-actions">
           <a href={email?.url} class="button primary">Send Email</a>
+          <a href="/cv/cv-en.pdf" download class="button secondary">CV (EN)</a>
+          <a href="/cv/cv-id.pdf" download class="button secondary">CV (ID)</a>
           <a href={github?.url} target="_blank" rel="noopener noreferrer" class="button secondary">View GitHub</a>
         </div>
       </div>
@@ -403,7 +406,7 @@
     --bg-soft: #191713;
     --paper: #f6efe0;
     --paper-muted: #cfc3ad;
-    --faint: #8d826f;
+    --faint: #b0a489;
     --line: rgba(246, 239, 224, 0.16);
     --line-strong: rgba(246, 239, 224, 0.32);
     --clay: #d2653f;
@@ -483,11 +486,6 @@
     font-size: 1.75rem;
     line-height: 1;
     text-transform: none;
-  }
-
-  .brand small {
-    color: var(--lime);
-    font-size: 0.7rem;
   }
 
   .desktop-links {
@@ -1114,14 +1112,40 @@
       font-size: 3rem;
     }
 
+    /* Tablet: drop fragile absolute positioning, flow frames in a grid */
     .evidence-wall {
-      min-height: 30rem;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .wall-line {
+      display: none;
+    }
+
+    .evidence-frame,
+    .pipeline-panel {
+      position: static;
+      width: 100%;
+    }
+
+    .evidence-frame {
+      aspect-ratio: 16 / 10;
+    }
+
+    .pipeline-panel {
+      align-self: center;
     }
 
     .work-intro,
-    .work-preview,
     .academic-mark {
       position: static;
+    }
+
+    /* Decorative hover preview is useless without a pointer — hide it */
+    .work-preview {
+      display: none;
     }
 
     .stack-grid {
@@ -1171,25 +1195,11 @@
     }
 
     .evidence-wall {
-      min-height: 26rem;
+      grid-template-columns: 1fr;
     }
 
-    .frame-1 {
-      width: 78%;
-    }
-
-    .frame-2 {
-      top: 10rem;
-      width: 58%;
-    }
-
-    .frame-3 {
-      width: 70%;
-    }
-
-    .pipeline-panel {
-      left: 0;
-      bottom: 1rem;
+    .evidence-frame {
+      width: 100%;
     }
 
     .proof-strip,
