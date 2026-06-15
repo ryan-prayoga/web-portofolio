@@ -732,11 +732,13 @@
   .btn.primary {
     background: var(--accent);
     border-color: var(--accent);
-    color: var(--paper);
+    color: var(--ink);
+    font-weight: 600;
   }
   .btn.primary:hover {
-    background: var(--accent-ink);
-    border-color: var(--accent-ink);
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
   }
 
   .proof {
