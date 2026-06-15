@@ -1,76 +1,39 @@
+// Lightweight scroll-reveal: adds `.in` when the node enters the viewport.
+// No animation library — CSS handles the transition. Respects reduced motion.
 export interface RevealOptions {
-  y?: number;
-  delay?: number;
-  duration?: number;
-  start?: string;
-  stagger?: number;
-  selector?: string;
+  threshold?: number;
 }
 
 export function reveal(node: HTMLElement, options: RevealOptions = {}) {
-  const {
-    y = 24,
-    delay = 0,
-    duration = 0.9,
-    start = "top 88%",
-    stagger = 0.08,
-    selector,
-  } = options;
-
-  let ctx: { revert: () => void } | undefined;
-  let cancelled = false;
-
-  async function init() {
-    if (typeof window === "undefined") return;
-
-    const reduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    const targets = selector
-      ? Array.from(node.querySelectorAll<HTMLElement>(selector))
-      : [node];
-
-    if (reduced) {
-      targets.forEach((el) => {
-        el.style.opacity = "1";
-        el.style.transform = "none";
-      });
-      return;
-    }
-
-    const { gsap } = await import("gsap");
-    const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-    gsap.registerPlugin(ScrollTrigger);
-    if (cancelled) return;
-
-    ctx = gsap.context(() => {
-      gsap.fromTo(
-        targets,
-        { y, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration,
-          delay,
-          ease: "power3.out",
-          stagger: targets.length > 1 ? stagger : 0,
-          scrollTrigger: {
-            trigger: node,
-            start,
-            toggleActions: "play none none none",
-          },
-        },
-      );
-    });
+  if (typeof IntersectionObserver === "undefined") {
+    node.classList.add("in");
+    return;
   }
 
-  init();
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) {
+    node.classList.add("in");
+    return;
+  }
+
+  node.classList.add("reveal");
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      }
+    },
+    { threshold: options.threshold ?? 0.12, rootMargin: "0px 0px -8% 0px" },
+  );
+
+  io.observe(node);
 
   return {
     destroy() {
-      cancelled = true;
-      ctx?.revert();
+      io.disconnect();
     },
   };
 }

@@ -4,22 +4,8 @@
    SELF-HOSTED FONTS (latin subset, woff2)
    ═══════════════════════════════════════════════ */
 @font-face {
-  font-family: "Instrument Serif";
-  src: url("/fonts/instrument-serif.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Instrument Serif";
-  src: url("/fonts/instrument-serif-italic.woff2") format("woff2");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Outfit";
-  src: url("/fonts/outfit.woff2") format("woff2");
+  font-family: "Archivo";
+  src: url("/fonts/archivo.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;

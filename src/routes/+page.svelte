@@ -10,78 +10,76 @@
   const PAGE_URL = SITE_URL;
   const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
-  const academic = 'S1 Informatika - Universitas Pasundan';
-  const email = socials.find((social) => social.name === 'Email');
-  const github = socials.find((social) => social.name === 'GitHub');
-  const linkedin = socials.find((social) => social.name === 'LinkedIn');
-  const visualProjects = projects.filter((project) => project.thumbnail);
-  const featuredProjects = projects;
+  const academic = 'S1 Informatika — Universitas Pasundan';
+  const email = socials.find((s) => s.name === 'Email');
+  const github = socials.find((s) => s.name === 'GitHub');
+  const linkedin = socials.find((s) => s.name === 'LinkedIn');
 
-  // Responsive image sizing for the evidence-wall thumbnails.
-  const imgSizes = '(max-width: 760px) 90vw, (max-width: 1120px) 45vw, 35vw';
-  const lcpBase = visualProjects[0]?.thumbnail?.replace('.webp', '');
+  const featuredProjects = projects;
+  const imgSizes = '(max-width: 760px) 90vw, 40vw';
 
   type Locale = 'en' | 'id';
   let locale = $state<Locale>('en');
 
   const copy = {
     en: {
-      nav: { about: 'About', work: 'Work', stack: 'Stack', contact: 'Contact' },
-      eyebrow: 'Tangerang, Indonesia / Full-stack delivery',
+      nav: { work: 'Work', about: 'About', stack: 'Stack', contact: 'Contact' },
+      available: 'Open to work',
       heroRole: 'Full-Stack Engineer & Team Lead',
       heroBody:
         'Building enterprise systems, civic-tech products, developer tooling, and deployment workflows with calm technical ownership.',
       viewWork: 'View Work',
       downloadCv: 'Download CV',
       contact: 'Contact',
-      proof: ['Professional experience', 'Engineers led', 'Systems shipped'],
+      proof: ['Years experience', 'Engineers led', 'Systems shipped'],
       aboutKicker: 'About',
       aboutHeading: 'From software craft to delivery leadership.',
       aboutRows: [
-        { kicker: 'Current role', body: `Hands-on delivery leadership at ${profile.company}, from planning and review to production decisions.` },
-        { kicker: 'Academic', body: 'Formal computer science foundation that supports product, architecture, and engineering execution.' },
-        { kicker: 'Operating range', body: 'Comfortable moving across product surfaces and production workflow when the system needs ownership.' },
+        { kicker: 'Current role', body: `Hands-on delivery leadership at ${profile.company} — from planning and review to production decisions.` },
+        { kicker: 'Academic', body: 'Formal computer science foundation supporting product, architecture, and engineering execution.' },
+        { kicker: 'Operating range', body: 'Comfortable across product surfaces and production workflow when the system needs ownership.' },
       ],
       workKicker: 'Selected Work',
       workHeading: 'Selected work with production weight.',
-      workIntro:
-        'A focused index of civic-tech, developer tooling, automation, and deployment systems built for real constraints.',
+      workIntro: 'Civic-tech, developer tooling, automation, and deployment systems built for real constraints.',
       open: 'Open',
       stackKicker: 'Stack & Method',
       stackHeading: 'How I build systems that keep moving.',
       stackNotes: {
         backend: 'API, auth, business workflow, integrations, and data processing.',
         frontend: 'Public portals, internal dashboards, PWA, and operational interfaces.',
-        mobile: 'Field apps, webview flows, upload media, and cross-device workflows.',
+        mobile: 'Field apps, webview flows, media upload, and cross-device workflows.',
         workflow: 'Deployment, process management, review cadence, and AI-assisted iteration.',
       },
+      method: 'Method',
       contactKicker: 'Contact',
       contactHeading: "Let's build the next useful thing.",
       contactBody: 'Open for full-stack, backend, and team lead roles.',
       sendEmail: 'Send Email',
       viewGithub: 'View GitHub',
+      footerNote: 'Built with SvelteKit',
+      backToTop: 'Back to top',
     },
     id: {
-      nav: { about: 'Tentang', work: 'Karya', stack: 'Stack', contact: 'Kontak' },
-      eyebrow: 'Tangerang, Indonesia / Pengembangan full-stack',
+      nav: { work: 'Karya', about: 'Tentang', stack: 'Stack', contact: 'Kontak' },
+      available: 'Terbuka untuk kerja',
       heroRole: 'Full-Stack Engineer & Team Lead',
       heroBody:
         'Membangun sistem enterprise, produk civic-tech, developer tooling, dan deployment workflow dengan kepemilikan teknis yang tenang.',
       viewWork: 'Lihat Karya',
       downloadCv: 'Unduh CV',
       contact: 'Kontak',
-      proof: ['Pengalaman profesional', 'Engineer dipimpin', 'Sistem dirilis'],
+      proof: ['Tahun pengalaman', 'Engineer dipimpin', 'Sistem dirilis'],
       aboutKicker: 'Tentang',
       aboutHeading: 'Dari kerajinan software ke kepemimpinan delivery.',
       aboutRows: [
-        { kicker: 'Peran sekarang', body: `Kepemimpinan delivery yang hands-on di ${profile.company}, dari perencanaan dan review sampai keputusan production.` },
+        { kicker: 'Peran sekarang', body: `Kepemimpinan delivery yang hands-on di ${profile.company} — dari perencanaan dan review sampai keputusan production.` },
         { kicker: 'Akademik', body: 'Fondasi computer science formal yang menopang product, arsitektur, dan eksekusi engineering.' },
         { kicker: 'Cakupan kerja', body: 'Nyaman berpindah antar product surface dan workflow production saat sistem butuh kepemilikan.' },
       ],
       workKicker: 'Karya Pilihan',
       workHeading: 'Karya pilihan dengan bobot production.',
-      workIntro:
-        'Indeks ringkas civic-tech, developer tooling, automation, dan sistem deployment yang dibangun untuk constraint nyata.',
+      workIntro: 'Civic-tech, developer tooling, automation, dan sistem deployment yang dibangun untuk constraint nyata.',
       open: 'Buka',
       stackKicker: 'Stack & Metode',
       stackHeading: 'Cara saya membangun sistem yang terus bergerak.',
@@ -91,11 +89,14 @@
         mobile: 'Aplikasi lapangan, flow webview, upload media, dan workflow lintas device.',
         workflow: 'Deployment, process management, ritme review, dan iterasi berbantuan AI.',
       },
+      method: 'Metode',
       contactKicker: 'Kontak',
       contactHeading: 'Mari bangun hal berguna berikutnya.',
       contactBody: 'Terbuka untuk peran full-stack, backend, dan team lead.',
       sendEmail: 'Kirim Email',
       viewGithub: 'Lihat GitHub',
+      footerNote: 'Dibangun dengan SvelteKit',
+      backToTop: 'Ke atas',
     },
   };
 
@@ -103,38 +104,31 @@
   const projectDescriptions = $derived(projectCopy[locale]);
 
   const navItems = $derived([
-    { label: t.nav.about, href: '#about' },
     { label: t.nav.work, href: '#work' },
+    { label: t.nav.about, href: '#about' },
     { label: t.nav.stack, href: '#stack' },
     { label: t.nav.contact, href: '#contact' },
   ]);
 
   const proof = $derived([
-    { value: profile.experience, label: t.proof[0] },
-    { value: String(profile.teamSize), label: t.proof[1] },
+    { value: profile.experience.replace(/[^0-9+]/g, '') || '4+', label: t.proof[0] },
+    { value: '5', label: t.proof[1] },
     { value: '11+', label: t.proof[2] },
   ]);
 
   const aboutRows = $derived([
     { kicker: t.aboutRows[0].kicker, title: profile.role, body: t.aboutRows[0].body },
     { kicker: t.aboutRows[1].kicker, title: academic, body: t.aboutRows[1].body },
-    { kicker: t.aboutRows[2].kicker, title: 'Backend, frontend, mobile, deploy', body: t.aboutRows[2].body },
+    { kicker: t.aboutRows[2].kicker, title: 'Backend · Frontend · Mobile · Deploy', body: t.aboutRows[2].body },
   ]);
 
   const stackOrder: TechStep['category'][] = ['backend', 'frontend', 'mobile', 'workflow'];
 
   function groupStack(items: TechStep[], notes: Record<TechStep['category'], string>) {
     const grouped: Record<TechStep['category'], TechStep[]> = {
-      backend: [],
-      frontend: [],
-      mobile: [],
-      workflow: [],
+      backend: [], frontend: [], mobile: [], workflow: [],
     };
-
-    for (const item of items) {
-      grouped[item.category].push(item);
-    }
-
+    for (const item of items) grouped[item.category].push(item);
     return stackOrder.map((category) => ({
       category,
       title: category[0].toUpperCase() + category.slice(1),
@@ -144,7 +138,6 @@
   }
 
   const stackGroups = $derived(groupStack(techJourney, t.stackNotes));
-
   const workflow = ['Discover', 'Build', 'Review', 'Deploy', 'Improve'];
   const contactLinks = [email, github, linkedin].filter(Boolean);
 
@@ -152,6 +145,7 @@
   let menuOpen = $state(false);
   let hoveredProject = $state(0);
   let previewProject = $derived(featuredProjects[hoveredProject] ?? featuredProjects[0]);
+  let previewBase = $derived(previewProject?.thumbnail?.replace('.webp', ''));
 
   const personJsonLd = {
     '@context': 'https://schema.org',
@@ -160,33 +154,12 @@
     url: SITE_URL,
     image: OG_IMAGE,
     jobTitle: 'Full-Stack Engineer',
-    worksFor: {
-      '@type': 'Organization',
-      name: profile.company,
-    },
-    alumniOf: {
-      '@type': 'CollegeOrUniversity',
-      name: 'Universitas Pasundan',
-    },
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Tangerang',
-      addressCountry: 'ID',
-    },
-    sameAs: [
-      github?.url,
-      linkedin?.url,
-    ].filter(Boolean),
+    worksFor: { '@type': 'Organization', name: profile.company },
+    alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universitas Pasundan' },
+    address: { '@type': 'PostalAddress', addressLocality: 'Tangerang', addressCountry: 'ID' },
+    sameAs: [github?.url, linkedin?.url].filter(Boolean),
     email: email?.label,
-    knowsAbout: [
-      'Full-Stack Development',
-      'SvelteKit',
-      'Go',
-      'Laravel',
-      'PostgreSQL',
-      'DevOps',
-      'Technical Leadership',
-    ],
+    knowsAbout: ['Full-Stack Development', 'SvelteKit', 'Go', 'Laravel', 'PostgreSQL', 'DevOps', 'Technical Leadership'],
   };
 
   $effect(() => {
@@ -200,16 +173,10 @@
   });
 
   $effect(() => {
-    const onScroll = () => {
-      scrolled = window.scrollY > 32;
-    };
-
+    const onScroll = () => (scrolled = window.scrollY > 24);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-    };
+    return () => window.removeEventListener('scroll', onScroll);
   });
 
   function setLocale(value: Locale) {
@@ -227,55 +194,31 @@
 
 <svelte:head>
   <title>Ryan Prayoga — Full-Stack Engineer & Team Lead</title>
-  {#if lcpBase}
-    <link
-      rel="preload"
-      as="image"
-      type="image/avif"
-      href="{lcpBase}.avif"
-      imagesrcset="{lcpBase}-sm.avif 700w, {lcpBase}.avif 1100w"
-      imagesizes={imgSizes}
-      fetchpriority="high"
-    />
-  {/if}
-  <meta
-    name="description"
-    content="Portfolio Ryan Prayoga: Full-Stack Engineer dan Team Lead dengan pengalaman enterprise systems, civic-tech, developer tooling, deployment workflow, dan pendidikan S1 Informatika Universitas Pasundan."
-  />
+  <meta name="description" content="Portfolio Ryan Prayoga: Full-Stack Engineer dan Team Lead — enterprise systems, civic-tech, developer tooling, deployment workflow, S1 Informatika Universitas Pasundan." />
   <meta name="author" content="Ryan Prayoga" />
-  <meta
-    name="keywords"
-    content="Ryan Prayoga, Full-Stack Engineer, Team Lead, SvelteKit, Go, Laravel, PostgreSQL, Universitas Pasundan, Indonesia"
-  />
+  <meta name="keywords" content="Ryan Prayoga, Full-Stack Engineer, Team Lead, SvelteKit, Go, Laravel, PostgreSQL, Universitas Pasundan, Indonesia" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href={PAGE_URL} />
-
   <meta property="og:type" content="profile" />
   <meta property="og:site_name" content="Ryan Prayoga" />
-  <meta property="og:title" content="Ryan Prayoga - Full-Stack Engineer & Team Lead" />
-  <meta
-    property="og:description"
-    content="Portfolio with selected work, stack, delivery method, and S1 Informatika Universitas Pasundan academic context."
-  />
+  <meta property="og:title" content="Ryan Prayoga — Full-Stack Engineer & Team Lead" />
+  <meta property="og:description" content="Selected work, stack, and delivery method — full-stack engineer & team lead based in Tangerang, Indonesia." />
   <meta property="og:url" content={PAGE_URL} />
   <meta property="og:image" content={OG_IMAGE} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Ryan Prayoga — Full-Stack Engineer & Team Lead" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Ryan Prayoga - Full-Stack Engineer & Team Lead" />
-  <meta name="twitter:description" content="Full-Stack Engineer & Team Lead — enterprise systems, civic-tech, developer tooling, and deployment workflows." />
+  <meta name="twitter:title" content="Ryan Prayoga — Full-Stack Engineer & Team Lead" />
+  <meta name="twitter:description" content="Full-Stack Engineer & Team Lead — enterprise systems, civic-tech, developer tooling, deployment workflows." />
   <meta name="twitter:image" content={OG_IMAGE} />
-
   {@html `<script type="application/ld+json">${JSON.stringify(personJsonLd)}</` + `script>`}
 </svelte:head>
 
-<div class="v5-root">
-  <div class="grain" aria-hidden="true"></div>
-
-  <nav class:scrolled class="site-nav">
-    <a href="#top" class="brand" onclick={goTo('top')} aria-label="Ryan Prayoga home">
-      <span>Ryan Prayoga</span>
+<div class="swiss">
+  <nav class:scrolled class="nav">
+    <a href="#top" class="brand" onclick={goTo('top')} aria-label="Ryan Prayoga, home">
+      Ryan Prayoga<span class="dot">.</span>
     </a>
 
     <div class="desktop-links" aria-label="Section navigation">
@@ -285,32 +228,13 @@
     </div>
 
     <div class="nav-actions">
-      <div class="lang-toggle" role="group" aria-label="Language">
-        <button
-          type="button"
-          class:active={locale === 'en'}
-          aria-pressed={locale === 'en'}
-          onclick={() => setLocale('en')}
-        >
-          EN
-        </button>
-        <button
-          type="button"
-          class:active={locale === 'id'}
-          aria-pressed={locale === 'id'}
-          onclick={() => setLocale('id')}
-        >
-          ID
-        </button>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" class:active={locale === 'en'} aria-pressed={locale === 'en'} onclick={() => setLocale('en')}>EN</button>
+        <span aria-hidden="true">/</span>
+        <button type="button" class:active={locale === 'id'} aria-pressed={locale === 'id'} onclick={() => setLocale('id')}>ID</button>
       </div>
-
-      <button
-        class="menu-button"
-        type="button"
-        onclick={() => (menuOpen = !menuOpen)}
-        aria-label="Toggle menu"
-        aria-expanded={menuOpen}
-      >
+      <a class="nav-cv" href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'} download>CV ↗</a>
+      <button class="menu-btn" type="button" onclick={() => (menuOpen = !menuOpen)} aria-label="Toggle menu" aria-expanded={menuOpen}>
         {menuOpen ? 'Close' : 'Menu'}
       </button>
     </div>
@@ -320,1116 +244,920 @@
     <div class="mobile-menu">
       {#each navItems as item, i (item.href)}
         <a href={item.href} onclick={goTo(item.href.slice(1))}>
-          <span>0{i + 1}</span>
-          {item.label}
+          <span>0{i + 1}</span>{item.label}
         </a>
       {/each}
+      <a class="mm-cv" href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'} download>
+        <span>→</span>{t.downloadCv}
+      </a>
     </div>
   {/if}
 
-  <main>
-    <header id="top" class="hero-section">
-      <div class="hero-grid">
-        <section class="hero-copy" aria-labelledby="v5-title">
-          <p data-hero class="eyebrow">{t.eyebrow}</p>
-          <h1 id="v5-title" data-hero>{profile.name}</h1>
-          <p data-hero class="hero-role">{t.heroRole}</p>
-          <p data-hero class="hero-body">
-            {t.heroBody}
-          </p>
-
-          <div data-hero class="hero-actions">
-            <a href="#work" onclick={goTo('work')} class="button primary">{t.viewWork}</a>
-            <a href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'} download class="button secondary">{t.downloadCv}</a>
-            <a href={email?.url} class="button secondary">{t.contact}</a>
-          </div>
-        </section>
-
-        <aside class="evidence-wall" aria-label="Project evidence wall" data-hero>
-          <div class="wall-line"></div>
-          {#each visualProjects.slice(0, 3) as project, i (project.slug)}
-            {@const base = project.thumbnail?.replace('.webp', '')}
-            <figure class="evidence-frame frame-{i + 1}">
-              <picture>
-                <source type="image/avif" srcset="{base}-sm.avif 700w, {base}.avif 1100w" sizes={imgSizes} />
-                <img src={project.thumbnail} srcset="{base}-sm.webp 700w, {base}.webp 1100w" sizes={imgSizes} alt="{project.name} preview" width="1100" height="688" decoding="async" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />
-              </picture>
-              <figcaption>
-                <span>{String(i + 1).padStart(2, '0')}</span>
-                {project.name}
-              </figcaption>
-            </figure>
-          {/each}
-          <div class="pipeline-panel">
-            <span>Discover</span>
-            <span>Build</span>
-            <span>Deploy</span>
-          </div>
-        </aside>
+  <main id="top">
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-top">
+        <span class="mono">Portfolio © 2026</span>
+        <span class="mono status"><i></i>{t.available}</span>
       </div>
 
-      <div class="proof-strip">
-        {#each proof as item (item.label)}
-          <div data-proof>
+      <h1 class="hero-title">Ryan<br />Prayoga<span class="accent">.</span></h1>
+
+      <div class="hero-body">
+        <div class="hb-role">
+          <p class="mono label">Role</p>
+          <p class="role">{t.heroRole}</p>
+        </div>
+        <div class="hb-lead">
+          <p class="mono label">Profile</p>
+          <p class="lead">{t.heroBody}</p>
+          <div class="cta">
+            <a class="btn primary" href="#work" onclick={goTo('work')}>{t.viewWork} <span>→</span></a>
+            <a class="btn" href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'} download>{t.downloadCv}</a>
+            <a class="btn" href={email?.url}>{t.contact}</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="proof">
+        {#each proof as item, i (item.label)}
+          <div class="proof-cell">
+            <span class="mono pn">0{i + 1}</span>
             <strong>{item.value}</strong>
-            <span>{item.label}</span>
+            <span class="mono pl">{item.label}</span>
           </div>
         {/each}
+        <div class="proof-cell loc">
+          <span class="mono pn">04</span>
+          <strong class="sm">{profile.location}</strong>
+          <span class="mono pl">Based in</span>
+        </div>
       </div>
     </header>
 
-    <section id="about" class="section about-section">
-      <div class="section-kicker" use:reveal={{ selector: '[data-r]', stagger: 0.1 }}>
-        <p data-r>01 / {t.aboutKicker}</p>
-        <h2 data-r>{t.aboutHeading}</h2>
+    <!-- WORK -->
+    <section id="work" class="section">
+      <div class="sec-head" use:reveal>
+        <p class="mono idx">01 — {t.workKicker}</p>
+        <h2>{t.workHeading}</h2>
+        <p class="lead">{t.workIntro}</p>
       </div>
 
-      <div class="about-layout">
-        <div class="academic-mark" use:reveal={{ y: 28 }}>
-          <span>S1</span>
-          <p>{academic}</p>
-        </div>
-
-        <div class="about-rows" use:reveal={{ selector: '[data-about]', stagger: 0.1, y: 20 }}>
-          {#each aboutRows as row (row.kicker)}
-            <article data-about>
-              <p>{row.kicker}</p>
-              <h3>{row.title}</h3>
-              <span>{row.body}</span>
-            </article>
-          {/each}
-        </div>
-      </div>
-    </section>
-
-    <section id="work" class="section work-section">
-      <div class="work-intro" use:reveal={{ selector: '[data-r]', stagger: 0.1 }}>
-        <p data-r>02 / {t.workKicker}</p>
-        <h2 data-r>{t.workHeading}</h2>
-        <span data-r>
-          {t.workIntro}
-        </span>
-      </div>
-
-      <div class="work-layout">
-        <div class="work-preview" aria-hidden="true">
-          {#if previewProject?.thumbnail}
-            <picture>
-              <source srcset={previewProject.thumbnail?.replace('.webp', '.avif')} type="image/avif" />
-              <img src={previewProject.thumbnail} alt="" width="1100" height="688" loading="lazy" decoding="async" />
-            </picture>
-          {:else}
-            <div class="preview-fallback">{previewProject?.name}</div>
-          {/if}
-        </div>
-
-        <div class="work-list" use:reveal={{ selector: '[data-project]', stagger: 0.07, y: 18 }}>
+      <div class="work">
+        <ol class="work-list" use:reveal>
           {#each featuredProjects as project, i (project.slug)}
             {@const desc = projectDescriptions[project.slug]}
-            <a
-              data-project
-              href={project.url ?? project.source ?? '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              onmouseenter={() => (hoveredProject = i)}
-              onfocus={() => (hoveredProject = i)}
-            >
-              <span class="project-number">0{i + 1}</span>
-              <span class="project-copy">
-                <strong>{project.name}</strong>
-                <small>{desc?.summary ?? project.category}</small>
-              </span>
-              <span class="project-stack">{project.stack.slice(0, 3).join(' / ')}</span>
-              <span class="project-arrow">{t.open}</span>
-            </a>
+            <li>
+              <a
+                class="row"
+                href={project.url ?? project.source ?? '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                onmouseenter={() => (hoveredProject = i)}
+                onfocus={() => (hoveredProject = i)}
+              >
+                <span class="r-idx mono">0{i + 1}</span>
+                <span class="r-main">
+                  <span class="r-name">{project.name}</span>
+                  <span class="r-desc">{desc?.summary ?? project.category}</span>
+                </span>
+                <span class="r-stack mono">{project.stack.slice(0, 3).join(' · ')}</span>
+                <span class="r-arrow" aria-hidden="true">↗</span>
+              </a>
+            </li>
           {/each}
-        </div>
+        </ol>
+
+        <aside class="work-preview" aria-hidden="true">
+          <div class="wp-inner">
+            {#if previewBase}
+              <picture>
+                <source type="image/avif" srcset="{previewBase}-sm.avif 700w, {previewBase}.avif 1100w" sizes={imgSizes} />
+                <img src={previewProject.thumbnail} srcset="{previewBase}-sm.webp 700w, {previewBase}.webp 1100w" sizes={imgSizes} alt="" width="1100" height="688" loading="lazy" decoding="async" />
+              </picture>
+            {:else}
+              <div class="wp-fallback">{previewProject?.name}</div>
+            {/if}
+            <div class="wp-meta mono">
+              <span>{previewProject?.category}</span>
+              <span>{previewProject?.year}</span>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <section id="stack" class="section stack-section">
-      <div class="stack-heading" use:reveal={{ selector: '[data-r]', stagger: 0.1 }}>
-        <p data-r>03 / {t.stackKicker}</p>
-        <h2 data-r>{t.stackHeading}</h2>
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <div class="sec-head" use:reveal>
+        <p class="mono idx">02 — {t.aboutKicker}</p>
+        <h2>{t.aboutHeading}</h2>
       </div>
 
-      <div class="stack-grid" use:reveal={{ selector: '[data-stack]', stagger: 0.08, y: 22 }}>
+      <div class="about" use:reveal>
+        {#each aboutRows as row (row.kicker)}
+          <article class="about-row">
+            <p class="mono ar-k">{row.kicker}</p>
+            <h3 class="ar-t">{row.title}</h3>
+            <p class="ar-b">{row.body}</p>
+          </article>
+        {/each}
+      </div>
+    </section>
+
+    <!-- STACK -->
+    <section id="stack" class="section">
+      <div class="sec-head" use:reveal>
+        <p class="mono idx">03 — {t.stackKicker}</p>
+        <h2>{t.stackHeading}</h2>
+      </div>
+
+      <div class="stack-grid" use:reveal>
         {#each stackGroups as group (group.category)}
-          <article data-stack>
-            <p>{group.title}</p>
-            <h3>{group.note}</h3>
-            <div>
+          <article class="stack-cell">
+            <p class="mono sc-title">{group.title}</p>
+            <p class="sc-note">{group.note}</p>
+            <ul class="sc-tags">
               {#each group.items as item (item.tech)}
-                <span>{item.tech}</span>
+                <li>{item.tech}</li>
               {/each}
-            </div>
+            </ul>
           </article>
         {/each}
       </div>
 
-      <div class="workflow-strip" use:reveal={{ selector: '[data-flow]', stagger: 0.08, y: 12 }}>
-        {#each workflow as item, i (item)}
-          <span data-flow>{item}</span>
-          {#if i < workflow.length - 1}
-            <i aria-hidden="true">/</i>
-          {/if}
+      <div class="workflow mono" use:reveal>
+        <span class="wf-label">{t.method}</span>
+        {#each workflow as step, i (step)}
+          <span class="wf-step">{step}</span>{#if i < workflow.length - 1}<span class="wf-sep" aria-hidden="true">→</span>{/if}
         {/each}
       </div>
     </section>
 
-    <section id="contact" class="section contact-section">
-      <div class="contact-copy" use:reveal={{ selector: '[data-r]', stagger: 0.1 }}>
-        <p data-r>04 / {t.contactKicker}</p>
-        <h2 data-r>{t.contactHeading}</h2>
-        <span data-r>{t.contactBody}</span>
-        <div data-r class="contact-actions">
-          <a href={email?.url} class="button primary">{t.sendEmail}</a>
-          <a href="/cv/cv-en.pdf" download class="button secondary">CV (EN)</a>
-          <a href="/cv/cv-id.pdf" download class="button secondary">CV (ID)</a>
-          <a href={github?.url} target="_blank" rel="noopener noreferrer" class="button secondary">{t.viewGithub}</a>
-        </div>
+    <!-- CONTACT -->
+    <section id="contact" class="section contact">
+      <div class="sec-head" use:reveal>
+        <p class="mono idx">04 — {t.contactKicker}</p>
+        <h2 class="contact-h">{t.contactHeading}</h2>
+        <p class="lead">{t.contactBody}</p>
       </div>
 
-      <div class="contact-links" use:reveal={{ selector: '[data-contact]', stagger: 0.1, y: 18 }}>
+      <ul class="contact-links" use:reveal>
         {#each contactLinks as social, i (social?.name)}
           {#if social}
-            <a
-              data-contact
-              href={social.url}
-              target={social.url.startsWith('mailto:') ? undefined : '_blank'}
-              rel={social.url.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
-            >
-              <span>0{i + 1} / {social.name}</span>
-              <strong>{social.label}</strong>
-            </a>
+            <li>
+              <a
+                href={social.url}
+                target={social.url.startsWith('mailto:') ? undefined : '_blank'}
+                rel={social.url.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+              >
+                <span class="cl-idx mono">0{i + 1}</span>
+                <span class="cl-name">{social.name}</span>
+                <span class="cl-val mono">{social.label}</span>
+                <span class="cl-arrow" aria-hidden="true">↗</span>
+              </a>
+            </li>
           {/if}
         {/each}
+      </ul>
+
+      <div class="cta contact-cta" use:reveal>
+        <a class="btn primary" href={email?.url}>{t.sendEmail} <span>→</span></a>
+        <a class="btn" href="/cv/cv-en.pdf" download>CV (EN)</a>
+        <a class="btn" href="/cv/cv-id.pdf" download>CV (ID)</a>
       </div>
     </section>
   </main>
+
+  <footer class="footer">
+    <span class="mono">© 2026 Ryan Prayoga</span>
+    <span class="mono">{profile.location}</span>
+    <span class="mono">{t.footerNote}</span>
+    <a class="mono to-top" href="#top" onclick={goTo('top')}>{t.backToTop} ↑</a>
+  </footer>
 </div>
 
 <style>
-  :global(body) {
-    background: #11100d;
-  }
-
   :global(html) {
-    color-scheme: dark;
+    color-scheme: light;
+    overflow-x: hidden;
+  }
+  :global(body) {
+    background: #f4f2ec;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+  :global(.swiss ::selection) {
+    background: #ff3d00;
+    color: #f4f2ec;
   }
 
-  :global(.v5-root *) {
+  .swiss {
+    --paper: #f4f2ec;
+    --paper-2: #ece9df;
+    --ink: #15120b;
+    --ink-2: #46412f;
+    --faint: #6c6655;
+    --rule: rgba(21, 18, 11, 0.16);
+    --rule-2: rgba(21, 18, 11, 0.32);
+    --accent: #ff3d00;
+    --accent-ink: #c93000;
+    --sans: 'Archivo', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --pad: clamp(1.25rem, 5vw, 4rem);
+
+    min-height: 100dvh;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-feature-settings: 'tnum' 1, 'ss01' 1;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  .swiss :global(*) {
     box-sizing: border-box;
   }
 
-  .v5-root {
-    --bg: #11100d;
-    --bg-soft: #191713;
-    --paper: #f6efe0;
-    --paper-muted: #cfc3ad;
-    --faint: #b0a489;
-    --line: rgba(246, 239, 224, 0.16);
-    --line-strong: rgba(246, 239, 224, 0.32);
-    --clay: #d2653f;
-    --lime: #c8ff64;
-    --shadow: rgba(0, 0, 0, 0.46);
-    position: relative;
-    min-height: 100dvh;
-    overflow-x: clip;
-    background:
-      linear-gradient(rgba(246, 239, 224, 0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(246, 239, 224, 0.035) 1px, transparent 1px),
-      radial-gradient(circle at 78% 8%, rgba(210, 101, 63, 0.16), transparent 26rem),
-      var(--bg);
-    background-size: 5.25rem 5.25rem, 5.25rem 5.25rem, auto, auto;
-    color: var(--paper);
-    font-family: var(--font-grotesk);
+  .mono {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
-  .grain {
-    position: fixed;
-    inset: 0;
-    z-index: 80;
-    pointer-events: none;
-    opacity: 0.05;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.8'/%3E%3C/svg%3E");
-  }
-
-  .site-nav {
+  /* ── NAV ── */
+  .nav {
     position: fixed;
     inset: 0 0 auto;
     z-index: 60;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.15rem 2.25rem;
+    gap: 1rem;
+    padding: 0.85rem var(--pad);
     border-bottom: 1px solid transparent;
-    transition:
-      background-color 220ms ease,
-      border-color 220ms ease;
+    transition: background-color 0.25s, border-color 0.25s;
   }
-
-  .site-nav.scrolled {
-    border-color: var(--line);
-    background: rgba(17, 16, 13, 0.86);
-    backdrop-filter: blur(16px);
+  .nav.scrolled {
+    background: color-mix(in srgb, var(--paper) 82%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom-color: var(--rule);
   }
-
-  .brand,
-  .desktop-links,
-  .menu-button,
-  .button,
-  .eyebrow,
-  .section-kicker p,
-  .work-intro p,
-  .stack-heading p,
-  .contact-copy p,
-  .project-number,
-  .project-stack,
-  .project-arrow,
-  .workflow-strip,
-  .contact-links span {
-    font-family: var(--font-mono-v4);
-    letter-spacing: 0;
-    text-transform: uppercase;
-  }
-
   .brand {
-    display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-    color: var(--paper);
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
     text-decoration: none;
   }
-
-  .brand span {
-    font-family: var(--font-display);
-    font-size: 1.75rem;
-    line-height: 1;
-    text-transform: none;
+  .brand .dot {
+    color: var(--accent);
   }
-
   .desktop-links {
     display: flex;
-    gap: 2.4rem;
+    gap: 1.6rem;
+  }
+  .desktop-links a {
+    font-family: var(--mono);
     font-size: 0.72rem;
-  }
-
-  .desktop-links a,
-  .menu-button {
-    color: var(--paper-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-2);
     text-decoration: none;
+    transition: color 0.18s;
   }
-
   .desktop-links a:hover,
   .desktop-links a:focus-visible {
-    color: var(--paper);
+    color: var(--accent-ink);
   }
-
-  .menu-button {
-    display: none;
-    min-height: 2.75rem;
-    padding: 0 1rem;
-    border: 1px solid var(--line-strong);
-    background: transparent;
-  }
-
   .nav-actions {
     display: flex;
     align-items: center;
     gap: 1rem;
   }
-
-  .lang-toggle {
+  .lang {
     display: inline-flex;
-    border: 1px solid var(--line-strong);
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
   }
-
-  .lang-toggle button {
-    min-height: 2.4rem;
-    padding: 0 0.7rem;
+  .lang span {
+    color: var(--rule-2);
+  }
+  .lang button {
     border: 0;
-    background: transparent;
-    color: var(--paper-muted);
-    font-family: var(--font-mono-v4);
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--faint);
+    font: inherit;
+    transition: color 0.18s;
+  }
+  .lang button.active {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .lang button:hover {
+    color: var(--accent-ink);
+  }
+  .nav-cv {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 1px;
+  }
+  .nav-cv:hover {
+    color: var(--accent-ink);
+    border-color: var(--accent);
+  }
+  .menu-btn {
+    display: none;
+    border: 1px solid var(--rule-2);
+    background: none;
+    font-family: var(--mono);
     font-size: 0.7rem;
     text-transform: uppercase;
+    padding: 0.45rem 0.7rem;
     cursor: pointer;
-    transition:
-      background-color 180ms ease,
-      color 180ms ease;
+    color: var(--ink);
   }
-
-  .lang-toggle button + button {
-    border-left: 1px solid var(--line);
-  }
-
-  .lang-toggle button.active {
-    background: var(--clay);
-    color: #17110e;
-  }
-
-  .lang-toggle button:focus-visible {
-    color: var(--paper);
-    outline: 1px solid var(--lime);
-  }
-
   .mobile-menu {
     position: fixed;
     inset: 0;
-    z-index: 50;
+    z-index: 55;
     display: grid;
     align-content: center;
     gap: 0;
-    padding: 5rem 2rem 2rem;
-    background: var(--bg);
+    padding: 5rem var(--pad) 2rem;
+    background: var(--paper);
   }
-
   .mobile-menu a {
     display: flex;
     align-items: baseline;
     gap: 1rem;
-    border-bottom: 1px solid var(--line);
-    padding: 1.4rem 0;
-    color: var(--paper);
-    font-family: var(--font-display);
-    font-size: 3rem;
-    line-height: 1;
+    padding: 1.1rem 0;
+    border-top: 1px solid var(--rule);
+    font-size: clamp(2rem, 9vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--ink);
     text-decoration: none;
   }
-
+  .mobile-menu a:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
   .mobile-menu span {
-    color: var(--clay);
-    font-family: var(--font-mono-v4);
+    font-family: var(--mono);
     font-size: 0.8rem;
+    color: var(--accent);
+  }
+  .mobile-menu .mm-cv {
+    color: var(--accent-ink);
   }
 
-  .hero-section,
+  /* ── LAYOUT ── */
+  main {
+    padding: 0 var(--pad);
+  }
   .section {
-    width: min(100% - 4.5rem, 1420px);
-    margin-inline: auto;
+    padding-block: clamp(4rem, 10vw, 8.5rem);
+    border-top: 1px solid var(--rule);
+  }
+  .lead {
+    color: var(--ink-2);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    line-height: 1.55;
+    max-width: 38ch;
+  }
+  .label {
+    color: var(--faint);
+    margin: 0 0 0.6rem;
   }
 
-  .hero-section {
-    min-height: 100svh;
-    padding-top: 7rem;
+  /* ── HERO ── */
+  .hero {
+    padding-top: clamp(6.5rem, 14vw, 9rem);
+    padding-bottom: clamp(2rem, 5vw, 3.5rem);
   }
-
-  .hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 0.86fr) minmax(28rem, 0.74fr);
-    gap: 4rem;
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    min-height: calc(100svh - 13rem);
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--rule);
   }
-
-  .eyebrow {
-    margin: 0 0 1.8rem;
-    color: var(--lime);
-    font-size: 0.74rem;
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ink);
   }
-
-  h1,
-  h2 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: 0;
+  .status i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
+    animation: pulse 2.4s ease-out infinite;
   }
-
-  .hero-copy h1 {
-    max-width: 13ch;
-    color: var(--paper);
-    font-size: 7.2rem;
-    line-height: 0.9;
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
+    70% { box-shadow: 0 0 0 7px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
   }
-
-  .hero-role {
-    margin: 1rem 0 0;
-    max-width: 18ch;
-    color: var(--clay);
-    font-family: var(--font-display);
-    font-size: 3.8rem;
-    line-height: 0.98;
+  .hero-title {
+    margin: clamp(1.5rem, 4vw, 3rem) 0 0;
+    font-size: clamp(2.8rem, 15.5vw, 15rem);
+    font-weight: 800;
+    line-height: 0.82;
+    letter-spacing: -0.045em;
+    text-transform: none;
+    overflow-wrap: anywhere;
   }
-
+  .hero-title .accent {
+    color: var(--accent);
+  }
   .hero-body {
-    margin: 2rem 0 0;
-    max-width: 42rem;
-    color: var(--paper-muted);
-    font-size: 1.14rem;
-    line-height: 1.75;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--rule);
   }
-
-  .hero-actions,
-  .contact-actions {
+  .role {
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 14ch;
+  }
+  .cta {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 2.4rem;
+    gap: 0.7rem;
+    margin-top: 1.6rem;
   }
-
-  .button {
+  .btn {
     display: inline-flex;
-    min-height: 3.2rem;
     align-items: center;
-    justify-content: center;
-    padding: 0 1.25rem;
-    border: 1px solid var(--line-strong);
-    color: var(--paper);
-    font-size: 0.74rem;
-    text-decoration: none;
-    transition:
-      transform 180ms ease,
-      background-color 180ms ease,
-      color 180ms ease,
-      border-color 180ms ease;
-  }
-
-  .button:hover,
-  .button:focus-visible {
-    transform: translateY(-2px);
-  }
-
-  .button.primary {
-    border-color: var(--clay);
-    background: var(--clay);
-    color: #17110e;
-  }
-
-  .button.secondary {
-    background: rgba(246, 239, 224, 0.04);
-  }
-
-  .evidence-wall {
-    position: relative;
-    min-height: 35rem;
-  }
-
-  .wall-line {
-    position: absolute;
-    inset: 8% auto 10% 50%;
-    width: 1px;
-    background: var(--line);
-  }
-
-  .evidence-frame,
-  .pipeline-panel {
-    position: absolute;
-    margin: 0;
-    border: 1px solid var(--line-strong);
-    background: var(--bg-soft);
-    box-shadow: 0 2rem 5rem var(--shadow);
-  }
-
-  .evidence-frame {
-    overflow: hidden;
-  }
-
-  .evidence-frame picture,
-  .work-preview picture {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
-  .evidence-frame img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: saturate(0.84) contrast(1.06);
-  }
-
-  .evidence-frame figcaption {
-    position: absolute;
-    inset: auto 0 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.8rem 1rem;
-    background: rgba(17, 16, 13, 0.82);
-    color: var(--paper);
-    font-size: 0.82rem;
-  }
-
-  .evidence-frame figcaption span {
-    color: var(--lime);
-    font-family: var(--font-mono-v4);
-  }
-
-  .frame-1 {
-    top: 1rem;
-    right: 1rem;
-    width: 68%;
-    aspect-ratio: 16 / 10;
-  }
-
-  .frame-2 {
-    top: 12rem;
-    left: 0;
-    width: 50%;
-    aspect-ratio: 4 / 3;
-  }
-
-  .frame-3 {
-    right: 0;
-    bottom: 1rem;
-    width: 58%;
-    aspect-ratio: 16 / 10;
-  }
-
-  .pipeline-panel {
-    left: 2rem;
-    bottom: 3rem;
-    display: grid;
-    gap: 0.8rem;
-    min-width: 12rem;
-    padding: 1rem;
-    color: var(--paper-muted);
-    font-family: var(--font-mono-v4);
+    gap: 0.5rem;
+    padding: 0.7rem 1.1rem;
+    border: 1px solid var(--rule-2);
+    font-family: var(--mono);
     font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background-color 0.18s, color 0.18s, border-color 0.18s, transform 0.18s;
+  }
+  .btn span {
+    transition: transform 0.18s;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--ink);
+  }
+  .btn:hover span {
+    transform: translateX(3px);
+  }
+  .btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--paper);
+  }
+  .btn.primary:hover {
+    background: var(--accent-ink);
+    border-color: var(--accent-ink);
   }
 
-  .pipeline-panel span {
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 0.6rem;
-  }
-
-  .pipeline-panel span:last-child {
-    border-bottom: 0;
-    padding-bottom: 0;
-    color: var(--lime);
-  }
-
-  .proof-strip {
+  .proof {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: clamp(3rem, 7vw, 5rem);
+    border-top: 1px solid var(--ink);
   }
-
-  .proof-strip div {
-    min-height: 6rem;
-    padding: 1.2rem 1.5rem;
-    border-right: 1px solid var(--line);
+  .proof-cell {
+    min-width: 0;
+    padding: 1.4rem 1.2rem 1.4rem 0;
+    border-right: 1px solid var(--rule);
   }
-
-  .proof-strip div:last-child {
+  .proof-cell:last-child {
     border-right: 0;
   }
-
-  .proof-strip strong {
+  .proof-cell .pn {
     display: block;
-    color: var(--paper);
-    font-family: var(--font-display);
-    font-size: 2.4rem;
-    font-weight: 400;
-    line-height: 1;
+    color: var(--accent-ink);
+    margin-bottom: 0.8rem;
+  }
+  .proof-cell strong {
+    display: block;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+  .proof-cell strong.sm {
+    font-size: clamp(1.1rem, 2.4vw, 1.7rem);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+  .proof-cell .pl {
+    display: block;
+    margin-top: 0.6rem;
+    color: var(--faint);
   }
 
-  .proof-strip span {
+  /* ── SECTION HEADER ── */
+  .sec-head {
+    display: grid;
+    grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
+    gap: clamp(1rem, 3vw, 3rem);
+    align-items: end;
+    margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .sec-head .idx {
+    color: var(--accent-ink);
+    grid-column: 1;
+  }
+  .sec-head h2 {
+    grid-column: 1;
+    margin: 0.8rem 0 0;
+    font-size: clamp(1.9rem, 4.5vw, 3.6rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    max-width: 16ch;
+  }
+  .sec-head .lead {
+    grid-column: 2;
+    align-self: end;
+  }
+
+  /* ── WORK ── */
+  .work {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 0.95fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+  .work-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .work-list .row {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr) auto 1.5rem;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    color: var(--ink);
+    transition: padding-left 0.22s ease, background-color 0.22s;
+  }
+  .work-list .row:hover {
+    padding-left: 0.9rem;
+    background: var(--paper-2);
+  }
+  .r-idx {
+    color: var(--faint);
+    transition: color 0.18s;
+  }
+  .work-list .row:hover .r-idx {
+    color: var(--accent-ink);
+  }
+  .r-name {
+    display: block;
+    font-size: clamp(1.5rem, 3vw, 2.3rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+  .r-desc {
     display: block;
     margin-top: 0.5rem;
     color: var(--faint);
-    font-size: 0.9rem;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    max-width: 46ch;
   }
-
-  .section {
-    padding-block: 9rem;
+  .r-stack {
+    color: var(--ink-2);
+    text-align: right;
+    white-space: nowrap;
   }
-
-  .section-kicker,
-  .work-intro,
-  .stack-heading,
-  .contact-section {
-    border-top: 1px solid var(--line);
+  .r-arrow {
+    justify-self: end;
+    color: var(--accent);
+    font-size: 1.1rem;
+    opacity: 0;
+    transform: translate(-4px, 4px);
+    transition: opacity 0.2s, transform 0.2s;
   }
-
-  .section-kicker,
-  .work-intro,
-  .stack-heading {
-    display: grid;
-    grid-template-columns: minmax(12rem, 0.34fr) minmax(0, 0.66fr);
-    gap: 3rem;
-    padding-top: 1.4rem;
-  }
-
-  .section-kicker p,
-  .work-intro p,
-  .stack-heading p,
-  .contact-copy p {
-    margin: 0;
-    color: var(--clay);
-    font-size: 0.72rem;
-  }
-
-  .section-kicker h2,
-  .work-intro h2,
-  .stack-heading h2,
-  .contact-copy h2 {
-    max-width: 13ch;
-    color: var(--paper);
-    font-size: 5rem;
-    line-height: 0.96;
-  }
-
-  .about-layout {
-    display: grid;
-    grid-template-columns: minmax(18rem, 0.42fr) minmax(0, 0.58fr);
-    gap: 4rem;
-    margin-top: 5rem;
-  }
-
-  .academic-mark {
-    position: sticky;
-    top: 7rem;
-    align-self: start;
-    border-top: 1px solid var(--line-strong);
-    padding-top: 1.2rem;
-  }
-
-  .academic-mark span {
-    display: block;
-    color: var(--clay);
-    font-family: var(--font-display);
-    font-size: 9rem;
-    line-height: 0.84;
-  }
-
-  .academic-mark p {
-    max-width: 16rem;
-    margin: 1.3rem 0 0;
-    color: var(--paper);
-    font-size: 1.25rem;
-    line-height: 1.4;
-  }
-
-  .about-rows article {
-    display: grid;
-    grid-template-columns: minmax(7rem, 0.24fr) minmax(14rem, 0.34fr) minmax(0, 0.42fr);
-    gap: 1.4rem;
-    border-top: 1px solid var(--line);
-    padding: 1.8rem 0;
-  }
-
-  .about-rows article:last-child {
-    border-bottom: 1px solid var(--line);
-  }
-
-  .about-rows p {
-    margin: 0;
-    color: var(--faint);
-    font-family: var(--font-mono-v4);
-    font-size: 0.72rem;
-    text-transform: uppercase;
-  }
-
-  .about-rows h3 {
-    margin: 0;
-    color: var(--paper);
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 400;
-    line-height: 1.05;
-  }
-
-  .about-rows span {
-    color: var(--paper-muted);
-    font-size: 0.95rem;
-    line-height: 1.7;
-  }
-
-  .work-section {
-    display: grid;
-    grid-template-columns: minmax(18rem, 0.34fr) minmax(0, 0.66fr);
-    gap: 4rem;
-  }
-
-  .work-intro {
-    position: sticky;
-    top: 7rem;
-    display: block;
-    align-self: start;
-  }
-
-  .work-intro h2 {
-    margin-top: 1.2rem;
-  }
-
-  .work-intro span {
-    display: block;
-    max-width: 22rem;
-    margin-top: 1.4rem;
-    color: var(--paper-muted);
-    line-height: 1.7;
-  }
-
-  .work-layout {
-    display: grid;
-    gap: 2rem;
+  .work-list .row:hover .r-arrow,
+  .work-list .row:focus-visible .r-arrow {
+    opacity: 1;
+    transform: translate(0, 0);
   }
 
   .work-preview {
     position: sticky;
-    top: 7rem;
-    z-index: 1;
-    aspect-ratio: 16 / 8;
-    overflow: hidden;
-    border: 1px solid var(--line-strong);
-    background: var(--bg-soft);
-    box-shadow: 0 2rem 5rem var(--shadow);
+    top: 6rem;
   }
-
+  .wp-inner {
+    border: 1px solid var(--rule);
+    background: var(--paper-2);
+  }
+  .work-preview picture,
+  .wp-fallback {
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
   .work-preview img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: saturate(0.82) contrast(1.05);
+    display: block;
   }
-
-  .preview-fallback {
+  .wp-fallback {
     display: grid;
-    height: 100%;
     place-items: center;
+    font-size: 1.4rem;
+    font-weight: 600;
     color: var(--faint);
-    font-family: var(--font-display);
-    font-size: 3rem;
+  }
+  .wp-meta {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.7rem 0.9rem;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-2);
   }
 
-  .work-list {
+  /* ── ABOUT ── */
+  .about {
+    border-top: 1px solid var(--ink);
+  }
+  .about-row {
     display: grid;
+    grid-template-columns: minmax(0, 0.22fr) minmax(0, 0.36fr) minmax(0, 0.42fr);
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding: clamp(1.6rem, 3vw, 2.4rem) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .ar-k {
+    color: var(--accent-ink);
+  }
+  .ar-t {
+    margin: 0;
+    font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .ar-b {
+    margin: 0;
+    color: var(--ink-2);
+    line-height: 1.6;
   }
 
-  .work-list a {
-    display: grid;
-    grid-template-columns: 4rem minmax(0, 1fr) minmax(10rem, 0.32fr) 4rem;
-    gap: 1.2rem;
-    align-items: baseline;
-    border-bottom: 1px solid var(--line);
-    padding: 1.6rem 0;
-    color: var(--paper);
-    text-decoration: none;
-    transition:
-      border-color 180ms ease,
-      transform 180ms ease;
-  }
-
-  .work-list a:first-child {
-    border-top: 1px solid var(--line);
-  }
-
-  .work-list a:hover,
-  .work-list a:focus-visible {
-    border-color: var(--line-strong);
-    transform: translateX(0.35rem);
-  }
-
-  .project-number,
-  .project-stack,
-  .project-arrow {
-    color: var(--faint);
-    font-size: 0.68rem;
-  }
-
-  .project-copy strong {
-    display: block;
-    color: var(--paper);
-    font-family: var(--font-display);
-    font-size: 2.35rem;
-    font-weight: 400;
-    line-height: 1;
-  }
-
-  .project-copy small {
-    display: block;
-    max-width: 38rem;
-    margin-top: 0.75rem;
-    color: var(--paper-muted);
-    font-size: 0.95rem;
-    line-height: 1.65;
-  }
-
-  .project-arrow {
-    color: var(--lime);
-    text-align: right;
-  }
-
+  /* ── STACK ── */
   .stack-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    margin-top: 5rem;
-    border-top: 1px solid var(--line);
-    border-left: 1px solid var(--line);
+    border-top: 1px solid var(--ink);
+    border-left: 1px solid var(--rule);
   }
-
-  .stack-grid article {
-    min-height: 25rem;
+  .stack-cell {
+    min-width: 0;
     padding: 1.4rem;
-    border-right: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    min-height: 17rem;
+    display: flex;
+    flex-direction: column;
   }
-
-  .stack-grid p {
-    margin: 0;
-    color: var(--lime);
-    font-family: var(--font-mono-v4);
-    font-size: 0.72rem;
-    text-transform: uppercase;
+  .sc-title {
+    color: var(--accent-ink);
+    margin: 0 0 0.9rem;
   }
-
-  .stack-grid h3 {
-    min-height: 8rem;
-    margin: 1rem 0 2.2rem;
-    color: var(--paper);
-    font-family: var(--font-display);
-    font-size: 2.1rem;
-    font-weight: 400;
-    line-height: 1.05;
-  }
-
-  .stack-grid div {
-    display: grid;
-    gap: 0.7rem;
-  }
-
-  .stack-grid span {
-    border-top: 1px solid var(--line);
-    padding-top: 0.7rem;
-    color: var(--paper-muted);
+  .sc-note {
+    margin: 0 0 1.4rem;
+    color: var(--ink-2);
     font-size: 0.95rem;
+    line-height: 1.5;
   }
-
-  .workflow-strip {
+  .sc-tags {
+    list-style: none;
+    margin: auto 0 0;
+    padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.4rem;
+  }
+  .sc-tags li {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    padding: 0.3rem 0.5rem;
+    border: 1px solid var(--rule);
+    color: var(--ink-2);
+  }
+  .workflow {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    margin-top: 2rem;
-    color: var(--paper);
-    font-size: 0.78rem;
+    gap: 0.7rem;
+    margin-top: 1.6rem;
+    color: var(--ink);
+  }
+  .wf-label {
+    color: var(--faint);
+    margin-right: 0.4rem;
+  }
+  .wf-sep {
+    color: var(--accent);
   }
 
-  .workflow-strip i {
-    color: var(--clay);
-    font-style: normal;
+  /* ── CONTACT ── */
+  .contact-h {
+    max-width: 12ch;
+    font-size: clamp(2.2rem, 7vw, 5rem);
   }
-
-  .contact-section {
-    display: grid;
-    grid-template-columns: minmax(0, 0.62fr) minmax(18rem, 0.38fr);
-    gap: 4rem;
-    padding-top: 1.4rem;
-  }
-
-  .contact-copy h2 {
-    max-width: 11ch;
-    margin-top: 1.5rem;
-    font-size: 6.6rem;
-  }
-
-  .contact-copy > span {
-    display: block;
-    max-width: 28rem;
-    margin-top: 1.8rem;
-    color: var(--paper-muted);
-    font-size: 1.2rem;
-    line-height: 1.65;
-  }
-
   .contact-links {
-    align-self: end;
-    border-top: 1px solid var(--line);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--ink);
   }
-
   .contact-links a {
     display: grid;
-    gap: 0.7rem;
-    border-bottom: 1px solid var(--line);
-    padding: 1.4rem 0;
-    color: var(--paper);
+    grid-template-columns: 2.5rem minmax(0, 0.3fr) minmax(0, 1fr) 1.5rem;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 1.3rem 0;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    color: var(--ink);
+    transition: padding-left 0.22s, background-color 0.22s;
+  }
+  .contact-links a:hover {
+    padding-left: 0.9rem;
+    background: var(--paper-2);
+  }
+  .cl-idx {
+    color: var(--faint);
+  }
+  .cl-name {
+    font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .cl-val {
+    color: var(--ink-2);
+    align-self: center;
+  }
+  .cl-arrow {
+    justify-self: end;
+    color: var(--accent);
+  }
+  .contact-cta {
+    margin-top: 2.2rem;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    justify-content: space-between;
+    padding: 1.6rem var(--pad);
+    border-top: 1px solid var(--ink);
+    color: var(--faint);
+  }
+  .footer .to-top {
+    color: var(--ink);
     text-decoration: none;
   }
-
-  .contact-links span {
-    color: var(--faint);
-    font-size: 0.7rem;
+  .footer .to-top:hover {
+    color: var(--accent-ink);
   }
 
-  .contact-links strong {
-    overflow-wrap: anywhere;
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 400;
+  /* ── REVEAL ── */
+  :global(.swiss .reveal) {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  :global(.swiss .reveal.in) {
+    opacity: 1;
+    transform: none;
   }
 
-  @media (max-width: 1120px) {
-    .hero-grid,
-    .about-layout,
-    .work-section,
-    .contact-section {
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1080px) {
+    .work {
       grid-template-columns: 1fr;
     }
-
-    .hero-copy h1 {
-      font-size: 5.8rem;
-    }
-
-    .hero-role {
-      font-size: 3rem;
-    }
-
-    /* Tablet: drop fragile absolute positioning, flow frames in a grid */
-    .evidence-wall {
-      min-height: 0;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .wall-line {
-      display: none;
-    }
-
-    .evidence-frame,
-    .pipeline-panel {
-      position: static;
-      width: 100%;
-    }
-
-    .evidence-frame {
-      aspect-ratio: 16 / 10;
-    }
-
-    .pipeline-panel {
-      align-self: center;
-    }
-
-    .work-intro,
-    .academic-mark {
-      position: static;
-    }
-
-    /* Decorative hover preview is useless without a pointer — hide it */
     .work-preview {
       display: none;
     }
-
     .stack-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-  }
-
-  @media (max-width: 760px) {
-    .site-nav {
-      padding: 1rem;
+    .stack-cell {
+      min-height: 0;
     }
-
-    .desktop-links {
+  }
+  @media (max-width: 760px) {
+    .desktop-links,
+    .nav-cv {
       display: none;
     }
-
-    .menu-button {
+    .menu-btn {
       display: inline-flex;
-      align-items: center;
     }
-
-    .hero-section,
-    .section {
-      width: min(100% - 2rem, 1420px);
-    }
-
-    .hero-section {
-      padding-top: 6rem;
-    }
-
-    .hero-grid {
-      gap: 2.6rem;
-      min-height: auto;
-      padding-bottom: 4rem;
-    }
-
-    .hero-copy h1 {
-      font-size: 4.2rem;
-    }
-
-    .hero-role {
-      font-size: 2.35rem;
-    }
-
     .hero-body {
-      font-size: 1rem;
-    }
-
-    .evidence-wall {
       grid-template-columns: 1fr;
     }
-
-    .evidence-frame {
-      width: 100%;
+    .proof {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-
-    .proof-strip,
+    .proof-cell:nth-child(2) {
+      border-right: 0;
+    }
+    .proof-cell:nth-child(1),
+    .proof-cell:nth-child(2) {
+      border-bottom: 1px solid var(--rule);
+    }
+    .proof-cell.loc {
+      grid-column: 1 / -1;
+      border-right: 0;
+      border-top: 1px solid var(--rule);
+    }
+    .proof-cell.loc strong.sm {
+      white-space: nowrap;
+    }
+    .sec-head {
+      grid-template-columns: 1fr;
+    }
+    .sec-head h2,
+    .sec-head .lead {
+      grid-column: 1;
+    }
+    .work-list .row {
+      grid-template-columns: 2rem minmax(0, 1fr);
+      gap: 0.5rem 0.9rem;
+    }
+    .r-stack {
+      grid-column: 2;
+      text-align: left;
+      margin-top: 0.5rem;
+      white-space: normal;
+    }
+    .r-arrow {
+      display: none;
+    }
+    .about-row {
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
     .stack-grid {
       grid-template-columns: 1fr;
     }
-
-    .proof-strip div,
-    .proof-strip div:last-child {
-      border-right: 0;
-      border-bottom: 1px solid var(--line);
+    .contact-links a {
+      grid-template-columns: 2rem 1fr;
     }
-
-    .proof-strip div:last-child {
-      border-bottom: 0;
+    .cl-val {
+      grid-column: 2;
     }
-
-    .section {
-      padding-block: 6rem;
+    .cl-arrow {
+      display: none;
     }
+  }
 
-    .section-kicker,
-    .work-intro,
-    .stack-heading {
-      grid-template-columns: 1fr;
-      gap: 1.2rem;
+  @media (prefers-reduced-motion: reduce) {
+    .status i {
+      animation: none;
     }
-
-    .section-kicker h2,
-    .work-intro h2,
-    .stack-heading h2 {
-      font-size: 3.3rem;
-    }
-
-    .academic-mark span {
-      font-size: 6rem;
-    }
-
-    .about-rows article,
-    .work-list a {
-      grid-template-columns: 1fr;
-      gap: 0.9rem;
-    }
-
-    .project-copy strong {
-      font-size: 2rem;
-    }
-
-    .project-arrow {
-      text-align: left;
-    }
-
-    .stack-grid article {
-      min-height: auto;
-    }
-
-    .stack-grid h3 {
-      min-height: auto;
-    }
-
-    .contact-copy h2 {
-      font-size: 4rem;
+    .btn,
+    .work-list .row,
+    .contact-links a,
+    .r-arrow {
+      transition: none;
     }
   }
 </style>
