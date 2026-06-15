@@ -345,7 +345,7 @@
             <figure class="evidence-frame frame-{i + 1}">
               <picture>
                 <source srcset={project.thumbnail?.replace('.webp', '.avif')} type="image/avif" />
-                <img src={project.thumbnail} alt="{project.name} preview" width="1100" height="688" decoding="async" fetchpriority={i === 0 ? 'high' : 'auto'} />
+                <img src={project.thumbnail} alt="{project.name} preview" width="1100" height="688" decoding="async" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />
               </picture>
               <figcaption>
                 <span>{String(i + 1).padStart(2, '0')}</span>
