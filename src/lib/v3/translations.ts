@@ -101,6 +101,22 @@ export const translations: Record<Locale, Translations> = {
           summary: 'CLI Bash untuk build dan deploy project Go dan Node ecosystem via PM2 dengan mode interactive.',
           focus: 'Stack detection otomatis, ecosystem config, wizard deploy, metadata SQLite, dan PM2 integration.',
         },
+        cinematix: {
+          summary: 'PWA tiket bioskop dengan pemilihan kursi POV 3D realtime — fitur yang belum ada di aplikasi bioskop besar Indonesia.',
+          focus: 'Seat locking realtime anti double-book via Socket.IO, App Router Next.js, Prisma + PostgreSQL, dan CI/CD GitHub Actions.',
+        },
+        pildun: {
+          summary: 'Platform tebak skor Piala Dunia 2026 — bikin room, ajak teman, dan adu tebakan dengan leaderboard realtime.',
+          focus: 'Room code, prediksi exact-score + knockout, 48 tim & 104 match, leaderboard realtime, deploy VPS dengan PM2 + Caddy.',
+        },
+        koruptorrank: {
+          summary: 'Civic-tech peringkat kasus korupsi Indonesia dengan 260+ entri terkurasi dan scoring multi-faktor.',
+          focus: 'Kurasi data dari Wikipedia, scoring multi-faktor, filtering, dan visualisasi ranking interaktif.',
+        },
+        messhub: {
+          summary: 'Aplikasi operasional mess realtime untuk kas, wifi, feed, anggota, dan workflow harian — mobile-first PWA.',
+          focus: 'Transport WebSocket, auth + role tanpa ganti alur existing, dashboard mobile-first, dan mode PWA.',
+        },
       },
     },
     skills: {
@@ -182,6 +198,22 @@ export const translations: Record<Locale, Translations> = {
           summary: 'Bash CLI for building and deploying Go and Node ecosystem projects via PM2 with interactive mode.',
           focus: 'Auto stack detection, ecosystem config, deploy wizard, SQLite metadata, and PM2 integration.',
         },
+        cinematix: {
+          summary: 'Cinema ticketing PWA with realtime 3D seat-POV selection — a feature absent from all major Indonesian cinema apps.',
+          focus: 'Realtime seat locking with double-book prevention via Socket.IO, Next.js App Router, Prisma + PostgreSQL, and GitHub Actions CI/CD.',
+        },
+        pildun: {
+          summary: 'World Cup 2026 score-prediction platform — create a room, invite friends, and compete on a realtime leaderboard.',
+          focus: 'Room codes, exact-score + knockout prediction, 48 teams & 104 matches, realtime leaderboard, deployed on VPS with PM2 + Caddy.',
+        },
+        koruptorrank: {
+          summary: 'Civic-tech ranking of Indonesian corruption cases with 260+ curated entries and multi-factor scoring.',
+          focus: 'Curated data sourced from Wikipedia, multi-factor scoring, filtering, and interactive ranking visualization.',
+        },
+        messhub: {
+          summary: 'Realtime operations app for daily mess management — cash, wifi, feed, members, and workflows in a mobile-first PWA.',
+          focus: 'WebSocket transport, role-based auth without changing existing flows, mobile-first dashboard, and PWA mode.',
+        },
       },
     },
     skills: {
@@ -262,6 +294,22 @@ export const translations: Record<Locale, Translations> = {
         gascli: {
           summary: 'CLI Bash pour construire et déployer des projets Go et Node via PM2 avec mode interactif.',
           focus: 'Détection automatique du stack, configuration écosystème, assistant de déploiement, métadonnées SQLite et intégration PM2.',
+        },
+        cinematix: {
+          summary: 'PWA de billetterie de cinéma avec sélection de sièges en vue 3D temps réel — une fonctionnalité absente des grandes apps de cinéma indonésiennes.',
+          focus: 'Verrouillage des sièges en temps réel anti double-réservation via Socket.IO, Next.js App Router, Prisma + PostgreSQL et CI/CD GitHub Actions.',
+        },
+        pildun: {
+          summary: 'Plateforme de pronostics de la Coupe du Monde 2026 — créez une salle, invitez des amis et affrontez-vous sur un classement en temps réel.',
+          focus: 'Codes de salle, pronostic score exact + phase finale, 48 équipes & 104 matchs, classement temps réel, déployé sur VPS avec PM2 + Caddy.',
+        },
+        koruptorrank: {
+          summary: 'Classement civic-tech des affaires de corruption indonésiennes avec plus de 260 entrées curées et scoring multi-facteurs.',
+          focus: 'Données curées depuis Wikipédia, scoring multi-facteurs, filtrage et visualisation interactive du classement.',
+        },
+        messhub: {
+          summary: 'Application temps réel de gestion quotidienne de foyer — caisse, wifi, fil, membres et workflows dans une PWA mobile-first.',
+          focus: 'Transport WebSocket, authentification par rôle sans modifier les flux existants, tableau de bord mobile-first et mode PWA.',
         },
       },
     },
