@@ -5,9 +5,7 @@ export const prerender = true;
 const SITE_URL = 'https://ryanprayoga.dev';
 
 const routes: Array<{ path: string; changefreq: string; priority: string }> = [
-  { path: '/', changefreq: 'monthly', priority: '0.8' },
-  { path: '/v3', changefreq: 'monthly', priority: '1.0' },
-  { path: '/v5', changefreq: 'monthly', priority: '1.0' },
+  { path: '/', changefreq: 'monthly', priority: '1.0' },
 ];
 
 export const GET: RequestHandler = async () => {

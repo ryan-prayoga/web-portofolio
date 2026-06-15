@@ -2,9 +2,9 @@
   import { profile } from '$lib/data/profile';
   import { socials } from '$lib/data/socials';
   import { techJourney, type TechStep } from '$lib/data/techJourney';
-  import { v3projects } from '$lib/v3/data/v3projects';
-  import { translations } from '$lib/v3/translations';
-  import { reveal } from '$lib/v4/actions/reveal';
+  import { projects } from '$lib/data/projects';
+  import { projectCopy } from '$lib/data/projectCopy';
+  import { reveal } from '$lib/actions/reveal';
 
   const SITE_URL = 'https://ryanprayoga.dev';
   const PAGE_URL = SITE_URL;
@@ -14,8 +14,8 @@
   const email = socials.find((social) => social.name === 'Email');
   const github = socials.find((social) => social.name === 'GitHub');
   const linkedin = socials.find((social) => social.name === 'LinkedIn');
-  const visualProjects = v3projects.filter((project) => project.thumbnail);
-  const featuredProjects = v3projects;
+  const visualProjects = projects.filter((project) => project.thumbnail);
+  const featuredProjects = projects;
 
   type Locale = 'en' | 'id';
   let locale = $state<Locale>('en');
@@ -96,7 +96,7 @@
   };
 
   const t = $derived(copy[locale]);
-  const projectDescriptions = $derived(translations[locale].projects.descriptions);
+  const projectDescriptions = $derived(projectCopy[locale]);
 
   const navItems = $derived([
     { label: t.nav.about, href: '#about' },
