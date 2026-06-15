@@ -223,6 +223,15 @@
 
 <svelte:head>
   <title>Ryan Prayoga — Full-Stack Engineer & Team Lead</title>
+  {#if visualProjects[0]?.thumbnail}
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      href={visualProjects[0].thumbnail.replace('.webp', '.avif')}
+      fetchpriority="high"
+    />
+  {/if}
   <meta
     name="description"
     content="Portfolio Ryan Prayoga: Full-Stack Engineer dan Team Lead dengan pengalaman enterprise systems, civic-tech, developer tooling, deployment workflow, dan pendidikan S1 Informatika Universitas Pasundan."
@@ -314,7 +323,7 @@
 
   <main>
     <header id="top" class="hero-section">
-      <div class="hero-grid" use:reveal={{ selector: '[data-hero]', stagger: 0.06, duration: 0.65 }}>
+      <div class="hero-grid">
         <section class="hero-copy" aria-labelledby="v5-title">
           <p data-hero class="eyebrow">{t.eyebrow}</p>
           <h1 id="v5-title" data-hero>{profile.name}</h1>
@@ -336,7 +345,7 @@
             <figure class="evidence-frame frame-{i + 1}">
               <picture>
                 <source srcset={project.thumbnail?.replace('.webp', '.avif')} type="image/avif" />
-                <img src={project.thumbnail} alt="{project.name} preview" width="1100" height="688" decoding="async" />
+                <img src={project.thumbnail} alt="{project.name} preview" width="1100" height="688" decoding="async" fetchpriority={i === 0 ? 'high' : 'auto'} />
               </picture>
               <figcaption>
                 <span>{String(i + 1).padStart(2, '0')}</span>
@@ -352,7 +361,7 @@
         </aside>
       </div>
 
-      <div class="proof-strip" use:reveal={{ selector: '[data-proof]', stagger: 0.06, duration: 0.6, y: 16 }}>
+      <div class="proof-strip">
         {#each proof as item (item.label)}
           <div data-proof>
             <strong>{item.value}</strong>
