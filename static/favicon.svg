@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <title>Ryan Prayoga</title>
+  <defs>
+    <radialGradient id="g" cx="30%" cy="22%" r="80%">
+      <stop offset="0%" stop-color="#e8865f"/>
+      <stop offset="60%" stop-color="#d2653f"/>
+      <stop offset="100%" stop-color="#c5572f"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="104" fill="url(#g)"/>
+  <text x="256" y="372" text-anchor="middle" fill="#11100d"
+    font-family="'Instrument Serif', Georgia, 'Times New Roman', serif"
+    font-size="380" font-weight="400">R</text>
+</svg>

@@ -8,7 +8,7 @@
 
   const SITE_URL = 'https://ryanprayoga.dev';
   const PAGE_URL = SITE_URL;
-  const OG_IMAGE = `${SITE_URL}/v3/og-image.png`;
+  const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
   const academic = 'S1 Informatika - Universitas Pasundan';
   const email = socials.find((social) => social.name === 'Email');
@@ -244,8 +244,12 @@
   />
   <meta property="og:url" content={PAGE_URL} />
   <meta property="og:image" content={OG_IMAGE} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Ryan Prayoga — Full-Stack Engineer & Team Lead" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Ryan Prayoga - Full-Stack Engineer & Team Lead" />
+  <meta name="twitter:description" content="Full-Stack Engineer & Team Lead — enterprise systems, civic-tech, developer tooling, and deployment workflows." />
   <meta name="twitter:image" content={OG_IMAGE} />
 
   {@html `<script type="application/ld+json">${JSON.stringify(personJsonLd)}</` + `script>`}
