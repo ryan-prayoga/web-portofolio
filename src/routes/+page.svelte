@@ -307,6 +307,7 @@
         <ol class="work-list" use:reveal>
           {#each featuredProjects as project, i (project.slug)}
             {@const desc = projectDescriptions[project.slug]}
+            {@const base = project.thumbnail?.replace('.webp', '')}
             <li>
               <a
                 class="row"
@@ -317,6 +318,14 @@
                 onfocus={() => (hoveredProject = i)}
               >
                 <span class="r-idx mono">0{i + 1}</span>
+                {#if base}
+                  <picture class="row-thumb" aria-hidden="true">
+                    <source type="image/avif" srcset="{base}-sm.avif 700w, {base}.avif 1100w" sizes="(max-width: 1080px) 92vw, 40vw" />
+                    <img src={project.thumbnail} srcset="{base}-sm.webp 700w, {base}.webp 1100w" sizes="(max-width: 1080px) 92vw, 40vw" alt="{project.name} preview" width="1100" height="688" loading="lazy" decoding="async" />
+                  </picture>
+                {:else}
+                  <span class="row-thumb fallback" aria-hidden="true">{project.name}</span>
+                {/if}
                 <span class="r-main">
                   <span class="r-name">{project.name}</span>
                   <span class="r-desc">{desc?.summary ?? project.category}</span>
@@ -867,6 +876,26 @@
     transform: translate(-4px, 4px);
     transition: opacity 0.2s, transform 0.2s;
   }
+  /* per-row thumbnail — desktop hides it (sticky preview used instead) */
+  .row-thumb {
+    display: none;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    background: var(--paper-2);
+  }
+  .row-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .row-thumb.fallback {
+    place-items: center;
+    color: var(--faint);
+    font-weight: 600;
+    font-size: 1.3rem;
+  }
   .work-list .row:hover .r-arrow,
   .work-list .row:focus-visible .r-arrow {
     opacity: 1;
@@ -1077,6 +1106,48 @@
     .work-preview {
       display: none;
     }
+    /* rows become cards with their own thumbnail */
+    .work-list .row {
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        'idx arrow'
+        'thumb thumb'
+        'main main'
+        'stack stack';
+      gap: 0.5rem 1rem;
+      align-items: center;
+      padding: 1.6rem 0;
+    }
+    .work-list .row:hover {
+      padding-left: 0;
+      background: transparent;
+    }
+    .r-idx {
+      grid-area: idx;
+    }
+    .r-arrow {
+      grid-area: arrow;
+      display: block;
+      opacity: 1;
+      transform: none;
+    }
+    .row-thumb {
+      grid-area: thumb;
+      display: block;
+      margin: 0.4rem 0 0.3rem;
+    }
+    .row-thumb.fallback {
+      display: grid;
+    }
+    .r-main {
+      grid-area: main;
+    }
+    .r-stack {
+      grid-area: stack;
+      text-align: left;
+      white-space: normal;
+      margin-top: 0.2rem;
+    }
     .stack-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -1119,19 +1190,6 @@
     .sec-head h2,
     .sec-head .lead {
       grid-column: 1;
-    }
-    .work-list .row {
-      grid-template-columns: 2rem minmax(0, 1fr);
-      gap: 0.5rem 0.9rem;
-    }
-    .r-stack {
-      grid-column: 2;
-      text-align: left;
-      margin-top: 0.5rem;
-      white-space: normal;
-    }
-    .r-arrow {
-      display: none;
     }
     .about-row {
       grid-template-columns: 1fr;
