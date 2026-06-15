@@ -14,50 +14,112 @@
   const email = socials.find((social) => social.name === 'Email');
   const github = socials.find((social) => social.name === 'GitHub');
   const linkedin = socials.find((social) => social.name === 'LinkedIn');
-  const projectDescriptions = translations.id.projects.descriptions;
   const visualProjects = v3projects.filter((project) => project.thumbnail);
   const featuredProjects = v3projects;
 
-  const navItems = [
-    { label: 'About', href: '#about' },
-    { label: 'Work', href: '#work' },
-    { label: 'Stack', href: '#stack' },
-    { label: 'Contact', href: '#contact' },
-  ];
+  type Locale = 'en' | 'id';
+  let locale = $state<Locale>('en');
 
-  const proof = [
-    { value: profile.experience, label: 'Professional experience' },
-    { value: String(profile.teamSize), label: 'Engineers led' },
-    { value: '11+', label: 'Systems shipped' },
-  ];
-
-  const aboutRows = [
-    {
-      kicker: 'Current role',
-      title: profile.role,
-      body: `Hands-on delivery leadership at ${profile.company}, from planning and review to production decisions.`,
+  const copy = {
+    en: {
+      nav: { about: 'About', work: 'Work', stack: 'Stack', contact: 'Contact' },
+      eyebrow: 'Tangerang, Indonesia / Full-stack delivery',
+      heroRole: 'Full-Stack Engineer & Team Lead',
+      heroBody:
+        'Building enterprise systems, civic-tech products, developer tooling, and deployment workflows with calm technical ownership.',
+      viewWork: 'View Work',
+      downloadCv: 'Download CV',
+      contact: 'Contact',
+      proof: ['Professional experience', 'Engineers led', 'Systems shipped'],
+      aboutKicker: 'About',
+      aboutHeading: 'From software craft to delivery leadership.',
+      aboutRows: [
+        { kicker: 'Current role', body: `Hands-on delivery leadership at ${profile.company}, from planning and review to production decisions.` },
+        { kicker: 'Academic', body: 'Formal computer science foundation that supports product, architecture, and engineering execution.' },
+        { kicker: 'Operating range', body: 'Comfortable moving across product surfaces and production workflow when the system needs ownership.' },
+      ],
+      workKicker: 'Selected Work',
+      workHeading: 'Selected work with production weight.',
+      workIntro:
+        'A focused index of civic-tech, developer tooling, automation, and deployment systems built for real constraints.',
+      open: 'Open',
+      stackKicker: 'Stack & Method',
+      stackHeading: 'How I build systems that keep moving.',
+      stackNotes: {
+        backend: 'API, auth, business workflow, integrations, and data processing.',
+        frontend: 'Public portals, internal dashboards, PWA, and operational interfaces.',
+        mobile: 'Field apps, webview flows, upload media, and cross-device workflows.',
+        workflow: 'Deployment, process management, review cadence, and AI-assisted iteration.',
+      },
+      contactKicker: 'Contact',
+      contactHeading: "Let's build the next useful thing.",
+      contactBody: 'Open for full-stack, backend, and team lead roles.',
+      sendEmail: 'Send Email',
+      viewGithub: 'View GitHub',
     },
-    {
-      kicker: 'Academic',
-      title: academic,
-      body: 'Formal computer science foundation that supports product, architecture, and engineering execution.',
+    id: {
+      nav: { about: 'Tentang', work: 'Karya', stack: 'Stack', contact: 'Kontak' },
+      eyebrow: 'Tangerang, Indonesia / Pengembangan full-stack',
+      heroRole: 'Full-Stack Engineer & Team Lead',
+      heroBody:
+        'Membangun sistem enterprise, produk civic-tech, developer tooling, dan deployment workflow dengan kepemilikan teknis yang tenang.',
+      viewWork: 'Lihat Karya',
+      downloadCv: 'Unduh CV',
+      contact: 'Kontak',
+      proof: ['Pengalaman profesional', 'Engineer dipimpin', 'Sistem dirilis'],
+      aboutKicker: 'Tentang',
+      aboutHeading: 'Dari kerajinan software ke kepemimpinan delivery.',
+      aboutRows: [
+        { kicker: 'Peran sekarang', body: `Kepemimpinan delivery yang hands-on di ${profile.company}, dari perencanaan dan review sampai keputusan production.` },
+        { kicker: 'Akademik', body: 'Fondasi computer science formal yang menopang product, arsitektur, dan eksekusi engineering.' },
+        { kicker: 'Cakupan kerja', body: 'Nyaman berpindah antar product surface dan workflow production saat sistem butuh kepemilikan.' },
+      ],
+      workKicker: 'Karya Pilihan',
+      workHeading: 'Karya pilihan dengan bobot production.',
+      workIntro:
+        'Indeks ringkas civic-tech, developer tooling, automation, dan sistem deployment yang dibangun untuk constraint nyata.',
+      open: 'Buka',
+      stackKicker: 'Stack & Metode',
+      stackHeading: 'Cara saya membangun sistem yang terus bergerak.',
+      stackNotes: {
+        backend: 'API, auth, business workflow, integrasi, dan pemrosesan data.',
+        frontend: 'Portal publik, dashboard internal, PWA, dan interface operasional.',
+        mobile: 'Aplikasi lapangan, flow webview, upload media, dan workflow lintas device.',
+        workflow: 'Deployment, process management, ritme review, dan iterasi berbantuan AI.',
+      },
+      contactKicker: 'Kontak',
+      contactHeading: 'Mari bangun hal berguna berikutnya.',
+      contactBody: 'Terbuka untuk peran full-stack, backend, dan team lead.',
+      sendEmail: 'Kirim Email',
+      viewGithub: 'Lihat GitHub',
     },
-    {
-      kicker: 'Operating range',
-      title: 'Backend, frontend, mobile, deploy',
-      body: 'Comfortable moving across product surfaces and production workflow when the system needs ownership.',
-    },
-  ];
-
-  const stackOrder: TechStep['category'][] = ['backend', 'frontend', 'mobile', 'workflow'];
-  const stackNotes: Record<TechStep['category'], string> = {
-    backend: 'API, auth, business workflow, integrations, and data processing.',
-    frontend: 'Public portals, internal dashboards, PWA, and operational interfaces.',
-    mobile: 'Field apps, webview flows, upload media, and cross-device workflows.',
-    workflow: 'Deployment, process management, review cadence, and AI-assisted iteration.',
   };
 
-  function groupStack(items: TechStep[]) {
+  const t = $derived(copy[locale]);
+  const projectDescriptions = $derived(translations[locale].projects.descriptions);
+
+  const navItems = $derived([
+    { label: t.nav.about, href: '#about' },
+    { label: t.nav.work, href: '#work' },
+    { label: t.nav.stack, href: '#stack' },
+    { label: t.nav.contact, href: '#contact' },
+  ]);
+
+  const proof = $derived([
+    { value: profile.experience, label: t.proof[0] },
+    { value: String(profile.teamSize), label: t.proof[1] },
+    { value: '11+', label: t.proof[2] },
+  ]);
+
+  const aboutRows = $derived([
+    { kicker: t.aboutRows[0].kicker, title: profile.role, body: t.aboutRows[0].body },
+    { kicker: t.aboutRows[1].kicker, title: academic, body: t.aboutRows[1].body },
+    { kicker: t.aboutRows[2].kicker, title: 'Backend, frontend, mobile, deploy', body: t.aboutRows[2].body },
+  ]);
+
+  const stackOrder: TechStep['category'][] = ['backend', 'frontend', 'mobile', 'workflow'];
+
+  function groupStack(items: TechStep[], notes: Record<TechStep['category'], string>) {
     const grouped: Record<TechStep['category'], TechStep[]> = {
       backend: [],
       frontend: [],
@@ -72,12 +134,12 @@
     return stackOrder.map((category) => ({
       category,
       title: category[0].toUpperCase() + category.slice(1),
-      note: stackNotes[category],
+      note: notes[category],
       items: grouped[category],
     }));
   }
 
-  const stackGroups = groupStack(techJourney);
+  const stackGroups = $derived(groupStack(techJourney, t.stackNotes));
 
   const workflow = ['Discover', 'Build', 'Review', 'Deploy', 'Improve'];
   const contactLinks = [email, github, linkedin].filter(Boolean);
@@ -124,8 +186,16 @@
   };
 
   $effect(() => {
-    document.documentElement.lang = 'en';
+    const saved = localStorage.getItem('locale');
+    if (saved === 'en' || saved === 'id') locale = saved;
+  });
 
+  $effect(() => {
+    document.documentElement.lang = locale;
+    localStorage.setItem('locale', locale);
+  });
+
+  $effect(() => {
     const onScroll = () => {
       scrolled = window.scrollY > 32;
     };
@@ -137,6 +207,10 @@
       window.removeEventListener('scroll', onScroll);
     };
   });
+
+  function setLocale(value: Locale) {
+    locale = value;
+  }
 
   function goTo(id: string) {
     return (event: Event) => {
@@ -191,15 +265,36 @@
       {/each}
     </div>
 
-    <button
-      class="menu-button"
-      type="button"
-      onclick={() => (menuOpen = !menuOpen)}
-      aria-label="Toggle menu"
-      aria-expanded={menuOpen}
-    >
-      {menuOpen ? 'Close' : 'Menu'}
-    </button>
+    <div class="nav-actions">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button
+          type="button"
+          class:active={locale === 'en'}
+          aria-pressed={locale === 'en'}
+          onclick={() => setLocale('en')}
+        >
+          EN
+        </button>
+        <button
+          type="button"
+          class:active={locale === 'id'}
+          aria-pressed={locale === 'id'}
+          onclick={() => setLocale('id')}
+        >
+          ID
+        </button>
+      </div>
+
+      <button
+        class="menu-button"
+        type="button"
+        onclick={() => (menuOpen = !menuOpen)}
+        aria-label="Toggle menu"
+        aria-expanded={menuOpen}
+      >
+        {menuOpen ? 'Close' : 'Menu'}
+      </button>
+    </div>
   </nav>
 
   {#if menuOpen}
@@ -217,17 +312,17 @@
     <header id="top" class="hero-section">
       <div class="hero-grid" use:reveal={{ selector: '[data-hero]', stagger: 0.06, duration: 0.65 }}>
         <section class="hero-copy" aria-labelledby="v5-title">
-          <p data-hero class="eyebrow">Tangerang, Indonesia / Full-stack delivery</p>
+          <p data-hero class="eyebrow">{t.eyebrow}</p>
           <h1 id="v5-title" data-hero>{profile.name}</h1>
-          <p data-hero class="hero-role">Full-Stack Engineer & Team Lead</p>
+          <p data-hero class="hero-role">{t.heroRole}</p>
           <p data-hero class="hero-body">
-            Building enterprise systems, civic-tech products, developer tooling, and deployment workflows with calm technical ownership.
+            {t.heroBody}
           </p>
 
           <div data-hero class="hero-actions">
-            <a href="#work" onclick={goTo('work')} class="button primary">View Work</a>
-            <a href="/cv/cv-en.pdf" download class="button secondary">Download CV</a>
-            <a href={email?.url} class="button secondary">Contact</a>
+            <a href="#work" onclick={goTo('work')} class="button primary">{t.viewWork}</a>
+            <a href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'} download class="button secondary">{t.downloadCv}</a>
+            <a href={email?.url} class="button secondary">{t.contact}</a>
           </div>
         </section>
 
@@ -262,8 +357,8 @@
 
     <section id="about" class="section about-section">
       <div class="section-kicker" use:reveal={{ selector: '[data-r]', stagger: 0.1 }}>
-        <p data-r>01 / About</p>
-        <h2 data-r>From software craft to delivery leadership.</h2>
+        <p data-r>01 / {t.aboutKicker}</p>
+        <h2 data-r>{t.aboutHeading}</h2>
       </div>
 
       <div class="about-layout">
@@ -286,10 +381,10 @@
 
     <section id="work" class="section work-section">
       <div class="work-intro" use:reveal={{ selector: '[data-r]', stagger: 0.1 }}>
-        <p data-r>02 / Selected Work</p>
-        <h2 data-r>Selected work with production weight.</h2>
+        <p data-r>02 / {t.workKicker}</p>
+        <h2 data-r>{t.workHeading}</h2>
         <span data-r>
-          A focused index of civic-tech, developer tooling, automation, and deployment systems built for real constraints.
+          {t.workIntro}
         </span>
       </div>
 
@@ -319,7 +414,7 @@
                 <small>{desc?.summary ?? project.category}</small>
               </span>
               <span class="project-stack">{project.stack.slice(0, 3).join(' / ')}</span>
-              <span class="project-arrow">Open</span>
+              <span class="project-arrow">{t.open}</span>
             </a>
           {/each}
         </div>
@@ -328,8 +423,8 @@
 
     <section id="stack" class="section stack-section">
       <div class="stack-heading" use:reveal={{ selector: '[data-r]', stagger: 0.1 }}>
-        <p data-r>03 / Stack & Method</p>
-        <h2 data-r>How I build systems that keep moving.</h2>
+        <p data-r>03 / {t.stackKicker}</p>
+        <h2 data-r>{t.stackHeading}</h2>
       </div>
 
       <div class="stack-grid" use:reveal={{ selector: '[data-stack]', stagger: 0.08, y: 22 }}>
@@ -358,14 +453,14 @@
 
     <section id="contact" class="section contact-section">
       <div class="contact-copy" use:reveal={{ selector: '[data-r]', stagger: 0.1 }}>
-        <p data-r>04 / Contact</p>
-        <h2 data-r>Let's build the next useful thing.</h2>
-        <span data-r>Open for full-stack, backend, and team lead roles.</span>
+        <p data-r>04 / {t.contactKicker}</p>
+        <h2 data-r>{t.contactHeading}</h2>
+        <span data-r>{t.contactBody}</span>
         <div data-r class="contact-actions">
-          <a href={email?.url} class="button primary">Send Email</a>
+          <a href={email?.url} class="button primary">{t.sendEmail}</a>
           <a href="/cv/cv-en.pdf" download class="button secondary">CV (EN)</a>
           <a href="/cv/cv-id.pdf" download class="button secondary">CV (ID)</a>
-          <a href={github?.url} target="_blank" rel="noopener noreferrer" class="button secondary">View GitHub</a>
+          <a href={github?.url} target="_blank" rel="noopener noreferrer" class="button secondary">{t.viewGithub}</a>
         </div>
       </div>
 
@@ -511,6 +606,46 @@
     padding: 0 1rem;
     border: 1px solid var(--line-strong);
     background: transparent;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .lang-toggle {
+    display: inline-flex;
+    border: 1px solid var(--line-strong);
+  }
+
+  .lang-toggle button {
+    min-height: 2.4rem;
+    padding: 0 0.7rem;
+    border: 0;
+    background: transparent;
+    color: var(--paper-muted);
+    font-family: var(--font-mono-v4);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .lang-toggle button + button {
+    border-left: 1px solid var(--line);
+  }
+
+  .lang-toggle button.active {
+    background: var(--clay);
+    color: #17110e;
+  }
+
+  .lang-toggle button:focus-visible {
+    color: var(--paper);
+    outline: 1px solid var(--lime);
   }
 
   .mobile-menu {
