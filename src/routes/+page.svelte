@@ -17,6 +17,10 @@
   const visualProjects = projects.filter((project) => project.thumbnail);
   const featuredProjects = projects;
 
+  // Responsive image sizing for the evidence-wall thumbnails.
+  const imgSizes = '(max-width: 760px) 90vw, (max-width: 1120px) 45vw, 35vw';
+  const lcpBase = visualProjects[0]?.thumbnail?.replace('.webp', '');
+
   type Locale = 'en' | 'id';
   let locale = $state<Locale>('en');
 
@@ -223,12 +227,14 @@
 
 <svelte:head>
   <title>Ryan Prayoga — Full-Stack Engineer & Team Lead</title>
-  {#if visualProjects[0]?.thumbnail}
+  {#if lcpBase}
     <link
       rel="preload"
       as="image"
       type="image/avif"
-      href={visualProjects[0].thumbnail.replace('.webp', '.avif')}
+      href="{lcpBase}.avif"
+      imagesrcset="{lcpBase}-sm.avif 700w, {lcpBase}.avif 1100w"
+      imagesizes={imgSizes}
       fetchpriority="high"
     />
   {/if}
@@ -342,10 +348,11 @@
         <aside class="evidence-wall" aria-label="Project evidence wall" data-hero>
           <div class="wall-line"></div>
           {#each visualProjects.slice(0, 3) as project, i (project.slug)}
+            {@const base = project.thumbnail?.replace('.webp', '')}
             <figure class="evidence-frame frame-{i + 1}">
               <picture>
-                <source srcset={project.thumbnail?.replace('.webp', '.avif')} type="image/avif" />
-                <img src={project.thumbnail} alt="{project.name} preview" width="1100" height="688" decoding="async" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />
+                <source type="image/avif" srcset="{base}-sm.avif 700w, {base}.avif 1100w" sizes={imgSizes} />
+                <img src={project.thumbnail} srcset="{base}-sm.webp 700w, {base}.webp 1100w" sizes={imgSizes} alt="{project.name} preview" width="1100" height="688" decoding="async" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />
               </picture>
               <figcaption>
                 <span>{String(i + 1).padStart(2, '0')}</span>
