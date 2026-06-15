@@ -334,7 +334,10 @@
           <div class="wall-line"></div>
           {#each visualProjects.slice(0, 3) as project, i (project.slug)}
             <figure class="evidence-frame frame-{i + 1}">
-              <img src={project.thumbnail} alt="{project.name} preview" width="1100" height="688" decoding="async" />
+              <picture>
+                <source srcset={project.thumbnail?.replace('.webp', '.avif')} type="image/avif" />
+                <img src={project.thumbnail} alt="{project.name} preview" width="1100" height="688" decoding="async" />
+              </picture>
               <figcaption>
                 <span>{String(i + 1).padStart(2, '0')}</span>
                 {project.name}
@@ -395,7 +398,10 @@
       <div class="work-layout">
         <div class="work-preview" aria-hidden="true">
           {#if previewProject?.thumbnail}
-            <img src={previewProject.thumbnail} alt="" width="1100" height="688" loading="lazy" decoding="async" />
+            <picture>
+              <source srcset={previewProject.thumbnail?.replace('.webp', '.avif')} type="image/avif" />
+              <img src={previewProject.thumbnail} alt="" width="1100" height="688" loading="lazy" decoding="async" />
+            </picture>
           {:else}
             <div class="preview-fallback">{previewProject?.name}</div>
           {/if}
@@ -802,6 +808,13 @@
 
   .evidence-frame {
     overflow: hidden;
+  }
+
+  .evidence-frame picture,
+  .work-preview picture {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 
   .evidence-frame img {
