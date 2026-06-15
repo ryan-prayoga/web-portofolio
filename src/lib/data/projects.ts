@@ -20,7 +20,7 @@ export const projects: Project[] = [
     category: 'Realtime Product',
     url: 'https://cinema.ryanprayoga.dev',
     source: 'https://github.com/ryan-prayoga/cinema-tix',
-    thumbnail: '/v3/projects/cinematix.png',
+    thumbnail: '/v3/projects/cinematix.webp',
   },
   {
     name: 'PILDUN',
@@ -31,7 +31,7 @@ export const projects: Project[] = [
     category: 'Realtime Product',
     url: 'https://pildun.ryanprayoga.dev',
     source: 'https://github.com/ryan-prayoga/pildun',
-    thumbnail: '/v3/projects/pildun.png',
+    thumbnail: '/v3/projects/pildun.webp',
   },
   {
     name: 'Koruptor Rank',
@@ -42,7 +42,7 @@ export const projects: Project[] = [
     category: 'Civic Tech',
     url: 'https://koruptor-rank.ryanprayoga.dev',
     source: 'https://github.com/ryan-prayoga/koruptor-rank',
-    thumbnail: '/v3/projects/koruptorrank.png',
+    thumbnail: '/v3/projects/koruptorrank.webp',
   },
   {
     name: 'Pantau Anggaran',
@@ -53,7 +53,7 @@ export const projects: Project[] = [
     category: 'Civic Tech',
     url: 'https://pantauanggaran.ryanprayoga.dev',
     source: 'https://github.com/ryan-prayoga/pantau-anggaran',
-    thumbnail: '/v3/projects/pantauanggaran.png',
+    thumbnail: '/v3/projects/pantauanggaran.webp',
   },
   {
     name: 'JEDUG',
@@ -64,7 +64,7 @@ export const projects: Project[] = [
     category: 'Civic Tech',
     url: 'https://jedug.id',
     source: 'https://github.com/ryan-prayoga/jedug_v2',
-    thumbnail: '/v3/projects/jedug.png',
+    thumbnail: '/v3/projects/jedug.webp',
   },
   {
     name: 'Brunogen',
@@ -85,6 +85,6 @@ export const projects: Project[] = [
     category: 'Realtime Product',
     url: 'https://messhub.ryanprayoga.dev',
     source: 'https://github.com/ryan-prayoga/messhub',
-    thumbnail: '/v3/projects/messhub.png',
+    thumbnail: '/v3/projects/messhub.webp',
   },
 ];

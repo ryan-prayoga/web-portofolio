@@ -334,7 +334,7 @@
           <div class="wall-line"></div>
           {#each visualProjects.slice(0, 3) as project, i (project.slug)}
             <figure class="evidence-frame frame-{i + 1}">
-              <img src={project.thumbnail} alt="{project.name} preview" />
+              <img src={project.thumbnail} alt="{project.name} preview" width="1100" height="688" decoding="async" />
               <figcaption>
                 <span>{String(i + 1).padStart(2, '0')}</span>
                 {project.name}
@@ -395,7 +395,7 @@
       <div class="work-layout">
         <div class="work-preview" aria-hidden="true">
           {#if previewProject?.thumbnail}
-            <img src={previewProject.thumbnail} alt="" />
+            <img src={previewProject.thumbnail} alt="" width="1100" height="688" loading="lazy" decoding="async" />
           {:else}
             <div class="preview-fallback">{previewProject?.name}</div>
           {/if}
