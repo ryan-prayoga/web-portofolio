@@ -3,8 +3,10 @@
   import { uiCopy } from '$lib/data/uiCopy';
   import { profile } from '$lib/data/profile';
   import { reveal } from '$lib/actions/reveal';
+  import { scrubWords } from '$lib/motion/splitReveal';
 
   const t = $derived(uiCopy[localeStore.value]);
+  const locale = $derived(localeStore.value);
   const academic = 'S1 Informatika — Universitas Pasundan';
 
   const aboutRows = $derived([
@@ -24,7 +26,9 @@
     <h2>{t.aboutHeading}</h2>
   </div>
 
-  <p class="statement" use:reveal>{t.aboutStatement}</p>
+  {#key locale}
+    <p class="statement" use:scrubWords>{t.aboutStatement}</p>
+  {/key}
 
   <div class="about" use:reveal>
     {#each aboutRows as row (row.kicker)}
@@ -72,9 +76,6 @@
     line-height: 1.25;
     letter-spacing: -0.02em;
     max-width: 30ch;
-    color: var(--color-greige);
-  }
-  .statement :global(.word.lit) {
     color: var(--color-bone);
   }
   .about {

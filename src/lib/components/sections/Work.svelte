@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { localeStore } from '$lib/stores/locale.svelte';
   import { uiCopy } from '$lib/data/uiCopy';
   import { projects } from '$lib/data/projects';
@@ -16,6 +17,45 @@
   const previewCity = $derived(
     beacons.find((b) => b.slug === previewProject?.slug)?.city ?? 'Nusantara'
   );
+
+  let listEl: HTMLElement | undefined = $state();
+
+  onMount(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!listEl) return;
+
+    let mm: { revert: () => void } | undefined;
+    let cancelled = false;
+    (async () => {
+      const { gsap, ScrollTrigger } = await import('$lib/motion/gsap');
+      if (cancelled || !listEl) return;
+      mm = gsap.matchMedia();
+      (mm as ReturnType<typeof gsap.matchMedia>).add(
+        '(prefers-reduced-motion: no-preference)',
+        () => {
+          const rows = gsap.utils.toArray<HTMLElement>(listEl!.querySelectorAll('li'));
+          gsap.set(rows, { autoAlpha: 0, y: 44 });
+          ScrollTrigger.batch(rows, {
+            start: 'top 90%',
+            once: true,
+            onEnter: (batch) =>
+              gsap.to(batch, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                stagger: 0.09,
+              }),
+          });
+        }
+      );
+    })();
+
+    return () => {
+      cancelled = true;
+      mm?.revert();
+    };
+  });
 </script>
 
 <section id="work" class="section">
@@ -26,7 +66,7 @@
   </div>
 
   <div class="work">
-    <ol class="work-list" use:reveal>
+    <ol class="work-list" bind:this={listEl}>
       {#each projects as project, i (project.slug)}
         {@const desc = projectDescriptions[project.slug]}
         {@const base = project.thumbnail?.replace('.webp', '')}

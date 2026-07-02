@@ -26,6 +26,7 @@
 
   let heroEl: HTMLElement | undefined = $state();
   let intro = $state(false); // true = elemen disembunyikan menunggu timeline
+  let scrollProgress = $state(0); // 0..1 selama hero di-pin → dolly kamera 3D
 
   onMount(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -70,6 +71,21 @@
               { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out', stagger: 0.08 },
               0.7
             );
+
+          // Pin hero +110vh: konten memudar, kamera 3D dolly ke Jawa
+          gsap
+            .timeline({
+              scrollTrigger: {
+                trigger: heroEl!,
+                start: 'top top',
+                end: '+=110%',
+                pin: true,
+                scrub: true,
+                anticipatePin: 1,
+                onUpdate: (self) => (scrollProgress = self.progress),
+              },
+            })
+            .to('.hero-inner', { yPercent: -10, autoAlpha: 0, ease: 'none' }, 0.15);
         }, heroEl);
       } catch {
         intro = false;
@@ -84,7 +100,7 @@
 </script>
 
 <header class="hero" class:intro id="hero" bind:this={heroEl}>
-  <HeroCanvas />
+  <HeroCanvas {scrollProgress} />
 
   <div class="hero-inner">
     <div class="hero-top mono">
