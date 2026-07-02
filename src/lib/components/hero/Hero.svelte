@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { localeStore } from '$lib/stores/locale.svelte';
   import { uiCopy } from '$lib/data/uiCopy';
   import { profile } from '$lib/data/profile';
@@ -21,9 +22,67 @@
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     };
   }
+
+  let heroEl: HTMLElement | undefined = $state();
+  let intro = $state(false); // true = elemen disembunyikan menunggu timeline
+
+  onMount(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!heroEl) return;
+
+    intro = true;
+    let ctx: { revert: () => void } | undefined;
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const { gsap, SplitText } = await import('$lib/motion/gsap');
+        if (cancelled || !heroEl) return;
+        ctx = gsap.context(() => {
+          const split = SplitText.create('.hero-title', { type: 'chars' });
+          gsap
+            .timeline({
+              defaults: { ease: 'power4.out' },
+              onStart: () => (intro = false),
+            })
+            .fromTo(
+              split.chars,
+              { yPercent: 115, autoAlpha: 0 },
+              { yPercent: 0, autoAlpha: 1, duration: 0.9, stagger: 0.03 },
+              0.1
+            )
+            .fromTo(
+              ['.role', '.lead', '.cta'],
+              { y: 26, autoAlpha: 0 },
+              { y: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out', stagger: 0.1 },
+              0.5
+            )
+            .fromTo(
+              '.hero-badge',
+              { y: 34, autoAlpha: 0, scale: 0.96, rotate: 2.5 },
+              { y: 0, autoAlpha: 1, scale: 1, rotate: 0, duration: 0.9, ease: 'power3.out' },
+              0.55
+            )
+            .fromTo(
+              ['.hero-top', '.ticker', '.proof'],
+              { y: 14, autoAlpha: 0 },
+              { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out', stagger: 0.08 },
+              0.7
+            );
+        }, heroEl);
+      } catch {
+        intro = false;
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+      ctx?.revert();
+    };
+  });
 </script>
 
-<header class="hero" id="hero">
+<header class="hero" class:intro id="hero" bind:this={heroEl}>
   <div class="hero-bg" aria-hidden="true"></div>
 
   <div class="hero-inner">
@@ -83,6 +142,17 @@
     flex-direction: column;
     justify-content: flex-end;
     overflow: clip;
+  }
+  /* Sembunyikan target animasi selagi chunk GSAP dimuat, hindari flash */
+  .hero.intro .hero-title,
+  .hero.intro .role,
+  .hero.intro .lead,
+  .hero.intro .cta,
+  .hero.intro .hero-badge,
+  .hero.intro .hero-top,
+  .hero.intro .ticker,
+  .hero.intro .proof {
+    visibility: hidden;
   }
   /* Poster "langit malam" — Phase 3 menumpuk canvas 3D di atas layer ini */
   .hero-bg {
