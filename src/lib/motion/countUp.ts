@@ -15,12 +15,12 @@ export function countUp(node: HTMLElement, opts: { duration?: number } = {}) {
   const duration = opts.duration ?? 1400;
 
   let raf = 0;
-  node.textContent = `0${suffix}`;
 
   const io = new IntersectionObserver(
     ([entry]) => {
       if (!entry.isIntersecting) return;
       io.disconnect();
+      node.textContent = `0${suffix}`;
       const t0 = performance.now();
       const tick = (now: number) => {
         const p = Math.min((now - t0) / duration, 1);

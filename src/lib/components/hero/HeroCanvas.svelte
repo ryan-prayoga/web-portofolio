@@ -36,8 +36,8 @@
     };
     const hasIdle = typeof window.requestIdleCallback === 'function';
     const idle = hasIdle
-      ? window.requestIdleCallback(load, { timeout: 2000 })
-      : window.setTimeout(load, 350);
+      ? window.requestIdleCallback(load, { timeout: 4000 })
+      : window.setTimeout(load, 1200);
 
     let io: IntersectionObserver | undefined;
     if (wrapper) {

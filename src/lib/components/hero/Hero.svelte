@@ -27,48 +27,21 @@
   }
 
   let heroEl: HTMLElement | undefined = $state();
-  let intro = $state(false); // true = elemen disembunyikan menunggu timeline
   let scrollProgress = $state(0); // 0..1 selama hero di-pin → dolly kamera 3D
 
   onMount(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!heroEl) return;
 
-    intro = true;
     let ctx: { revert: () => void } | undefined;
     let cancelled = false;
 
-    (async () => {
+    const runMotion = async () => {
       try {
-        const { gsap, SplitText } = await import('$lib/motion/gsap');
+        const { gsap } = await import('$lib/motion/gsap');
         if (cancelled || !heroEl) return;
         ctx = gsap.context(() => {
-          const split = SplitText.create('.hero-title', { type: 'chars' });
-          gsap
-            .timeline({
-              defaults: { ease: 'power4.out' },
-              onStart: () => (intro = false),
-            })
-            .fromTo(
-              split.chars,
-              { yPercent: 115, autoAlpha: 0 },
-              { yPercent: 0, autoAlpha: 1, duration: 0.9, stagger: 0.03 },
-              0.1
-            )
-            .fromTo(
-              ['.role', '.lead', '.cta'],
-              { y: 26, autoAlpha: 0 },
-              { y: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out', stagger: 0.1 },
-              0.5
-            )
-            .fromTo(
-              ['.hero-top', '.ticker', '.proof'],
-              { y: 14, autoAlpha: 0 },
-              { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out', stagger: 0.08 },
-              0.7
-            );
-
-          // Pin hero +110vh: konten memudar, kamera 3D dolly ke Jawa
+          // Hanya scroll choreography — intro char-reveal dihapus agar LCP tidak tertahan
           gsap
             .timeline({
               scrollTrigger: {
@@ -84,18 +57,25 @@
             .to('.hero-inner', { yPercent: -10, autoAlpha: 0, ease: 'none' }, 0.15);
         }, heroEl);
       } catch {
-        intro = false;
+        /* hero tetap terbaca tanpa animasi */
       }
-    })();
+    };
+
+    const hasIdle = typeof window.requestIdleCallback === 'function';
+    const idleId = hasIdle
+      ? window.requestIdleCallback(() => runMotion(), { timeout: 2500 })
+      : window.setTimeout(runMotion, 800);
 
     return () => {
       cancelled = true;
+      if (hasIdle) window.cancelIdleCallback(idleId);
+      else clearTimeout(idleId);
       ctx?.revert();
     };
   });
 </script>
 
-<header class="hero" class:intro id="hero" bind:this={heroEl}>
+<header class="hero" id="hero" bind:this={heroEl}>
   <HeroCanvas {scrollProgress} />
 
   <div class="hero-inner">
@@ -155,16 +135,6 @@
     flex-direction: column;
     justify-content: flex-end;
     overflow: clip;
-  }
-  /* Sembunyikan target animasi selagi chunk GSAP dimuat, hindari flash */
-  .hero.intro .hero-title,
-  .hero.intro .role,
-  .hero.intro .lead,
-  .hero.intro .cta,
-  .hero.intro .hero-top,
-  .hero.intro .ticker,
-  .hero.intro .proof {
-    visibility: hidden;
   }
   .hero-inner {
     position: relative;

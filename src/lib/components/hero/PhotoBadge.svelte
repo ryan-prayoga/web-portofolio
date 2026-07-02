@@ -64,7 +64,7 @@
         alt="Ryan Prayoga"
         width="708"
         height="886"
-        fetchpriority="high"
+        loading="lazy"
         decoding="async"
       />
     </picture>
