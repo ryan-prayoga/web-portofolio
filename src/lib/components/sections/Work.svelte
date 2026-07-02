@@ -6,6 +6,9 @@
   import { beacons } from '$lib/data/beacons';
   import { reveal } from '$lib/actions/reveal';
   import { scrollStack } from '$lib/motion/scrollStack';
+  import { scramble } from '$lib/motion/scramble';
+
+  const locale = $derived(localeStore.value);
 
   const t = $derived(uiCopy[localeStore.value]);
   const projectDescriptions = $derived(projectCopy[localeStore.value]);
@@ -17,7 +20,9 @@
 
 <section id="work" class="section">
   <div class="sec-head" use:reveal>
-    <p class="mono idx">SYS/01 — {t.workKicker}</p>
+    {#key locale}
+      <p class="mono idx" use:scramble>SYS/01 — {t.workKicker}</p>
+    {/key}
     <h2>{t.workHeading}</h2>
     <p class="lead">{t.workIntro}</p>
   </div>

@@ -7,6 +7,8 @@
   import PhotoBadge from './PhotoBadge.svelte';
   import HeroCanvas from './HeroCanvas.svelte';
   import { magnetic } from '$lib/motion/magnetic';
+  import { countUp } from '$lib/motion/countUp';
+  import { scramble } from '$lib/motion/scramble';
 
   const t = $derived(uiCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -106,7 +108,7 @@
   <div class="hero-inner">
     <div class="hero-top mono">
       <span>PORTFOLIO © 2026</span>
-      <span class="coords">-6.17°S · 106.63°E · TANGERANG</span>
+      <span class="coords" use:scramble={{ duration: 1200 }}>-6.17°S · 106.63°E · TANGERANG</span>
     </div>
 
     <div class="hero-main">
@@ -127,12 +129,14 @@
     </div>
 
     <div class="hero-foot">
-      <p class="ticker mono">{t.ticker}</p>
+      {#key locale}
+        <p class="ticker mono shiny" use:scramble={{ duration: 1100 }}>{t.ticker}</p>
+      {/key}
       <div class="proof">
         {#each proof as item, i (item.label)}
           <div class="proof-cell">
             <span class="mono pn">0{i + 1}</span>
-            <strong>{item.value}</strong>
+            <strong use:countUp>{item.value}</strong>
             <span class="mono pl">{item.label}</span>
           </div>
         {/each}
@@ -279,6 +283,35 @@
     padding: 0.7rem 0;
     border-top: 1px solid color-mix(in srgb, var(--color-slate) 55%, transparent);
     color: var(--color-ember);
+  }
+  /* kilau menyapu teks ticker */
+  .ticker.shiny {
+    background: linear-gradient(
+      100deg,
+      var(--color-ember) 40%,
+      var(--color-bone) 50%,
+      var(--color-ember) 60%
+    );
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 5.5s linear infinite;
+  }
+  @keyframes shine {
+    from {
+      background-position: 125% 0;
+    }
+    to {
+      background-position: -125% 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker.shiny {
+      animation: none;
+      background: none;
+      -webkit-text-fill-color: currentColor;
+    }
   }
   .proof {
     display: grid;

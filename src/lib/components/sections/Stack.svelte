@@ -4,6 +4,9 @@
   import { techJourney, type TechStep } from '$lib/data/techJourney';
   import { reveal } from '$lib/actions/reveal';
   import Marquee from '$lib/components/ui/Marquee.svelte';
+  import { scramble } from '$lib/motion/scramble';
+
+  const locale = $derived(localeStore.value);
 
   const t = $derived(uiCopy[localeStore.value]);
 
@@ -32,7 +35,9 @@
 
 <section id="stack" class="section">
   <div class="sec-head" use:reveal>
-    <p class="mono idx">SYS/03 — {t.stackKicker}</p>
+    {#key locale}
+      <p class="mono idx" use:scramble>SYS/03 — {t.stackKicker}</p>
+    {/key}
     <h2>{t.stackHeading}</h2>
   </div>
 

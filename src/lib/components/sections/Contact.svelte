@@ -4,6 +4,9 @@
   import { socials } from '$lib/data/socials';
   import { reveal } from '$lib/actions/reveal';
   import { magnetic } from '$lib/motion/magnetic';
+  import { scramble } from '$lib/motion/scramble';
+
+  const locale = $derived(localeStore.value);
 
   const t = $derived(uiCopy[localeStore.value]);
 
@@ -13,7 +16,9 @@
 
 <section id="contact" class="section contact">
   <div class="sec-head" use:reveal>
-    <p class="mono idx">SYS/04 — {t.contactKicker}</p>
+    {#key locale}
+      <p class="mono idx" use:scramble>SYS/04 — {t.contactKicker}</p>
+    {/key}
     <h2 class="contact-h">{t.contactHeading}</h2>
     <p class="lead">{t.contactBody}</p>
   </div>

@@ -4,6 +4,7 @@
   import { profile } from '$lib/data/profile';
   import { reveal } from '$lib/actions/reveal';
   import { scrubWords } from '$lib/motion/splitReveal';
+  import { scramble } from '$lib/motion/scramble';
 
   const t = $derived(uiCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -22,7 +23,9 @@
 
 <section id="about" class="section">
   <div class="sec-head" use:reveal>
-    <p class="mono idx">SYS/02 — {t.aboutKicker}</p>
+    {#key locale}
+      <p class="mono idx" use:scramble>SYS/02 — {t.aboutKicker}</p>
+    {/key}
     <h2>{t.aboutHeading}</h2>
   </div>
 
