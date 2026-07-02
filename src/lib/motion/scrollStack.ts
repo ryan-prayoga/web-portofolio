@@ -44,6 +44,12 @@ export function scrollStack(node: HTMLElement, options: ScrollStackOptions = {})
   const cards = Array.from(node.querySelectorAll<HTMLElement>('.stack-card'));
   if (!cards.length) return;
 
+  // step scale per kartu — dibatasi supaya kartu ke-N (terakhir) gak pernah
+  // nembus scale 1 duluan. itemScale tetap (0.035) bikin kartu tengah/akhir
+  // mentok di 1 kalau kartunya banyak (9 kartu → mentok dari kartu ke-5),
+  // jadi yang numpuk di belakang gak ngecil lagi sama sekali pas discroll.
+  const scaleStep = Math.min(itemScale, (1 - baseScale) / Math.max(1, cards.length - 1));
+
   const applied = new Map<number, { translateY: number; scale: number; blur: number }>();
   let raf = 0;
   let queued = false;
@@ -84,10 +90,7 @@ export function scrollStack(node: HTMLElement, options: ScrollStackOptions = {})
       const triggerEnd = cardTop - scaleEndPx;
 
       const sp = progress(scrollTop, triggerStart, triggerEnd);
-      // clamp — kartu terakhir jangan sampai membesar lewat ukuran aslinya
-      // (baseScale + i*itemScale bisa > 1 kalau jumlah kartu banyak), soalnya
-      // itu bikin box-nya nyerempet ke section berikutnya pas settle
-      const targetScale = Math.min(1, baseScale + i * itemScale);
+      const targetScale = baseScale + i * scaleStep;
       const scale = 1 - sp * (1 - targetScale);
       const blur = blurAmount && i < topIdx ? (topIdx - i) * blurAmount : 0;
 
