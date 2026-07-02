@@ -16,6 +16,22 @@
   function cityOf(slug: string) {
     return beacons.find((b) => b.slug === slug)?.city ?? 'Nusantara';
   }
+
+  // Mock terminal untuk project tanpa thumbnail
+  const termMock: Record<string, { cmd: string; out: string[] }> = {
+    brunogen: {
+      cmd: 'npx brunogen generate',
+      out: ['✓ openapi.yaml → bruno collection', '✓ 42 endpoints · laravel + express + go'],
+    },
+    komikreader: {
+      cmd: 'docker compose up suwayomi -d',
+      out: ['✓ keiyoushi sources loaded', '→ library synced · lanjut baca ch. 214'],
+    },
+    openrowdb: {
+      cmd: 'open -a OpenRowDB',
+      out: ['✓ postgres://localhost:5432 connected', '→ SELECT * FROM orders LIMIT 500 · 12ms'],
+    },
+  };
 </script>
 
 <section id="work" class="section">
@@ -73,10 +89,12 @@
               />
             </picture>
           {:else}
+            {@const mock = termMock[project.slug]}
             <div class="card-thumb terminal mono" aria-hidden="true">
-              <span class="prompt">$</span> npx brunogen generate<br />
-              <span class="out">✓ openapi.yaml → bruno collection</span><br />
-              <span class="out">✓ 42 endpoints · laravel + express + go</span><br />
+              <span class="prompt">$</span> {mock?.cmd ?? project.name.toLowerCase()}<br />
+              {#each mock?.out ?? [] as line (line)}
+                <span class="out">{line}</span><br />
+              {/each}
               <span class="cursor">▌</span>
             </div>
           {/if}
@@ -141,33 +159,27 @@
     width: 100%;
     height: 1px;
   }
-  .stack-card {
-    border-radius: 22px;
-  }
   .card {
     display: grid;
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     min-height: clamp(380px, 56vh, 520px);
-    border-radius: 22px;
     overflow: hidden;
-    background: linear-gradient(
-      145deg,
-      color-mix(in srgb, var(--color-navy) 92%, var(--color-ember) 8%) 0%,
-      var(--color-navy) 34%,
-      color-mix(in srgb, var(--color-night) 65%, var(--color-navy) 35%) 100%
-    );
-    border: 1px solid var(--color-slate);
-    box-shadow:
-      inset 0 1px 0 color-mix(in srgb, var(--color-bone) 7%, transparent),
-      0 30px 70px -30px rgba(0, 0, 0, 0.85);
+    background: color-mix(in srgb, var(--color-navy) 55%, var(--color-night));
+    border: 1px solid color-mix(in srgb, var(--color-slate) 70%, transparent);
+    box-shadow: 0 -18px 40px -20px rgba(0, 0, 0, 0.7);
     text-decoration: none;
     color: var(--color-bone);
+    transition: border-color 0.25s;
+  }
+  .card:hover {
+    border-color: color-mix(in srgb, var(--color-ember) 45%, var(--color-slate));
   }
   .card-info {
     display: flex;
     flex-direction: column;
     padding: clamp(1.4rem, 3vw, 2.6rem);
     min-width: 0;
+    border-right: 1px solid color-mix(in srgb, var(--color-slate) 45%, transparent);
   }
   .meta {
     color: var(--color-greige);
@@ -175,6 +187,8 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-slate) 45%, transparent);
   }
   .meta .year {
     margin-left: auto;
@@ -215,8 +229,7 @@
     text-transform: uppercase;
     letter-spacing: 0.02em;
     padding: 0.3rem 0.55rem;
-    border: 1px solid color-mix(in srgb, var(--color-slate) 80%, transparent);
-    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--color-slate) 70%, transparent);
     color: var(--color-greige);
   }
   .open {

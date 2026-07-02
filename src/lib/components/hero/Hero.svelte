@@ -4,7 +4,6 @@
   import { uiCopy } from '$lib/data/uiCopy';
   import { profile } from '$lib/data/profile';
   import { socials } from '$lib/data/socials';
-  import PhotoBadge from './PhotoBadge.svelte';
   import HeroCanvas from './HeroCanvas.svelte';
   import { magnetic } from '$lib/motion/magnetic';
   import { countUp } from '$lib/motion/countUp';
@@ -63,12 +62,6 @@
               0.5
             )
             .fromTo(
-              '.hero-badge',
-              { y: 34, autoAlpha: 0, scale: 0.96, rotate: 2.5 },
-              { y: 0, autoAlpha: 1, scale: 1, rotate: 0, duration: 0.9, ease: 'power3.out' },
-              0.55
-            )
-            .fromTo(
               ['.hero-top', '.ticker', '.proof'],
               { y: 14, autoAlpha: 0 },
               { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out', stagger: 0.08 },
@@ -112,19 +105,17 @@
     </div>
 
     <div class="hero-main">
-      <div class="hero-text">
-        <h1 class="hero-title">Ryan<br />Prayoga<span class="accent">.</span></h1>
+      <h1 class="hero-title">Ryan Prayoga<span class="accent">.</span></h1>
+      <div class="hero-sub">
         <p class="role">{t.heroRole}</p>
-        <p class="lead">{t.heroBody}</p>
-        <div class="cta">
-          <a class="btn primary" href="#work" onclick={goTo('work')} use:magnetic>{t.viewWork} <span>→</span></a>
-          <a class="btn" href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'} download>{t.downloadCv}</a>
-          <a class="btn" href={email?.url}>{t.contact}</a>
+        <div class="hero-right">
+          <p class="lead">{t.heroBody}</p>
+          <div class="cta">
+            <a class="btn primary" href="#work" onclick={goTo('work')} use:magnetic>{t.viewWork} <span>→</span></a>
+            <a class="btn" href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'} download>{t.downloadCv}</a>
+            <a class="btn" href={email?.url}>{t.contact}</a>
+          </div>
         </div>
-      </div>
-
-      <div class="hero-badge">
-        <PhotoBadge />
       </div>
     </div>
 
@@ -170,7 +161,6 @@
   .hero.intro .role,
   .hero.intro .lead,
   .hero.intro .cta,
-  .hero.intro .hero-badge,
   .hero.intro .hero-top,
   .hero.intro .ticker,
   .hero.intro .proof {
@@ -199,16 +189,14 @@
   }
   .hero-main {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: clamp(1.5rem, 4vw, 4rem);
-    align-items: end;
+    gap: clamp(1.2rem, 3vh, 2.2rem);
   }
   .hero-title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(3rem, 13vw, 12.5rem);
+    font-size: clamp(3rem, 10.5vw, 10.5rem);
     font-weight: 800;
-    line-height: 0.85;
+    line-height: 0.88;
     letter-spacing: -0.04em;
     color: var(--color-bone);
     overflow-wrap: anywhere;
@@ -216,16 +204,25 @@
   .hero-title .accent {
     color: var(--color-ember);
   }
+  .hero-sub {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: start;
+    padding-top: 1.4rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-slate) 55%, transparent);
+  }
   .role {
-    margin: clamp(1rem, 2.5vh, 1.8rem) 0 0;
-    font-size: clamp(1.2rem, 2.4vw, 1.9rem);
+    margin: 0;
+    font-size: clamp(1.3rem, 2.6vw, 2.2rem);
     font-weight: 600;
     line-height: 1.1;
     letter-spacing: -0.02em;
     color: var(--color-bone);
+    max-width: 14ch;
   }
   .lead {
-    margin: 0.9rem 0 0;
+    margin: 0;
     color: var(--color-greige);
     font-size: clamp(1rem, 1.4vw, 1.15rem);
     line-height: 1.55;
@@ -270,9 +267,6 @@
   .btn.primary:hover {
     background: var(--color-bone);
     border-color: var(--color-bone);
-  }
-  .hero-badge {
-    justify-self: end;
   }
   .hero-foot {
     display: grid;
@@ -351,16 +345,11 @@
     color: var(--color-greige);
   }
 
-  @media (max-width: 1080px) {
-    .hero-main {
-      grid-template-columns: 1fr;
-      align-items: start;
-    }
-    .hero-badge {
-      justify-self: start;
-    }
-  }
   @media (max-width: 760px) {
+    .hero-sub {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
     .hero {
       min-height: auto;
     }

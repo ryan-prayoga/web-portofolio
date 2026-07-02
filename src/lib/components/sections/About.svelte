@@ -5,6 +5,7 @@
   import { reveal } from '$lib/actions/reveal';
   import { scrubWords } from '$lib/motion/splitReveal';
   import { scramble } from '$lib/motion/scramble';
+  import PhotoBadge from '$lib/components/hero/PhotoBadge.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -29,9 +30,14 @@
     <h2>{t.aboutHeading}</h2>
   </div>
 
-  {#key locale}
-    <p class="statement" use:scrubWords>{t.aboutStatement}</p>
-  {/key}
+  <div class="statement-row">
+    {#key locale}
+      <p class="statement" use:scrubWords>{t.aboutStatement}</p>
+    {/key}
+    <div class="photo" use:reveal>
+      <PhotoBadge />
+    </div>
+  </div>
 
   <div class="about" use:reveal>
     {#each aboutRows as row (row.kicker)}
@@ -71,8 +77,19 @@
     max-width: 16ch;
     color: var(--color-bone);
   }
+  .statement-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: start;
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  }
+  .photo {
+    width: min(15rem, 100%);
+    justify-self: end;
+  }
   .statement {
-    margin: 0 0 clamp(2.5rem, 6vw, 4rem);
+    margin: 0;
     font-family: var(--font-display);
     font-size: clamp(1.4rem, 3.2vw, 2.6rem);
     font-weight: 500;
@@ -108,6 +125,12 @@
     line-height: 1.6;
   }
   @media (max-width: 760px) {
+    .statement-row {
+      grid-template-columns: 1fr;
+    }
+    .photo {
+      justify-self: start;
+    }
     .about-row {
       grid-template-columns: 1fr;
       gap: 0.6rem;

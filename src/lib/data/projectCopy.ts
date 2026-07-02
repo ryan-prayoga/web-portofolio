@@ -49,6 +49,18 @@ export const projectCopy: Record<Locale, Record<string, ProjectCopy>> = {
       focus:
         "WebSocket transport, role-based auth without changing existing flows, mobile-first dashboard, and PWA mode.",
     },
+    komikreader: {
+      summary:
+        "Self-hosted comic reading web app on top of Suwayomi with Keiyoushi extensions — library, reader, and progress tracking.",
+      focus:
+        "Suwayomi API integration, extension sources via Keiyoushi, continuous reader UX, and self-hosted deployment.",
+    },
+    openrowdb: {
+      summary:
+        "Modern native macOS database client built with SwiftUI and Liquid Glass — Postgres & MySQL first, MIT licensed.",
+      focus:
+        "Native SwiftUI architecture, connection management, query workflow, and an open-source release under MIT.",
+    },
   },
   id: {
     cinematix: {
@@ -92,6 +104,18 @@ export const projectCopy: Record<Locale, Record<string, ProjectCopy>> = {
         "Aplikasi operasional mess realtime untuk kas, wifi, feed, anggota, dan workflow harian — mobile-first PWA.",
       focus:
         "Transport WebSocket, auth + role tanpa ganti alur existing, dashboard mobile-first, dan mode PWA.",
+    },
+    komikreader: {
+      summary:
+        "Web app baca komik self-hosted di atas Suwayomi dengan extension Keiyoushi — library, reader, dan tracking progres baca.",
+      focus:
+        "Integrasi API Suwayomi, sumber extension via Keiyoushi, UX continuous reader, dan deployment self-hosted.",
+    },
+    openrowdb: {
+      summary:
+        "Database client macOS native modern dengan SwiftUI dan Liquid Glass — Postgres & MySQL dulu, lisensi MIT.",
+      focus:
+        "Arsitektur SwiftUI native, manajemen koneksi, workflow query, dan rilis open-source dengan lisensi MIT.",
     },
   },
 };

@@ -22,4 +22,6 @@ export const beacons: Beacon[] = [
   { slug: 'jedug', label: 'JEDUG', city: 'Bandung', lonlat: [107.61, -6.91] },
   { slug: 'brunogen', label: 'Brunogen', city: 'Yogyakarta', lonlat: [110.37, -7.8] },
   { slug: 'messhub', label: 'MessHub', city: 'Balikpapan', lonlat: [116.83, -1.24] },
+  { slug: 'komikreader', label: 'Komik Reader', city: 'Palembang', lonlat: [104.75, -2.99] },
+  { slug: 'openrowdb', label: 'OpenRowDB', city: 'Denpasar', lonlat: [115.22, -8.65] },
 ];

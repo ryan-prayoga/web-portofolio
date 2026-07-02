@@ -53,8 +53,8 @@ export const uiCopy: Record<Locale, UiCopy> = {
       'I build systems that stay online — and lead the engineers who keep them that way. From planning and review to production decisions, I hold the technical line with calm ownership.',
     aboutRows: [
       {
-        kicker: 'Current role',
-        body: `Hands-on delivery leadership at ${profile.company} — from planning and review to production decisions.`,
+        kicker: 'Previously',
+        body: `4+ years at ${profile.company} — grew from developer to team lead, holding delivery hands-on from planning and review to production decisions.`,
       },
       {
         kicker: 'Academic',
@@ -105,8 +105,8 @@ export const uiCopy: Record<Locale, UiCopy> = {
       'Saya bangun sistem yang terus online — dan mimpin engineer yang jaga sistem itu tetap hidup. Dari rencana, review, sampai keputusan production, sisi teknisnya saya pegang dengan tenang.',
     aboutRows: [
       {
-        kicker: 'Peran sekarang',
-        body: `Mimpin delivery tapi tetap turun tangan di teknis di ${profile.company} — dari rencana, review, sampai ambil keputusan pas di production.`,
+        kicker: 'Sebelumnya',
+        body: `4+ tahun di ${profile.company} — berkembang dari developer jadi team lead, tetap turun tangan dari rencana, review, sampai keputusan production.`,
       },
       {
         kicker: 'Pendidikan',

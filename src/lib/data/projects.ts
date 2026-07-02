@@ -87,4 +87,22 @@ export const projects: Project[] = [
     source: 'https://github.com/ryan-prayoga/messhub',
     thumbnail: '/v3/projects/messhub.webp',
   },
+  {
+    name: 'Komik Reader',
+    slug: 'komikreader',
+    tags: ['Media', 'Self-Hosted', 'Reader'],
+    stack: ['SvelteKit', 'Suwayomi', 'Keiyoushi'],
+    year: '2026',
+    category: 'Media Product',
+    source: 'https://github.com/ryan-prayoga/komik-reader',
+  },
+  {
+    name: 'OpenRowDB',
+    slug: 'openrowdb',
+    tags: ['macOS', 'Native', 'Open Source'],
+    stack: ['Swift', 'SwiftUI', 'PostgreSQL', 'MySQL'],
+    year: '2026',
+    category: 'Developer Tooling',
+    source: 'https://github.com/ryan-prayoga/openrowdb',
+  },
 ];

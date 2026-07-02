@@ -22,7 +22,6 @@
     url: SITE_URL,
     image: OG_IMAGE,
     jobTitle: 'Full-Stack Engineer',
-    worksFor: { '@type': 'Organization', name: profile.company },
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universitas Pasundan' },
     address: { '@type': 'PostalAddress', addressLocality: 'Tangerang', addressCountry: 'ID' },
     sameAs: [github?.url, linkedin?.url].filter(Boolean),
