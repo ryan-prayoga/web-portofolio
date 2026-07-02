@@ -5,6 +5,7 @@
   import { profile } from '$lib/data/profile';
   import { socials } from '$lib/data/socials';
   import PhotoBadge from './PhotoBadge.svelte';
+  import HeroCanvas from './HeroCanvas.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -83,7 +84,7 @@
 </script>
 
 <header class="hero" class:intro id="hero" bind:this={heroEl}>
-  <div class="hero-bg" aria-hidden="true"></div>
+  <HeroCanvas />
 
   <div class="hero-inner">
     <div class="hero-top mono">
@@ -153,20 +154,6 @@
   .hero.intro .ticker,
   .hero.intro .proof {
     visibility: hidden;
-  }
-  /* Poster "langit malam" — Phase 3 menumpuk canvas 3D di atas layer ini */
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background:
-      radial-gradient(
-        ellipse 90% 60% at 65% 38%,
-        color-mix(in srgb, var(--color-ember) 7%, transparent),
-        transparent 70%
-      ),
-      radial-gradient(ellipse 120% 80% at 50% 100%, var(--color-navy) 0%, transparent 55%),
-      var(--color-night);
   }
   .hero-inner {
     position: relative;
