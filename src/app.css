@@ -56,6 +56,14 @@ html {
   overflow-x: hidden;
 }
 
+/* Lenis (desktop/pointer halus) punya smoothing JS sendiri — native
+   scroll-behavior:smooth di atas bikin dobel-easing tiap frame scroll,
+   keliatan sebagai getar/vibrasi pas scroll (paling kentara di scroll-stack).
+   Lenis nempel class ini ke <html> otomatis pas aktif. */
+html.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
 body {
   background-color: var(--color-night);
   color: var(--color-bone);

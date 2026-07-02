@@ -84,7 +84,10 @@ export function scrollStack(node: HTMLElement, options: ScrollStackOptions = {})
       const triggerEnd = cardTop - scaleEndPx;
 
       const sp = progress(scrollTop, triggerStart, triggerEnd);
-      const targetScale = baseScale + i * itemScale;
+      // clamp — kartu terakhir jangan sampai membesar lewat ukuran aslinya
+      // (baseScale + i*itemScale bisa > 1 kalau jumlah kartu banyak), soalnya
+      // itu bikin box-nya nyerempet ke section berikutnya pas settle
+      const targetScale = Math.min(1, baseScale + i * itemScale);
       const scale = 1 - sp * (1 - targetScale);
       const blur = blurAmount && i < topIdx ? (topIdx - i) * blurAmount : 0;
 
@@ -94,16 +97,24 @@ export function scrollStack(node: HTMLElement, options: ScrollStackOptions = {})
       } else if (scrollTop > pinEnd) {
         translateY = pinEnd - cardTop + stackPx + itemStackDistance * i;
       }
+      // clamp — pin-release freeze value (terutama di viewport pendek/mobile,
+      // vh gede + itemStackDistance*i numpuk) bisa lebih gede dari sisa ruang
+      // trailing, bikin kartu permanen nyerempet ke section berikutnya.
+      // Jangan biarkan kartu (natural bottom + translateY) lewatin .stack-end.
+      const maxTranslateY = endTop - (cardTop + card.offsetHeight);
+      if (translateY > maxTranslateY) translateY = maxTranslateY;
 
       const next = {
-        translateY: Math.round(translateY * 100) / 100,
+        // dibulatkan ke integer px — nilai subpixel bikin sliver kartu
+        // tertumpuk di belakang "bergetar" (shimmer AA) pas discroll
+        translateY: Math.round(translateY),
         scale: Math.round(scale * 1000) / 1000,
         blur: Math.round(blur * 100) / 100,
       };
       const last = applied.get(i);
       const changed =
         !last ||
-        Math.abs(last.translateY - next.translateY) > 0.1 ||
+        last.translateY !== next.translateY ||
         Math.abs(last.scale - next.scale) > 0.001 ||
         Math.abs(last.blur - next.blur) > 0.1;
       if (changed) {

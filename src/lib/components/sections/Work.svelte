@@ -23,14 +23,6 @@
       cmd: 'npx brunogen generate',
       out: ['✓ openapi.yaml → bruno collection', '✓ 42 endpoints · laravel + express + go'],
     },
-    komikreader: {
-      cmd: 'docker compose up suwayomi -d',
-      out: ['✓ keiyoushi sources loaded', '→ library synced · lanjut baca ch. 214'],
-    },
-    openrowdb: {
-      cmd: 'open -a OpenRowDB',
-      out: ['✓ postgres://localhost:5432 connected', '→ SELECT * FROM orders LIMIT 500 · 12ms'],
-    },
   };
 </script>
 

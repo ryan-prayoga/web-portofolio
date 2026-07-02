@@ -95,6 +95,7 @@ export const projects: Project[] = [
     year: '2026',
     category: 'Media Product',
     source: 'https://github.com/ryan-prayoga/komik-reader',
+    thumbnail: '/v3/projects/komikreader.webp',
   },
   {
     name: 'OpenRowDB',
@@ -104,5 +105,6 @@ export const projects: Project[] = [
     year: '2026',
     category: 'Developer Tooling',
     source: 'https://github.com/ryan-prayoga/openrowdb',
+    thumbnail: '/v3/projects/openrowdb.webp',
   },
 ];
