@@ -5,6 +5,7 @@
   import { motionFlags } from '$lib/stores/motion.svelte';
   import Nav from '$lib/components/layout/Nav.svelte';
   import Footer from '$lib/components/layout/Footer.svelte';
+  import Cursor from '$lib/components/layout/Cursor.svelte';
 
   let { children } = $props();
 
@@ -34,3 +35,4 @@
 <Nav />
 {@render children()}
 <Footer />
+<Cursor />

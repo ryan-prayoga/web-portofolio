@@ -6,6 +6,7 @@
   import { socials } from '$lib/data/socials';
   import PhotoBadge from './PhotoBadge.svelte';
   import HeroCanvas from './HeroCanvas.svelte';
+  import { magnetic } from '$lib/motion/magnetic';
 
   const t = $derived(uiCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -114,7 +115,7 @@
         <p class="role">{t.heroRole}</p>
         <p class="lead">{t.heroBody}</p>
         <div class="cta">
-          <a class="btn primary" href="#work" onclick={goTo('work')}>{t.viewWork} <span>→</span></a>
+          <a class="btn primary" href="#work" onclick={goTo('work')} use:magnetic>{t.viewWork} <span>→</span></a>
           <a class="btn" href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'} download>{t.downloadCv}</a>
           <a class="btn" href={email?.url}>{t.contact}</a>
         </div>

@@ -3,6 +3,7 @@
   import { uiCopy } from '$lib/data/uiCopy';
   import { techJourney, type TechStep } from '$lib/data/techJourney';
   import { reveal } from '$lib/actions/reveal';
+  import Marquee from '$lib/components/ui/Marquee.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
 
@@ -26,6 +27,7 @@
 
   const stackGroups = $derived(groupStack(techJourney, t.stackNotes));
   const workflow = ['Discover', 'Build', 'Review', 'Deploy', 'Improve'];
+  const marqueeItems = techJourney.map((s) => s.tech);
 </script>
 
 <section id="stack" class="section">
@@ -46,6 +48,10 @@
         </ul>
       </article>
     {/each}
+  </div>
+
+  <div class="marquee-wrap" use:reveal>
+    <Marquee items={marqueeItems} />
   </div>
 
   <div class="workflow mono" use:reveal>
@@ -126,6 +132,9 @@
     padding: 0.3rem 0.5rem;
     border: 1px solid color-mix(in srgb, var(--color-slate) 70%, transparent);
     color: var(--color-greige);
+  }
+  .marquee-wrap {
+    margin-top: 1.6rem;
   }
   .workflow {
     display: flex;

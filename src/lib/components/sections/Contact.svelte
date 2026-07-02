@@ -3,6 +3,7 @@
   import { uiCopy } from '$lib/data/uiCopy';
   import { socials } from '$lib/data/socials';
   import { reveal } from '$lib/actions/reveal';
+  import { magnetic } from '$lib/motion/magnetic';
 
   const t = $derived(uiCopy[localeStore.value]);
 
@@ -35,7 +36,7 @@
   </ul>
 
   <div class="cta contact-cta" use:reveal>
-    <a class="btn primary" href={email?.url}>{t.sendEmail} <span>→</span></a>
+    <a class="btn primary" href={email?.url} use:magnetic>{t.sendEmail} <span>→</span></a>
     <a class="btn" href="/cv/cv-en.pdf" download>CV (EN)</a>
     <a class="btn" href="/cv/cv-id.pdf" download>CV (ID)</a>
   </div>
