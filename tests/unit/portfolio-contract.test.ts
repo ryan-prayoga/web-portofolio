@@ -1,7 +1,6 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { beacons } from '../../src/lib/data/beacons';
 import { portfolioContractErrors, type PortfolioContractInput } from '../../src/lib/data/portfolioContract';
 import { profile } from '../../src/lib/data/profile';
 import { projectCopy } from '../../src/lib/data/projectCopy';
@@ -16,7 +15,6 @@ function productionInput(): PortfolioContractInput {
   return {
     projects,
     copy: projectCopy,
-    beacons: beacons.map(({ kind, slug }) => ({ kind, slug })),
     assets,
     teamSize: profile.teamSize,
     renderedTeamSizes: [
@@ -112,36 +110,11 @@ describe('portfolio content contract', () => {
       message: 'duplicate project slug: cinematix',
     },
     {
-      name: 'missing beacon',
-      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
-        ...input,
-        beacons: input.beacons.filter((beacon) => beacon.slug !== 'pildun'),
-      }),
-      message: 'expected exactly one project beacon for pildun; found 0',
-    },
-    {
-      name: 'duplicate beacon',
-      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
-        ...input,
-        beacons: [...input.beacons, { kind: 'project', slug: 'pildun' }],
-      }),
-      message: 'expected exactly one project beacon for pildun; found 2',
-    },
-    {
-      name: 'duplicate HQ',
-      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
-        ...input,
-        beacons: [...input.beacons, { kind: 'hq', slug: 'hq-copy' }],
-      }),
-      message: 'expected exactly one HQ beacon; found 2',
-    },
-    {
       name: 'invalid destination',
       mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
         ...input,
         projects: [{ slug: 'broken', destination: { kind: 'site', href: 'http://example.com' } }],
         copy: { en: { broken: {} }, id: { broken: {} } },
-        beacons: [input.beacons[0] ?? { kind: 'hq', slug: 'hq' }, { kind: 'project', slug: 'broken' }],
       }),
       message: 'invalid destination for broken',
     },
@@ -151,7 +124,6 @@ describe('portfolio content contract', () => {
         ...input,
         projects: [{ slug: 'broken', destination: { kind: 'source', href: 'https://gitlab.com/owner/repo' } }],
         copy: { en: { broken: {} }, id: { broken: {} } },
-        beacons: [input.beacons[0] ?? { kind: 'hq', slug: 'hq' }, { kind: 'project', slug: 'broken' }],
       }),
       message: 'invalid source for broken',
     },

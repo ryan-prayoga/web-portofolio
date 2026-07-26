@@ -1,13 +1,8 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { localeStore } from '$lib/stores/locale.svelte';
   import { uiCopy } from '$lib/data/uiCopy';
   import { profile } from '$lib/data/profile';
   import { socials } from '$lib/data/socials';
-  import HeroCanvas from './HeroCanvas.svelte';
-  import { magnetic } from '$lib/motion/magnetic';
-  import { countUp } from '$lib/motion/countUp';
-  import { scramble } from '$lib/motion/scramble';
 
   const t = $derived(uiCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -25,63 +20,15 @@
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     };
   }
-
-  let heroEl: HTMLElement | undefined = $state();
-  let scrollProgress = $state(0); // 0..1 selama hero di-pin → dolly kamera 3D
-
-  onMount(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (!heroEl) return;
-
-    let ctx: { revert: () => void } | undefined;
-    let cancelled = false;
-
-    const runMotion = async () => {
-      try {
-        const { gsap } = await import('$lib/motion/gsap');
-        if (cancelled || !heroEl) return;
-        ctx = gsap.context(() => {
-          // Hanya scroll choreography — intro char-reveal dihapus agar LCP tidak tertahan
-          gsap
-            .timeline({
-              scrollTrigger: {
-                trigger: heroEl!,
-                start: 'top top',
-                end: '+=110%',
-                pin: true,
-                scrub: true,
-                anticipatePin: 1,
-                onUpdate: (self) => (scrollProgress = self.progress),
-              },
-            })
-            .to('.hero-inner', { yPercent: -10, autoAlpha: 0, ease: 'none' }, 0.15);
-        }, heroEl);
-      } catch {
-        /* hero tetap terbaca tanpa animasi */
-      }
-    };
-
-    const hasIdle = typeof window.requestIdleCallback === 'function';
-    const idleId = hasIdle
-      ? window.requestIdleCallback(() => runMotion(), { timeout: 2500 })
-      : window.setTimeout(runMotion, 800);
-
-    return () => {
-      cancelled = true;
-      if (hasIdle) window.cancelIdleCallback(idleId);
-      else clearTimeout(idleId);
-      ctx?.revert();
-    };
-  });
 </script>
 
-<header class="hero" id="hero" bind:this={heroEl}>
-  <HeroCanvas {scrollProgress} />
+<header class="hero" id="hero">
+  <div class="poster" aria-hidden="true"></div>
 
   <div class="hero-inner">
     <div class="hero-top mono">
       <span>PORTFOLIO © 2026</span>
-      <span class="coords" use:scramble={{ duration: 1200 }}>-6.17°S · 106.63°E · TANGERANG</span>
+      <span class="coords">-6.17°S · 106.63°E · TANGERANG</span>
     </div>
 
     <div class="hero-main">
@@ -91,7 +38,7 @@
         <div class="hero-right">
           <p class="lead">{t.heroBody}</p>
           <div class="cta">
-            <a class="btn primary" href="#work" onclick={goTo('work')} use:magnetic>{t.viewWork} <span>→</span></a>
+            <a class="btn primary" href="#work" onclick={goTo('work')}>{t.viewWork} <span>→</span></a>
             <a class="btn" href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'} download>{t.downloadCv}</a>
             <a class="btn" href={email?.url}>{t.contact}</a>
           </div>
@@ -100,14 +47,12 @@
     </div>
 
     <div class="hero-foot">
-      {#key locale}
-        <p class="ticker mono shiny" use:scramble={{ duration: 1100 }}>{t.ticker}</p>
-      {/key}
+      <p class="ticker mono">{t.ticker}</p>
       <div class="proof">
         {#each proof as item, i (item.label)}
           <div class="proof-cell">
             <span class="mono pn">0{i + 1}</span>
-            <strong use:countUp>{item.value}</strong>
+            <strong>{item.value}</strong>
             <span class="mono pl">{item.label}</span>
           </div>
         {/each}
@@ -135,6 +80,18 @@
     flex-direction: column;
     justify-content: flex-end;
     overflow: clip;
+  }
+  .poster {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(
+        ellipse 90% 60% at 65% 38%,
+        color-mix(in srgb, var(--color-ember) 7%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(ellipse 120% 80% at 50% 100%, var(--color-navy) 0%, transparent 55%), var(--color-night);
   }
   .hero-inner {
     position: relative;
@@ -251,30 +208,6 @@
     padding: 0.7rem 0;
     border-top: 1px solid color-mix(in srgb, var(--color-slate) 55%, transparent);
     color: var(--color-ember);
-  }
-  /* kilau menyapu teks ticker */
-  .ticker.shiny {
-    background: linear-gradient(100deg, var(--color-ember) 40%, var(--color-bone) 50%, var(--color-ember) 60%);
-    background-size: 250% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 5.5s linear infinite;
-  }
-  @keyframes shine {
-    from {
-      background-position: 125% 0;
-    }
-    to {
-      background-position: -125% 0;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .ticker.shiny {
-      animation: none;
-      background: none;
-      -webkit-text-fill-color: currentColor;
-    }
   }
   .proof {
     display: grid;

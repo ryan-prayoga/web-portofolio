@@ -5,12 +5,9 @@ export type ContractProject = {
   readonly thumbnail?: string;
 };
 
-export type ContractBeacon = { readonly kind: 'hq' | 'project'; readonly slug: string };
-
 export type PortfolioContractInput = {
   readonly projects: readonly ContractProject[];
   readonly copy: Readonly<Record<string, Readonly<Record<string, unknown>>>>;
-  readonly beacons: readonly ContractBeacon[];
   readonly assets: ReadonlySet<string>;
   readonly teamSize: number;
   readonly renderedTeamSizes: readonly number[];
@@ -27,13 +24,6 @@ export function portfolioContractErrors(input: PortfolioContractInput): readonly
     const extra = Object.keys(copy).filter((slug) => !slugs.includes(slug));
     if (missing.length > 0) errors.push(`${locale} copy missing slugs: ${missing.join(', ')}`);
     if (extra.length > 0) errors.push(`${locale} copy has extra slugs: ${extra.join(', ')}`);
-  }
-
-  const hqCount = input.beacons.filter((beacon) => beacon.kind === 'hq').length;
-  if (hqCount !== 1) errors.push(`expected exactly one HQ beacon; found ${hqCount}`);
-  for (const slug of slugs) {
-    const count = input.beacons.filter((beacon) => beacon.kind === 'project' && beacon.slug === slug).length;
-    if (count !== 1) errors.push(`expected exactly one project beacon for ${slug}; found ${count}`);
   }
 
   for (const project of input.projects) {

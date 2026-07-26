@@ -1,5 +1,5 @@
-import { readFile, stat } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { readFile, readdir, stat } from 'node:fs/promises';
+import { join, resolve } from 'node:path';
 
 export class ArtifactError extends Error {
   /** @param {string} message */
@@ -9,11 +9,14 @@ export class ArtifactError extends Error {
   }
 }
 
-/** @param {string} buildRoot */
+/**
+ * Artefak adapter-static: build/ berisi halaman prerender + _app/ + salinan static/.
+ * @param {string} buildRoot
+ */
 export async function inspectBuildArtifact(buildRoot) {
   const root = resolve(buildRoot);
-  const requiredFiles = ['index.js', 'handler.js', 'env.js'];
-  const requiredDirectories = ['client', 'server', 'prerendered'];
+  const requiredFiles = ['index.html', 'sitemap.xml', 'robots.txt'];
+  const requiredDirectories = ['_app'];
 
   for (const file of requiredFiles) {
     const path = resolve(root, file);
@@ -34,85 +37,40 @@ export async function inspectBuildArtifact(buildRoot) {
   return { root, requiredFiles, requiredDirectories };
 }
 
-/** @typedef {{ file: string, imports?: string[], dynamicImports?: string[], src?: string }} ManifestEntry */
-
 /**
- * @param {string} htmlPath
- * @param {string} manifestPath
+ * Regression guard: artefak tidak boleh membawa sisa scene 3D / library motion
+ * yang sudah dihapus pada redesign v4.
+ * @param {string} buildRoot
+ * @param {readonly string[]} [forbidden]
  */
-export async function inspectLazySceneBoundary(htmlPath, manifestPath) {
-  const html = await readFile(resolve(htmlPath), 'utf8');
-  /** @type {Record<string, ManifestEntry>} */
-  const manifest = JSON.parse(await readFile(resolve(manifestPath), 'utf8'));
-  const entries = Object.entries(manifest);
-  const keyByFile = new Map(entries.map(([key, entry]) => [entry.file, key]));
-  const initialFiles = [
-    ...[...html.matchAll(/href=["']\.?\/?([^"']+\.js)["']/g)].map((match) => match[1]),
-    ...[...html.matchAll(/import\(["']\.?\/?([^"']+\.js)["']\)/g)].map((match) => match[1]),
-  ];
-  const initialKeys = initialFiles.map((file) => keyByFile.get(file)).filter((key) => key !== undefined);
-  const sceneKey = entries.find(([, entry]) => entry.src?.endsWith('/ArchipelagoScene.svelte'))?.[0];
-  if (!sceneKey) {
-    throw new ArtifactError('Missing dynamic ArchipelagoScene manifest entry');
-  }
+export async function inspectForbiddenRemnants(buildRoot, forbidden = ['archipelago.json', 'ArchipelagoScene']) {
+  const root = resolve(buildRoot);
+  /** @type {string[]} */
+  const scanned = [];
 
-  /** @param {string[]} roots */
-  const staticClosure = (roots) => {
-    const visited = new Set();
-    const pending = [...roots];
-    while (pending.length > 0) {
-      const key = pending.pop();
-      if (!key || visited.has(key)) continue;
-      visited.add(key);
-      pending.push(...(manifest[key]?.imports ?? []));
+  /** @param {string} directory */
+  async function walk(directory) {
+    const entries = await readdir(directory, { withFileTypes: true });
+    for (const entry of entries) {
+      const path = join(directory, entry.name);
+      if (entry.isDirectory()) {
+        await walk(path);
+        continue;
+      }
+      if (!/\.(?:html|js|css|json)$/.test(entry.name)) continue;
+      scanned.push(path);
+      const contents = await readFile(path, 'utf8');
+      for (const needle of forbidden) {
+        if (contents.includes(needle)) {
+          throw new ArtifactError(`Forbidden remnant "${needle}" found in ${path}`);
+        }
+      }
     }
-    return visited;
-  };
-
-  const initialClosure = staticClosure(initialKeys);
-  const sceneClosure = staticClosure([sceneKey]);
-  const forbiddenSceneKeys = new Set(
-    [...sceneClosure].filter((key) => {
-      const entry = manifest[key];
-      return (
-        key === sceneKey ||
-        key.includes('three') ||
-        entry?.src?.includes('node_modules/three') ||
-        entry?.src?.includes('@threlte')
-      );
-    }),
-  );
-  const forbiddenInitialKeys = [...initialClosure].filter((key) => forbiddenSceneKeys.has(key));
-  if (forbiddenInitialKeys.length > 0) {
-    throw new ArtifactError(
-      `Initial HTML reaches lazy Scene graph: ${forbiddenInitialKeys.map((key) => manifest[key]?.file ?? key).join(', ')}`,
-    );
   }
 
-  /** @param {string} root */
-  const reachesScene = (root) => {
-    const visited = new Set();
-    const pending = [root];
-    while (pending.length > 0) {
-      const key = pending.pop();
-      if (!key || visited.has(key)) continue;
-      if (key === sceneKey) return true;
-      visited.add(key);
-      const entry = manifest[key];
-      pending.push(...(entry?.imports ?? []), ...(entry?.dynamicImports ?? []));
-    }
-    return false;
-  };
-  if (!initialKeys.some(reachesScene)) {
-    throw new ArtifactError('Initial application graph has no dynamic path to ArchipelagoScene');
+  await walk(root);
+  if (scanned.length === 0) {
+    throw new ArtifactError('No scannable files found in build artifact');
   }
-
-  return {
-    initialFiles,
-    initialKeys,
-    initialClosure: [...initialClosure],
-    sceneKey,
-    sceneClosure: [...sceneClosure],
-    forbiddenSceneKeys: [...forbiddenSceneKeys],
-  };
+  return { root, scanned: scanned.length, forbidden: [...forbidden] };
 }

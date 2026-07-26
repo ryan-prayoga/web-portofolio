@@ -3,11 +3,10 @@ import { focusedCoverageHelperFiles } from '../../config/focused-coverage';
 import playwrightConfig from '../../playwright.config';
 
 describe('verification harness configuration', () => {
-  it('enforces focused coverage for every scene lifecycle helper', () => {
+  it('enforces focused coverage for every behavioral helper', () => {
     // Given
     const requiredHelpers: readonly (typeof focusedCoverageHelperFiles)[number][] = [
-      'src/lib/components/three/sceneGeneration.ts',
-      'src/lib/components/three/sceneResources.ts',
+      'src/lib/data/portfolioContract.ts',
       'src/lib/stores/motion.svelte.ts',
     ];
 

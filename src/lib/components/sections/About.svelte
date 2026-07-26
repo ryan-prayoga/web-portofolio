@@ -3,12 +3,9 @@
   import { uiCopy } from '$lib/data/uiCopy';
   import { profile } from '$lib/data/profile';
   import { reveal } from '$lib/actions/reveal';
-  import { scrubWords } from '$lib/motion/splitReveal';
-  import { scramble } from '$lib/motion/scramble';
   import PhotoBadge from '$lib/components/hero/PhotoBadge.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
-  const locale = $derived(localeStore.value);
   const academic = 'S1 Informatika — Universitas Pasundan';
 
   const aboutRows = $derived([
@@ -24,16 +21,12 @@
 
 <section id="about" class="section">
   <div class="sec-head" use:reveal>
-    {#key locale}
-      <p class="mono idx" use:scramble>SYS/02 — {t.aboutKicker}</p>
-    {/key}
+    <p class="mono idx">SYS/02 — {t.aboutKicker}</p>
     <h2>{t.aboutHeading}</h2>
   </div>
 
   <div class="statement-row">
-    {#key locale}
-      <p class="statement" use:scrubWords>{t.aboutStatement}</p>
-    {/key}
+    <p class="statement">{t.aboutStatement}</p>
     <div class="photo" use:reveal>
       <PhotoBadge />
     </div>

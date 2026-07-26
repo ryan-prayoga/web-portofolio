@@ -3,11 +3,8 @@
   import { uiCopy } from '$lib/data/uiCopy';
   import { socials } from '$lib/data/socials';
   import { reveal } from '$lib/actions/reveal';
-  import { magnetic } from '$lib/motion/magnetic';
-  import { scramble } from '$lib/motion/scramble';
 
   const t = $derived(uiCopy[localeStore.value]);
-  const locale = $derived(localeStore.value);
 
   const email = socials.find((s) => s.name === 'Email');
   const github = socials.find((s) => s.name === 'GitHub');
@@ -16,13 +13,11 @@
 
 <section id="contact" class="section contact">
   <div class="sec-head" use:reveal>
-    {#key locale}
-      <p class="mono idx" use:scramble>SYS/04 — {t.contactKicker}</p>
-    {/key}
+    <p class="mono idx">SYS/04 — {t.contactKicker}</p>
     <p class="intro">{t.contactHeading} <span class="dim">{t.contactBody}</span></p>
   </div>
 
-  <a class="email" href={email?.url} use:reveal use:magnetic={0.08} data-cursor>
+  <a class="email" href={email?.url} use:reveal>
     <span class="email-label mono">{t.sendEmail} ↗</span>
     <span class="email-addr">developer@<wbr />ryanprayoga.dev</span>
   </a>

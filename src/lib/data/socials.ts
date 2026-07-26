@@ -25,11 +25,3 @@ export const socials: Social[] = [
     label: 'ryanprayogaaa',
   },
 ];
-
-export const navLinks = [
-  { label: 'Proof', href: '#proof' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Enterprise', href: '#enterprise' },
-  { label: 'Stack', href: '#tech-journey' },
-  { label: 'Contact', href: '#contact' },
-];

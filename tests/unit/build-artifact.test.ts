@@ -2,108 +2,103 @@ import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
-import { ArtifactError, inspectBuildArtifact, inspectLazySceneBoundary } from '../../scripts/build-artifact.mjs';
+import { ArtifactError, inspectBuildArtifact, inspectForbiddenRemnants } from '../../scripts/build-artifact.mjs';
+
+const temporaryRoots: string[] = [];
+
+afterEach(async () => {
+  await Promise.all(temporaryRoots.splice(0).map((root) => rm(root, { recursive: true, force: true })));
+});
+
+async function completeStaticArtifact(prefix: string): Promise<string> {
+  const root = await mkdtemp(join(tmpdir(), prefix));
+  temporaryRoots.push(root);
+  await mkdir(join(root, '_app'));
+  await Promise.all([
+    writeFile(join(root, 'index.html'), '<!doctype html><html><body>ok</body></html>'),
+    writeFile(join(root, 'sitemap.xml'), '<urlset/>'),
+    writeFile(join(root, 'robots.txt'), 'User-agent: *'),
+    writeFile(join(root, '_app', 'app.js'), 'console.log("app")'),
+  ]);
+  return root;
+}
 
 describe('inspectBuildArtifact', () => {
-  const temporaryRoots: string[] = [];
-
-  afterEach(async () => {
-    await Promise.all(temporaryRoots.splice(0).map((root) => rm(root, { recursive: true, force: true })));
-  });
-
-  it('accepts a complete adapter-node artifact', async () => {
+  it('accepts a complete adapter-static artifact', async () => {
     // Given
-    const root = await mkdtemp(join(tmpdir(), 'portfolio-build-complete-'));
-    temporaryRoots.push(root);
-    await Promise.all(['client', 'server', 'prerendered'].map((directory) => mkdir(join(root, directory))));
-    await Promise.all([
-      writeFile(join(root, 'index.js'), ''),
-      writeFile(join(root, 'handler.js'), ''),
-      writeFile(join(root, 'env.js'), ''),
-    ]);
+    const root = await completeStaticArtifact('portfolio-static-complete-');
 
     // When
     const result = await inspectBuildArtifact(root);
 
     // Then
     expect(result).toMatchObject({
-      requiredFiles: ['index.js', 'handler.js', 'env.js'],
-      requiredDirectories: ['client', 'server', 'prerendered'],
+      requiredFiles: ['index.html', 'sitemap.xml', 'robots.txt'],
+      requiredDirectories: ['_app'],
     });
   });
 
   it('rejects an incomplete artifact', async () => {
     // Given
-    const root = await mkdtemp(join(tmpdir(), 'portfolio-build-incomplete-'));
+    const root = await mkdtemp(join(tmpdir(), 'portfolio-static-incomplete-'));
     temporaryRoots.push(root);
 
     // When
     const inspection = inspectBuildArtifact(root);
 
     // Then
-    await expect(inspection).rejects.toEqual(new ArtifactError('Missing build artifact: index.js'));
+    await expect(inspection).rejects.toEqual(new ArtifactError('Missing build artifact: index.html'));
+  });
+
+  it('rejects an artifact without the _app directory', async () => {
+    // Given
+    const root = await completeStaticArtifact('portfolio-static-no-app-');
+    await rm(join(root, '_app'), { recursive: true, force: true });
+
+    // When
+    const inspection = inspectBuildArtifact(root);
+
+    // Then
+    await expect(inspection).rejects.toEqual(new ArtifactError('Missing build directory: _app'));
   });
 });
 
-describe('inspectLazySceneBoundary', () => {
-  const temporaryRoots: string[] = [];
-
-  afterEach(async () => {
-    await Promise.all(temporaryRoots.splice(0).map((root) => rm(root, { recursive: true, force: true })));
-  });
-
-  it('accepts a dynamic Scene graph excluded from initial HTML', async () => {
+describe('inspectForbiddenRemnants', () => {
+  it('accepts an artifact free of purged scene references', async () => {
     // Given
-    const root = await mkdtemp(join(tmpdir(), 'portfolio-lazy-scene-'));
-    temporaryRoots.push(root);
-    const htmlPath = join(root, 'index.html');
-    const manifestPath = join(root, 'manifest.json');
-    await writeFile(htmlPath, '<script>import("_app/app.js")</script>');
-    await writeFile(
-      manifestPath,
-      JSON.stringify({
-        app: { file: '_app/app.js', dynamicImports: ['route'] },
-        route: { file: '_app/route.js', dynamicImports: ['scene'] },
-        scene: {
-          file: '_app/scene.js',
-          src: 'src/lib/components/three/ArchipelagoScene.svelte',
-          imports: ['three'],
-        },
-        three: { file: '_app/three.js', src: 'node_modules/three/build/three.module.js' },
-      }),
-    );
+    const root = await completeStaticArtifact('portfolio-clean-remnants-');
 
     // When
-    const result = await inspectLazySceneBoundary(htmlPath, manifestPath);
+    const result = await inspectForbiddenRemnants(root);
 
     // Then
-    expect(result.sceneClosure).toEqual(['scene', 'three']);
+    expect(result.scanned).toBeGreaterThan(0);
+    expect(result.forbidden).toEqual(['archipelago.json', 'ArchipelagoScene']);
   });
 
-  it('rejects initial HTML that preloads a Scene dependency', async () => {
+  it('rejects an artifact that still references the purged scene data', async () => {
     // Given
-    const root = await mkdtemp(join(tmpdir(), 'portfolio-preloaded-scene-'));
-    temporaryRoots.push(root);
-    const htmlPath = join(root, 'forbidden-preload.html');
-    const manifestPath = join(root, 'manifest.json');
-    await writeFile(htmlPath, '<link rel="modulepreload" href="_app/three.js"><script>import("_app/app.js")</script>');
-    await writeFile(
-      manifestPath,
-      JSON.stringify({
-        app: { file: '_app/app.js', dynamicImports: ['scene'] },
-        scene: {
-          file: '_app/scene.js',
-          src: 'src/lib/components/three/ArchipelagoScene.svelte',
-          imports: ['three'],
-        },
-        three: { file: '_app/three.js', src: 'node_modules/three/build/three.module.js' },
-      }),
-    );
+    const root = await completeStaticArtifact('portfolio-dirty-remnants-');
+    await writeFile(join(root, '_app', 'chunk.js'), 'fetch("/data/archipelago.json")');
 
     // When
-    const inspection = inspectLazySceneBoundary(htmlPath, manifestPath);
+    const inspection = inspectForbiddenRemnants(root);
 
     // Then
-    await expect(inspection).rejects.toEqual(new ArtifactError('Initial HTML reaches lazy Scene graph: _app/three.js'));
+    await expect(inspection).rejects.toEqual(
+      new ArtifactError(`Forbidden remnant "archipelago.json" found in ${join(root, '_app', 'chunk.js')}`),
+    );
+  });
+
+  it('rejects an empty artifact with no scannable files', async () => {
+    // Given
+    const root = await mkdtemp(join(tmpdir(), 'portfolio-empty-remnants-'));
+    temporaryRoots.push(root);
+
+    // When
+    const inspection = inspectForbiddenRemnants(root);
+
+    // Then
+    await expect(inspection).rejects.toEqual(new ArtifactError('No scannable files found in build artifact'));
   });
 });

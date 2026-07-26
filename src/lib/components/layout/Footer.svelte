@@ -2,7 +2,6 @@
   import { localeStore } from '$lib/stores/locale.svelte';
   import { uiCopy } from '$lib/data/uiCopy';
   import { profile } from '$lib/data/profile';
-  import WibClock from '$lib/components/ui/WibClock.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
 
@@ -15,7 +14,6 @@
 <footer class="footer">
   <span class="mono">© 2026 Ryan Prayoga</span>
   <span class="mono">{profile.location} · -6.17, 106.63</span>
-  <span class="mono clock"><WibClock seconds /></span>
   <span class="mono">{t.footerNote}</span>
   <a class="mono to-top" href="#top" onclick={toTop}>{t.backToTop} ↑</a>
 </footer>
@@ -35,9 +33,6 @@
     padding: 1.6rem clamp(1.25rem, 5vw, 4rem);
     border-top: 1px solid var(--color-bone);
     color: var(--color-greige);
-  }
-  .footer .clock {
-    color: var(--color-ember);
   }
   .footer .to-top {
     color: var(--color-bone);

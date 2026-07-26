@@ -3,12 +3,7 @@
   import { uiCopy } from '$lib/data/uiCopy';
   import { portfolioProjects } from '$lib/data/projects';
   import { projectCopy } from '$lib/data/projectCopy';
-  import { projectBeacons } from '$lib/data/beacons';
   import { reveal } from '$lib/actions/reveal';
-  import { scrollStack } from '$lib/motion/scrollStack';
-  import { scramble } from '$lib/motion/scramble';
-
-  const locale = $derived(localeStore.value);
 
   const t = $derived(uiCopy[localeStore.value]);
   const projectDescriptions = $derived(projectCopy[localeStore.value]);
@@ -24,24 +19,22 @@
 
 <section id="work" class="section">
   <div class="sec-head" use:reveal>
-    {#key locale}
-      <p class="mono idx" use:scramble>SYS/01 — {t.workKicker}</p>
-    {/key}
+    <p class="mono idx">SYS/01 — {t.workKicker}</p>
     <h2>{t.workHeading}</h2>
     <p class="lead">{t.workIntro}</p>
   </div>
 
-  <div class="stack" use:scrollStack>
+  <div class="stack">
     {#each portfolioProjects as project, i (project.slug)}
       {@const desc = projectDescriptions[project.slug]}
       {@const base = project.thumbnail?.replace('.webp', '')}
-      <article class="stack-card">
+      <article class="stack-card" use:reveal>
         <a class="card" href={project.destination.href} target="_blank" rel="noopener noreferrer">
           <div class="card-info">
             <p class="mono meta">
-              BCN-0{i + 1}
+              IDX-0{i + 1}
               <i class="dot" aria-hidden="true"></i>
-              {projectBeacons[project.slug].city}
+              {project.category}
               <span class="year">{project.year}</span>
             </p>
             <h3 class="name">{project.name}</h3>
@@ -85,7 +78,6 @@
         </a>
       </article>
     {/each}
-    <div class="stack-end" aria-hidden="true"></div>
   </div>
 </section>
 
@@ -133,15 +125,12 @@
     align-self: end;
   }
 
-  /* ── STACKED CARDS ── */
+  /* ── PROJECT CARDS ── */
   .stack {
     max-width: 72rem;
     margin: 0 auto;
-    padding-bottom: 24vh; /* ruang supaya kartu terakhir sempat settle */
-  }
-  .stack-end {
-    width: 100%;
-    height: 1px;
+    display: grid;
+    gap: 2rem;
   }
   .card {
     display: grid;
@@ -303,9 +292,6 @@
     .open {
       padding-top: 1.2rem;
     }
-    .stack {
-      padding-bottom: 16vh;
-    }
   }
   @media (max-width: 760px) {
     .sec-head {
@@ -317,9 +303,6 @@
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .stack-card + .stack-card {
-      margin-top: 2rem;
-    }
     .card-thumb img,
     .open .arrow {
       transition: none;

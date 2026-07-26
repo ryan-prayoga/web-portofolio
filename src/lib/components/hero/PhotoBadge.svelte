@@ -1,7 +1,6 @@
 <script lang="ts">
   import { localeStore } from '$lib/stores/locale.svelte';
   import { uiCopy } from '$lib/data/uiCopy';
-  import WibClock from '$lib/components/ui/WibClock.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
 
@@ -65,7 +64,7 @@
     <figcaption class="chrome mono">
       <span class="name">RYAN PRAYOGA</span>
       <span>{t.badge.role}</span>
-      <span>{t.badge.loc} · <WibClock /></span>
+      <span>{t.badge.loc}</span>
     </figcaption>
   </figure>
 </div>
