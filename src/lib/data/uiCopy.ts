@@ -19,6 +19,7 @@ export interface UiCopy {
     caseStudy: string;
     visit: string;
     source: string;
+    npm: string;
     clientTag: string;
     moreLabel: string;
   };
@@ -26,6 +27,7 @@ export interface UiCopy {
   education: { label: string; heading: string; languages: string };
   contact: { label: string; heading: string; body: string; emailCta: string };
   footer: { note: string; backToTop: string };
+  a11y: { home: string; toggleMenu: string; mobileNav: string; language: string; sectionNav: string };
   caseStudy: {
     back: string;
     problem: string;
@@ -58,6 +60,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
       caseStudy: 'Read case study',
       visit: 'Visit live',
       source: 'Source',
+      npm: 'View on npm',
       clientTag: 'Client work',
       moreLabel: 'More projects',
     },
@@ -70,6 +73,13 @@ export const uiCopy: Record<Locale, UiCopy> = {
       emailCta: 'Send email',
     },
     footer: { note: 'Built with SvelteKit — fully static, no trackers', backToTop: 'Back to top' },
+    a11y: {
+      home: 'Ryan Prayoga, home',
+      toggleMenu: 'Toggle menu',
+      mobileNav: 'Mobile navigation',
+      language: 'Language',
+      sectionNav: 'Section navigation',
+    },
     caseStudy: {
       back: 'All work',
       problem: 'Problem',
@@ -100,6 +110,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
       caseStudy: 'Baca case study',
       visit: 'Lihat live',
       source: 'Source',
+      npm: 'Lihat di npm',
       clientTag: 'Kerja klien',
       moreLabel: 'Proyek lainnya',
     },
@@ -112,6 +123,13 @@ export const uiCopy: Record<Locale, UiCopy> = {
       emailCta: 'Kirim email',
     },
     footer: { note: 'Dibuat dengan SvelteKit — full static, tanpa tracker', backToTop: 'Ke atas' },
+    a11y: {
+      home: 'Ryan Prayoga, beranda',
+      toggleMenu: 'Buka/tutup menu',
+      mobileNav: 'Navigasi mobile',
+      language: 'Bahasa',
+      sectionNav: 'Navigasi bagian',
+    },
     caseStudy: {
       back: 'Semua karya',
       problem: 'Masalah',

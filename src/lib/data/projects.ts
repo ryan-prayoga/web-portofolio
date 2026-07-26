@@ -7,7 +7,9 @@ type ProjectCatalogEntry = {
   readonly year: string;
   readonly category: string;
   readonly destination:
-    { readonly kind: 'site'; readonly href: string } | { readonly kind: 'source'; readonly href: string };
+    | { readonly kind: 'site'; readonly href: string }
+    | { readonly kind: 'package'; readonly href: string }
+    | { readonly kind: 'source'; readonly href: string };
   readonly thumbnail?: string;
 };
 
@@ -47,7 +49,7 @@ export const projects = [
     stack: ['TypeScript', 'AST Parsing', 'OpenAPI', 'Vitest'],
     year: '2026',
     category: 'Developer Tooling',
-    destination: { kind: 'site', href: 'https://www.npmjs.com/package/brunogen' },
+    destination: { kind: 'package', href: 'https://www.npmjs.com/package/brunogen' },
   },
   {
     name: 'CineTix',

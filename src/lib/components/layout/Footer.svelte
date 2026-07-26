@@ -7,7 +7,9 @@
 
   function toTop(event: Event) {
     event.preventDefault();
-    document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' });
+    // id="top" hanya ada di homepage — di halaman lain fallback ke scrollTo.
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
   }
 </script>
 
@@ -17,5 +19,7 @@
   <span>© 2026 {profile.name}</span>
   <span>{profile.location}</span>
   <span>{t.footer.note}</span>
-  <a href="#top" onclick={toTop} class="no-print hover:text-accent">{t.footer.backToTop} ↑</a>
+  <a href="#top" onclick={toTop} class="no-print hover:text-accent"
+    >{t.footer.backToTop} <span aria-hidden="true">↑</span></a
+  >
 </footer>

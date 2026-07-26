@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
   <title>Ryan Prayoga</title>
-  <rect width="512" height="512" rx="104" fill="#f4f2ec" />
+  <rect width="512" height="512" rx="104" fill="#fbfaf8" />
   <text
-    x="248"
-    y="372"
+    x="240"
+    y="366"
     text-anchor="middle"
-    fill="#15120b"
-    font-family="Archivo, 'Arial Black', 'Helvetica Neue', sans-serif"
-    font-size="360"
-    font-weight="800"
+    fill="#14161a"
+    font-family="Geist, Arial, 'Helvetica Neue', sans-serif"
+    font-size="340"
+    font-weight="650"
     letter-spacing="-14"
   >
     R
   </text>
-  <rect x="352" y="298" width="64" height="64" fill="#ff3d00" />
+  <circle cx="386" cy="330" r="38" fill="#a33b14" />
 </svg>

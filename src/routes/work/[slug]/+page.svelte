@@ -17,6 +17,16 @@
 
   const title = $derived(`${data.project.name} — Case Study · Ryan Prayoga`);
   const pageUrl = $derived(`${SITE_URL}/work/${slug}`);
+  // OG butuh PNG/JPEG — scraper LinkedIn/WhatsApp tidak render webp.
+  // Project tanpa thumbnail (brunogen) fallback ke OG situs.
+  const ogImage = $derived(data.project.thumbnail ? `${SITE_URL}/og/${slug}.png` : `${SITE_URL}/og-image.png`);
+  const externalLabel = $derived(
+    data.project.destination.kind === 'site'
+      ? t.caseStudy.visit
+      : data.project.destination.kind === 'package'
+        ? t.work.npm
+        : t.caseStudy.source,
+  );
 </script>
 
 <svelte:head>
@@ -28,17 +38,20 @@
   <meta property="og:title" content={title} />
   <meta property="og:description" content={copy.summary} />
   <meta property="og:url" content={pageUrl} />
-  {#if data.project.thumbnail}
-    <meta property="og:image" content="{SITE_URL}{data.project.thumbnail}" />
-  {/if}
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={title} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={copy.summary} />
+  <meta name="twitter:image" content={ogImage} />
 </svelte:head>
 
 <main class="mx-auto max-w-3xl px-6 pt-28 pb-20">
   <a href="/#work" class="text-muted hover:text-accent font-mono text-xs tracking-wide uppercase">
-    ← {t.caseStudy.back}
+    <span aria-hidden="true">←</span>
+    {t.caseStudy.back}
   </a>
 
   <header class="mt-8">
@@ -57,7 +70,7 @@
         rel="noopener noreferrer"
         class="text-accent font-mono text-xs tracking-wide uppercase underline-offset-4 hover:underline"
       >
-        {data.project.destination.kind === 'site' ? t.caseStudy.visit : t.caseStudy.source} ↗
+        {externalLabel} <span aria-hidden="true">↗</span>
       </a>
       <span class="text-muted font-mono text-[0.65rem] uppercase">
         {t.caseStudy.stack}: {data.project.stack.join(' · ')}

@@ -42,7 +42,7 @@
               href="/work/{project.slug}"
               class="text-accent font-mono text-xs tracking-wide uppercase underline-offset-4 hover:underline"
             >
-              {t.work.caseStudy} →
+              {t.work.caseStudy} <span aria-hidden="true">→</span>
             </a>
             <a
               href={project.destination.href}
@@ -50,7 +50,11 @@
               rel="noopener noreferrer"
               class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline"
             >
-              {project.destination.kind === 'site' ? t.work.visit : t.work.source} ↗
+              {project.destination.kind === 'site'
+                ? t.work.visit
+                : project.destination.kind === 'package'
+                  ? t.work.npm
+                  : t.work.source} <span aria-hidden="true">↗</span>
             </a>
           </div>
         </div>
@@ -108,6 +112,9 @@
         <h3 class="group-hover:text-accent mt-2 font-semibold tracking-tight transition-colors">
           {project.name}
           <span class="text-muted group-hover:text-accent ml-1 text-sm" aria-hidden="true">↗</span>
+          <span class="sr-only">
+            ({project.destination.kind === 'source' ? t.work.source : t.work.visit})
+          </span>
         </h3>
         <p class="text-muted mt-2 text-sm leading-relaxed">{copy[project.slug].summary}</p>
         <ul class="mt-3 flex flex-wrap gap-x-3 gap-y-1">

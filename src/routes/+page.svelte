@@ -24,7 +24,8 @@
     '@type': 'Person',
     name: profile.name,
     url: SITE_URL,
-    image: OG_IMAGE,
+    // Person.image = foto orangnya (rich result), bukan screenshot situs
+    image: `${SITE_URL}/photo/ryan-700.jpg`,
     jobTitle: 'Fullstack Developer & Sub Team Lead',
     worksFor: { '@type': 'Organization', name: profile.company },
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universitas Pasundan' },

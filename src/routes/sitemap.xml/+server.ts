@@ -15,13 +15,12 @@ const routes: Array<{ path: string; changefreq: string; priority: string }> = [
 ];
 
 export const GET: RequestHandler = async () => {
-  const today = new Date().toISOString().split('T')[0];
-
+  // Tanpa <lastmod>: stamp tanggal build untuk semua URL = sinyal
+  // freshness palsu yang justru bikin Google mengabaikannya.
   const urls = routes
     .map(
       (r) => `  <url>
     <loc>${SITE_URL}${r.path}</loc>
-    <lastmod>${today}</lastmod>
     <changefreq>${r.changefreq}</changefreq>
     <priority>${r.priority}</priority>
   </url>`,

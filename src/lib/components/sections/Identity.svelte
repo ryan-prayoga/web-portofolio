@@ -37,7 +37,7 @@
           download
           class="bg-accent text-paper inline-flex items-center gap-2 px-4 py-2 font-mono text-xs tracking-wide uppercase transition-opacity hover:opacity-85"
         >
-          {t.hero.downloadCv} ↓
+          {t.hero.downloadCv} <span aria-hidden="true">↓</span>
         </a>
         <a
           href={email?.url}
@@ -51,7 +51,7 @@
           rel="noopener noreferrer"
           class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline"
         >
-          GitHub ↗
+          GitHub <span aria-hidden="true">↗</span>
         </a>
         <a
           href={linkedin?.url}
@@ -59,7 +59,7 @@
           rel="noopener noreferrer"
           class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline"
         >
-          LinkedIn ↗
+          LinkedIn <span aria-hidden="true">↗</span>
         </a>
       </div>
     </div>

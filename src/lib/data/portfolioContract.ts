@@ -2,7 +2,9 @@ export type ContractProject = {
   readonly slug: string;
   readonly featured: boolean;
   readonly destination:
-    { readonly kind: 'site'; readonly href: string } | { readonly kind: 'source'; readonly href: string };
+    | { readonly kind: 'site'; readonly href: string }
+    | { readonly kind: 'package'; readonly href: string }
+    | { readonly kind: 'source'; readonly href: string };
   readonly thumbnail?: string;
 };
 
@@ -46,6 +48,12 @@ export function portfolioContractErrors(input: PortfolioContractInput): readonly
       !/^https:\/\/github\.com\/[^/]+\/[^/]+\/?$/.test(project.destination.href)
     ) {
       errors.push(`invalid source for ${project.slug}`);
+    }
+    if (
+      project.destination.kind === 'package' &&
+      !/^https:\/\/www\.npmjs\.com\/package\/[^/]+\/?$/.test(project.destination.href)
+    ) {
+      errors.push(`invalid package for ${project.slug}`);
     }
     if (project.thumbnail) {
       const base = project.thumbnail.replace(/\.webp$/, '');

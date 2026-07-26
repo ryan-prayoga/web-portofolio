@@ -41,7 +41,9 @@
       '.nav > :not(.nav-actions), .nav-actions > :not(.menu-btn)',
     );
     const previousBodyStyle = document.body.getAttribute('style');
-    const desktop = window.matchMedia('(min-width: 761px)');
+    // 640px = Tailwind `sm` — harus sama dengan kelas sm:hidden pada
+    // tombol toggle, kalau tidak ada rentang lebar tanpa kontrol tutup.
+    const desktop = window.matchMedia('(min-width: 640px)');
     const menuLinks = [...menu.querySelectorAll<HTMLAnchorElement>('a[href]')];
 
     background?.setAttribute('inert', '');
@@ -99,9 +101,17 @@
 
   function goTo(id: string) {
     return (event: Event) => {
-      if (!onHome) return; // biarkan navigasi normal ke /#id dari halaman lain
+      if (!onHome) {
+        // Navigasi normal ke /#id dari halaman lain — tapi menu tetap
+        // WAJIB ditutup, kalau tidak overlay + inert nyangkut di atas
+        // halaman tujuan.
+        closeFocus = 'none';
+        menuOpen = false;
+        return;
+      }
       event.preventDefault();
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.getElementById(id)?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
       closeFocus = 'toggle';
       menuOpen = false;
     };
@@ -117,12 +127,12 @@
     href={onHome ? '#top' : '/'}
     class="brand font-semibold tracking-tight"
     onclick={goTo('top')}
-    aria-label="Ryan Prayoga, home"
+    aria-label={t.a11y.home}
   >
     Ryan Prayoga<span class="text-accent">.</span>
   </a>
 
-  <div class="desktop-links hidden gap-6 sm:flex" aria-label="Section navigation">
+  <div class="desktop-links hidden gap-6 sm:flex">
     {#each navItems as item (item.href)}
       <a
         href={onHome ? item.href : `/${item.href}`}
@@ -138,7 +148,7 @@
     <span class="status text-muted hidden items-center gap-2 font-mono text-xs uppercase min-[900px]:inline-flex">
       <i class="bg-accent inline-block h-1.5 w-1.5 rounded-full" aria-hidden="true"></i>{t.status}
     </span>
-    <div class="flex items-center gap-1 font-mono text-xs" role="group" aria-label="Language">
+    <div class="flex items-center gap-1 font-mono text-xs" role="group" aria-label={t.a11y.language}>
       <button
         type="button"
         class="cursor-pointer {locale === 'en' ? 'font-semibold' : 'text-muted hover:text-accent'}"
@@ -158,7 +168,7 @@
       download
       class="nav-cv border-ink hover:text-accent hover:border-accent hidden border-b font-mono text-xs uppercase sm:inline"
     >
-      CV ↓
+      CV <span aria-hidden="true">↓</span>
     </a>
     <button
       id={toggleId}
@@ -169,7 +179,7 @@
         closeFocus = 'toggle';
         menuOpen = !menuOpen;
       }}
-      aria-label="Toggle menu"
+      aria-label={t.a11y.toggleMenu}
       aria-expanded={menuOpen}
       aria-controls={menuId}
     >
@@ -185,7 +195,7 @@
     class="bg-paper fixed inset-0 z-55 grid content-center px-6 pt-20 pb-8"
     role="dialog"
     aria-modal="true"
-    aria-label="Mobile navigation"
+    aria-label={t.a11y.mobileNav}
   >
     {#each navItems as item, i (item.href)}
       <a
@@ -193,7 +203,7 @@
         onclick={goTo(item.href.slice(1))}
         class="border-rule flex items-baseline gap-4 border-t py-4 text-3xl font-semibold tracking-tight"
       >
-        <span class="text-accent font-mono text-sm">0{i + 1}</span>{item.label}
+        <span class="text-accent font-mono text-sm" aria-hidden="true">0{i + 1}</span>{item.label}
       </a>
     {/each}
     <a

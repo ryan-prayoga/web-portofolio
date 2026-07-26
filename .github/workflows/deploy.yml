@@ -1,48 +1,116 @@
 name: Deploy web-portofolio
 
-# Auto-deploy DINONAKTIFKAN selama redesign v4.
-# Build sekarang adapter-static (tidak ada build/index.js), sedangkan step
-# di bawah masih `pm2 restart` proses adapter-node — kalau jalan, situs mati.
-# Deploy dirombak total ke Caddy static + gate quality di fase F5.
+# Trigger push SENGAJA masih mati sampai cutover Caddy static selesai
+# (runbook: docs/DEPLOY.md). Setelah cutover terverifikasi, nyalakan blok
+# push di bawah dengan menghapus komentarnya.
+#
+# on:
+#   push:
+#     branches: [main]
+#     paths:
+#       - 'src/**'
+#       - 'static/**'
+#       - 'package.json'
+#       - 'package-lock.json'
+#       - 'svelte.config.js'
+#       - 'vite.config.ts'
+#       - 'tsconfig.json'
+#       - '.github/workflows/deploy.yml'
 on:
   workflow_dispatch:
 
+# Serialisasi deploy: dua push beruntun tidak boleh rilis out-of-order.
+concurrency:
+  group: deploy-web-portofolio
+  cancel-in-progress: false
+
 jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies (locked)
+        run: npm ci
+
+      - name: Static checks
+        run: |
+          npm run format:check
+          npm run lint
+          npm run check
+
+      - name: Unit tests + coverage thresholds
+        run: npm run test:unit
+
+      - name: Build static artifact
+        run: npm run build
+
+      - name: Verify artifact
+        run: npm run test:artifact
+
+      - name: E2E against the production build
+        run: |
+          npx playwright install --with-deps chromium
+          npm run test:e2e
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-${{ github.sha }}
+          path: build/
+          include-hidden-files: true
+          retention-days: 7
+
   deploy:
+    needs: quality
+    # Guard: hanya main yang boleh menyentuh produksi, dari trigger mana pun.
+    if: github.ref == 'refs/heads/main'
     runs-on: self-hosted
     steps:
-      - name: Pull latest code
-        working-directory: /home/ubuntu/projects/web-portofolio
-        run: |
-          set -e
-          git fetch origin
-          git reset --hard origin/main
-          echo "✅ Code updated to $(git rev-parse --short HEAD)"
+      - name: Clean stale workspace
+        run: rm -rf site
 
-      - name: Install dependencies
-        working-directory: /home/ubuntu/projects/web-portofolio
-        run: |
-          set -e
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-          npm install
-          echo "✅ Dependencies installed"
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: site-${{ github.sha }}
+          path: site
 
-      - name: Build
-        working-directory: /home/ubuntu/projects/web-portofolio
+      - name: Release atomically
         run: |
-          set -e
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-          npm run build
-          echo "✅ Built"
+          set -euo pipefail
+          DEST=/var/www/ryanprayoga.dev
+          SHA_SHORT="${GITHUB_SHA:0:7}"
+          RELEASE="$DEST/releases/$SHA_SHORT"
+          mkdir -p "$RELEASE"
+          rsync -a --delete site/ "$RELEASE/"
+          ln -sfn "$RELEASE" "$DEST/current.tmp"
+          mv -Tf "$DEST/current.tmp" "$DEST/current"
+          echo "✅ Released $SHA_SHORT -> $DEST/current"
 
-      - name: Restart PM2
+      - name: Prune old releases (keep 5)
         run: |
-          set -e
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-          export PATH="$HOME/.local/bin:$PATH"
-          pm2 restart web-portofolio
-          pm2 save
-          echo "✅ Deployed successfully"
+          set -euo pipefail
+          cd /var/www/ryanprayoga.dev/releases
+          ls -1t | tail -n +6 | xargs -r rm -rf
+          echo "✅ Pruned; kept $(ls -1 | wc -l) release(s)"
+
+      - name: Health check
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 5); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' https://ryanprayoga.dev/)
+            if [ "$code" = "200" ]; then
+              echo "✅ Live site returns 200"
+              exit 0
+            fi
+            echo "attempt $i: got $code, retrying..."
+            sleep 3
+          done
+          echo "❌ Health check failed"
+          exit 1

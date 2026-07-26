@@ -20,7 +20,9 @@
   </div>
 
   <a href={email?.url} class="group border-rule mt-8 block border-t pt-8 pb-6" use:reveal>
-    <span class="text-accent font-mono text-xs tracking-wide uppercase">{t.contact.emailCta} ↗</span>
+    <span class="text-accent font-mono text-xs tracking-wide uppercase"
+      >{t.contact.emailCta} <span aria-hidden="true">↗</span></span
+    >
     <span
       class="group-hover:text-accent mt-2 block text-2xl font-semibold tracking-tight break-all transition-colors sm:text-4xl"
     >
@@ -33,13 +35,15 @@
       href={github?.url}
       target="_blank"
       rel="noopener noreferrer"
-      class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline">GitHub ↗</a
+      class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline"
+      >GitHub <span aria-hidden="true">↗</span></a
     >
     <a
       href={linkedin?.url}
       target="_blank"
       rel="noopener noreferrer"
-      class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline">LinkedIn ↗</a
+      class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline"
+      >LinkedIn <span aria-hidden="true">↗</span></a
     >
     <a
       href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}

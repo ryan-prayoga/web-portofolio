@@ -1,42 +1,56 @@
-# sv
+# ryanprayoga.dev
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Portfolio personal Ryan Prayoga — Fullstack Developer & Sub Team Lead.
+Fully static, zero runtime dependency, dwibahasa (EN/ID).
 
-## Creating a project
+**Live:** https://ryanprayoga.dev
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Stack
 
-```sh
-# create a new project
-npx sv create my-app
-```
+- SvelteKit 2 + Svelte 5 (runes) + TypeScript
+- Tailwind CSS 4 (`@theme` tokens: paper/ink/rust, light-first + dark
+  via `prefers-color-scheme`)
+- `adapter-static` — full prerender, tanpa server
+- Geist Sans + Geist Mono (variable, self-hosted, 51KB)
+- `dependencies: {}` — tidak ada runtime dep sama sekali
 
-To recreate this project with the same configuration:
+## Struktur konten
 
-```sh
-# recreate this project
-npx sv@0.12.5 create --template minimal --types ts --no-install .
-```
+Semua konten hidup di `src/lib/data/` dan dijaga kontrak:
 
-## Developing
+| File                   | Isi                                                  |
+| ---------------------- | ---------------------------------------------------- |
+| `profile.ts`           | Identitas — WAJIB konsisten dengan CV ATS            |
+| `experience.ts`        | Riwayat kerja + bullet dampak (EN/ID)                |
+| `skills.ts`            | Matrix skill mengikuti struktur CV                   |
+| `projects.ts`          | Katalog 7 project terkurasi, 3 `featured`            |
+| `projectCopy.ts`       | Ringkasan per project (EN/ID)                        |
+| `caseStudies.ts`       | Case study penuh untuk project featured (EN/ID)      |
+| `portfolioContract.ts` | Invariant: 3 featured, case study lengkap, aset utuh |
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Drift (slug hilang, thumbnail hilang, case study bolong) gagal di
+`npm run test:unit`, bukan di production.
 
-```sh
+## Development
+
+```bash
+nvm use          # 24.4.1 (engine-strict)
+npm ci
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+## Quality gate
 
-To create a production version of your app:
-
-```sh
-npm run build
+```bash
+npm run quality
 ```
 
-You can preview the production build with `npm run preview`.
+= format:check → lint → svelte-check → unit+coverage → build →
+artifact verify (termasuk scan sisa modul purged) → Playwright e2e.
+Gate yang sama jalan di CI sebelum deploy.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Deploy
+
+Static artifact dirilis atomic ke `/var/www/ryanprayoga.dev/current`
+lewat GitHub Actions (job quality → job deploy self-hosted), disajikan
+Caddy. Runbook cutover + rollback: [docs/DEPLOY.md](docs/DEPLOY.md).
