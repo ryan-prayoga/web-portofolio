@@ -29,7 +29,7 @@ const idn = world.features.find(
     f.properties?.ISO_A3 === 'IDN' ||
     f.properties?.adm0_a3 === 'IDN' ||
     f.properties?.name === 'Indonesia' ||
-    f.properties?.NAME === 'Indonesia'
+    f.properties?.NAME === 'Indonesia',
 );
 if (!idn) {
   console.error('Indonesia feature not found in input GeoJSON');
@@ -37,8 +37,7 @@ if (!idn) {
 }
 
 // Normalize to array of polygons; each polygon = [outerRing, ...holes]
-const polygons =
-  idn.geometry.type === 'MultiPolygon' ? idn.geometry.coordinates : [idn.geometry.coordinates];
+const polygons = idn.geometry.type === 'MultiPolygon' ? idn.geometry.coordinates : [idn.geometry.coordinates];
 
 function pointInRing([px, py], ring) {
   let inside = false;
@@ -57,7 +56,10 @@ function pointInPolygon(pt, polygon) {
 }
 
 // Bounding box of Indonesia
-let minLon = Infinity, minLat = Infinity, maxLon = -Infinity, maxLat = -Infinity;
+let minLon = Infinity,
+  minLat = Infinity,
+  maxLon = -Infinity,
+  maxLat = -Infinity;
 for (const poly of polygons)
   for (const ring of poly)
     for (const [lon, lat] of ring) {
@@ -71,7 +73,7 @@ const STEP = 0.18; // degrees ≈ 20 km
 const pts = [];
 // Deterministic pseudo-random jitter so dots don't read as a rigid grid
 let seed = 42;
-const rand = () => ((seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
+const rand = () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
 
 for (let lat = minLat; lat <= maxLat; lat += STEP) {
   for (let lon = minLon; lon <= maxLon; lon += STEP) {
@@ -81,8 +83,10 @@ for (let lat = minLat; lat <= maxLat; lat += STEP) {
     if (!inside) continue;
     // Coastline check: any 4-neighbor at STEP outside → brighter edge dot
     const edge = [
-      [jLon + STEP, jLat], [jLon - STEP, jLat],
-      [jLon, jLat + STEP], [jLon, jLat - STEP],
+      [jLon + STEP, jLat],
+      [jLon - STEP, jLat],
+      [jLon, jLat + STEP],
+      [jLon, jLat - STEP],
     ].some((n) => !polygons.some((p) => pointInPolygon(n, p)));
     const brightness = edge ? 200 + Math.floor(rand() * 55) : 90 + Math.floor(rand() * 90);
     pts.push([jLon, jLat, brightness]);
@@ -96,7 +100,7 @@ for (const [lon, lat, b] of pts) {
   flat.push(
     Math.round(((lon - minLon) / (maxLon - minLon)) * Q),
     Math.round(((lat - minLat) / (maxLat - minLat)) * Q),
-    b
+    b,
   );
 }
 

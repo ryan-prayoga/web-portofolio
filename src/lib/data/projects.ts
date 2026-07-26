@@ -1,16 +1,16 @@
-export interface Project {
-  name: string;
-  slug: string;
-  tags: string[];
-  stack: string[];
-  year: string;
-  category: string;
-  url?: string;
-  source?: string;
-  thumbnail?: string;
-}
+type ProjectCatalogEntry = {
+  readonly name: string;
+  readonly slug: string;
+  readonly tags: readonly string[];
+  readonly stack: readonly string[];
+  readonly year: string;
+  readonly category: string;
+  readonly destination:
+    { readonly kind: 'site'; readonly href: string } | { readonly kind: 'source'; readonly href: string };
+  readonly thumbnail?: string;
+};
 
-export const projects: Project[] = [
+export const projects = [
   {
     name: 'CineTix',
     slug: 'cinematix',
@@ -18,8 +18,7 @@ export const projects: Project[] = [
     stack: ['Next.js', 'Express', 'Socket.IO', 'PostgreSQL', 'Prisma'],
     year: '2026',
     category: 'Realtime Product',
-    url: 'https://cinema.ryanprayoga.dev',
-    source: 'https://github.com/ryan-prayoga/cinema-tix',
+    destination: { kind: 'site', href: 'https://cinema.ryanprayoga.dev' },
     thumbnail: '/v3/projects/cinematix.webp',
   },
   {
@@ -29,8 +28,7 @@ export const projects: Project[] = [
     stack: ['SvelteKit', 'PostgreSQL', 'PM2', 'Caddy'],
     year: '2026',
     category: 'Realtime Product',
-    url: 'https://pildun.ryanprayoga.dev',
-    source: 'https://github.com/ryan-prayoga/pildun',
+    destination: { kind: 'site', href: 'https://pildun.ryanprayoga.dev' },
     thumbnail: '/v3/projects/pildun.webp',
   },
   {
@@ -40,8 +38,7 @@ export const projects: Project[] = [
     stack: ['SvelteKit', 'PostgreSQL'],
     year: '2026',
     category: 'Civic Tech',
-    url: 'https://koruptor-rank.ryanprayoga.dev',
-    source: 'https://github.com/ryan-prayoga/koruptor-rank',
+    destination: { kind: 'site', href: 'https://koruptor-rank.ryanprayoga.dev' },
     thumbnail: '/v3/projects/koruptorrank.webp',
   },
   {
@@ -51,8 +48,7 @@ export const projects: Project[] = [
     stack: ['SvelteKit', 'Go', 'PostgreSQL', 'PostGIS'],
     year: '2026',
     category: 'Civic Tech',
-    url: 'https://pantauanggaran.ryanprayoga.dev',
-    source: 'https://github.com/ryan-prayoga/pantau-anggaran',
+    destination: { kind: 'site', href: 'https://pantauanggaran.ryanprayoga.dev' },
     thumbnail: '/v3/projects/pantauanggaran.webp',
   },
   {
@@ -62,8 +58,7 @@ export const projects: Project[] = [
     stack: ['Go Fiber', 'SvelteKit', 'PostgreSQL', 'PostGIS', 'MapLibre'],
     year: '2026',
     category: 'Civic Tech',
-    url: 'https://jedug.id',
-    source: 'https://github.com/ryan-prayoga/jedug_v2',
+    destination: { kind: 'site', href: 'https://jedug.id' },
     thumbnail: '/v3/projects/jedug.webp',
   },
   {
@@ -73,8 +68,7 @@ export const projects: Project[] = [
     stack: ['TypeScript', 'OpenAPI', 'AST Parsing', 'Vitest'],
     year: '2026',
     category: 'Developer Tooling',
-    url: 'https://www.npmjs.com/package/brunogen',
-    source: 'https://github.com/ryan-prayoga/brunogen',
+    destination: { kind: 'site', href: 'https://www.npmjs.com/package/brunogen' },
   },
   {
     name: 'MessHub',
@@ -83,8 +77,7 @@ export const projects: Project[] = [
     stack: ['Go', 'SvelteKit', 'WebSocket', 'PostgreSQL'],
     year: '2026',
     category: 'Realtime Product',
-    url: 'https://messhub.ryanprayoga.dev',
-    source: 'https://github.com/ryan-prayoga/messhub',
+    destination: { kind: 'site', href: 'https://messhub.ryanprayoga.dev' },
     thumbnail: '/v3/projects/messhub.webp',
   },
   {
@@ -94,7 +87,7 @@ export const projects: Project[] = [
     stack: ['SvelteKit', 'Suwayomi', 'Keiyoushi'],
     year: '2026',
     category: 'Media Product',
-    source: 'https://github.com/ryan-prayoga/komik-reader',
+    destination: { kind: 'source', href: 'https://github.com/ryan-prayoga/komik-reader' },
     thumbnail: '/v3/projects/komikreader.webp',
   },
   {
@@ -104,7 +97,11 @@ export const projects: Project[] = [
     stack: ['Swift', 'SwiftUI', 'PostgreSQL', 'MySQL'],
     year: '2026',
     category: 'Developer Tooling',
-    source: 'https://github.com/ryan-prayoga/openrowdb',
+    destination: { kind: 'source', href: 'https://github.com/ryan-prayoga/openrowdb' },
     thumbnail: '/v3/projects/openrowdb.webp',
   },
-];
+] as const satisfies readonly ProjectCatalogEntry[];
+
+export type ProjectSlug = (typeof projects)[number]['slug'];
+export type Project = ProjectCatalogEntry & { readonly slug: ProjectSlug };
+export const portfolioProjects: readonly Project[] = projects;

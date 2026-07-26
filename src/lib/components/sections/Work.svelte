@@ -1,9 +1,9 @@
 <script lang="ts">
   import { localeStore } from '$lib/stores/locale.svelte';
   import { uiCopy } from '$lib/data/uiCopy';
-  import { projects } from '$lib/data/projects';
+  import { portfolioProjects } from '$lib/data/projects';
   import { projectCopy } from '$lib/data/projectCopy';
-  import { beacons } from '$lib/data/beacons';
+  import { projectBeacons } from '$lib/data/beacons';
   import { reveal } from '$lib/actions/reveal';
   import { scrollStack } from '$lib/motion/scrollStack';
   import { scramble } from '$lib/motion/scramble';
@@ -12,10 +12,6 @@
 
   const t = $derived(uiCopy[localeStore.value]);
   const projectDescriptions = $derived(projectCopy[localeStore.value]);
-
-  function cityOf(slug: string) {
-    return beacons.find((b) => b.slug === slug)?.city ?? 'Nusantara';
-  }
 
   // Mock terminal untuk project tanpa thumbnail
   const termMock: Record<string, { cmd: string; out: string[] }> = {
@@ -36,25 +32,20 @@
   </div>
 
   <div class="stack" use:scrollStack>
-    {#each projects as project, i (project.slug)}
+    {#each portfolioProjects as project, i (project.slug)}
       {@const desc = projectDescriptions[project.slug]}
       {@const base = project.thumbnail?.replace('.webp', '')}
       <article class="stack-card">
-        <a
-          class="card"
-          href={project.url ?? project.source ?? '#'}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a class="card" href={project.destination.href} target="_blank" rel="noopener noreferrer">
           <div class="card-info">
             <p class="mono meta">
               BCN-0{i + 1}
               <i class="dot" aria-hidden="true"></i>
-              {cityOf(project.slug)}
+              {projectBeacons[project.slug].city}
               <span class="year">{project.year}</span>
             </p>
             <h3 class="name">{project.name}</h3>
-            <p class="desc">{desc?.summary ?? project.category}</p>
+            <p class="desc">{desc.summary}</p>
             <ul class="tags">
               {#each project.stack as tech (tech)}
                 <li>{tech}</li>
@@ -83,7 +74,8 @@
           {:else}
             {@const mock = termMock[project.slug]}
             <div class="card-thumb terminal mono" aria-hidden="true">
-              <span class="prompt">$</span> {mock?.cmd ?? project.name.toLowerCase()}<br />
+              <span class="prompt">$</span>
+              {mock?.cmd ?? project.name.toLowerCase()}<br />
               {#each mock?.out ?? [] as line (line)}
                 <span class="out">{line}</span><br />
               {/each}
@@ -259,11 +251,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--color-navy) 45%, transparent),
-      transparent 30%
-    );
+    background: linear-gradient(90deg, color-mix(in srgb, var(--color-navy) 45%, transparent), transparent 30%);
     pointer-events: none;
   }
   .card-thumb.terminal {

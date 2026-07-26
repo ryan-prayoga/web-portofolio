@@ -5,28 +5,28 @@ export interface RevealOptions {
 }
 
 export function reveal(node: HTMLElement, options: RevealOptions = {}) {
-  if (typeof IntersectionObserver === "undefined") {
-    node.classList.add("in");
+  if (typeof IntersectionObserver === 'undefined') {
+    node.classList.add('in');
     return;
   }
 
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce) {
-    node.classList.add("in");
+    node.classList.add('in');
     return;
   }
 
-  node.classList.add("reveal");
+  node.classList.add('reveal');
   const io = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) {
-          entry.target.classList.add("in");
+          entry.target.classList.add('in');
           io.unobserve(entry.target);
         }
       }
     },
-    { threshold: options.threshold ?? 0.12, rootMargin: "0px 0px -8% 0px" },
+    { threshold: options.threshold ?? 0.12, rootMargin: '0px 0px -8% 0px' },
   );
 
   io.observe(node);

@@ -63,7 +63,8 @@
     <span class="wf-label">{t.method}</span>
     <span class="wf-path">
       {#each workflow as step, i (step)}
-        <span class="wf-step">{step}</span>{#if i < workflow.length - 1}<span class="wf-sep" aria-hidden="true">→</span>{/if}
+        <span class="wf-step">{step}</span>{#if i < workflow.length - 1}<span class="wf-sep" aria-hidden="true">→</span
+          >{/if}
       {/each}
     </span>
   </div>

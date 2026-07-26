@@ -1,0 +1,16 @@
+node_modules
+.svelte-kit
+build
+coverage
+playwright-report
+test-results
+artifacts
+.omo
+**/*.avif
+**/*.webp
+**/*.png
+**/*.jpg
+**/*.jpeg
+**/*.ico
+**/*.pdf
+**/*.woff2

@@ -59,14 +59,7 @@
         srcset="/photo/ryan-480.webp 480w, /photo/ryan-700.webp 708w"
         sizes="(max-width: 760px) 60vw, 22rem"
       />
-      <img
-        src="/photo/ryan-700.jpg"
-        alt="Ryan Prayoga"
-        width="708"
-        height="886"
-        loading="lazy"
-        decoding="async"
-      />
+      <img src="/photo/ryan-700.jpg" alt="Ryan Prayoga" width="708" height="886" loading="lazy" decoding="async" />
     </picture>
     <span class="glare" aria-hidden="true"></span>
     <figcaption class="chrome mono">

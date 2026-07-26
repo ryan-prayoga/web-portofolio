@@ -1,9 +1,6 @@
 // Angka menghitung naik saat masuk viewport. Format didukung: "4+", "11+", "5".
 export function countUp(node: HTMLElement, opts: { duration?: number } = {}) {
-  if (
-    typeof window === 'undefined' ||
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) {
+  if (typeof window === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     return;
   }
 
@@ -30,7 +27,7 @@ export function countUp(node: HTMLElement, opts: { duration?: number } = {}) {
       };
       raf = requestAnimationFrame(tick);
     },
-    { threshold: 0.6 }
+    { threshold: 0.6 },
   );
   io.observe(node);
 

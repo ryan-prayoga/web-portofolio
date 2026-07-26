@@ -1,4 +1,5 @@
-export type Locale = 'en' | 'id';
+import type { Locale } from '$lib/data/uiCopy';
+export type { Locale } from '$lib/data/uiCopy';
 
 let current = $state<Locale>('en');
 

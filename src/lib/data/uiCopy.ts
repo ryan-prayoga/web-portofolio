@@ -1,6 +1,7 @@
 import { profile } from './profile';
 
-export type Locale = 'en' | 'id';
+export const locales = ['en', 'id'] as const;
+export type Locale = (typeof locales)[number];
 
 export interface UiCopy {
   nav: { work: string; about: string; stack: string; contact: string };
@@ -45,7 +46,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
     downloadCv: 'Download CV',
     contact: 'Contact',
     proof: ['Years experience', 'Engineers led', 'Systems shipped'],
-    ticker: '11 SYSTEMS ONLINE · 5 ENGINEERS LED · 4+ YRS IN PRODUCTION',
+    ticker: `11 SYSTEMS ONLINE · ${profile.teamSize} ENGINEERS LED · 4+ YRS IN PRODUCTION`,
     badge: { role: 'FULL-STACK · LEAD', loc: 'TANGERANG, ID' },
     aboutKicker: 'Operator File',
     aboutHeading: 'From software craft to delivery leadership.',
@@ -67,8 +68,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
     ],
     workKicker: 'Systems Index',
     workHeading: 'Selected work with production weight.',
-    workIntro:
-      'Civic-tech, developer tooling, automation, and deployment systems built for real constraints.',
+    workIntro: 'Civic-tech, developer tooling, automation, and deployment systems built for real constraints.',
     open: 'Open',
     stackKicker: 'Instruments',
     stackHeading: 'How I build systems that keep moving.',
@@ -97,7 +97,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
     downloadCv: 'Unduh CV',
     contact: 'Kontak',
     proof: ['Tahun pengalaman', 'Engineer dipimpin', 'Sistem rilis'],
-    ticker: '11 SISTEM ONLINE · 5 ENGINEER DIPIMPIN · 4+ THN DI PRODUCTION',
+    ticker: `11 SISTEM ONLINE · ${profile.teamSize} ENGINEER DIPIMPIN · 4+ THN DI PRODUCTION`,
     badge: { role: 'FULL-STACK · LEAD', loc: 'TANGERANG, ID' },
     aboutKicker: 'Berkas Operator',
     aboutHeading: 'Dari ngoding langsung ke mimpin tim delivery.',

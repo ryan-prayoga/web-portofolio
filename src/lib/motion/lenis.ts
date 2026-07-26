@@ -9,10 +9,13 @@ export function createLenis() {
   const tick = (time: number) => lenis.raf(time * 1000);
   gsap.ticker.add(tick);
   gsap.ticker.lagSmoothing(0);
+  let active = true;
 
   return {
     lenis,
     destroy() {
+      if (!active) return;
+      active = false;
       gsap.ticker.remove(tick);
       lenis.destroy();
     },

@@ -4,14 +4,14 @@ on:
   push:
     branches: [main]
     paths:
-      - "src/**"
-      - "static/**"
-      - "package.json"
-      - "package-lock.json"
-      - "svelte.config.js"
-      - "vite.config.ts"
-      - "tsconfig.json"
-      - ".github/workflows/deploy.yml"
+      - 'src/**'
+      - 'static/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'svelte.config.js'
+      - 'vite.config.ts'
+      - 'tsconfig.json'
+      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
 jobs:

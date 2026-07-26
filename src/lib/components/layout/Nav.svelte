@@ -14,12 +14,81 @@
 
   let scrolled = $state(false);
   let menuOpen = $state(false);
+  let toggleEl: HTMLButtonElement | undefined = $state();
+  let menuEl: HTMLDivElement | undefined = $state();
+  let closeFocus: 'toggle' | 'brand' | 'none' = 'toggle';
+
+  const toggleId = 'mobile-menu-toggle';
+  const menuId = 'mobile-menu-dialog';
 
   $effect(() => {
     const onScroll = () => (scrolled = window.scrollY > 24);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  });
+
+  $effect(() => {
+    if (!menuOpen || !toggleEl || !menuEl) return;
+
+    const toggle = toggleEl;
+    const menu = menuEl;
+    const background = document.getElementById('page-background');
+    const brand = document.querySelector<HTMLAnchorElement>('.nav .brand');
+    const navControls = document.querySelectorAll<HTMLElement>(
+      '.nav > :not(.nav-actions), .nav-actions > :not(.menu-btn)',
+    );
+    const previousBodyStyle = document.body.getAttribute('style');
+    const desktop = window.matchMedia('(min-width: 761px)');
+    const menuLinks = [...menu.querySelectorAll<HTMLAnchorElement>('a[href]')];
+
+    background?.setAttribute('inert', '');
+    navControls.forEach((control) => control.setAttribute('inert', ''));
+    document.body.style.overflow = 'hidden';
+    menuLinks[0]?.focus();
+
+    const closeForBreakpoint = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        closeFocus = 'brand';
+        menuOpen = false;
+      }
+    };
+    const prepareForTeardown = () => {
+      closeFocus = 'none';
+    };
+    const containKeyboard = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        menuOpen = false;
+        return;
+      }
+      if (event.key !== 'Tab') return;
+
+      const focusable: HTMLElement[] = [toggle, ...menuLinks];
+      const currentIndex = focusable.indexOf(document.activeElement as HTMLElement);
+      const nextIndex = event.shiftKey
+        ? (currentIndex - 1 + focusable.length) % focusable.length
+        : (currentIndex + 1) % focusable.length;
+      event.preventDefault();
+      focusable[nextIndex]?.focus();
+    };
+
+    desktop.addEventListener('change', closeForBreakpoint);
+    window.addEventListener('portfolio:test-teardown', prepareForTeardown, { capture: true });
+    document.addEventListener('keydown', containKeyboard);
+
+    return () => {
+      desktop.removeEventListener('change', closeForBreakpoint);
+      window.removeEventListener('portfolio:test-teardown', prepareForTeardown, { capture: true });
+      document.removeEventListener('keydown', containKeyboard);
+      background?.removeAttribute('inert');
+      navControls.forEach((control) => control.removeAttribute('inert'));
+      if (previousBodyStyle === null) document.body.removeAttribute('style');
+      else document.body.setAttribute('style', previousBodyStyle);
+      if (closeFocus === 'brand') brand?.focus();
+      if (closeFocus === 'toggle') toggle.focus();
+      closeFocus = 'toggle';
+    };
   });
 
   function setLocale(value: Locale) {
@@ -30,6 +99,7 @@
     return (event: Event) => {
       event.preventDefault();
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      closeFocus = 'toggle';
       menuOpen = false;
     };
   }
@@ -49,19 +119,48 @@
   <div class="nav-actions">
     <span class="status mono"><i></i>{t.available}</span>
     <div class="lang" role="group" aria-label="Language">
-      <button type="button" class:active={locale === 'en'} aria-pressed={locale === 'en'} onclick={() => setLocale('en')}>EN</button>
+      <button
+        type="button"
+        class:active={locale === 'en'}
+        aria-pressed={locale === 'en'}
+        onclick={() => setLocale('en')}>EN</button
+      >
       <span aria-hidden="true">/</span>
-      <button type="button" class:active={locale === 'id'} aria-pressed={locale === 'id'} onclick={() => setLocale('id')}>ID</button>
+      <button
+        type="button"
+        class:active={locale === 'id'}
+        aria-pressed={locale === 'id'}
+        onclick={() => setLocale('id')}>ID</button
+      >
     </div>
     <a class="nav-cv" href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'} download>CV ↗</a>
-    <button class="menu-btn" type="button" onclick={() => (menuOpen = !menuOpen)} aria-label="Toggle menu" aria-expanded={menuOpen}>
+    <button
+      id={toggleId}
+      bind:this={toggleEl}
+      class="menu-btn"
+      type="button"
+      onclick={() => {
+        closeFocus = 'toggle';
+        menuOpen = !menuOpen;
+      }}
+      aria-label="Toggle menu"
+      aria-expanded={menuOpen}
+      aria-controls={menuId}
+    >
       {menuOpen ? 'Close' : 'Menu'}
     </button>
   </div>
 </nav>
 
 {#if menuOpen}
-  <div class="mobile-menu">
+  <div
+    id={menuId}
+    bind:this={menuEl}
+    class="mobile-menu"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Mobile navigation"
+  >
     {#each navItems as item, i (item.href)}
       <a href={item.href} onclick={goTo(item.href.slice(1))}>
         <span>0{i + 1}</span>{item.label}
@@ -90,7 +189,9 @@
     gap: 1rem;
     padding: 0.85rem clamp(1.25rem, 5vw, 4rem);
     border-bottom: 1px solid transparent;
-    transition: background-color 0.25s, border-color 0.25s;
+    transition:
+      background-color 0.25s,
+      border-color 0.25s;
   }
   .nav.scrolled {
     background: color-mix(in srgb, var(--color-night) 82%, transparent);

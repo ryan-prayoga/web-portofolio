@@ -24,10 +24,7 @@ export interface ScrollStackOptions {
 }
 
 export function scrollStack(node: HTMLElement, options: ScrollStackOptions = {}) {
-  if (
-    typeof window === 'undefined' ||
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) {
+  if (typeof window === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     return;
   }
 

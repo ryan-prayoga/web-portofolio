@@ -1,0 +1,181 @@
+import { readFileSync, readdirSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { describe, expect, it } from 'vitest';
+import { beacons } from '../../src/lib/data/beacons';
+import { portfolioContractErrors, type PortfolioContractInput } from '../../src/lib/data/portfolioContract';
+import { profile } from '../../src/lib/data/profile';
+import { projectCopy } from '../../src/lib/data/projectCopy';
+import { projects } from '../../src/lib/data/projects';
+import { locales, uiCopy } from '../../src/lib/data/uiCopy';
+
+const assetDirectory = resolve(process.cwd(), 'static/v3/projects');
+const assets = new Set(readdirSync(assetDirectory).map((file) => `/v3/projects/${file}`));
+const source = (path: string): string => readFileSync(resolve(process.cwd(), path), 'utf8');
+
+function productionInput(): PortfolioContractInput {
+  return {
+    projects,
+    copy: projectCopy,
+    beacons: beacons.map(({ kind, slug }) => ({ kind, slug })),
+    assets,
+    teamSize: profile.teamSize,
+    renderedTeamSizes: [
+      Number(uiCopy.en.ticker.match(/\d+(?= ENGINEERS LED)/)?.[0]),
+      Number(uiCopy.id.ticker.match(/\d+(?= ENGINEER DIPIMPIN)/)?.[0]),
+      profile.teamSize,
+    ],
+  };
+}
+
+describe('portfolio content contract', () => {
+  it('keeps Locale defined only in uiCopy and imported by the store', () => {
+    // Given
+    const localeDeclarations = readdirSync(resolve(process.cwd(), 'src/lib'), { recursive: true })
+      .filter((entry) => typeof entry === 'string' && /\.(?:ts|svelte\.ts)$/.test(entry))
+      .map((entry) => source(`src/lib/${entry}`))
+      .filter((contents) => /(?:type|interface)\s+Locale\b/.test(contents));
+
+    // When
+    const storeSource = source('src/lib/stores/locale.svelte.ts');
+
+    // Then
+    expect(localeDeclarations).toHaveLength(1);
+    expect(storeSource).toContain("import type { Locale } from '$lib/data/uiCopy';");
+  });
+
+  it('keeps project destinations exhaustive without a Work fallback', () => {
+    // Given
+    const projectSource = source('src/lib/data/projects.ts');
+    const workSource = source('src/lib/components/sections/Work.svelte');
+
+    // When
+    const hasRequiredDestination = /readonly destination:/.test(projectSource);
+    const hasSiteDestination = /\{ readonly kind: 'site'; readonly href: string \}/.test(projectSource);
+    const hasSourceDestination = /\{ readonly kind: 'source'; readonly href: string \}/.test(projectSource);
+
+    // Then
+    expect([hasRequiredDestination, hasSiteDestination, hasSourceDestination]).toEqual([true, true, true]);
+    expect(workSource).toContain('project.destination.href');
+    expect(workSource).not.toMatch(/project\.url\s*\?\?|project\.source\s*\?\?|\?\?\s*["']#["']/);
+  });
+
+  it('keeps focused thresholds at 80 lines/functions/statements and 75 branches', () => {
+    // Given
+    const configSource = source('vitest.config.ts');
+
+    // When
+    const threshold = configSource.match(/\{ statements: (\d+), branches: (\d+), functions: (\d+), lines: (\d+) \}/);
+
+    // Then
+    expect(threshold?.slice(1)).toEqual(['80', '75', '80', '80']);
+  });
+
+  it('passes for nine projects and two exact locales', () => {
+    // Given
+    const input = productionInput();
+
+    // When
+    const errors = portfolioContractErrors(input);
+
+    // Then
+    expect(projects).toHaveLength(9);
+    expect(locales).toEqual(['en', 'id']);
+    expect(errors).toEqual([]);
+  });
+
+  it.each([
+    {
+      name: 'missing copy key',
+      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
+        ...input,
+        copy: { ...input.copy, en: Object.fromEntries(Object.entries(input.copy.en).slice(1)) },
+      }),
+      message: 'en copy missing slugs: cinematix',
+    },
+    {
+      name: 'extra copy key',
+      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
+        ...input,
+        copy: { ...input.copy, id: { ...input.copy.id, invented: {} } },
+      }),
+      message: 'id copy has extra slugs: invented',
+    },
+    {
+      name: 'duplicate slug',
+      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
+        ...input,
+        projects: [
+          ...input.projects,
+          input.projects[0] ?? { slug: 'cinematix', destination: { kind: 'site', href: 'https://example.com' } },
+        ],
+      }),
+      message: 'duplicate project slug: cinematix',
+    },
+    {
+      name: 'missing beacon',
+      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
+        ...input,
+        beacons: input.beacons.filter((beacon) => beacon.slug !== 'pildun'),
+      }),
+      message: 'expected exactly one project beacon for pildun; found 0',
+    },
+    {
+      name: 'duplicate beacon',
+      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
+        ...input,
+        beacons: [...input.beacons, { kind: 'project', slug: 'pildun' }],
+      }),
+      message: 'expected exactly one project beacon for pildun; found 2',
+    },
+    {
+      name: 'duplicate HQ',
+      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
+        ...input,
+        beacons: [...input.beacons, { kind: 'hq', slug: 'hq-copy' }],
+      }),
+      message: 'expected exactly one HQ beacon; found 2',
+    },
+    {
+      name: 'invalid destination',
+      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
+        ...input,
+        projects: [{ slug: 'broken', destination: { kind: 'site', href: 'http://example.com' } }],
+        copy: { en: { broken: {} }, id: { broken: {} } },
+        beacons: [input.beacons[0] ?? { kind: 'hq', slug: 'hq' }, { kind: 'project', slug: 'broken' }],
+      }),
+      message: 'invalid destination for broken',
+    },
+    {
+      name: 'invalid source',
+      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
+        ...input,
+        projects: [{ slug: 'broken', destination: { kind: 'source', href: 'https://gitlab.com/owner/repo' } }],
+        copy: { en: { broken: {} }, id: { broken: {} } },
+        beacons: [input.beacons[0] ?? { kind: 'hq', slug: 'hq' }, { kind: 'project', slug: 'broken' }],
+      }),
+      message: 'invalid source for broken',
+    },
+    {
+      name: 'missing image variant',
+      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
+        ...input,
+        assets: new Set([...input.assets].filter((asset) => asset !== '/v3/projects/cinematix-sm.avif')),
+      }),
+      message: 'missing thumbnail variant for cinematix: /v3/projects/cinematix-sm.avif',
+    },
+    {
+      name: 'team-size drift',
+      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({ ...input, renderedTeamSizes: [5] }),
+      message: 'team size drift: expected 4; found 5',
+    },
+  ])('rejects $name with a specific message', ({ mutate, message }) => {
+    // Given
+    const input = mutate(productionInput());
+
+    // When
+    const errors = portfolioContractErrors(input);
+
+    // Then
+    expect(errors).toContain(message);
+  });
+});

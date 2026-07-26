@@ -1,25 +1,25 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* ═══════════════════════════════════════════════
    SELF-HOSTED FONTS (latin subset, woff2)
    ═══════════════════════════════════════════════ */
 @font-face {
-  font-family: "Bricolage Grotesque";
-  src: url("/fonts/bricolage.woff2") format("woff2");
+  font-family: 'Bricolage Grotesque';
+  src: url('/fonts/bricolage.woff2') format('woff2');
   font-weight: 200 800;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Archivo";
-  src: url("/fonts/archivo.woff2") format("woff2");
+  font-family: 'Archivo';
+  src: url('/fonts/archivo.woff2') format('woff2');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "JetBrains Mono";
-  src: url("/fonts/jetbrains-mono.woff2") format("woff2");
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/jetbrains-mono.woff2') format('woff2');
   font-weight: 100 800;
   font-style: normal;
   font-display: swap;
@@ -40,9 +40,9 @@
   --color-ember: #f09e58;
   --color-ember-deep: #c96f2e;
 
-  --font-display: "Bricolage Grotesque", "Archivo", system-ui, sans-serif;
-  --font-body: "Archivo", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: 'Bricolage Grotesque', 'Archivo', system-ui, sans-serif;
+  --font-body: 'Archivo', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 /* ═══════════════════════════════════════════════
@@ -68,7 +68,7 @@ body {
   background-color: var(--color-night);
   color: var(--color-bone);
   font-family: var(--font-body);
-  font-feature-settings: "tnum" 1;
+  font-feature-settings: 'tnum' 1;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   max-width: 100%;

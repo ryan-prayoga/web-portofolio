@@ -15,7 +15,7 @@
 
   const proof = $derived([
     { value: '4+', label: t.proof[0] },
-    { value: '5', label: t.proof[1] },
+    { value: String(profile.teamSize), label: t.proof[1] },
     { value: '11+', label: t.proof[2] },
   ]);
 
@@ -216,7 +216,11 @@
     letter-spacing: 0.04em;
     color: var(--color-bone);
     text-decoration: none;
-    transition: background-color 0.18s, color 0.18s, border-color 0.18s, transform 0.18s;
+    transition:
+      background-color 0.18s,
+      color 0.18s,
+      border-color 0.18s,
+      transform 0.18s;
   }
   .btn span {
     transition: transform 0.18s;
@@ -250,12 +254,7 @@
   }
   /* kilau menyapu teks ticker */
   .ticker.shiny {
-    background: linear-gradient(
-      100deg,
-      var(--color-ember) 40%,
-      var(--color-bone) 50%,
-      var(--color-ember) 60%
-    );
+    background: linear-gradient(100deg, var(--color-ember) 40%, var(--color-bone) 50%, var(--color-ember) 60%);
     background-size: 250% 100%;
     -webkit-background-clip: text;
     background-clip: text;

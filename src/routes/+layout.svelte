@@ -8,31 +8,51 @@
   import Cursor from '$lib/components/layout/Cursor.svelte';
 
   let { children } = $props();
+  let appMounted = $state(true);
 
   onMount(() => {
     localeStore.init();
-    motionFlags.init();
+    const releaseMotionFlags = motionFlags.init();
 
-    if (motionFlags.reduced) return;
+    const enableTestTeardown = new URLSearchParams(window.location.search).has('test-teardown');
+    const teardownApp = () => (appMounted = false);
+    if (enableTestTeardown) window.addEventListener('portfolio:test-teardown', teardownApp, { once: true });
 
     let destroyLenis: (() => void) | undefined;
+    const stopLenis = () => {
+      const destroy = destroyLenis;
+      destroyLenis = undefined;
+      destroy?.();
+    };
+    const unsubscribeMotion = motionFlags.subscribe(() => {
+      if (motionFlags.reduced) stopLenis();
+    });
     let cancelled = false;
-    (async () => {
-      // Lenis hanya di pointer halus — touch pakai scroll native
-      if (motionFlags.coarse) return;
-      const { createLenis } = await import('$lib/motion/lenis');
-      if (cancelled) return;
-      destroyLenis = createLenis().destroy;
-    })();
+    if (!motionFlags.reduced) {
+      (async () => {
+        // Lenis hanya di pointer halus — touch pakai scroll native
+        if (motionFlags.coarse) return;
+        const { createLenis } = await import('$lib/motion/lenis');
+        if (cancelled || motionFlags.reduced) return;
+        destroyLenis = createLenis().destroy;
+      })();
+    }
 
     return () => {
       cancelled = true;
-      destroyLenis?.();
+      unsubscribeMotion();
+      stopLenis();
+      releaseMotionFlags();
+      if (enableTestTeardown) window.removeEventListener('portfolio:test-teardown', teardownApp);
     };
   });
 </script>
 
-<Nav />
-{@render children()}
-<Footer />
-<Cursor />
+{#if appMounted}
+  <Nav />
+  <div id="page-background">
+    {@render children()}
+    <Footer />
+    <Cursor />
+  </div>
+{/if}

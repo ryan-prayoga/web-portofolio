@@ -46,13 +46,7 @@
 </script>
 
 {#if enabled}
-  <div
-    class="ring"
-    class:hovering
-    class:visible
-    bind:this={ringEl}
-    aria-hidden="true"
-  ></div>
+  <div class="ring" class:hovering class:visible bind:this={ringEl} aria-hidden="true"></div>
 {/if}
 
 <style>
@@ -68,7 +62,10 @@
     border-radius: 50%;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.25s, transform 0.25s ease, background-color 0.25s;
+    transition:
+      opacity 0.25s,
+      transform 0.25s ease,
+      background-color 0.25s;
   }
   .ring.visible {
     opacity: 1;

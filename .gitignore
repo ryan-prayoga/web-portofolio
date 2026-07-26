@@ -25,6 +25,13 @@ vite.config.ts.timestamp-*
 # Playwright
 .playwright*
 output/
+playwright-report/
+test-results/
+
+# Test and coverage reports
+coverage/
+artifacts/
+.omo/
 .kilo
 .vscode
 .claude

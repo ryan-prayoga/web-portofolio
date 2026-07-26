@@ -3,10 +3,7 @@
 const GLYPHS = '█▓▒░<>/\\|=+*#01';
 
 export function scramble(node: HTMLElement, opts: { duration?: number } = {}) {
-  if (
-    typeof window === 'undefined' ||
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) {
+  if (typeof window === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     return;
   }
 
@@ -36,7 +33,7 @@ export function scramble(node: HTMLElement, opts: { duration?: number } = {}) {
       };
       raf = requestAnimationFrame(tick);
     },
-    { threshold: 0.5 }
+    { threshold: 0.5 },
   );
   io.observe(node);
 

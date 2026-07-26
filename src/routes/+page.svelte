@@ -26,21 +26,38 @@
     address: { '@type': 'PostalAddress', addressLocality: 'Tangerang', addressCountry: 'ID' },
     sameAs: [github?.url, linkedin?.url].filter(Boolean),
     email: email?.label,
-    knowsAbout: ['Full-Stack Development', 'SvelteKit', 'Go', 'Laravel', 'PostgreSQL', 'DevOps', 'Technical Leadership'],
+    knowsAbout: [
+      'Full-Stack Development',
+      'SvelteKit',
+      'Go',
+      'Laravel',
+      'PostgreSQL',
+      'DevOps',
+      'Technical Leadership',
+    ],
   };
 </script>
 
 <svelte:head>
   <title>Ryan Prayoga — Full-Stack Engineer & Team Lead</title>
-  <meta name="description" content="Portfolio Ryan Prayoga: Full-Stack Engineer dan Team Lead — enterprise systems, civic-tech, developer tooling, deployment workflow, S1 Informatika Universitas Pasundan." />
+  <meta
+    name="description"
+    content="Portfolio Ryan Prayoga: Full-Stack Engineer dan Team Lead — enterprise systems, civic-tech, developer tooling, deployment workflow, S1 Informatika Universitas Pasundan."
+  />
   <meta name="author" content="Ryan Prayoga" />
-  <meta name="keywords" content="Ryan Prayoga, Full-Stack Engineer, Team Lead, SvelteKit, Go, Laravel, PostgreSQL, Universitas Pasundan, Indonesia" />
+  <meta
+    name="keywords"
+    content="Ryan Prayoga, Full-Stack Engineer, Team Lead, SvelteKit, Go, Laravel, PostgreSQL, Universitas Pasundan, Indonesia"
+  />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href={PAGE_URL} />
   <meta property="og:type" content="profile" />
   <meta property="og:site_name" content="Ryan Prayoga" />
   <meta property="og:title" content="Ryan Prayoga — Full-Stack Engineer & Team Lead" />
-  <meta property="og:description" content="Selected work, stack, and delivery method — full-stack engineer & team lead based in Tangerang, Indonesia." />
+  <meta
+    property="og:description"
+    content="Selected work, stack, and delivery method — full-stack engineer & team lead based in Tangerang, Indonesia."
+  />
   <meta property="og:url" content={PAGE_URL} />
   <meta property="og:image" content={OG_IMAGE} />
   <meta property="og:image:width" content="1200" />
@@ -48,7 +65,10 @@
   <meta property="og:image:alt" content="Ryan Prayoga — Full-Stack Engineer & Team Lead" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Ryan Prayoga — Full-Stack Engineer & Team Lead" />
-  <meta name="twitter:description" content="Full-Stack Engineer & Team Lead — enterprise systems, civic-tech, developer tooling, deployment workflows." />
+  <meta
+    name="twitter:description"
+    content="Full-Stack Engineer & Team Lead — enterprise systems, civic-tech, developer tooling, deployment workflows."
+  />
   <meta name="twitter:image" content={OG_IMAGE} />
   {@html `<script type="application/ld+json">${JSON.stringify(personJsonLd)}</` + `script>`}
 </svelte:head>

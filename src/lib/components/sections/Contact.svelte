@@ -89,7 +89,9 @@
     background-size: 0% 3px;
     background-position: 0 100%;
     background-repeat: no-repeat;
-    transition: background-size 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s;
+    transition:
+      background-size 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.3s;
     padding-bottom: 0.08em;
   }
   .email:hover .email-addr,
@@ -110,7 +112,10 @@
     border: 1px solid var(--color-slate);
     color: var(--color-bone);
     text-decoration: none;
-    transition: border-color 0.18s, color 0.18s, transform 0.18s;
+    transition:
+      border-color 0.18s,
+      color 0.18s,
+      transform 0.18s;
   }
   .channels a:hover {
     border-color: var(--color-ember);

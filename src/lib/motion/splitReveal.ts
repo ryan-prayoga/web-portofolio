@@ -2,10 +2,7 @@
 // Pasang di elemen yang di-recreate saat locale ganti ({#key locale}) supaya
 // SplitText selalu split teks yang benar.
 export function scrubWords(node: HTMLElement) {
-  if (
-    typeof window === 'undefined' ||
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) {
+  if (typeof window === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     return;
   }
 
@@ -31,7 +28,7 @@ export function scrubWords(node: HTMLElement) {
           end: 'bottom 40%',
           scrub: true,
         },
-      }
+      },
     );
     trigger = tween.scrollTrigger ?? undefined;
   })();

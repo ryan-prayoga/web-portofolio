@@ -1,12 +1,14 @@
 <script lang="ts">
   import { Canvas } from '@threlte/core';
   import Scene from './Scene.svelte';
+  import type { SceneStatusCallback } from './sceneLifecycle';
 
   let {
     paused = false,
     scrollProgress = 0,
     pointBudget = 5000,
-  }: { paused?: boolean; scrollProgress?: number; pointBudget?: number } = $props();
+    onStatus,
+  }: { paused?: boolean; scrollProgress?: number; pointBudget?: number; onStatus?: SceneStatusCallback } = $props();
 
   const dpr =
     typeof window === 'undefined'
@@ -15,5 +17,5 @@
 </script>
 
 <Canvas {dpr}>
-  <Scene {paused} {scrollProgress} {pointBudget} />
+  <Scene {paused} {scrollProgress} {pointBudget} {onStatus} />
 </Canvas>

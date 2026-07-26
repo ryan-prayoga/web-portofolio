@@ -18,7 +18,7 @@ export const GET: RequestHandler = async () => {
     <lastmod>${today}</lastmod>
     <changefreq>${r.changefreq}</changefreq>
     <priority>${r.priority}</priority>
-  </url>`
+  </url>`,
     )
     .join('\n');
 
