@@ -13,8 +13,6 @@ export type PortfolioContractInput = {
   readonly caseStudies: Readonly<Record<string, readonly string[]>>;
   readonly featuredCount: number;
   readonly assets: ReadonlySet<string>;
-  readonly teamSize: number;
-  readonly renderedTeamSizes: readonly number[];
 };
 
 export function portfolioContractErrors(input: PortfolioContractInput): readonly string[] {
@@ -57,9 +55,6 @@ export function portfolioContractErrors(input: PortfolioContractInput): readonly
     }
   }
 
-  for (const rendered of input.renderedTeamSizes) {
-    if (rendered !== input.teamSize) errors.push(`team size drift: expected ${input.teamSize}; found ${rendered}`);
-  }
   return errors;
 }
 

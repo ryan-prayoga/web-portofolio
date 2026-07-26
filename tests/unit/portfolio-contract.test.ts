@@ -3,10 +3,9 @@ import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { caseStudies } from '../../src/lib/data/caseStudies';
 import { portfolioContractErrors, type PortfolioContractInput } from '../../src/lib/data/portfolioContract';
-import { profile } from '../../src/lib/data/profile';
 import { projectCopy } from '../../src/lib/data/projectCopy';
 import { projects } from '../../src/lib/data/projects';
-import { locales, uiCopy } from '../../src/lib/data/uiCopy';
+import { locales } from '../../src/lib/data/uiCopy';
 
 const assetDirectory = resolve(process.cwd(), 'static/v3/projects');
 const assets = new Set(readdirSync(assetDirectory).map((file) => `/v3/projects/${file}`));
@@ -21,12 +20,6 @@ function productionInput(): PortfolioContractInput {
     ),
     featuredCount: 3,
     assets,
-    teamSize: profile.teamSize,
-    renderedTeamSizes: [
-      Number(uiCopy.en.ticker.match(/\d+(?= ENGINEERS LED)/)?.[0]),
-      Number(uiCopy.id.ticker.match(/\d+(?= ENGINEER DIPIMPIN)/)?.[0]),
-      profile.teamSize,
-    ],
   };
 }
 
@@ -178,11 +171,6 @@ describe('portfolio content contract', () => {
         assets: new Set([...input.assets].filter((asset) => asset !== '/v3/projects/cinematix-sm.avif')),
       }),
       message: 'missing thumbnail variant for cinematix: /v3/projects/cinematix-sm.avif',
-    },
-    {
-      name: 'team-size drift',
-      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({ ...input, renderedTeamSizes: [5] }),
-      message: 'team size drift: expected 4; found 5',
     },
   ])('rejects $name with a specific message', ({ mutate, message }) => {
     // Given

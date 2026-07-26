@@ -1,3 +1,4 @@
+import { featuredProjects } from '$lib/data/projects';
 import type { RequestHandler } from './$types';
 
 export const prerender = true;
@@ -6,6 +7,11 @@ const SITE_URL = 'https://ryanprayoga.dev';
 
 const routes: Array<{ path: string; changefreq: string; priority: string }> = [
   { path: '/', changefreq: 'monthly', priority: '1.0' },
+  ...featuredProjects.map((project) => ({
+    path: `/work/${project.slug}`,
+    changefreq: 'monthly',
+    priority: '0.8',
+  })),
 ];
 
 export const GET: RequestHandler = async () => {

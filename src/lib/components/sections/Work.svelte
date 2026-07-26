@@ -6,309 +6,116 @@
   import { reveal } from '$lib/actions/reveal';
 
   const t = $derived(uiCopy[localeStore.value]);
-  const projectDescriptions = $derived(projectCopy[localeStore.value]);
-
-  // Mock terminal untuk project tanpa thumbnail
-  const termMock: Record<string, { cmd: string; out: string[] }> = {
-    brunogen: {
-      cmd: 'npx brunogen generate',
-      out: ['✓ openapi.yaml → bruno collection', '✓ 42 endpoints · laravel + express + go'],
-    },
-  };
+  const copy = $derived(projectCopy[localeStore.value]);
+  const featured = portfolioProjects.filter((project) => project.featured);
+  const others = portfolioProjects.filter((project) => !project.featured);
 </script>
 
-<section id="work" class="section">
-  <div class="sec-head" use:reveal>
-    <p class="mono idx">SYS/01 — {t.workKicker}</p>
-    <h2>{t.workHeading}</h2>
-    <p class="lead">{t.workIntro}</p>
+<section id="work" class="mx-auto max-w-5xl px-6 py-14" aria-labelledby="work-heading">
+  <div use:reveal>
+    <p class="text-accent font-mono text-xs tracking-wider uppercase">{t.work.label}</p>
+    <h2 id="work-heading" class="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">{t.work.heading}</h2>
+    <p class="text-muted mt-3 max-w-prose leading-relaxed">{t.work.intro}</p>
   </div>
 
-  <div class="stack">
-    {#each portfolioProjects as project, i (project.slug)}
-      {@const desc = projectDescriptions[project.slug]}
+  <div class="mt-10 grid gap-8">
+    {#each featured as project (project.slug)}
       {@const base = project.thumbnail?.replace('.webp', '')}
-      <article class="stack-card" use:reveal>
-        <a class="card" href={project.destination.href} target="_blank" rel="noopener noreferrer">
-          <div class="card-info">
-            <p class="mono meta">
-              IDX-0{i + 1}
-              <i class="dot" aria-hidden="true"></i>
-              {project.category}
-              <span class="year">{project.year}</span>
-            </p>
-            <h3 class="name">{project.name}</h3>
-            <p class="desc">{desc.summary}</p>
-            <ul class="tags">
-              {#each project.stack as tech (tech)}
-                <li>{tech}</li>
-              {/each}
-            </ul>
-            <span class="open mono">{t.open} <span class="arrow" aria-hidden="true">↗</span></span>
+      <article class="border-rule grid overflow-hidden border md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]" use:reveal>
+        <div class="flex min-w-0 flex-col p-6 sm:p-8">
+          <p class="text-muted font-mono text-[0.65rem] tracking-wider uppercase">
+            {project.slug === 'putraselamatmakmur' ? t.work.clientTag : project.category}
+            <span class="text-rule mx-1" aria-hidden="true">/</span>
+            {project.year}
+          </p>
+          <h3 class="mt-3 text-xl font-semibold tracking-tight sm:text-2xl">
+            <a href="/work/{project.slug}" class="hover:text-accent transition-colors">{project.name}</a>
+          </h3>
+          <p class="text-muted mt-3 max-w-prose text-sm leading-relaxed">{copy[project.slug].summary}</p>
+          <ul class="mt-4 flex flex-wrap gap-x-3 gap-y-1">
+            {#each project.stack as tech (tech)}
+              <li class="text-muted font-mono text-[0.65rem] uppercase">{tech}</li>
+            {/each}
+          </ul>
+          <div class="mt-auto flex flex-wrap items-center gap-4 pt-6">
+            <a
+              href="/work/{project.slug}"
+              class="text-accent font-mono text-xs tracking-wide uppercase underline-offset-4 hover:underline"
+            >
+              {t.work.caseStudy} →
+            </a>
+            <a
+              href={project.destination.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline"
+            >
+              {project.destination.kind === 'site' ? t.work.visit : t.work.source} ↗
+            </a>
           </div>
-          {#if base}
-            <picture class="card-thumb">
+        </div>
+        {#if base}
+          <a
+            href="/work/{project.slug}"
+            class="border-rule relative block min-h-52 border-t md:border-t-0 md:border-l"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            <picture>
               <source
                 type="image/avif"
                 srcset="{base}-sm.avif 700w, {base}.avif 1100w"
-                sizes="(max-width: 900px) 92vw, 48vw"
+                sizes="(max-width: 768px) 92vw, 44vw"
               />
               <img
                 src={project.thumbnail}
                 srcset="{base}-sm.webp 700w, {base}.webp 1100w"
-                sizes="(max-width: 900px) 92vw, 48vw"
-                alt="{project.name} preview"
+                sizes="(max-width: 768px) 92vw, 44vw"
+                alt=""
                 width="1100"
                 height="688"
                 loading="lazy"
                 decoding="async"
+                class="absolute inset-0 h-full w-full object-cover object-top-left"
               />
             </picture>
-          {:else}
-            {@const mock = termMock[project.slug]}
-            <div class="card-thumb terminal mono" aria-hidden="true">
-              <span class="prompt">$</span>
-              {mock?.cmd ?? project.name.toLowerCase()}<br />
-              {#each mock?.out ?? [] as line (line)}
-                <span class="out">{line}</span><br />
-              {/each}
-              <span class="cursor">▌</span>
-            </div>
-          {/if}
-        </a>
+          </a>
+        {:else}
+          <div
+            class="border-rule text-muted flex min-h-52 flex-col justify-center border-t p-8 font-mono text-sm leading-7 md:border-t-0 md:border-l"
+            aria-hidden="true"
+          >
+            <span><span class="text-accent">$</span> npx brunogen generate</span>
+            <span>✓ openapi.yaml → bruno collection</span>
+            <span>✓ laravel + express + go adapters</span>
+            <span>✓ mcp server ready</span>
+          </div>
+        {/if}
       </article>
     {/each}
   </div>
+
+  <p class="text-muted mt-14 font-mono text-xs tracking-wider uppercase" use:reveal>{t.work.moreLabel}</p>
+  <div class="border-rule mt-4 grid border-t sm:grid-cols-2" use:reveal>
+    {#each others as project (project.slug)}
+      <a
+        href={project.destination.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group border-rule flex min-w-0 flex-col border-b p-5 transition-colors sm:odd:border-r"
+      >
+        <p class="text-muted font-mono text-[0.65rem] tracking-wider uppercase">{project.category} / {project.year}</p>
+        <h3 class="group-hover:text-accent mt-2 font-semibold tracking-tight transition-colors">
+          {project.name}
+          <span class="text-muted group-hover:text-accent ml-1 text-sm" aria-hidden="true">↗</span>
+        </h3>
+        <p class="text-muted mt-2 text-sm leading-relaxed">{copy[project.slug].summary}</p>
+        <ul class="mt-3 flex flex-wrap gap-x-3 gap-y-1">
+          {#each project.stack as tech (tech)}
+            <li class="text-muted font-mono text-[0.6rem] uppercase">{tech}</li>
+          {/each}
+        </ul>
+      </a>
+    {/each}
+  </div>
 </section>
-
-<style>
-  .mono {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .section {
-    padding: clamp(4rem, 10vw, 8.5rem) clamp(1.25rem, 5vw, 4rem);
-    border-top: 1px solid color-mix(in srgb, var(--color-slate) 55%, transparent);
-  }
-  .lead {
-    color: var(--color-greige);
-    font-size: clamp(1rem, 1.5vw, 1.2rem);
-    line-height: 1.55;
-    max-width: 38ch;
-  }
-  .sec-head {
-    display: grid;
-    grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
-    gap: clamp(1rem, 3vw, 3rem);
-    align-items: end;
-    margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
-  }
-  .sec-head .idx {
-    color: var(--color-ember);
-    grid-column: 1;
-  }
-  .sec-head h2 {
-    grid-column: 1;
-    margin: 0.8rem 0 0;
-    font-family: var(--font-display);
-    font-size: clamp(1.9rem, 4.5vw, 3.6rem);
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: -0.03em;
-    max-width: 16ch;
-    color: var(--color-bone);
-  }
-  .sec-head .lead {
-    grid-column: 2;
-    align-self: end;
-  }
-
-  /* ── PROJECT CARDS ── */
-  .stack {
-    max-width: 72rem;
-    margin: 0 auto;
-    display: grid;
-    gap: 2rem;
-  }
-  .card {
-    display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    min-height: clamp(380px, 56vh, 520px);
-    overflow: hidden;
-    background: color-mix(in srgb, var(--color-navy) 55%, var(--color-night));
-    border: 1px solid color-mix(in srgb, var(--color-slate) 70%, transparent);
-    box-shadow: 0 -18px 40px -20px rgba(0, 0, 0, 0.7);
-    text-decoration: none;
-    color: var(--color-bone);
-    transition: border-color 0.25s;
-  }
-  .card:hover {
-    border-color: color-mix(in srgb, var(--color-ember) 45%, var(--color-slate));
-  }
-  .card-info {
-    display: flex;
-    flex-direction: column;
-    padding: clamp(1.4rem, 3vw, 2.6rem);
-    min-width: 0;
-    border-right: 1px solid color-mix(in srgb, var(--color-slate) 45%, transparent);
-  }
-  .meta {
-    color: var(--color-greige);
-    margin: 0 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding-bottom: 0.9rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-slate) 45%, transparent);
-  }
-  .meta .year {
-    margin-left: auto;
-  }
-  .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--color-ember);
-    box-shadow: 0 0 8px color-mix(in srgb, var(--color-ember) 70%, transparent);
-  }
-  .name {
-    margin: 1.2rem 0 0;
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4.4vw, 3.4rem);
-    font-weight: 700;
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-  }
-  .desc {
-    margin: 0.9rem 0 0;
-    color: var(--color-greige);
-    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
-    line-height: 1.55;
-    max-width: 40ch;
-  }
-  .tags {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin: 1.4rem 0 0;
-    padding: 0;
-  }
-  .tags li {
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    padding: 0.3rem 0.55rem;
-    border: 1px solid color-mix(in srgb, var(--color-slate) 70%, transparent);
-    color: var(--color-greige);
-  }
-  .open {
-    margin-top: auto;
-    padding-top: 1.4rem;
-    color: var(--color-ember);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-  .open .arrow {
-    transition: transform 0.2s;
-  }
-  .card:hover .open .arrow {
-    transform: translate(3px, -3px);
-  }
-  .card-thumb {
-    position: relative;
-    min-height: 240px;
-    overflow: hidden;
-  }
-  .card-thumb img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top left;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .card:hover .card-thumb img {
-    transform: scale(1.04);
-  }
-  .card-thumb::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, color-mix(in srgb, var(--color-navy) 45%, transparent), transparent 30%);
-    pointer-events: none;
-  }
-  .card-thumb.terminal {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: clamp(1.4rem, 3vw, 2.4rem);
-    background: var(--color-night);
-    color: var(--color-greige);
-    font-size: 0.82rem;
-    line-height: 2;
-    text-transform: none;
-    letter-spacing: 0.02em;
-  }
-  .card-thumb.terminal::after {
-    display: none;
-  }
-  .terminal .prompt {
-    color: var(--color-ember);
-  }
-  .terminal .out {
-    color: color-mix(in srgb, var(--color-greige) 75%, transparent);
-  }
-  .terminal .cursor {
-    color: var(--color-ember);
-    animation: blink 1.1s step-end infinite;
-  }
-  @keyframes blink {
-    50% {
-      opacity: 0;
-    }
-  }
-
-  @media (max-width: 900px) {
-    .card {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto minmax(200px, 34vh);
-      min-height: 0;
-    }
-    .card-info {
-      order: 2;
-    }
-    .card-thumb {
-      order: 1;
-    }
-    .meta {
-      margin-bottom: 0;
-    }
-    .open {
-      padding-top: 1.2rem;
-    }
-  }
-  @media (max-width: 760px) {
-    .sec-head {
-      grid-template-columns: 1fr;
-    }
-    .sec-head h2,
-    .sec-head .lead {
-      grid-column: 1;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .card-thumb img,
-    .open .arrow {
-      transition: none;
-    }
-    .terminal .cursor {
-      animation: none;
-    }
-  }
-</style>

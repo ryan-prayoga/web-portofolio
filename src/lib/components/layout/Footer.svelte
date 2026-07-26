@@ -11,34 +11,11 @@
   }
 </script>
 
-<footer class="footer">
-  <span class="mono">© 2026 Ryan Prayoga</span>
-  <span class="mono">{profile.location} · -6.17, 106.63</span>
-  <span class="mono">{t.footerNote}</span>
-  <a class="mono to-top" href="#top" onclick={toTop}>{t.backToTop} ↑</a>
+<footer
+  class="border-rule text-muted mx-auto flex max-w-5xl flex-wrap justify-between gap-x-8 gap-y-2 border-t px-6 py-8 font-mono text-xs uppercase"
+>
+  <span>© 2026 {profile.name}</span>
+  <span>{profile.location}</span>
+  <span>{t.footer.note}</span>
+  <a href="#top" onclick={toTop} class="no-print hover:text-accent">{t.footer.backToTop} ↑</a>
 </footer>
-
-<style>
-  .mono {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .footer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem 2rem;
-    justify-content: space-between;
-    padding: 1.6rem clamp(1.25rem, 5vw, 4rem);
-    border-top: 1px solid var(--color-bone);
-    color: var(--color-greige);
-  }
-  .footer .to-top {
-    color: var(--color-bone);
-    text-decoration: none;
-  }
-  .footer .to-top:hover {
-    color: var(--color-ember);
-  }
-</style>

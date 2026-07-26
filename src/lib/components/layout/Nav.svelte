@@ -1,14 +1,16 @@
 <script lang="ts">
+  import { page } from '$app/state';
   import { localeStore, type Locale } from '$lib/stores/locale.svelte';
   import { uiCopy } from '$lib/data/uiCopy';
 
   const t = $derived(uiCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
+  const onHome = $derived(page.url.pathname === '/');
 
   const navItems = $derived([
+    { label: t.nav.experience, href: '#experience' },
     { label: t.nav.work, href: '#work' },
-    { label: t.nav.about, href: '#about' },
-    { label: t.nav.stack, href: '#stack' },
+    { label: t.nav.skills, href: '#skills' },
     { label: t.nav.contact, href: '#contact' },
   ]);
 
@@ -97,6 +99,7 @@
 
   function goTo(id: string) {
     return (event: Event) => {
+      if (!onHome) return; // biarkan navigasi normal ke /#id dari halaman lain
       event.preventDefault();
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
       closeFocus = 'toggle';
@@ -105,39 +108,62 @@
   }
 </script>
 
-<nav class:scrolled class="nav">
-  <a href="#top" class="brand" onclick={goTo('top')} aria-label="Ryan Prayoga, home">
-    RP<span class="coords">— 6.17°S 106.63°E</span>
+<nav
+  class="nav bg-paper/85 fixed inset-x-0 top-0 z-60 flex items-center justify-between gap-4 border-b px-6 py-3 backdrop-blur transition-colors {scrolled
+    ? 'border-rule'
+    : 'border-transparent'}"
+>
+  <a
+    href={onHome ? '#top' : '/'}
+    class="brand font-semibold tracking-tight"
+    onclick={goTo('top')}
+    aria-label="Ryan Prayoga, home"
+  >
+    Ryan Prayoga<span class="text-accent">.</span>
   </a>
 
-  <div class="desktop-links" aria-label="Section navigation">
+  <div class="desktop-links hidden gap-6 sm:flex" aria-label="Section navigation">
     {#each navItems as item (item.href)}
-      <a href={item.href} onclick={goTo(item.href.slice(1))}>{item.label}</a>
+      <a
+        href={onHome ? item.href : `/${item.href}`}
+        onclick={goTo(item.href.slice(1))}
+        class="text-muted hover:text-accent font-mono text-xs tracking-wide uppercase transition-colors"
+      >
+        {item.label}
+      </a>
     {/each}
   </div>
 
-  <div class="nav-actions">
-    <span class="status mono"><i></i>{t.available}</span>
-    <div class="lang" role="group" aria-label="Language">
+  <div class="nav-actions flex items-center gap-4">
+    <span class="status text-muted hidden items-center gap-2 font-mono text-xs uppercase min-[900px]:inline-flex">
+      <i class="bg-accent inline-block h-1.5 w-1.5 rounded-full" aria-hidden="true"></i>{t.status}
+    </span>
+    <div class="flex items-center gap-1 font-mono text-xs" role="group" aria-label="Language">
       <button
         type="button"
-        class:active={locale === 'en'}
+        class="cursor-pointer {locale === 'en' ? 'font-semibold' : 'text-muted hover:text-accent'}"
         aria-pressed={locale === 'en'}
         onclick={() => setLocale('en')}>EN</button
       >
-      <span aria-hidden="true">/</span>
+      <span class="text-rule" aria-hidden="true">/</span>
       <button
         type="button"
-        class:active={locale === 'id'}
+        class="cursor-pointer {locale === 'id' ? 'font-semibold' : 'text-muted hover:text-accent'}"
         aria-pressed={locale === 'id'}
         onclick={() => setLocale('id')}>ID</button
       >
     </div>
-    <a class="nav-cv" href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'} download>CV ↗</a>
+    <a
+      href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}
+      download
+      class="nav-cv border-ink hover:text-accent hover:border-accent hidden border-b font-mono text-xs uppercase sm:inline"
+    >
+      CV ↓
+    </a>
     <button
       id={toggleId}
       bind:this={toggleEl}
-      class="menu-btn"
+      class="menu-btn border-rule inline-flex cursor-pointer border px-3 py-1.5 font-mono text-xs uppercase sm:hidden"
       type="button"
       onclick={() => {
         closeFocus = 'toggle';
@@ -156,202 +182,26 @@
   <div
     id={menuId}
     bind:this={menuEl}
-    class="mobile-menu"
+    class="bg-paper fixed inset-0 z-55 grid content-center px-6 pt-20 pb-8"
     role="dialog"
     aria-modal="true"
     aria-label="Mobile navigation"
   >
     {#each navItems as item, i (item.href)}
-      <a href={item.href} onclick={goTo(item.href.slice(1))}>
-        <span>0{i + 1}</span>{item.label}
+      <a
+        href={onHome ? item.href : `/${item.href}`}
+        onclick={goTo(item.href.slice(1))}
+        class="border-rule flex items-baseline gap-4 border-t py-4 text-3xl font-semibold tracking-tight"
+      >
+        <span class="text-accent font-mono text-sm">0{i + 1}</span>{item.label}
       </a>
     {/each}
-    <a class="mm-cv" href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'} download>
-      <span>→</span>{t.downloadCv}
+    <a
+      href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}
+      download
+      class="border-rule text-accent flex items-baseline gap-4 border-t border-b py-4 text-3xl font-semibold tracking-tight"
+    >
+      <span class="font-mono text-sm" aria-hidden="true">↓</span>{t.hero.downloadCv}
     </a>
   </div>
 {/if}
-
-<style>
-  .mono {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .nav {
-    position: fixed;
-    inset: 0 0 auto;
-    z-index: 60;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.85rem clamp(1.25rem, 5vw, 4rem);
-    border-bottom: 1px solid transparent;
-    transition:
-      background-color 0.25s,
-      border-color 0.25s;
-  }
-  .nav.scrolled {
-    background: color-mix(in srgb, var(--color-night) 82%, transparent);
-    backdrop-filter: blur(10px);
-    border-bottom-color: color-mix(in srgb, var(--color-slate) 55%, transparent);
-  }
-  .brand {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.05rem;
-    letter-spacing: -0.02em;
-    color: var(--color-bone);
-    text-decoration: none;
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.5rem;
-  }
-  .brand .coords {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    color: var(--color-greige);
-  }
-  .desktop-links {
-    display: flex;
-    gap: 1.6rem;
-  }
-  .desktop-links a {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--color-greige);
-    text-decoration: none;
-    transition: color 0.18s;
-  }
-  .desktop-links a:hover,
-  .desktop-links a:focus-visible {
-    color: var(--color-ember);
-  }
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  .status {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--color-bone);
-  }
-  .status i {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--color-ember);
-    animation: ember-pulse 2.4s ease-out infinite;
-  }
-  .lang {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-  }
-  .lang span {
-    color: var(--color-slate);
-  }
-  .lang button {
-    border: 0;
-    background: none;
-    padding: 0;
-    cursor: pointer;
-    color: var(--color-greige);
-    font: inherit;
-    transition: color 0.18s;
-  }
-  .lang button.active {
-    color: var(--color-bone);
-    font-weight: 600;
-  }
-  .lang button:hover {
-    color: var(--color-ember);
-  }
-  .nav-cv {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--color-bone);
-    text-decoration: none;
-    border-bottom: 1px solid var(--color-bone);
-    padding-bottom: 1px;
-  }
-  .nav-cv:hover {
-    color: var(--color-ember);
-    border-color: var(--color-ember);
-  }
-  .menu-btn {
-    display: none;
-    border: 1px solid var(--color-slate);
-    background: none;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    padding: 0.45rem 0.7rem;
-    cursor: pointer;
-    color: var(--color-bone);
-  }
-  .mobile-menu {
-    position: fixed;
-    inset: 0;
-    z-index: 55;
-    display: grid;
-    align-content: center;
-    padding: 5rem clamp(1.25rem, 5vw, 4rem) 2rem;
-    background: var(--color-night);
-  }
-  .mobile-menu a {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    padding: 1.1rem 0;
-    border-top: 1px solid color-mix(in srgb, var(--color-slate) 55%, transparent);
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 9vw, 3rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    color: var(--color-bone);
-    text-decoration: none;
-  }
-  .mobile-menu a:last-child {
-    border-bottom: 1px solid color-mix(in srgb, var(--color-slate) 55%, transparent);
-  }
-  .mobile-menu span {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--color-ember);
-  }
-  .mobile-menu .mm-cv {
-    color: var(--color-ember);
-  }
-  @media (max-width: 900px) {
-    .status {
-      display: none;
-    }
-  }
-  @media (max-width: 760px) {
-    .desktop-links,
-    .nav-cv {
-      display: none;
-    }
-    .menu-btn {
-      display: inline-flex;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .status i {
-      animation: none;
-    }
-  }
-</style>

@@ -1,143 +1,126 @@
-import { profile } from './profile';
-import { projects } from './projects';
-
 export const locales = ['en', 'id'] as const;
 export type Locale = (typeof locales)[number];
 
 export interface UiCopy {
-  nav: { work: string; about: string; stack: string; contact: string };
-  available: string;
-  heroRole: string;
-  heroBody: string;
-  viewWork: string;
-  downloadCv: string;
-  contact: string;
-  proof: string[];
-  ticker: string;
-  badge: { role: string; loc: string };
-  aboutKicker: string;
-  aboutHeading: string;
-  aboutStatement: string;
-  aboutRows: { kicker: string; body: string }[];
-  workKicker: string;
-  workHeading: string;
-  workIntro: string;
-  open: string;
-  stackKicker: string;
-  stackHeading: string;
-  stackNotes: { backend: string; frontend: string; mobile: string; workflow: string };
-  method: string;
-  contactKicker: string;
-  contactHeading: string;
-  contactBody: string;
-  sendEmail: string;
-  viewGithub: string;
-  footerNote: string;
-  backToTop: string;
+  nav: { experience: string; work: string; skills: string; contact: string };
+  status: string;
+  hero: {
+    positioning: string;
+    downloadCv: string;
+    contact: string;
+    photoAlt: string;
+  };
+  facts: { years: string; led: string; shipped: string; based: string };
+  experience: { label: string; heading: string };
+  work: {
+    label: string;
+    heading: string;
+    intro: string;
+    caseStudy: string;
+    visit: string;
+    source: string;
+    clientTag: string;
+    moreLabel: string;
+  };
+  skills: { label: string; heading: string };
+  education: { label: string; heading: string; languages: string };
+  contact: { label: string; heading: string; body: string; emailCta: string };
+  footer: { note: string; backToTop: string };
+  caseStudy: {
+    back: string;
+    problem: string;
+    role: string;
+    decisions: string;
+    results: string;
+    stack: string;
+    visit: string;
+    source: string;
+  };
 }
 
 export const uiCopy: Record<Locale, UiCopy> = {
   en: {
-    nav: { work: 'Work', about: 'About', stack: 'Stack', contact: 'Contact' },
-    available: 'Open to work',
-    heroRole: 'Full-Stack Engineer & Team Lead',
-    heroBody:
-      'Building enterprise systems, civic-tech products, developer tooling, and deployment workflows with calm technical ownership.',
-    viewWork: 'View Work',
-    downloadCv: 'Download CV',
-    contact: 'Contact',
-    proof: ['Years experience', 'Engineers led', 'Systems shipped'],
-    ticker: `${projects.length} SYSTEMS SHIPPED · ${profile.teamSize} ENGINEERS LED · ${profile.experienceYears} YRS IN PRODUCTION`,
-    badge: { role: 'FULL-STACK · LEAD', loc: 'TANGERANG, ID' },
-    aboutKicker: 'Operator File',
-    aboutHeading: 'From software craft to delivery leadership.',
-    aboutStatement:
-      'I build systems that stay online — and lead the engineers who keep them that way. From planning and review to production decisions, I hold the technical line with calm ownership.',
-    aboutRows: [
-      {
-        kicker: 'Previously',
-        body: `4+ years at ${profile.company} — grew from developer to team lead, holding delivery hands-on from planning and review to production decisions.`,
-      },
-      {
-        kicker: 'Academic',
-        body: 'Formal computer science foundation supporting product, architecture, and engineering execution.',
-      },
-      {
-        kicker: 'Operating range',
-        body: 'Comfortable across product surfaces and production workflow when the system needs ownership.',
-      },
-    ],
-    workKicker: 'Systems Index',
-    workHeading: 'Selected work with production weight.',
-    workIntro: 'Civic-tech, developer tooling, automation, and deployment systems built for real constraints.',
-    open: 'Open',
-    stackKicker: 'Instruments',
-    stackHeading: 'How I build systems that keep moving.',
-    stackNotes: {
-      backend: 'API, auth, business workflow, integrations, and data processing.',
-      frontend: 'Public portals, internal dashboards, PWA, and operational interfaces.',
-      mobile: 'Field apps, webview flows, media upload, and cross-device workflows.',
-      workflow: 'Deployment, process management, review cadence, and AI-assisted iteration.',
+    nav: { experience: 'Experience', work: 'Work', skills: 'Skills', contact: 'Contact' },
+    status: 'Open to work',
+    hero: {
+      positioning:
+        'I build and ship production web, mobile, and tooling systems — and lead the engineers who keep them running. 4+ years across enterprise, government, and my own shipped products.',
+      downloadCv: 'Download CV',
+      contact: 'Email me',
+      photoAlt: 'Ryan Prayoga',
     },
-    method: 'Method',
-    contactKicker: 'Open Channel',
-    contactHeading: "Let's build the next useful thing.",
-    contactBody: 'Open for full-stack, backend, and team lead roles.',
-    sendEmail: 'Send Email',
-    viewGithub: 'View GitHub',
-    footerNote: 'Built with SvelteKit',
-    backToTop: 'Back to top',
+    facts: { years: 'Years experience', led: 'Engineers led', shipped: 'Systems shipped', based: 'Based in' },
+    experience: { label: 'Experience', heading: 'Where I have worked' },
+    work: {
+      label: 'Selected work',
+      heading: 'Three projects, in depth',
+      intro: 'Every claim below is backed by code, tests, or a live deployment — not slideware.',
+      caseStudy: 'Read case study',
+      visit: 'Visit live',
+      source: 'Source',
+      clientTag: 'Client work',
+      moreLabel: 'More projects',
+    },
+    skills: { label: 'Skills', heading: 'What I work with' },
+    education: { label: 'Education', heading: 'Education & languages', languages: 'Languages' },
+    contact: {
+      label: 'Contact',
+      heading: 'Let’s talk.',
+      body: 'Open for fullstack, backend, and team lead roles.',
+      emailCta: 'Send email',
+    },
+    footer: { note: 'Built with SvelteKit — fully static, no trackers', backToTop: 'Back to top' },
+    caseStudy: {
+      back: 'All work',
+      problem: 'Problem',
+      role: 'My role',
+      decisions: 'Technical decisions',
+      results: 'Results',
+      stack: 'Stack',
+      visit: 'Visit live',
+      source: 'Source',
+    },
   },
   id: {
-    nav: { work: 'Karya', about: 'Tentang', stack: 'Stack', contact: 'Kontak' },
-    available: 'Lagi cari peluang baru',
-    heroRole: 'Full-Stack Engineer & Team Lead',
-    heroBody:
-      'Bikin sistem enterprise, produk civic-tech, developer tooling, sampai workflow deployment — dan tetap pegang sisi teknisnya dengan tenang, dari perencanaan sampai jalan di production.',
-    viewWork: 'Lihat Karya',
-    downloadCv: 'Unduh CV',
-    contact: 'Kontak',
-    proof: ['Tahun pengalaman', 'Engineer dipimpin', 'Sistem rilis'],
-    ticker: `${projects.length} SISTEM DIRILIS · ${profile.teamSize} ENGINEER DIPIMPIN · ${profile.experienceYears} THN DI PRODUCTION`,
-    badge: { role: 'FULL-STACK · LEAD', loc: 'TANGERANG, ID' },
-    aboutKicker: 'Berkas Operator',
-    aboutHeading: 'Dari ngoding langsung ke mimpin tim delivery.',
-    aboutStatement:
-      'Saya bangun sistem yang terus online — dan mimpin engineer yang jaga sistem itu tetap hidup. Dari rencana, review, sampai keputusan production, sisi teknisnya saya pegang dengan tenang.',
-    aboutRows: [
-      {
-        kicker: 'Sebelumnya',
-        body: `4+ tahun di ${profile.company} — berkembang dari developer jadi team lead, tetap turun tangan dari rencana, review, sampai keputusan production.`,
-      },
-      {
-        kicker: 'Pendidikan',
-        body: 'Dasar ilmu komputer yang kuat, jadi pegangan buat ngambil keputusan produk, arsitektur, dan engineering.',
-      },
-      {
-        kicker: 'Jangkauan kerja',
-        body: 'Biasa pindah-pindah antar bagian produk dan urusan production pas sistem butuh orang yang beneran pegang.',
-      },
-    ],
-    workKicker: 'Indeks Sistem',
-    workHeading: 'Proyek pilihan yang beneran jalan di production.',
-    workIntro:
-      'Civic-tech, developer tooling, automation, sampai sistem deployment — dibangun buat kebutuhan nyata, bukan sekadar demo.',
-    open: 'Buka',
-    stackKicker: 'Instrumen',
-    stackHeading: 'Cara saya bangun sistem yang terus jalan.',
-    stackNotes: {
-      backend: 'API, auth, alur bisnis, integrasi, dan pengolahan data.',
-      frontend: 'Portal publik, dashboard internal, PWA, dan antarmuka operasional.',
-      mobile: 'Aplikasi lapangan, alur webview, upload media, dan workflow lintas perangkat.',
-      workflow: 'Deployment, manajemen proses, ritme review, dan iterasi dibantu AI.',
+    nav: { experience: 'Pengalaman', work: 'Karya', skills: 'Skill', contact: 'Kontak' },
+    status: 'Terbuka untuk peluang',
+    hero: {
+      positioning:
+        'Saya membangun dan merilis sistem web, mobile, dan tooling production — sekaligus memimpin engineer yang menjaganya tetap jalan. 4+ tahun di enterprise, government, dan produk rilisan sendiri.',
+      downloadCv: 'Unduh CV',
+      contact: 'Kirim email',
+      photoAlt: 'Ryan Prayoga',
     },
-    method: 'Metode',
-    contactKicker: 'Kanal Terbuka',
-    contactHeading: 'Yuk, bikin sesuatu yang berguna bareng.',
-    contactBody: 'Lagi terbuka buat peran full-stack, backend, dan team lead.',
-    sendEmail: 'Kirim Email',
-    viewGithub: 'Lihat GitHub',
-    footerNote: 'Dibuat pakai SvelteKit',
-    backToTop: 'Ke atas',
+    facts: { years: 'Tahun pengalaman', led: 'Engineer dipimpin', shipped: 'Sistem dirilis', based: 'Berbasis di' },
+    experience: { label: 'Pengalaman', heading: 'Tempat saya bekerja' },
+    work: {
+      label: 'Karya pilihan',
+      heading: 'Tiga proyek, dibedah dalam',
+      intro: 'Semua klaim di bawah didukung kode, test, atau deployment live — bukan sekadar slide.',
+      caseStudy: 'Baca case study',
+      visit: 'Lihat live',
+      source: 'Source',
+      clientTag: 'Kerja klien',
+      moreLabel: 'Proyek lainnya',
+    },
+    skills: { label: 'Skill', heading: 'Yang saya pakai bekerja' },
+    education: { label: 'Pendidikan', heading: 'Pendidikan & bahasa', languages: 'Bahasa' },
+    contact: {
+      label: 'Kontak',
+      heading: 'Ngobrol, yuk.',
+      body: 'Terbuka untuk peran fullstack, backend, dan team lead.',
+      emailCta: 'Kirim email',
+    },
+    footer: { note: 'Dibuat dengan SvelteKit — full static, tanpa tracker', backToTop: 'Ke atas' },
+    caseStudy: {
+      back: 'Semua karya',
+      problem: 'Masalah',
+      role: 'Peran saya',
+      decisions: 'Keputusan teknis',
+      results: 'Hasil',
+      stack: 'Stack',
+      visit: 'Lihat live',
+      source: 'Source',
+    },
   },
 };
