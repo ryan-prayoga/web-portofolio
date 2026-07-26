@@ -1,4 +1,5 @@
 import { profile } from './profile';
+import { projects } from './projects';
 
 export const locales = ['en', 'id'] as const;
 export type Locale = (typeof locales)[number];
@@ -46,7 +47,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
     downloadCv: 'Download CV',
     contact: 'Contact',
     proof: ['Years experience', 'Engineers led', 'Systems shipped'],
-    ticker: `11 SYSTEMS ONLINE · ${profile.teamSize} ENGINEERS LED · 4+ YRS IN PRODUCTION`,
+    ticker: `${projects.length} SYSTEMS SHIPPED · ${profile.teamSize} ENGINEERS LED · ${profile.experienceYears} YRS IN PRODUCTION`,
     badge: { role: 'FULL-STACK · LEAD', loc: 'TANGERANG, ID' },
     aboutKicker: 'Operator File',
     aboutHeading: 'From software craft to delivery leadership.',
@@ -97,7 +98,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
     downloadCv: 'Unduh CV',
     contact: 'Kontak',
     proof: ['Tahun pengalaman', 'Engineer dipimpin', 'Sistem rilis'],
-    ticker: `11 SISTEM ONLINE · ${profile.teamSize} ENGINEER DIPIMPIN · 4+ THN DI PRODUCTION`,
+    ticker: `${projects.length} SISTEM DIRILIS · ${profile.teamSize} ENGINEER DIPIMPIN · ${profile.experienceYears} THN DI PRODUCTION`,
     badge: { role: 'FULL-STACK · LEAD', loc: 'TANGERANG, ID' },
     aboutKicker: 'Berkas Operator',
     aboutHeading: 'Dari ngoding langsung ke mimpin tim delivery.',

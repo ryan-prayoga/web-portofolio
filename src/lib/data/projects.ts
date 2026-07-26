@@ -1,6 +1,7 @@
 type ProjectCatalogEntry = {
   readonly name: string;
   readonly slug: string;
+  readonly featured: boolean;
   readonly tags: readonly string[];
   readonly stack: readonly string[];
   readonly year: string;
@@ -10,10 +11,48 @@ type ProjectCatalogEntry = {
   readonly thumbnail?: string;
 };
 
+/**
+ * Katalog terkurasi hasil survey seluruh repo (Jul 2026):
+ * 3 featured (case study penuh) + 4 grid. Kurasi > kuantitas —
+ * hanya project dengan bukti (live / published / test+CI) yang tampil.
+ */
 export const projects = [
+  {
+    name: 'Pantau Anggaran',
+    slug: 'pantauanggaran',
+    featured: true,
+    tags: ['Civic Tech', 'PostGIS', 'ML Clustering'],
+    stack: ['Go', 'SvelteKit', 'PostgreSQL', 'PostGIS', 'Python', 'Redis'],
+    year: '2026',
+    category: 'Data Engineering',
+    destination: { kind: 'site', href: 'https://pantauanggaran.ryanprayoga.dev' },
+    thumbnail: '/v3/projects/pantauanggaran.webp',
+  },
+  {
+    name: 'Putra Selamat Makmur',
+    slug: 'putraselamatmakmur',
+    featured: true,
+    tags: ['Client Work', 'SEO', 'Company Profile'],
+    stack: ['SvelteKit', 'Tailwind', 'Go', 'Caddy'],
+    year: '2026',
+    category: 'Client Delivery',
+    destination: { kind: 'site', href: 'https://putraselamatmakmur.com' },
+    thumbnail: '/v3/projects/putraselamatmakmur.webp',
+  },
+  {
+    name: 'Brunogen',
+    slug: 'brunogen',
+    featured: true,
+    tags: ['CLI', 'OpenAPI', 'npm', 'MCP'],
+    stack: ['TypeScript', 'AST Parsing', 'OpenAPI', 'Vitest'],
+    year: '2026',
+    category: 'Developer Tooling',
+    destination: { kind: 'site', href: 'https://www.npmjs.com/package/brunogen' },
+  },
   {
     name: 'CineTix',
     slug: 'cinematix',
+    featured: false,
     tags: ['Realtime', 'PWA', '3D Seat-POV'],
     stack: ['Next.js', 'Express', 'Socket.IO', 'PostgreSQL', 'Prisma'],
     year: '2026',
@@ -22,39 +61,10 @@ export const projects = [
     thumbnail: '/v3/projects/cinematix.webp',
   },
   {
-    name: 'PILDUN',
-    slug: 'pildun',
-    tags: ['World Cup 2026', 'Realtime', 'Prediction'],
-    stack: ['SvelteKit', 'PostgreSQL', 'PM2', 'Caddy'],
-    year: '2026',
-    category: 'Realtime Product',
-    destination: { kind: 'site', href: 'https://pildun.ryanprayoga.dev' },
-    thumbnail: '/v3/projects/pildun.webp',
-  },
-  {
-    name: 'Koruptor Rank',
-    slug: 'koruptorrank',
-    tags: ['Civic Tech', 'Data', 'Ranking'],
-    stack: ['SvelteKit', 'PostgreSQL'],
-    year: '2026',
-    category: 'Civic Tech',
-    destination: { kind: 'site', href: 'https://koruptor-rank.ryanprayoga.dev' },
-    thumbnail: '/v3/projects/koruptorrank.webp',
-  },
-  {
-    name: 'Pantau Anggaran',
-    slug: 'pantauanggaran',
-    tags: ['Civic Tech', 'AI', 'Dashboard'],
-    stack: ['SvelteKit', 'Go', 'PostgreSQL', 'PostGIS'],
-    year: '2026',
-    category: 'Civic Tech',
-    destination: { kind: 'site', href: 'https://pantauanggaran.ryanprayoga.dev' },
-    thumbnail: '/v3/projects/pantauanggaran.webp',
-  },
-  {
     name: 'JEDUG',
     slug: 'jedug',
-    tags: ['Civic Tech', 'Map', 'Moderation'],
+    featured: false,
+    tags: ['Civic Tech', 'SSE', 'Web Push'],
     stack: ['Go Fiber', 'SvelteKit', 'PostgreSQL', 'PostGIS', 'MapLibre'],
     year: '2026',
     category: 'Civic Tech',
@@ -62,37 +72,9 @@ export const projects = [
     thumbnail: '/v3/projects/jedug.webp',
   },
   {
-    name: 'Brunogen',
-    slug: 'brunogen',
-    tags: ['CLI', 'OpenAPI', 'npm'],
-    stack: ['TypeScript', 'OpenAPI', 'AST Parsing', 'Vitest'],
-    year: '2026',
-    category: 'Developer Tooling',
-    destination: { kind: 'site', href: 'https://www.npmjs.com/package/brunogen' },
-  },
-  {
-    name: 'MessHub',
-    slug: 'messhub',
-    tags: ['Realtime', 'Operations', 'PWA'],
-    stack: ['Go', 'SvelteKit', 'WebSocket', 'PostgreSQL'],
-    year: '2026',
-    category: 'Realtime Product',
-    destination: { kind: 'site', href: 'https://messhub.ryanprayoga.dev' },
-    thumbnail: '/v3/projects/messhub.webp',
-  },
-  {
-    name: 'Komik Reader',
-    slug: 'komikreader',
-    tags: ['Media', 'Self-Hosted', 'Reader'],
-    stack: ['SvelteKit', 'Suwayomi', 'Keiyoushi'],
-    year: '2026',
-    category: 'Media Product',
-    destination: { kind: 'source', href: 'https://github.com/ryan-prayoga/komik-reader' },
-    thumbnail: '/v3/projects/komikreader.webp',
-  },
-  {
     name: 'OpenRowDB',
     slug: 'openrowdb',
+    featured: false,
     tags: ['macOS', 'Native', 'Open Source'],
     stack: ['Swift', 'SwiftUI', 'PostgreSQL', 'MySQL'],
     year: '2026',
@@ -100,8 +82,22 @@ export const projects = [
     destination: { kind: 'source', href: 'https://github.com/ryan-prayoga/openrowdb' },
     thumbnail: '/v3/projects/openrowdb.webp',
   },
+  {
+    name: 'Komik Reader',
+    slug: 'komikreader',
+    featured: false,
+    tags: ['PWA', 'Self-Hosted', 'CI/CD'],
+    stack: ['SvelteKit', 'SQLite', 'Playwright', 'Docker'],
+    year: '2026',
+    category: 'Media Product',
+    destination: { kind: 'source', href: 'https://github.com/ryan-prayoga/komik-reader' },
+    thumbnail: '/v3/projects/komikreader.webp',
+  },
 ] as const satisfies readonly ProjectCatalogEntry[];
 
 export type ProjectSlug = (typeof projects)[number]['slug'];
 export type Project = ProjectCatalogEntry & { readonly slug: ProjectSlug };
 export const portfolioProjects: readonly Project[] = projects;
+
+export type FeaturedSlug = Extract<(typeof projects)[number], { featured: true }>['slug'];
+export const featuredProjects = projects.filter((project) => project.featured);

@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { caseStudies } from '../../src/lib/data/caseStudies';
 import { portfolioContractErrors, type PortfolioContractInput } from '../../src/lib/data/portfolioContract';
 import { profile } from '../../src/lib/data/profile';
 import { projectCopy } from '../../src/lib/data/projectCopy';
@@ -15,6 +16,10 @@ function productionInput(): PortfolioContractInput {
   return {
     projects,
     copy: projectCopy,
+    caseStudies: Object.fromEntries(
+      Object.entries(caseStudies).map(([locale, entries]) => [locale, Object.keys(entries)]),
+    ),
+    featuredCount: 3,
     assets,
     teamSize: profile.teamSize,
     renderedTeamSizes: [
@@ -68,7 +73,7 @@ describe('portfolio content contract', () => {
     expect(threshold?.slice(1)).toEqual(['80', '75', '80', '80']);
   });
 
-  it('passes for nine projects and two exact locales', () => {
+  it('passes for seven curated projects, three featured, and two exact locales', () => {
     // Given
     const input = productionInput();
 
@@ -76,7 +81,8 @@ describe('portfolio content contract', () => {
     const errors = portfolioContractErrors(input);
 
     // Then
-    expect(projects).toHaveLength(9);
+    expect(projects).toHaveLength(7);
+    expect(projects.filter((project) => project.featured)).toHaveLength(3);
     expect(locales).toEqual(['en', 'id']);
     expect(errors).toEqual([]);
   });
@@ -88,7 +94,7 @@ describe('portfolio content contract', () => {
         ...input,
         copy: { ...input.copy, en: Object.fromEntries(Object.entries(input.copy.en).slice(1)) },
       }),
-      message: 'en copy missing slugs: cinematix',
+      message: 'en copy missing slugs: pantauanggaran',
     },
     {
       name: 'extra copy key',
@@ -104,16 +110,20 @@ describe('portfolio content contract', () => {
         ...input,
         projects: [
           ...input.projects,
-          input.projects[0] ?? { slug: 'cinematix', destination: { kind: 'site', href: 'https://example.com' } },
+          input.projects[0] ?? {
+            slug: 'cinematix',
+            featured: false,
+            destination: { kind: 'site', href: 'https://example.com' },
+          },
         ],
       }),
-      message: 'duplicate project slug: cinematix',
+      message: 'duplicate project slug: pantauanggaran',
     },
     {
       name: 'invalid destination',
       mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
         ...input,
-        projects: [{ slug: 'broken', destination: { kind: 'site', href: 'http://example.com' } }],
+        projects: [{ slug: 'broken', featured: false, destination: { kind: 'site', href: 'http://example.com' } }],
         copy: { en: { broken: {} }, id: { broken: {} } },
       }),
       message: 'invalid destination for broken',
@@ -122,10 +132,44 @@ describe('portfolio content contract', () => {
       name: 'invalid source',
       mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
         ...input,
-        projects: [{ slug: 'broken', destination: { kind: 'source', href: 'https://gitlab.com/owner/repo' } }],
+        projects: [
+          { slug: 'broken', featured: false, destination: { kind: 'source', href: 'https://gitlab.com/owner/repo' } },
+        ],
         copy: { en: { broken: {} }, id: { broken: {} } },
       }),
       message: 'invalid source for broken',
+    },
+    {
+      name: 'featured-count drift',
+      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
+        ...input,
+        projects: input.projects.map((project) =>
+          project.slug === 'brunogen' ? { ...project, featured: false } : project,
+        ),
+      }),
+      message: 'expected exactly 3 featured projects; found 2',
+    },
+    {
+      name: 'missing case study',
+      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
+        ...input,
+        caseStudies: {
+          ...input.caseStudies,
+          en: (input.caseStudies.en ?? []).filter((slug) => slug !== 'brunogen'),
+        },
+      }),
+      message: 'en case studies missing featured slugs: brunogen',
+    },
+    {
+      name: 'case study for non-featured project',
+      mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
+        ...input,
+        caseStudies: {
+          ...input.caseStudies,
+          id: [...(input.caseStudies.id ?? []), 'cinematix'],
+        },
+      }),
+      message: 'id case studies cover non-featured slugs: cinematix',
     },
     {
       name: 'missing image variant',

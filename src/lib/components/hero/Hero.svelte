@@ -2,6 +2,7 @@
   import { localeStore } from '$lib/stores/locale.svelte';
   import { uiCopy } from '$lib/data/uiCopy';
   import { profile } from '$lib/data/profile';
+  import { projects } from '$lib/data/projects';
   import { socials } from '$lib/data/socials';
 
   const t = $derived(uiCopy[localeStore.value]);
@@ -9,9 +10,9 @@
   const email = socials.find((s) => s.name === 'Email');
 
   const proof = $derived([
-    { value: '4+', label: t.proof[0] },
+    { value: profile.experienceYears, label: t.proof[0] },
     { value: String(profile.teamSize), label: t.proof[1] },
-    { value: '11+', label: t.proof[2] },
+    { value: String(projects.length), label: t.proof[2] },
   ]);
 
   function goTo(id: string) {

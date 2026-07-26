@@ -8,109 +8,87 @@ export interface ProjectCopy {
 
 export const projectCopy = {
   en: {
-    cinematix: {
-      summary:
-        'Cinema ticketing PWA with realtime 3D seat-POV selection — a feature absent from all major Indonesian cinema apps.',
-      focus:
-        'Realtime seat locking with double-book prevention via Socket.IO, Next.js App Router, Prisma + PostgreSQL, and GitHub Actions CI/CD.',
-    },
-    pildun: {
-      summary:
-        'World Cup 2026 score-prediction platform — create a room, invite friends, and compete on a realtime leaderboard.',
-      focus:
-        'Room codes, exact-score + knockout prediction, 48 teams & 104 matches, realtime leaderboard, deployed on VPS with PM2 + Caddy.',
-    },
-    koruptorrank: {
-      summary: 'Civic-tech ranking of Indonesian corruption cases with 260+ curated entries and multi-factor scoring.',
-      focus:
-        'Curated data sourced from Wikipedia, multi-factor scoring, filtering, and interactive ranking visualization.',
-    },
     pantauanggaran: {
       summary:
-        'Indonesian public procurement transparency platform. Real-time dashboard with AI-based anomaly detection.',
+        'Public dashboard monitoring 3M+ government procurement records for anomalies — regional maps, agency rankings, risk clusters.',
       focus:
-        'SiRUP data scraping, normalization, region mapping, anomaly scoring, and interactive dashboard visualization.',
+        'PostGIS materialized views for map geometry, GIN trigram full-text search, K-Means clustering with spatial-lag features (plus an ablation study), optional Redis cache with graceful degradation, CI with a real test gate.',
     },
-    jedug: {
-      summary: 'Map-based damaged road reporting platform with photo upload, admin moderation, and public statistics.',
+    putraselamatmakmur: {
+      summary:
+        'Company profile + internal admin for a real forklift-service client — scoped, built, shipped, and SEO-tuned end to end.',
       focus:
-        'Report submission flow, smart nearest-issue merge, storage hardening, map clustering, heatmap, and admin moderation.',
+        'Static-first SvelteKit with full prerender, curated image pipeline (127 photos → 12, WebP via sharp), JSON-LD LocalBusiness SEO, zero-trust deploy through Cloudflare Access. Lighthouse mobile: 90 / 100 / 100 / 92.',
     },
     brunogen: {
       summary:
-        'Developer tool that reads Laravel, Express, and Go APIs then generates OpenAPI specs and ready-to-use Bruno collections.',
+        'Open-source CLI on npm that scans Laravel, Express, and Go codebases into OpenAPI specs, Bruno collections, and a runnable MCP server.',
       focus:
-        'Route scanning, request/response inference, regression fixtures, publish workflow, and npm package hygiene.',
+        'Real AST parsing (@typescript-eslint) for Express router resolution, deep Laravel inference (FormRequest rules, JsonResource), CI matrix on Node 20+24 with a release-gate script — published as brunogen v0.6.x.',
     },
-    messhub: {
+    cinematix: {
       summary:
-        'Realtime operations app for daily mess management — cash, wifi, feed, members, and workflows in a mobile-first PWA.',
+        'Cinema ticketing PWA with realtime seat locking and interactive 3D seat-POV preview — a feature absent from major Indonesian cinema apps.',
       focus:
-        'WebSocket transport, role-based auth without changing existing flows, mobile-first dashboard, and PWA mode.',
+        'Socket.IO room broadcast + seat locks with expiry for double-book prevention (409 on conflict), react-three-fiber seat viewer with real seat-grid geometry, Next.js App Router + Prisma + PostgreSQL.',
     },
-    komikreader: {
-      summary:
-        'Self-hosted comic reading web app on top of Suwayomi with Keiyoushi extensions — library, reader, and progress tracking.',
+    jedug: {
+      summary: 'Civic platform where citizens report and track damaged public infrastructure — live at jedug.id.',
       focus:
-        'Suwayomi API integration, extension sources via Keiyoushi, continuous reader UX, and self-hosted deployment.',
+        'Hand-rolled SSE hub for realtime issue updates, Web Push with a retrying delivery job queue, PostGIS nearby-alerts, R2 presigned uploads, 15 versioned migrations, 21 Go test files.',
     },
     openrowdb: {
       summary:
-        'Modern native macOS database client built with SwiftUI and Liquid Glass — Postgres & MySQL first, MIT licensed.',
+        'Native macOS database client for Postgres and MySQL — no Electron, no JVM. Open source, distributed as signed DMG releases.',
       focus:
-        'Native SwiftUI architecture, connection management, query workflow, and an open-source release under MIT.',
+        'Swift 6 + SwiftUI with wire-protocol drivers over NIO, SQL tokenizer/formatter/completion written from scratch, SSH tunneling + Keychain secret store, 28 test files, scripted release pipeline.',
+    },
+    komikreader: {
+      summary: 'Self-hosted comic reader PWA built on Suwayomi with Keiyoushi extensions.',
+      focus:
+        '20 test files across Vitest + Playwright (desktop and mobile), CI/CD with secret scanning before deploy, SQLite auth layer, Docker + Caddy self-hosting.',
     },
   },
   id: {
-    cinematix: {
-      summary:
-        'PWA tiket bioskop yang bisa pilih kursi pakai POV 3D realtime — fitur yang belum ada di aplikasi bioskop besar mana pun di Indonesia.',
-      focus:
-        'Kunci kursi realtime biar nggak dobel-booking via Socket.IO, App Router Next.js, Prisma + PostgreSQL, dan CI/CD GitHub Actions.',
-    },
-    pildun: {
-      summary:
-        'Platform tebak skor Piala Dunia 2026 — bikin room, ajak teman, dan adu tebakan dengan leaderboard realtime.',
-      focus:
-        'Room code, prediksi exact-score + knockout, 48 tim & 104 match, leaderboard realtime, deploy VPS dengan PM2 + Caddy.',
-    },
-    koruptorrank: {
-      summary:
-        'Civic-tech yang nge-ranking kasus korupsi di Indonesia — 260+ data terkurasi dengan scoring multi-faktor.',
-      focus: 'Kurasi data dari Wikipedia, scoring multi-faktor, filtering, dan visualisasi ranking yang interaktif.',
-    },
     pantauanggaran: {
       summary:
-        'Platform buat mantau transparansi pengadaan publik Indonesia — dashboard real-time plus deteksi anomali berbasis AI.',
+        'Dashboard publik pemantau 3jt+ record pengadaan pemerintah untuk deteksi anomali — peta wilayah, ranking instansi, klaster risiko.',
       focus:
-        'Scraping data SiRUP, normalisasi, pemetaan wilayah, scoring anomali, dan visualisasi dashboard interaktif.',
+        'Materialized view PostGIS untuk geometri peta, full-text search GIN trigram, K-Means dengan fitur spatial-lag (plus ablation study), cache Redis opsional yang degrade dengan aman, CI dengan test gate beneran.',
     },
-    jedug: {
-      summary: 'Platform pelaporan jalan rusak berbasis peta, upload bukti, moderasi admin, dan statistik publik.',
+    putraselamatmakmur: {
+      summary:
+        'Company profile + admin internal untuk klien jasa servis forklift nyata — scoping, build, rilis, dan SEO dikerjakan end-to-end.',
       focus:
-        'Flow submit laporan, smart merge issue terdekat, storage hardening, map clustering, heatmap, dan admin moderation.',
+        'SvelteKit static-first full prerender, pipeline kurasi gambar (127 foto → 12, WebP via sharp), SEO JSON-LD LocalBusiness, deploy zero-trust lewat Cloudflare Access. Lighthouse mobile: 90 / 100 / 100 / 92.',
     },
     brunogen: {
       summary:
-        'Developer tool yang membaca Laravel, Express, dan Go API lalu menghasilkan OpenAPI dan Bruno collection siap pakai.',
+        'CLI open-source di npm yang memindai codebase Laravel, Express, dan Go menjadi spec OpenAPI, koleksi Bruno, dan MCP server siap jalan.',
       focus:
-        'Route scanning, request/response inference, regression fixtures, publish workflow, dan package hygiene untuk npm.',
+        'AST parsing beneran (@typescript-eslint) untuk resolusi router Express, inferensi Laravel dalam (FormRequest rules, JsonResource), CI matrix Node 20+24 dengan release-gate script — terpublish sebagai brunogen v0.6.x.',
     },
-    messhub: {
+    cinematix: {
       summary:
-        'Aplikasi operasional mess realtime untuk kas, wifi, feed, anggota, dan workflow harian — mobile-first PWA.',
-      focus: 'Transport WebSocket, auth + role tanpa ganti alur existing, dashboard mobile-first, dan mode PWA.',
-    },
-    komikreader: {
-      summary:
-        'Web app baca komik self-hosted di atas Suwayomi dengan extension Keiyoushi — library, reader, dan tracking progres baca.',
+        'PWA tiket bioskop dengan seat lock realtime dan preview 3D dari sudut pandang kursi — fitur yang belum ada di aplikasi bioskop besar Indonesia.',
       focus:
-        'Integrasi API Suwayomi, sumber extension via Keiyoushi, UX continuous reader, dan deployment self-hosted.',
+        'Broadcast room Socket.IO + seat lock ber-expiry untuk cegah double-book (409 saat konflik), seat viewer react-three-fiber dengan geometri grid kursi nyata, Next.js App Router + Prisma + PostgreSQL.',
+    },
+    jedug: {
+      summary: 'Platform warga untuk melaporkan dan melacak kerusakan infrastruktur publik — live di jedug.id.',
+      focus:
+        'SSE hub buatan sendiri untuk update isu realtime, Web Push dengan job queue ber-retry, nearby-alert PostGIS, upload presigned R2, 15 migration berversi, 21 file test Go.',
     },
     openrowdb: {
       summary:
-        'Database client macOS native modern dengan SwiftUI dan Liquid Glass — Postgres & MySQL dulu, lisensi MIT.',
-      focus: 'Arsitektur SwiftUI native, manajemen koneksi, workflow query, dan rilis open-source dengan lisensi MIT.',
+        'Database client native macOS untuk Postgres dan MySQL — tanpa Electron, tanpa JVM. Open source, dirilis sebagai DMG.',
+      focus:
+        'Swift 6 + SwiftUI dengan driver wire-protocol di atas NIO, SQL tokenizer/formatter/completion ditulis dari nol, SSH tunneling + Keychain secret store, 28 file test, pipeline rilis ter-script.',
+    },
+    komikreader: {
+      summary: 'PWA pembaca komik self-hosted di atas Suwayomi dengan extension Keiyoushi.',
+      focus:
+        '20 file test Vitest + Playwright (desktop dan mobile), CI/CD dengan secret scanning sebelum deploy, layer auth SQLite, self-hosting Docker + Caddy.',
     },
   },
 } satisfies Record<Locale, Record<ProjectSlug, ProjectCopy>>;
