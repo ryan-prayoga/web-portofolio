@@ -2,6 +2,7 @@
   import { page } from '$app/state';
   import { localeStore, type Locale } from '$lib/stores/locale.svelte';
   import { uiCopy } from '$lib/data/uiCopy';
+  import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -125,7 +126,7 @@
 >
   <a
     href={onHome ? '#top' : '/'}
-    class="brand font-semibold tracking-tight"
+    class="brand font-display text-lg font-semibold tracking-tight"
     onclick={goTo('top')}
     aria-label={t.a11y.home}
   >
@@ -144,10 +145,11 @@
     {/each}
   </div>
 
-  <div class="nav-actions flex items-center gap-4">
+  <div class="nav-actions flex items-center gap-3.5">
     <span class="status text-muted hidden items-center gap-2 font-mono text-xs uppercase min-[900px]:inline-flex">
       <i class="bg-accent inline-block h-1.5 w-1.5 rounded-full" aria-hidden="true"></i>{t.status}
     </span>
+    <ThemeToggle />
     <div class="flex items-center gap-1 font-mono text-xs" role="group" aria-label={t.a11y.language}>
       <button
         type="button"

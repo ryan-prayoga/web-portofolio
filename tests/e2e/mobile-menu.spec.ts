@@ -73,7 +73,7 @@ test.describe('mobile menu', () => {
     await expect(background).toHaveAttribute('inert', '');
     await expect(page.locator('.brand')).toHaveAttribute('inert', '');
     const inactiveNavControls = page.locator('.nav-actions > :not(.menu-btn)');
-    await expect(inactiveNavControls).toHaveCount(3);
+    await expect(inactiveNavControls).toHaveCount(4);
     for (let index = 0; index < (await inactiveNavControls.count()); index += 1) {
       await expect(inactiveNavControls.nth(index)).toHaveAttribute('inert', '');
     }

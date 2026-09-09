@@ -1,30 +1,41 @@
 @import 'tailwindcss';
 @import 'drawably/style.css';
 
+@custom-variant dark (&:is(.dark *));
+
 /* ═══════════════════════════════════════════════
-   SELF-HOSTED FONTS — Geist variable (latin, woff2)
+   SELF-HOSTED FONTS — The Engineering Sketchbook
+   - Shantell Sans: Handwritten architectural marker font (headings, badges, proofs)
+   - Hanken Grotesk: Warm, highly readable body grotesque (kasbadminton)
+   - JetBrains Mono: Developer monospace (kasbadminton)
    ═══════════════════════════════════════════════ */
 @font-face {
-  font-family: 'Geist';
-  src: url('/fonts/geist.woff2') format('woff2');
-  font-weight: 100 900;
+  font-family: 'Shantell Sans';
+  src: url('/fonts/shantell-sans.woff2') format('woff2');
+  font-weight: 300 800;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Geist Mono';
-  src: url('/fonts/geist-mono.woff2') format('woff2');
-  font-weight: 100 900;
+  font-family: 'Hanken Grotesk';
+  src: url('/fonts/hanken-grotesk.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/jetbrains-mono.woff2') format('woff2');
+  font-weight: 100 800;
   font-style: normal;
   font-display: swap;
 }
 
 /* ═══════════════════════════════════════════════
-   THEME — dokumen terang, satu aksen.
-   Light default (recruiter: monitor kantor, print).
-   Dark tersedia lewat preferensi OS, bukan default brand.
+   THEME TOKENS
    ═══════════════════════════════════════════════ */
-
 @theme {
   --color-paper: #fbfaf8;
   --color-ink: #14161a;
@@ -33,30 +44,31 @@
   --color-accent: #a33b14;
   --color-accent-soft: #f4e9e3;
 
-  --font-sans: 'Geist', system-ui, sans-serif;
-  --font-mono: 'Geist Mono', ui-monospace, monospace;
+  --font-sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+  --font-display: 'Shantell Sans', cursive, sans-serif;
+  --font-hand: 'Shantell Sans', cursive, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   --drawably-ink: var(--color-ink);
   --drawably-paper: var(--color-paper);
   --drawably-stroke: var(--color-ink);
   --drawably-width: 1.5;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-paper: #141618;
-    --color-ink: #f2f0ec;
-    --color-muted: #9a958c;
-    --color-rule: #2a2d31;
-    --color-accent: #e8703a;
-    --color-accent-soft: #26201c;
-    --drawably-ink: var(--color-ink);
-    --drawably-paper: var(--color-paper);
-    --drawably-stroke: var(--color-ink);
-  }
+:root.dark {
+  color-scheme: dark;
+  --color-paper: #121316;
+  --color-ink: #f2f0ec;
+  --color-muted: #9a958c;
+  --color-rule: #2a2d31;
+  --color-accent: #e8703a;
+  --color-accent-soft: #26201c;
+  --drawably-ink: var(--color-ink);
+  --drawably-paper: var(--color-paper);
+  --drawably-stroke: var(--color-ink);
 }
 
 .drawably-host {
@@ -69,9 +81,49 @@
 }
 
 /* ═══════════════════════════════════════════════
+   VIEW TRANSITIONS (THEME REVEAL) — Kas Badminton style
+   Reveal lingkaran ber-blur dari pojok kanan atas
+   ═══════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+:root[data-theme-transition]::view-transition-group(root) {
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root[data-theme-transition]::view-transition-old(root),
+:root[data-theme-transition].dark::view-transition-old(root) {
+  animation: none;
+  animation-fill-mode: both;
+  z-index: -1;
+}
+
+:root[data-theme-transition]::view-transition-new(root),
+:root[data-theme-transition].dark::view-transition-new(root) {
+  mask: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+PGRlZnM+PGZpbHRlciBpZD0iYmx1ciI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMiIvPjwvZmlsdGVyPjwvZGVmcz48Y2lyY2xlIGN4PSI0MCIgY3k9IjAiIHI9IjE4IiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI2JsdXIpIi8+PC9zdmc+')
+    top right / 0 no-repeat;
+  mask-origin: content-box;
+  transform-origin: top right;
+  animation-name: theme-reveal;
+  animation-duration: 0.85s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
+}
+
+@keyframes theme-reveal {
+  to {
+    mask-size: 350vmax;
+  }
+}
+
+/* ═══════════════════════════════════════════════
    BASE
    ═══════════════════════════════════════════════ */
-
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 4.5rem;
@@ -84,6 +136,13 @@ body {
   font-feature-settings: 'tnum' 1;
   -webkit-font-smoothing: antialiased;
   line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
 }
 
 ::selection {
@@ -99,7 +158,6 @@ body {
 /* ═══════════════════════════════════════════════
    SCROLL REVEAL — halus, opacity saja
    ═══════════════════════════════════════════════ */
-
 .reveal {
   opacity: 0;
   transform: translateY(8px);
@@ -125,9 +183,8 @@ body {
 }
 
 /* ═══════════════════════════════════════════════
-   PRINT — halaman jadi dokumen CV rapi
+   PRINT — dokumen CV rapi
    ═══════════════════════════════════════════════ */
-
 @media print {
   :root {
     --color-paper: #ffffff;

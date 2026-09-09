@@ -107,7 +107,7 @@
           title="Hover to re-sketch frame"
         >
           <dt class="text-muted font-mono text-[0.65rem] tracking-wider uppercase">{fact.label}</dt>
-          <dd class="text-accent mt-1 text-2xl font-semibold tracking-tight sm:text-3xl">{fact.value}</dd>
+          <dd class="text-accent mt-1 text-2xl font-bold tracking-tight sm:text-3xl font-display">{fact.value}</dd>
           <p class="text-muted/75 mt-1 text-xs">{fact.note}</p>
         </div>
       {/each}
