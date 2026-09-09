@@ -79,7 +79,7 @@
         {#if base}
           <a
             href="/work/{project.slug}"
-            class="relative block min-h-56 overflow-hidden md:min-h-full"
+            class="relative block w-full aspect-[1100/688] overflow-hidden md:aspect-auto md:min-h-full"
             aria-hidden="true"
             tabindex="-1"
           >
@@ -98,7 +98,7 @@
                 height="688"
                 loading="lazy"
                 decoding="async"
-                class="absolute inset-0 h-full w-full object-cover object-top-left transition-transform duration-500 group-hover:scale-[1.02]"
+                class="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
               />
             </picture>
           </a>
