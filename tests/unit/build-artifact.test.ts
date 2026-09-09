@@ -19,6 +19,7 @@ async function completeStaticArtifact(prefix: string): Promise<string> {
     writeFile(join(root, '404.html'), '<!doctype html><html><body>404</body></html>'),
     writeFile(join(root, 'sitemap.xml'), '<urlset/>'),
     writeFile(join(root, 'robots.txt'), 'User-agent: *'),
+    writeFile(join(root, 'freelance.html'), '<!doctype html><html><body>freelance</body></html>'),
     writeFile(join(root, '_app', 'app.js'), 'console.log("app")'),
   ]);
   return root;
@@ -34,7 +35,7 @@ describe('inspectBuildArtifact', () => {
 
     // Then
     expect(result).toMatchObject({
-      requiredFiles: ['index.html', '404.html', 'sitemap.xml', 'robots.txt'],
+      requiredFiles: ['index.html', '404.html', 'sitemap.xml', 'robots.txt', 'freelance.html'],
       requiredDirectories: ['_app'],
     });
   });

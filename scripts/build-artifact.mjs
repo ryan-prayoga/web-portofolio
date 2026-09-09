@@ -15,7 +15,7 @@ export class ArtifactError extends Error {
  */
 export async function inspectBuildArtifact(buildRoot) {
   const root = resolve(buildRoot);
-  const requiredFiles = ['index.html', '404.html', 'sitemap.xml', 'robots.txt'];
+  const requiredFiles = ['index.html', '404.html', 'sitemap.xml', 'robots.txt', 'freelance.html'];
   const requiredDirectories = ['_app'];
 
   for (const file of requiredFiles) {

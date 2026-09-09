@@ -100,12 +100,13 @@ jobs:
         run: |
           set -euo pipefail
           for i in $(seq 1 5); do
-            code=$(curl -s -o /dev/null -w '%{http_code}' https://ryanprayoga.dev/)
-            if [ "$code" = "200" ]; then
-              echo "✅ Live site returns 200"
+            code_main=$(curl -s -o /dev/null -w '%{http_code}' https://ryanprayoga.dev/)
+            code_freelance=$(curl -s -o /dev/null -w '%{http_code}' https://freelance.ryanprayoga.dev/)
+            if [ "$code_main" = "200" ] && [ "$code_freelance" = "200" ]; then
+              echo "✅ Live site & freelance subdomain both return 200"
               exit 0
             fi
-            echo "attempt $i: got $code, retrying..."
+            echo "attempt $i: main=$code_main freelance=$code_freelance, retrying..."
             sleep 3
           done
           echo "❌ Health check failed"

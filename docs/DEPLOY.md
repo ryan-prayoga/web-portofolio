@@ -63,16 +63,51 @@ job `deploy` (self-hosted) merilisnya secara atomic ke
      header /fonts/* Cache-Control "public, max-age=31536000, immutable"
      header /_app/immutable/* Cache-Control "public, max-age=31536000, immutable"
    }
+
+   # ══════════════════════════════════════════════════════════
+   # Subdomain Freelance: freelance.ryanprayoga.dev
+   # ══════════════════════════════════════════════════════════
+   freelance.ryanprayoga.dev {
+     root * /var/www/ryanprayoga.dev/current
+     encode zstd gzip
+
+     # Root menyajikan freelance.html hasil prerender adapter-static
+     rewrite / /freelance.html
+     try_files {path} {path}.html /freelance.html
+
+     file_server
+
+     handle_errors {
+       @notfound expression {http.error.status_code} == 404
+       rewrite @notfound /404.html
+       file_server
+     }
+
+     header {
+       X-Content-Type-Options nosniff
+       Referrer-Policy strict-origin-when-cross-origin
+       Permissions-Policy "camera=(), microphone=(), geolocation=()"
+     }
+     header /fonts/* Cache-Control "public, max-age=31536000, immutable"
+     header /_app/immutable/* Cache-Control "public, max-age=31536000, immutable"
+   }
    ```
+
+   > **DNS Setup Subdomain**:
+   > Buat DNS `A` (atau `CNAME`) record di Cloudflare / registrar DNS Anda:
+   >
+   > - Type: `A`
+   > - Name / Host: `freelance`
+   > - Value: IP VPS yang sama dengan `ryanprayoga.dev`
 
    ```bash
    sudo caddy validate --config /etc/caddy/Caddyfile
    sudo systemctl reload caddy
    ```
 
-5. **Verifikasi live** — `https://ryanprayoga.dev` harus menampilkan
-   v4 (desain terang). Cek juga `/work/pantauanggaran` dan
-   `/sitemap.xml`.
+5. **Verifikasi live** — `https://ryanprayoga.dev` dan `https://freelance.ryanprayoga.dev`
+   keduanya harus aktif melayani konten masing-masing dengan SSL otomatis dari Caddy.
+   Cek juga `/work/pantauanggaran`, `/freelance`, dan `/sitemap.xml`.
 
 6. **Matikan proses PM2 lama**
 

@@ -7,6 +7,7 @@ const SITE_URL = 'https://ryanprayoga.dev';
 
 const routes: Array<{ path: string; changefreq: string; priority: string }> = [
   { path: '/', changefreq: 'monthly', priority: '1.0' },
+  { path: '/freelance', changefreq: 'weekly', priority: '0.9' },
   ...featuredProjects.map((project) => ({
     path: `/work/${project.slug}`,
     changefreq: 'monthly',

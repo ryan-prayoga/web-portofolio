@@ -18,6 +18,9 @@
 >
   <span>© 2026 {profile.name}</span>
   <span>{profile.location}</span>
+  <a href="/freelance" class="hover:text-accent transition-colors">
+    {localeStore.value === 'id' ? 'Jasa Web Portofolio' : 'Freelance Service'} ↗
+  </a>
   <span>{t.footer.note}</span>
   <a href="#top" onclick={toTop} class="no-print hover:text-accent"
     >{t.footer.backToTop} <span aria-hidden="true">↑</span></a
