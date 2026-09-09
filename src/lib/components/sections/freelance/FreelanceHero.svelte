@@ -53,7 +53,7 @@
       <a
         href="#packages"
         use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-        class="border-rule hover:border-accent hover:text-accent inline-flex items-center gap-2 border px-6 py-3 font-mono text-xs font-semibold tracking-wide uppercase transition-colors"
+        class="hover:text-accent inline-flex items-center gap-2 px-6 py-3 font-mono text-xs font-semibold tracking-wide uppercase transition-colors"
       >
         {t.hero.ctaPackages}
         <Icon name="arrowDown" size={14} />

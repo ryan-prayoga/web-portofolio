@@ -106,7 +106,7 @@
             use:drawButton={{ variant: pkg.popular ? 'solid' : 'outline', resketchOnHover: true }}
             class="flex w-full items-center justify-center gap-2 py-3 font-mono text-xs font-semibold tracking-wide uppercase transition-all {pkg.popular
               ? 'bg-accent text-paper hover:opacity-90'
-              : 'border-rule hover:border-accent hover:text-accent'}"
+              : 'hover:text-accent'}"
           >
             <Icon name="message" size={15} />
             {t.packages.ctaButton}

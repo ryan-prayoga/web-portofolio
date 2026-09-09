@@ -44,7 +44,7 @@
     const navControls = document.querySelectorAll<HTMLElement>(
       '.freelance-nav > :not(.nav-actions), .nav-actions > :not(.menu-btn)',
     );
-    const desktop = window.matchMedia('(min-width: 900px)');
+    const desktop = window.matchMedia('(min-width: 1120px)');
     const menuLinks = [...menu.querySelectorAll<HTMLAnchorElement>('a[href]')];
 
     background?.setAttribute('inert', '');
@@ -137,7 +137,7 @@
   <div class="flex items-center gap-3">
     <a
       href="#top"
-      class="brand font-display text-lg font-semibold tracking-tight"
+      class="brand font-display text-lg font-semibold tracking-tight whitespace-nowrap"
       onclick={goTo('top')}
       aria-label="Ryan Prayoga Freelance"
     >
@@ -151,7 +151,7 @@
     </span>
   </div>
 
-  <div class="desktop-links hidden gap-5 min-[960px]:flex">
+  <div class="desktop-links hidden gap-5 min-[1120px]:flex">
     {#each navItems as item (item.href)}
       <a
         href={item.href}
@@ -203,7 +203,7 @@
       id={toggleId}
       bind:this={toggleEl}
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="menu-btn min-[960px]:!hidden inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-3 !py-1 font-mono text-xs uppercase transition-colors active:scale-95"
+      class="menu-btn min-[1120px]:!hidden inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-3 !py-1 font-mono text-xs uppercase transition-colors active:scale-95"
       type="button"
       onclick={() => {
         closeFocus = 'toggle';
@@ -262,12 +262,3 @@
     </div>
   </div>
 {/if}
-
-<style>
-  @media (min-width: 960px) {
-    :global(.freelance-nav .menu-btn.drawably-button),
-    :global(.freelance-nav .menu-btn) {
-      display: none !important;
-    }
-  }
-</style>

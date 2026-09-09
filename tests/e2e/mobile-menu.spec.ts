@@ -17,6 +17,60 @@ async function openMenu(page: Page) {
   return toggle;
 }
 
+const HEADER_WIDTHS = [360, 375, 414, 640, 768, 900, 1119, 1120, 1280, 1440];
+
+test.describe('header layout', () => {
+  for (const path of ['/', '/freelance']) {
+    test(`keeps the header on one row with nothing spilling off-screen: ${path}`, async ({ page }) => {
+      for (const width of HEADER_WIDTHS) {
+        await page.setViewportSize({ width, height: 800 });
+        await page.goto(path);
+        await page.waitForLoadState('domcontentloaded');
+
+        const layout = await page.evaluate(() => {
+          const nav = document.querySelector('nav');
+          if (!nav) throw new Error('no nav rendered');
+          const viewport = document.documentElement.clientWidth;
+          const spilling = [...nav.querySelectorAll('*')]
+            .filter((el) => {
+              const rect = el.getBoundingClientRect();
+              return rect.width > 0 && (rect.right > viewport + 0.5 || rect.left < -0.5);
+            })
+            .map((el) => `${el.tagName.toLowerCase()}.${el.className.toString().slice(0, 60)}`);
+
+          const visible = (selector: string) => {
+            const el = document.querySelector(selector);
+            if (!el) return false;
+            const rect = el.getBoundingClientRect();
+            return rect.width > 0 && rect.height > 0;
+          };
+
+          return {
+            height: Math.round(nav.getBoundingClientRect().height),
+            spilling,
+            menuButton: visible('.menu-btn'),
+            desktopLinks: visible('.desktop-links'),
+          };
+        });
+
+        // Drawably pernah mengalahkan utility `hidden`, membuat tombol yang
+        // seharusnya sembunyi tetap tampil dan mendorong isi header keluar layar.
+        expect(layout.spilling, `${path} @ ${width}px spills: ${layout.spilling.join(' | ')}`).toEqual([]);
+
+        // Header satu baris; begitu isinya membungkus, tingginya melonjak.
+        expect(layout.height, `${path} @ ${width}px header wrapped to two rows`).toBeLessThan(72);
+
+        // Persis satu jalur navigasi tersedia di setiap lebar — pernah ada
+        // celah 640-959px yang tidak menampilkan keduanya sama sekali.
+        expect(
+          layout.menuButton !== layout.desktopLinks,
+          `${path} @ ${width}px menuButton=${layout.menuButton} desktopLinks=${layout.desktopLinks}`,
+        ).toBe(true);
+      }
+    });
+  }
+});
+
 test.describe('mobile menu', () => {
   test.use({ viewport: mobileViewport });
 

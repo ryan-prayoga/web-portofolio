@@ -102,7 +102,7 @@
           target="_blank"
           rel="noopener noreferrer"
           use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-          class="border-rule hover:border-accent hover:text-accent mt-6 flex items-center justify-center gap-2 py-2.5 font-mono text-xs font-semibold tracking-wide uppercase transition-colors"
+          class="hover:text-accent mt-6 flex items-center justify-center gap-2 py-2.5 font-mono text-xs font-semibold tracking-wide uppercase transition-colors"
         >
           <Icon name="message" size={14} />
           {t.revisions.packCta}

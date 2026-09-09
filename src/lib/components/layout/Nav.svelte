@@ -127,7 +127,7 @@
 >
   <a
     href={onHome ? '#top' : '/'}
-    class="brand font-display text-lg font-semibold tracking-tight"
+    class="brand font-display text-lg font-semibold tracking-tight whitespace-nowrap"
     onclick={goTo('top')}
     aria-label={t.a11y.home}
   >
@@ -242,19 +242,3 @@
     </div>
   </div>
 {/if}
-
-<style>
-  @media (max-width: 639.98px) {
-    :global(.nav-cv.drawably-button),
-    :global(.nav-cv) {
-      display: none !important;
-    }
-  }
-
-  @media (min-width: 640px) {
-    :global(.menu-btn.drawably-button),
-    :global(.menu-btn) {
-      display: none !important;
-    }
-  }
-</style>

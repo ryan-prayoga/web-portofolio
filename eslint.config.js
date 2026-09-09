@@ -11,6 +11,8 @@ export default defineConfig(
     'build/**',
     'coverage/**',
     'playwright-report/**',
+    // Reporter Playwright menulis bundle HTML minified ke sini.
+    '.playwright-output/**',
     'test-results/**',
     'artifacts/**',
     '.omo/**',

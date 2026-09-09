@@ -54,7 +54,7 @@
       <a
         href="mailto:{FREELANCE_CONFIG.email}?subject=Inquiry%20Pembuatan%20Web%20Bisnis"
         use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-        class="border-rule hover:border-accent hover:text-accent inline-flex items-center gap-2 border px-6 py-3.5 font-mono text-xs font-semibold tracking-wide uppercase transition-colors"
+        class="hover:text-accent inline-flex items-center gap-2 px-6 py-3.5 font-mono text-xs font-semibold tracking-wide uppercase transition-colors"
       >
         <Icon name="mail" size={16} />
         {t.cta.emailButton}

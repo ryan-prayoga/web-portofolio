@@ -1,5 +1,12 @@
 @import 'tailwindcss';
-@import 'drawably/style.css';
+/*
+ * Drawably masuk ke layer `components` agar seluruh utility Tailwind
+ * (hidden, inline-flex, beserta varian responsifnya) selalu menang atas
+ * `.drawably-button { display: inline-flex }` dan sejenisnya. Tanpa ini
+ * urutan import membuat drawably menang, sehingga tombol yang seharusnya
+ * sembunyi di layar kecil tetap tampil dan merusak susunan header.
+ */
+@import 'drawably/style.css' layer(components);
 
 @custom-variant dark (&:is(.dark *));
 

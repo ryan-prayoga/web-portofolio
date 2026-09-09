@@ -2,6 +2,7 @@ node_modules
 .svelte-kit
 build
 coverage
+.playwright-output
 playwright-report
 test-results
 artifacts
