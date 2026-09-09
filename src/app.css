@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'drawably/style.css';
 
 /* ═══════════════════════════════════════════════
    SELF-HOSTED FONTS — Geist variable (latin, woff2)
@@ -38,6 +39,10 @@
 
 :root {
   color-scheme: light dark;
+  --drawably-ink: var(--color-ink);
+  --drawably-paper: var(--color-paper);
+  --drawably-stroke: var(--color-ink);
+  --drawably-width: 1.5;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -48,7 +53,19 @@
     --color-rule: #2a2d31;
     --color-accent: #e8703a;
     --color-accent-soft: #26201c;
+    --drawably-ink: var(--color-ink);
+    --drawably-paper: var(--color-paper);
+    --drawably-stroke: var(--color-ink);
   }
+}
+
+.drawably-host {
+  font-family: inherit !important;
+}
+
+.drawably-accent {
+  --drawably-ink: var(--color-accent) !important;
+  --drawably-stroke: var(--color-accent) !important;
 }
 
 /* ═══════════════════════════════════════════════

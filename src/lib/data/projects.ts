@@ -14,11 +14,45 @@ type ProjectCatalogEntry = {
 };
 
 /**
- * Katalog terkurasi hasil survey seluruh repo (Jul 2026):
- * 3 featured (case study penuh) + 4 grid. Kurasi > kuantitas —
- * hanya project dengan bukti (live / published / test+CI) yang tampil.
+ * Katalog terkurasi hasil survey seluruh repo:
+ * 4 featured (case study penuh) + 4 grid.
+ * Menampilkan spektrum keahlian penuh: Systems/Rust, Realtime SaaS Go,
+ * AI Agent Tooling, Big Data Civic Tech, dan Client Delivery.
  */
 export const projects = [
+  {
+    name: 'WhatsApp Desk (Rust)',
+    slug: 'whatsappdesk',
+    featured: true,
+    tags: ['Rust', 'Tauri v2', 'Systems', 'Multi-Platform'],
+    stack: ['Rust', 'Tauri v2', 'WebKit', 'macOS', 'Windows', 'Linux'],
+    year: '2026',
+    category: 'Systems & Desktop',
+    destination: { kind: 'source', href: 'https://github.com/ryan-prayoga/whatsapp-desktop-rust' },
+    thumbnail: '/v3/projects/whatsappdesk.webp',
+  },
+  {
+    name: 'Kas Badminton',
+    slug: 'kasbadminton',
+    featured: true,
+    tags: ['Realtime SaaS', 'Go & SvelteKit', 'FinTech QRIS', 'PWA'],
+    stack: ['Go', 'SvelteKit', 'PostgreSQL', 'SSE', 'PWA', 'Caddy'],
+    year: '2026',
+    category: 'Production SaaS',
+    destination: { kind: 'site', href: 'https://kasbadminton.com' },
+    thumbnail: '/v3/projects/kasbadminton.webp',
+  },
+  {
+    name: 'native-design',
+    slug: 'nativedesign',
+    featured: true,
+    tags: ['AI Agents', 'Design Engine', 'CLI', 'Multi-Platform'],
+    stack: ['Node.js', 'CLI', 'SwiftUI', 'Jetpack Compose', 'WinUI', 'Libadwaita'],
+    year: '2026',
+    category: 'Developer Tooling',
+    destination: { kind: 'source', href: 'https://github.com/ryan-prayoga/native-design' },
+    thumbnail: '/v3/projects/nativedesign.webp',
+  },
   {
     name: 'Pantau Anggaran',
     slug: 'pantauanggaran',
@@ -33,45 +67,13 @@ export const projects = [
   {
     name: 'Putra Selamat Makmur',
     slug: 'putraselamatmakmur',
-    featured: true,
+    featured: false,
     tags: ['Client Work', 'SEO', 'Company Profile'],
     stack: ['SvelteKit', 'Tailwind', 'Go', 'Caddy'],
     year: '2026',
     category: 'Client Delivery',
     destination: { kind: 'site', href: 'https://putraselamatmakmur.com' },
     thumbnail: '/v3/projects/putraselamatmakmur.webp',
-  },
-  {
-    name: 'Brunogen',
-    slug: 'brunogen',
-    featured: true,
-    tags: ['CLI', 'OpenAPI', 'npm', 'MCP'],
-    stack: ['TypeScript', 'AST Parsing', 'OpenAPI', 'Vitest'],
-    year: '2026',
-    category: 'Developer Tooling',
-    destination: { kind: 'package', href: 'https://www.npmjs.com/package/brunogen' },
-  },
-  {
-    name: 'CineTix',
-    slug: 'cinematix',
-    featured: false,
-    tags: ['Realtime', 'PWA', '3D Seat-POV'],
-    stack: ['Next.js', 'Express', 'Socket.IO', 'PostgreSQL', 'Prisma'],
-    year: '2026',
-    category: 'Realtime Product',
-    destination: { kind: 'site', href: 'https://cinema.ryanprayoga.dev' },
-    thumbnail: '/v3/projects/cinematix.webp',
-  },
-  {
-    name: 'JEDUG',
-    slug: 'jedug',
-    featured: false,
-    tags: ['Civic Tech', 'SSE', 'Web Push'],
-    stack: ['Go Fiber', 'SvelteKit', 'PostgreSQL', 'PostGIS', 'MapLibre'],
-    year: '2026',
-    category: 'Civic Tech',
-    destination: { kind: 'site', href: 'https://jedug.id' },
-    thumbnail: '/v3/projects/jedug.webp',
   },
   {
     name: 'OpenRowDB',
@@ -83,6 +85,17 @@ export const projects = [
     category: 'Developer Tooling',
     destination: { kind: 'source', href: 'https://github.com/ryan-prayoga/openrowdb' },
     thumbnail: '/v3/projects/openrowdb.webp',
+  },
+  {
+    name: 'JEDUG',
+    slug: 'jedug',
+    featured: false,
+    tags: ['Civic Tech', 'SSE', 'Web Push'],
+    stack: ['Go Fiber', 'SvelteKit', 'PostgreSQL', 'PostGIS', 'MapLibre'],
+    year: '2026',
+    category: 'Civic Tech',
+    destination: { kind: 'site', href: 'https://jedug.id' },
+    thumbnail: '/v3/projects/jedug.webp',
   },
   {
     name: 'Komik Reader',

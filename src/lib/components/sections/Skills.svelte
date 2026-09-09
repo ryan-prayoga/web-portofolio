@@ -3,6 +3,7 @@
   import { uiCopy } from '$lib/data/uiCopy';
   import { skills } from '$lib/data/skills';
   import { reveal } from '$lib/actions/reveal';
+  import { drawCard, drawBadge } from '$lib/actions/drawably';
 
   const t = $derived(uiCopy[localeStore.value]);
   const groups = $derived(skills[localeStore.value]);
@@ -10,16 +11,35 @@
 
 <section id="skills" class="mx-auto max-w-5xl px-6 py-14" aria-labelledby="skills-heading">
   <div use:reveal>
-    <p class="text-accent font-mono text-xs tracking-wider uppercase">{t.skills.label}</p>
-    <h2 id="skills-heading" class="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">{t.skills.heading}</h2>
+    <span use:drawBadge={{ variant: 'outline' }} class="px-2.5 py-0.5 font-mono text-xs tracking-wider uppercase">
+      {t.skills.label}
+    </span>
+    <h2 id="skills-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{t.skills.heading}</h2>
   </div>
 
-  <dl class="border-rule mt-8 border-t">
-    {#each groups as group (group.key)}
-      <div class="border-rule grid gap-2 border-b py-5 sm:grid-cols-[minmax(0,14rem)_1fr] sm:gap-10" use:reveal>
-        <dt class="font-mono text-xs tracking-wider uppercase">{group.title}</dt>
-        <dd class="text-muted text-sm leading-relaxed">{group.items.join(' · ')}</dd>
+  <div class="mt-8 grid gap-5 sm:grid-cols-2">
+    {#each groups as group, index (group.key)}
+      <div
+        class="group cursor-pointer p-6 transition-transform hover:-translate-y-0.5 sm:p-7 {index === 0
+          ? 'sm:col-span-2'
+          : ''}"
+        use:reveal
+        use:drawCard={{ resketchOnHover: true }}
+      >
+        <div class="flex items-center justify-between">
+          <dt class="font-mono text-xs font-semibold tracking-wider uppercase text-accent">
+            {group.title}
+          </dt>
+          <span class="text-muted/60 font-mono text-[0.65rem]">0{index + 1}</span>
+        </div>
+        <dd class="mt-4 flex flex-wrap gap-2">
+          {#each group.items as item (item)}
+            <span class="bg-muted/10 text-muted hover:text-ink px-2.5 py-1 font-mono text-xs transition-colors">
+              {item}
+            </span>
+          {/each}
+        </dd>
       </div>
     {/each}
-  </dl>
+  </div>
 </section>

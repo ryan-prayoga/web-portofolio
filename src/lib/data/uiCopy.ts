@@ -55,7 +55,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
     experience: { label: 'Experience', heading: 'Where I have worked' },
     work: {
       label: 'Selected work',
-      heading: 'Three projects, in depth',
+      heading: 'Featured projects, in depth',
       intro: 'Every claim below is backed by code, tests, or a live deployment — not slideware.',
       caseStudy: 'Read case study',
       visit: 'Visit live',
@@ -105,7 +105,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
     experience: { label: 'Pengalaman', heading: 'Tempat saya bekerja' },
     work: {
       label: 'Karya pilihan',
-      heading: 'Tiga proyek, dibedah dalam',
+      heading: 'Proyek unggulan, mendalam',
       intro: 'Semua klaim di bawah didukung kode, test, atau deployment live — bukan sekadar slide.',
       caseStudy: 'Baca case study',
       visit: 'Lihat live',

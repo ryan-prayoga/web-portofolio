@@ -4,6 +4,7 @@
   import { portfolioProjects } from '$lib/data/projects';
   import { projectCopy } from '$lib/data/projectCopy';
   import { reveal } from '$lib/actions/reveal';
+  import { drawCard, drawBadge, drawButton } from '$lib/actions/drawably';
 
   const t = $derived(uiCopy[localeStore.value]);
   const copy = $derived(projectCopy[localeStore.value]);
@@ -13,55 +14,72 @@
 
 <section id="work" class="mx-auto max-w-5xl px-6 py-14" aria-labelledby="work-heading">
   <div use:reveal>
-    <p class="text-accent font-mono text-xs tracking-wider uppercase">{t.work.label}</p>
-    <h2 id="work-heading" class="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">{t.work.heading}</h2>
-    <p class="text-muted mt-3 max-w-prose leading-relaxed">{t.work.intro}</p>
+    <span use:drawBadge={{ variant: 'outline' }} class="px-2.5 py-0.5 font-mono text-xs tracking-wider uppercase">
+      {t.work.label}
+    </span>
+    <h2 id="work-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{t.work.heading}</h2>
+    <p class="text-muted mt-2.5 max-w-prose leading-relaxed">{t.work.intro}</p>
   </div>
 
-  <div class="mt-10 grid gap-8">
-    {#each featured as project (project.slug)}
+  <div class="mt-10 grid gap-10">
+    {#each featured as project, index (project.slug)}
       {@const base = project.thumbnail?.replace('.webp', '')}
-      <article class="border-rule grid overflow-hidden border md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]" use:reveal>
-        <div class="flex min-w-0 flex-col p-6 sm:p-8">
-          <p class="text-muted font-mono text-[0.65rem] tracking-wider uppercase">
-            {project.slug === 'putraselamatmakmur' ? t.work.clientTag : project.category}
-            <span class="text-rule mx-1" aria-hidden="true">/</span>
-            {project.year}
-          </p>
+      <article
+        class="group grid overflow-hidden p-3 transition-transform hover:-translate-y-0.5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]"
+        use:reveal
+        use:drawCard={{ resketchOnHover: true }}
+      >
+        <div class="flex min-w-0 flex-col p-5 sm:p-7">
+          <div class="flex items-center gap-2">
+            <span class="text-accent font-mono text-xs font-bold" aria-hidden="true">0{index + 1}</span>
+            <span class="text-rule" aria-hidden="true">/</span>
+            <p class="text-muted font-mono text-[0.65rem] tracking-wider uppercase">
+              {project.category}
+              <span class="text-rule mx-1" aria-hidden="true">/</span>
+              {project.year}
+            </p>
+          </div>
+
           <h3 class="mt-3 text-xl font-semibold tracking-tight sm:text-2xl">
-            <a href="/work/{project.slug}" class="hover:text-accent transition-colors">{project.name}</a>
+            <a href="/work/{project.slug}" class="hover:text-accent transition-colors">
+              {project.name}
+            </a>
           </h3>
+
           <p class="text-muted mt-3 max-w-prose text-sm leading-relaxed">{copy[project.slug].summary}</p>
-          <ul class="mt-4 flex flex-wrap gap-x-3 gap-y-1">
+
+          <ul class="mt-4 flex flex-wrap gap-1.5">
             {#each project.stack as tech (tech)}
-              <li class="text-muted font-mono text-[0.65rem] uppercase">{tech}</li>
+              <li class="bg-muted/10 text-muted px-2 py-0.5 font-mono text-[0.65rem] uppercase">
+                {tech}
+              </li>
             {/each}
           </ul>
+
           <div class="mt-auto flex flex-wrap items-center gap-4 pt-6">
             <a
               href="/work/{project.slug}"
-              class="text-accent font-mono text-xs tracking-wide uppercase underline-offset-4 hover:underline"
+              use:drawButton={{ variant: 'solid', resketchOnHover: true }}
+              class="bg-accent text-paper inline-flex items-center gap-2 px-4 py-1.5 font-mono text-xs tracking-wide uppercase transition-opacity hover:opacity-85"
             >
               {t.work.caseStudy} <span aria-hidden="true">→</span>
             </a>
+
             <a
               href={project.destination.href}
               target="_blank"
               rel="noopener noreferrer"
               class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline"
             >
-              {project.destination.kind === 'site'
-                ? t.work.visit
-                : project.destination.kind === 'package'
-                  ? t.work.npm
-                  : t.work.source} <span aria-hidden="true">↗</span>
+              {project.destination.kind === 'site' ? t.work.visit : t.work.source} <span aria-hidden="true">↗</span>
             </a>
           </div>
         </div>
+
         {#if base}
           <a
             href="/work/{project.slug}"
-            class="border-rule relative block min-h-52 border-t md:border-t-0 md:border-l"
+            class="relative block min-h-56 overflow-hidden md:min-h-full"
             aria-hidden="true"
             tabindex="-1"
           >
@@ -80,33 +98,30 @@
                 height="688"
                 loading="lazy"
                 decoding="async"
-                class="absolute inset-0 h-full w-full object-cover object-top-left"
+                class="absolute inset-0 h-full w-full object-cover object-top-left transition-transform duration-500 group-hover:scale-[1.02]"
               />
             </picture>
           </a>
-        {:else}
-          <div
-            class="border-rule text-muted flex min-h-52 flex-col justify-center border-t p-8 font-mono text-sm leading-7 md:border-t-0 md:border-l"
-            aria-hidden="true"
-          >
-            <span><span class="text-accent">$</span> npx brunogen generate</span>
-            <span>✓ openapi.yaml → bruno collection</span>
-            <span>✓ laravel + express + go adapters</span>
-            <span>✓ mcp server ready</span>
-          </div>
         {/if}
       </article>
     {/each}
   </div>
 
-  <p class="text-muted mt-14 font-mono text-xs tracking-wider uppercase" use:reveal>{t.work.moreLabel}</p>
-  <div class="border-rule mt-4 grid border-t sm:grid-cols-2" use:reveal>
+  <div class="mt-16 flex items-center justify-between" use:reveal>
+    <p class="text-muted font-mono text-xs tracking-wider uppercase">{t.work.moreLabel}</p>
+    <span class="text-muted/60 hidden font-mono text-[0.65rem] sm:inline"
+      >client delivery, desktop & civic platforms</span
+    >
+  </div>
+
+  <div class="mt-4 grid gap-4 sm:grid-cols-2" use:reveal>
     {#each others as project (project.slug)}
       <a
         href={project.destination.href}
         target="_blank"
         rel="noopener noreferrer"
-        class="group border-rule flex min-w-0 flex-col border-b p-5 transition-colors sm:odd:border-r"
+        use:drawCard={{ resketchOnHover: true }}
+        class="group flex min-w-0 flex-col p-6 transition-transform hover:-translate-y-0.5"
       >
         <p class="text-muted font-mono text-[0.65rem] tracking-wider uppercase">{project.category} / {project.year}</p>
         <h3 class="group-hover:text-accent mt-2 font-semibold tracking-tight transition-colors">
@@ -117,9 +132,9 @@
           </span>
         </h3>
         <p class="text-muted mt-2 text-sm leading-relaxed">{copy[project.slug].summary}</p>
-        <ul class="mt-3 flex flex-wrap gap-x-3 gap-y-1">
+        <ul class="mt-4 flex flex-wrap gap-1.5">
           {#each project.stack as tech (tech)}
-            <li class="text-muted font-mono text-[0.6rem] uppercase">{tech}</li>
+            <li class="bg-muted/10 text-muted px-2 py-0.5 font-mono text-[0.6rem] uppercase">{tech}</li>
           {/each}
         </ul>
       </a>

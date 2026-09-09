@@ -8,71 +8,119 @@ export interface SkillGroup {
 
 /**
  * Matrix skill — mengikuti struktur SKILLS di CV ATS.
- * "Primary" = dipakai harian bertahun-tahun; sisanya jujur sesuai porsi.
+ * Jujur, terverifikasi, dan mencerminkan kapabilitas riil.
  */
 export const skills: Record<Locale, readonly SkillGroup[]> = {
   en: [
     {
       key: 'primary',
-      title: 'Primary',
-      items: ['Laravel', 'Nuxt.js', 'Svelte / SvelteKit', 'Flutter', 'TypeScript', 'PHP'],
+      title: 'Primary Daily Drivers',
+      items: ['Go', 'TypeScript / JavaScript', 'Svelte / SvelteKit', 'Laravel / PHP', 'Flutter', 'Tailwind CSS'],
     },
     {
       key: 'backend-data',
-      title: 'Backend & Data',
-      items: ['Go', 'PostgreSQL (incl. PostGIS)', 'Redis', 'Docker', 'WebSocket', 'gRPC', 'GraphQL'],
+      title: 'Systems, Backend & Data',
+      items: [
+        'Rust (Tauri v2)',
+        'Swift (SwiftUI macOS)',
+        'PostgreSQL (incl. PostGIS)',
+        'Redis',
+        'Docker',
+        'SSE / WebSocket',
+        'gRPC',
+      ],
     },
     {
       key: 'ai-llm',
-      title: 'AI / LLM',
+      title: 'AI Agents & Tooling',
       items: [
-        'AI-powered developer tooling (brunogen)',
+        'AI agent design engines (native-design)',
         'Agent orchestration pipelines',
         'MCP server integration',
-        'Multi-model setups & LLM routing',
+        'Deterministic AST code analysis',
       ],
     },
     {
       key: 'devops',
       title: 'DevOps & Infrastructure',
-      items: ['PM2', 'Nginx', 'Caddy', 'GitHub Actions', 'GitLab CI', 'Linux (Ubuntu)', 'VPS hardening', 'WireGuard'],
+      items: [
+        'Caddy',
+        'Nginx',
+        'PM2',
+        'GitHub Actions CI/CD',
+        'GitLab CI',
+        'Linux (Ubuntu/Debian)',
+        'VPS hardening',
+        'WireGuard',
+      ],
     },
     {
       key: 'practices',
-      title: 'Tools & Practices',
-      items: ['Agile/Scrum', 'Code review & mentoring', 'Swagger/OpenAPI', 'Bruno/Postman', 'Figma', 'Jira'],
+      title: 'Engineering Practices',
+      items: [
+        'Agile / Scrum sprint planning',
+        'Code review & mentoring',
+        'Idempotent schema migrations',
+        'Zero-downtime static delivery',
+        'Figma',
+        'Jira',
+      ],
     },
   ],
   id: [
     {
       key: 'primary',
-      title: 'Utama',
-      items: ['Laravel', 'Nuxt.js', 'Svelte / SvelteKit', 'Flutter', 'TypeScript', 'PHP'],
+      title: 'Teknologi Utama',
+      items: ['Go', 'TypeScript / JavaScript', 'Svelte / SvelteKit', 'Laravel / PHP', 'Flutter', 'Tailwind CSS'],
     },
     {
       key: 'backend-data',
-      title: 'Backend & Data',
-      items: ['Go', 'PostgreSQL (termasuk PostGIS)', 'Redis', 'Docker', 'WebSocket', 'gRPC', 'GraphQL'],
+      title: 'Sistem, Backend & Data',
+      items: [
+        'Rust (Tauri v2)',
+        'Swift (SwiftUI macOS)',
+        'PostgreSQL (termasuk PostGIS)',
+        'Redis',
+        'Docker',
+        'SSE / WebSocket',
+        'gRPC',
+      ],
     },
     {
       key: 'ai-llm',
-      title: 'AI / LLM',
+      title: 'AI Agents & Tooling',
       items: [
-        'Developer tooling ber-AI (brunogen)',
+        'Engine desain coding agent (native-design)',
         'Pipeline orkestrasi agent',
         'Integrasi MCP server',
-        'Setup multi-model & LLM routing',
+        'Analisis AST kode deterministik',
       ],
     },
     {
       key: 'devops',
       title: 'DevOps & Infrastruktur',
-      items: ['PM2', 'Nginx', 'Caddy', 'GitHub Actions', 'GitLab CI', 'Linux (Ubuntu)', 'VPS hardening', 'WireGuard'],
+      items: [
+        'Caddy',
+        'Nginx',
+        'PM2',
+        'GitHub Actions CI/CD',
+        'GitLab CI',
+        'Linux (Ubuntu/Debian)',
+        'Pengamanan VPS',
+        'WireGuard',
+      ],
     },
     {
       key: 'practices',
-      title: 'Tools & Praktik',
-      items: ['Agile/Scrum', 'Code review & mentoring', 'Swagger/OpenAPI', 'Bruno/Postman', 'Figma', 'Jira'],
+      title: 'Praktik Engineering',
+      items: [
+        'Perencanaan sprint Agile / Scrum',
+        'Code review & mentoring tim',
+        'Migrasi skema idempoten',
+        'Rilis statis zero-downtime',
+        'Figma',
+        'Jira',
+      ],
     },
   ],
 };

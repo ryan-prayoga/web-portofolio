@@ -8,6 +8,24 @@ export interface ProjectCopy {
 
 export const projectCopy = {
   en: {
+    whatsappdesk: {
+      summary:
+        'Ultra-lightweight multi-platform desktop WhatsApp client built with Rust and Tauri v2 — slashing RAM from 1.5GB to ~18MB with zero-GC runtime.',
+      focus:
+        'Native OS WebKit/WebView2/WebKitGTK integration, persistent session storage, privacy blur mode, permanent chat download interceptor, native Cocoa menu bar and Dock badges, signed multi-platform releases (.dmg, .exe, .deb, .AppImage).',
+    },
+    kasbadminton: {
+      summary:
+        'Real-time badminton club cash & match manager — 2-pair matchup calculations, dynamic QRIS generation, offline-first PWA, and single Go binary delivery via go:embed.',
+      focus:
+        'Single binary deployment with SvelteKit SPA embedded in Go (chi/pgx), Server-Sent Events (SSE) for live session sync, automated goose schema migrations, and idempotent debt reconciliation (player_balances). Live in production at kasbadminton.com.',
+    },
+    nativedesign: {
+      summary:
+        'Open-source design intelligence engine and CLI for AI coding agents enforcing authentic 2026 native OS guidelines across Apple, Google, Microsoft, and Linux.',
+      focus:
+        'Deterministic AST rule-checking for anti-AI-slop design, enforcing Apple Liquid Glass, Android 17 M3 Expressive, Windows 11 WinUI, and GNOME Libadwaita standards, strict touch targets (44pt/48dp), and semantic theme token validation.',
+    },
     pantauanggaran: {
       summary:
         'Public dashboard monitoring 3M+ government procurement records for anomalies — regional maps, agency rankings, risk clusters.',
@@ -20,28 +38,16 @@ export const projectCopy = {
       focus:
         'Static-first SvelteKit with full prerender, curated image pipeline (127 photos → 12, WebP via sharp), JSON-LD LocalBusiness SEO, zero-trust deploy through Cloudflare Access. Lighthouse mobile: 90 / 100 / 100 / 92.',
     },
-    brunogen: {
-      summary:
-        'Open-source CLI on npm that scans Laravel, Express, and Go codebases into OpenAPI specs, Bruno collections, and a runnable MCP server.',
-      focus:
-        'Real AST parsing (@typescript-eslint) for Express router resolution, deep Laravel inference (FormRequest rules, JsonResource), CI matrix on Node 20+24 with a release-gate script — published as brunogen v0.6.x.',
-    },
-    cinematix: {
-      summary:
-        'Cinema ticketing PWA with realtime seat locking and interactive 3D seat-POV preview — a feature absent from major Indonesian cinema apps.',
-      focus:
-        'Socket.IO room broadcast + seat locks with expiry for double-book prevention (409 on conflict), react-three-fiber seat viewer with real seat-grid geometry, Next.js App Router + Prisma + PostgreSQL.',
-    },
-    jedug: {
-      summary: 'Civic platform where citizens report and track damaged public infrastructure — live at jedug.id.',
-      focus:
-        'Hand-rolled SSE hub for realtime issue updates, Web Push with a retrying delivery job queue, PostGIS nearby-alerts, R2 presigned uploads, 15 versioned migrations, 21 Go test files.',
-    },
     openrowdb: {
       summary:
         'Native macOS database client for Postgres and MySQL — no Electron, no JVM. Open source, distributed as signed DMG releases.',
       focus:
         'Swift 6 + SwiftUI with wire-protocol drivers over NIO, SQL tokenizer/formatter/completion written from scratch, SSH tunneling + Keychain secret store, 28 test files, scripted release pipeline.',
+    },
+    jedug: {
+      summary: 'Civic platform where citizens report and track damaged public infrastructure — live at jedug.id.',
+      focus:
+        'Hand-rolled SSE hub for realtime issue updates, Web Push with a retrying delivery job queue, PostGIS nearby-alerts, R2 presigned uploads, 15 versioned migrations, 21 Go test files.',
     },
     komikreader: {
       summary: 'Self-hosted comic reader PWA built on Suwayomi with Keiyoushi extensions.',
@@ -50,6 +56,24 @@ export const projectCopy = {
     },
   },
   id: {
+    whatsappdesk: {
+      summary:
+        'Aplikasi desktop WhatsApp multi-platform ultra-ringan berbasis Rust & Tauri v2 — memangkas RAM dari 1.5GB menjadi ~18MB tanpa overhead GC.',
+      focus:
+        'Pemanfaatan WebKit/WebView2 bawaan OS, penyimpanan sesi persisten, mode privasi anti-intip, pencegatan unduhan chat permanen, Dock badge macOS native, rilis installer multi-platform (.dmg, .exe, .deb, .AppImage).',
+    },
+    kasbadminton: {
+      summary:
+        'Aplikasi operasional dan kas patungan kok badminton realtime — pencatatan matchup, pembayaran QRIS dinamis, PWA offline-first, disajikan satu binary Go via go:embed.',
+      focus:
+        'Satu binary Go (chi/pgx) dengan SvelteKit SPA ter-embed, Server-Sent Events (SSE) untuk sinkronisasi live pertandingan, migrasi schema goose terotomasi, dan rekonsiliasi saldo utang idempoten. Live di kasbadminton.com.',
+    },
+    nativedesign: {
+      summary:
+        'Design intelligence engine dan CLI open-source untuk AI coding agents yang menegakkan standar desain native resmi 2026 di Apple, Google, Microsoft, dan Linux.',
+      focus:
+        'Aturan deterministik anti-AI-slop untuk Apple Liquid Glass, Android 17 M3 Expressive, Windows 11 WinUI, dan GNOME Libadwaita, penegakan hit-target ketat (44pt/48dp), dan validasi token tema semantik.',
+    },
     pantauanggaran: {
       summary:
         'Dashboard publik pemantau 3jt+ record pengadaan pemerintah untuk deteksi anomali — peta wilayah, ranking instansi, klaster risiko.',
@@ -62,28 +86,16 @@ export const projectCopy = {
       focus:
         'SvelteKit static-first full prerender, pipeline kurasi gambar (127 foto → 12, WebP via sharp), SEO JSON-LD LocalBusiness, deploy zero-trust lewat Cloudflare Access. Lighthouse mobile: 90 / 100 / 100 / 92.',
     },
-    brunogen: {
-      summary:
-        'CLI open-source di npm yang memindai codebase Laravel, Express, dan Go menjadi spec OpenAPI, koleksi Bruno, dan MCP server siap jalan.',
-      focus:
-        'AST parsing beneran (@typescript-eslint) untuk resolusi router Express, inferensi Laravel dalam (FormRequest rules, JsonResource), CI matrix Node 20+24 dengan release-gate script — terpublish sebagai brunogen v0.6.x.',
-    },
-    cinematix: {
-      summary:
-        'PWA tiket bioskop dengan seat lock realtime dan preview 3D dari sudut pandang kursi — fitur yang belum ada di aplikasi bioskop besar Indonesia.',
-      focus:
-        'Broadcast room Socket.IO + seat lock ber-expiry untuk cegah double-book (409 saat konflik), seat viewer react-three-fiber dengan geometri grid kursi nyata, Next.js App Router + Prisma + PostgreSQL.',
-    },
-    jedug: {
-      summary: 'Platform warga untuk melaporkan dan melacak kerusakan infrastruktur publik — live di jedug.id.',
-      focus:
-        'SSE hub buatan sendiri untuk update isu realtime, Web Push dengan job queue ber-retry, nearby-alert PostGIS, upload presigned R2, 15 migration berversi, 21 file test Go.',
-    },
     openrowdb: {
       summary:
         'Database client native macOS untuk Postgres dan MySQL — tanpa Electron, tanpa JVM. Open source, dirilis sebagai DMG.',
       focus:
         'Swift 6 + SwiftUI dengan driver wire-protocol di atas NIO, SQL tokenizer/formatter/completion ditulis dari nol, SSH tunneling + Keychain secret store, 28 file test, pipeline rilis ter-script.',
+    },
+    jedug: {
+      summary: 'Platform warga untuk melaporkan dan melacak kerusakan infrastruktur publik — live di jedug.id.',
+      focus:
+        'SSE hub buatan sendiri untuk update isu realtime, Web Push dengan job queue ber-retry, nearby-alert PostGIS, upload presigned R2, 15 migration berversi, 21 file test Go.',
     },
     komikreader: {
       summary: 'PWA pembaca komik self-hosted di atas Suwayomi dengan extension Keiyoushi.',

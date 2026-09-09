@@ -18,7 +18,7 @@ function productionInput(): PortfolioContractInput {
     caseStudies: Object.fromEntries(
       Object.entries(caseStudies).map(([locale, entries]) => [locale, Object.keys(entries)]),
     ),
-    featuredCount: 3,
+    featuredCount: 4,
     assets,
   };
 }
@@ -66,7 +66,7 @@ describe('portfolio content contract', () => {
     expect(threshold?.slice(1)).toEqual(['80', '75', '80', '80']);
   });
 
-  it('passes for seven curated projects, three featured, and two exact locales', () => {
+  it('passes for eight curated projects, four featured, and two exact locales', () => {
     // Given
     const input = productionInput();
 
@@ -74,8 +74,8 @@ describe('portfolio content contract', () => {
     const errors = portfolioContractErrors(input);
 
     // Then
-    expect(projects).toHaveLength(7);
-    expect(projects.filter((project) => project.featured)).toHaveLength(3);
+    expect(projects).toHaveLength(8);
+    expect(projects.filter((project) => project.featured)).toHaveLength(4);
     expect(locales).toEqual(['en', 'id']);
     expect(errors).toEqual([]);
   });
@@ -87,7 +87,7 @@ describe('portfolio content contract', () => {
         ...input,
         copy: { ...input.copy, en: Object.fromEntries(Object.entries(input.copy.en).slice(1)) },
       }),
-      message: 'en copy missing slugs: pantauanggaran',
+      message: 'en copy missing slugs: whatsappdesk',
     },
     {
       name: 'extra copy key',
@@ -104,13 +104,13 @@ describe('portfolio content contract', () => {
         projects: [
           ...input.projects,
           input.projects[0] ?? {
-            slug: 'cinematix',
+            slug: 'openrowdb',
             featured: false,
             destination: { kind: 'site', href: 'https://example.com' },
           },
         ],
       }),
-      message: 'duplicate project slug: pantauanggaran',
+      message: 'duplicate project slug: whatsappdesk',
     },
     {
       name: 'invalid destination',
@@ -137,10 +137,10 @@ describe('portfolio content contract', () => {
       mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
         ...input,
         projects: input.projects.map((project) =>
-          project.slug === 'brunogen' ? { ...project, featured: false } : project,
+          project.slug === 'nativedesign' ? { ...project, featured: false } : project,
         ),
       }),
-      message: 'expected exactly 3 featured projects; found 2',
+      message: 'expected exactly 4 featured projects; found 3',
     },
     {
       name: 'missing case study',
@@ -148,10 +148,10 @@ describe('portfolio content contract', () => {
         ...input,
         caseStudies: {
           ...input.caseStudies,
-          en: (input.caseStudies.en ?? []).filter((slug) => slug !== 'brunogen'),
+          en: (input.caseStudies.en ?? []).filter((slug) => slug !== 'nativedesign'),
         },
       }),
-      message: 'en case studies missing featured slugs: brunogen',
+      message: 'en case studies missing featured slugs: nativedesign',
     },
     {
       name: 'case study for non-featured project',
@@ -159,18 +159,18 @@ describe('portfolio content contract', () => {
         ...input,
         caseStudies: {
           ...input.caseStudies,
-          id: [...(input.caseStudies.id ?? []), 'cinematix'],
+          id: [...(input.caseStudies.id ?? []), 'openrowdb'],
         },
       }),
-      message: 'id case studies cover non-featured slugs: cinematix',
+      message: 'id case studies cover non-featured slugs: openrowdb',
     },
     {
       name: 'missing image variant',
       mutate: (input: PortfolioContractInput): PortfolioContractInput => ({
         ...input,
-        assets: new Set([...input.assets].filter((asset) => asset !== '/v3/projects/cinematix-sm.avif')),
+        assets: new Set([...input.assets].filter((asset) => asset !== '/v3/projects/whatsappdesk-sm.avif')),
       }),
-      message: 'missing thumbnail variant for cinematix: /v3/projects/cinematix-sm.avif',
+      message: 'missing thumbnail variant for whatsappdesk: /v3/projects/whatsappdesk-sm.avif',
     },
   ])('rejects $name with a specific message', ({ mutate, message }) => {
     // Given
