@@ -72,7 +72,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
       body: 'Open for fullstack, backend, and team lead roles.',
       emailCta: 'Send email',
     },
-    footer: { note: 'Built with SvelteKit — fully static, no trackers', backToTop: 'Back to top' },
+    footer: { note: '', backToTop: 'Back to top' },
     a11y: {
       home: 'Ryan Prayoga, home',
       toggleMenu: 'Toggle menu',
@@ -122,7 +122,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
       body: 'Terbuka untuk peran fullstack, backend, dan team lead.',
       emailCta: 'Kirim email',
     },
-    footer: { note: 'Dibuat dengan SvelteKit — full static, tanpa tracker', backToTop: 'Ke atas' },
+    footer: { note: '', backToTop: 'Ke atas' },
     a11y: {
       home: 'Ryan Prayoga, beranda',
       toggleMenu: 'Buka/tutup menu',

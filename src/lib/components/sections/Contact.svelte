@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { localeStore } from '$lib/stores/locale.svelte';
   import { uiCopy } from '$lib/data/uiCopy';
   import { socials } from '$lib/data/socials';
@@ -11,6 +12,80 @@
   const email = socials.find((s) => s.name === 'Email');
   const github = socials.find((s) => s.name === 'GitHub');
   const linkedin = socials.find((s) => s.name === 'LinkedIn');
+
+  let now = $state<Date | null>(null);
+  let diffMinutes = $state(0);
+  let userTzName = $state('');
+
+  onMount(() => {
+    const updateTime = () => {
+      now = new Date();
+    };
+    updateTime();
+
+    if (now) {
+      // Tangerang (WIB) is permanently UTC+7 (420 minutes, zero DST)
+      const visitorOffset = -now.getTimezoneOffset();
+      const tangerangOffset = 7 * 60;
+      diffMinutes = visitorOffset - tangerangOffset;
+
+      try {
+        const parts = new Intl.DateTimeFormat(undefined, { timeZoneName: 'short' }).formatToParts(now);
+        userTzName = parts.find((p) => p.type === 'timeZoneName')?.value ?? '';
+      } catch {
+        userTzName = '';
+      }
+    }
+
+    const timer = setInterval(updateTime, 1000);
+    return () => clearInterval(timer);
+  });
+
+  const tangerangTime = $derived.by(() => {
+    if (!now) return '';
+    return new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Jakarta',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    }).format(now);
+  });
+
+  const visitorTime = $derived.by(() => {
+    if (!now) return '';
+    return new Intl.DateTimeFormat('en-GB', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    }).format(now);
+  });
+
+  const isDifferentTz = $derived(diffMinutes !== 0);
+
+  const diffText = $derived.by(() => {
+    if (diffMinutes === 0) return '';
+    const isAhead = diffMinutes > 0;
+    const absMinutes = Math.abs(diffMinutes);
+    const hours = Math.floor(absMinutes / 60);
+    const mins = absMinutes % 60;
+
+    let timeStr = '';
+    if (hours > 0 && mins > 0) {
+      timeStr = locale === 'id' ? `${hours}j ${mins}m` : `${hours}h ${mins}m`;
+    } else if (hours > 0) {
+      timeStr = locale === 'id' ? `${hours} jam` : `${hours}h`;
+    } else {
+      timeStr = locale === 'id' ? `${mins} menit` : `${mins}m`;
+    }
+
+    if (locale === 'id') {
+      return isAhead ? `${timeStr} lebih cepat` : `${timeStr} lebih lambat`;
+    } else {
+      return isAhead ? `${timeStr} ahead` : `${timeStr} behind`;
+    }
+  });
 </script>
 
 <section id="contact" class="mx-auto max-w-5xl px-6 py-14 pb-20" aria-labelledby="contact-heading">
@@ -66,6 +141,19 @@
     >
       CV (PDF) <span aria-hidden="true">↓</span>
     </a>
-    <span class="text-muted w-full sm:w-auto sm:ml-auto font-mono text-xs uppercase">Tangerang, ID · UTC+7</span>
+    <div class="mt-4 flex w-full flex-col font-mono text-xs uppercase sm:mt-0 sm:w-auto sm:ml-auto sm:items-end">
+      <span class="text-muted">Tangerang, ID · UTC+7</span>
+      {#if now}
+        <div class="mt-1 flex items-center gap-1.5 tabular-nums text-ink">
+          <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true"></span>
+          <span>{tangerangTime} WIB</span>
+        </div>
+        {#if isDifferentTz}
+          <span class="mt-0.5 text-muted/75 font-mono text-[0.7rem] tabular-nums tracking-wide">
+            {locale === 'id' ? 'Waktu Anda' : 'Your time'}: {visitorTime}{userTzName ? ` ${userTzName}` : ''} ({diffText})
+          </span>
+        {/if}
+      {/if}
+    </div>
   </div>
 </section>
