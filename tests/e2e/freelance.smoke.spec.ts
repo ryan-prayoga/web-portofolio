@@ -17,6 +17,7 @@ test.describe('freelance landing page', () => {
     await expect(page.locator('#services')).toBeVisible();
     await expect(page.locator('#packages')).toBeVisible();
     await expect(page.locator('#process')).toBeVisible();
+    await expect(page.locator('#revisions')).toBeVisible();
     await expect(page.locator('#showcase')).toBeVisible();
     await expect(page.locator('#faq')).toBeVisible();
     await expect(page.locator('#contact')).toBeVisible();
@@ -105,6 +106,46 @@ test.describe('freelance landing page', () => {
     expect(hrefs.some((href) => href.includes('kasbadminton.com'))).toBe(true);
     expect(hrefs.some((href) => href.includes('putraselamatmakmur.com'))).toBe(true);
     expect(hrefs.some((href) => href.includes('konveksipro'))).toBe(false);
+  });
+
+  test('draws card outlines once, never a sketch stacked on a CSS border', async ({ page }) => {
+    await page.goto('/freelance');
+
+    // Drawably menggambar garis tepi sendiri sebagai SVG. Kalau elemen yang
+    // sama juga punya border CSS, pengunjung melihat dua garis: satu lurus,
+    // satu goresan tangan.
+    const { inspected, doubled } = await page.evaluate(() => {
+      const sides = ['top', 'right', 'bottom', 'left'];
+      const sketched = [...document.querySelectorAll('.drawably-card, .drawably-button, .drawably-badge')];
+      const doubledUp = sketched
+        .filter((el) => {
+          const style = getComputedStyle(el);
+          return sides.some(
+            (side) =>
+              style.getPropertyValue(`border-${side}-style`) !== 'none' &&
+              parseFloat(style.getPropertyValue(`border-${side}-width`)) > 0,
+          );
+        })
+        .map((el) => `${el.tagName.toLowerCase()}.${el.className}`.slice(0, 120));
+
+      return { inspected: sketched.length, doubled: doubledUp };
+    });
+
+    // Tanpa ini, tes lolos begitu saja kalau nama kelas drawably berubah.
+    expect(inspected).toBeGreaterThan(10);
+    expect(doubled, `elements with both a sketch and a CSS border: ${doubled.join(' | ')}`).toEqual([]);
+  });
+
+  test('prices every major request pack and links it to WhatsApp', async ({ page }) => {
+    await page.goto('/freelance');
+
+    const packSection = page.locator('#revisions');
+    await expect(packSection).toContainText('Rp 400.000');
+    await expect(packSection).toContainText('Rp 900.000');
+    await expect(packSection).toContainText('Rp 1.500.000');
+
+    const packLinks = packSection.locator('a[href*="wa.me"]');
+    expect(await packLinks.count()).toBeGreaterThanOrEqual(3);
   });
 
   test('mobile viewport: ensures zero horizontal overflow', async ({ page }) => {

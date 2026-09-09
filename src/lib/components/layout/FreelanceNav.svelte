@@ -14,6 +14,7 @@
     { label: t.nav.whyUs, href: '#why-us' },
     { label: t.nav.packages, href: '#packages' },
     { label: t.nav.process, href: '#process' },
+    { label: t.nav.revisions, href: '#revisions' },
     { label: t.nav.showcase, href: '#showcase' },
     { label: t.nav.faq, href: '#faq' },
   ]);

@@ -36,9 +36,9 @@
     {#each pricingPackages as pkg (pkg.id)}
       <div
         use:drawCard={{ resketchOnHover: true }}
-        class="bg-paper flex flex-col justify-between p-6 sm:p-8 transition-all hover:-translate-y-1 relative {pkg.popular
-          ? 'border-2 border-accent shadow-md bg-accent-soft/10'
-          : 'border border-rule'}"
+        class="bg-paper relative flex flex-col justify-between p-6 transition-all hover:-translate-y-1 sm:p-8 {pkg.popular
+          ? 'drawably-accent bg-accent-soft/10 shadow-md'
+          : ''}"
       >
         <div>
           {#if pkg.popular}

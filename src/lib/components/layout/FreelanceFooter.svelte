@@ -41,6 +41,7 @@
         <li><a href="#why-us" class="hover:text-accent transition-colors">{t.nav.whyUs}</a></li>
         <li><a href="#packages" class="hover:text-accent transition-colors">{t.nav.packages}</a></li>
         <li><a href="#process" class="hover:text-accent transition-colors">{t.nav.process}</a></li>
+        <li><a href="#revisions" class="hover:text-accent transition-colors">{t.nav.revisions}</a></li>
         <li><a href="#faq" class="hover:text-accent transition-colors">{t.nav.faq}</a></li>
       </ul>
     </div>

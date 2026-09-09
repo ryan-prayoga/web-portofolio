@@ -1,10 +1,11 @@
 <script lang="ts">
   import { localeStore } from '$lib/stores/locale.svelte';
-  import { FREELANCE_CONFIG } from '$lib/data/freelanceData';
+  import { FREELANCE_CONFIG, pricingPackages } from '$lib/data/freelanceData';
   import FreelanceHero from '$lib/components/sections/freelance/FreelanceHero.svelte';
   import FreelanceComparison from '$lib/components/sections/freelance/FreelanceComparison.svelte';
   import FreelanceServices from '$lib/components/sections/freelance/FreelanceServices.svelte';
   import FreelancePricing from '$lib/components/sections/freelance/FreelancePricing.svelte';
+  import FreelanceRevisions from '$lib/components/sections/freelance/FreelanceRevisions.svelte';
   import FreelanceProcess from '$lib/components/sections/freelance/FreelanceProcess.svelte';
   import FreelanceShowcase from '$lib/components/sections/freelance/FreelanceShowcase.svelte';
   import FreelanceFaq from '$lib/components/sections/freelance/FreelanceFaq.svelte';
@@ -33,7 +34,7 @@
     name: 'Ryan Prayoga — Jasa Pembuatan Web Portofolio & Profil Bisnis',
     url: SITE_URL,
     image: 'https://ryanprayoga.dev/photo/ryan-700.jpg',
-    priceRange: 'Rp 699.000 - Rp 2.999.000+',
+    priceRange: `${pricingPackages[0].priceIdr} - ${pricingPackages[pricingPackages.length - 1].priceIdr}`,
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Tangerang',
@@ -49,40 +50,18 @@
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Paket Pembuatan Website Bisnis & Portofolio',
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Starter Bisnis',
-            description: 'Website profil satu halaman responsif untuk usaha baru, jasa perorangan, dan kuliner.',
-          },
-          price: '699000',
-          priceCurrency: 'IDR',
+      // Diturunkan dari pricingPackages supaya harga di rich result Google
+      // tidak pernah berbeda dengan harga yang dilihat pengunjung.
+      itemListElement: pricingPackages.map((pkg) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: pkg.name.id,
+          description: pkg.description.id,
         },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Portofolio Bisnis Pro',
-            description:
-              'Website bisnis multi-section lengkap dengan katalog portofolio, Google SEO, dan pemesanan WhatsApp.',
-          },
-          price: '1499000',
-          priceCurrency: 'IDR',
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Custom Korporat & Katalog',
-            description:
-              'Website bisnis kustom penuh dengan filter katalog, sistem update konten CMS, dan email resmi perusahaan.',
-          },
-          price: '2999000',
-          priceCurrency: 'IDR',
-        },
-      ],
+        price: pkg.priceValue,
+        priceCurrency: 'IDR',
+      })),
     },
   };
 </script>
@@ -115,6 +94,7 @@
   <FreelanceComparison />
   <FreelanceServices />
   <FreelancePricing />
+  <FreelanceRevisions />
   <FreelanceProcess />
   <FreelanceShowcase />
   <FreelanceFaq />

@@ -18,7 +18,7 @@
 <section id="contact" class="mx-auto max-w-5xl px-6 py-16 sm:py-24 border-t border-rule">
   <div
     use:drawCard={{ resketchOnHover: true }}
-    class="bg-accent-soft/25 p-8 sm:p-14 text-center border-2 border-accent/40 relative overflow-hidden"
+    class="bg-accent-soft/25 drawably-accent relative overflow-hidden p-8 text-center sm:p-14"
   >
     <div class="inline-block">
       <span

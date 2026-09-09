@@ -26,10 +26,7 @@
 
   <div class="mt-12 grid gap-8 md:grid-cols-2">
     <!-- Generic Builders Card -->
-    <div
-      use:drawCard={{ resketchOnHover: true }}
-      class="bg-paper/40 p-6 sm:p-8 opacity-90 border border-dashed border-rule"
-    >
+    <div use:drawCard={{ resketchOnHover: true }} class="bg-paper/40 p-6 opacity-90 sm:p-8">
       <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-muted font-semibold">
         <Icon name="close" size={15} strokeWidth={2.25} class="text-rose-500" />
         <h3>{t.comparison.genericTitle}</h3>
@@ -48,7 +45,7 @@
     <!-- Handcrafted Bespoke Card -->
     <div
       use:drawCard={{ resketchOnHover: true }}
-      class="bg-accent-soft/30 p-6 sm:p-8 border-2 border-accent/40 shadow-sm relative overflow-hidden"
+      class="bg-accent-soft/30 drawably-accent relative overflow-hidden p-6 shadow-sm sm:p-8"
     >
       <div class="flex items-center justify-between gap-2">
         <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-accent font-semibold">

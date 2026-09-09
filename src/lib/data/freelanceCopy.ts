@@ -7,6 +7,7 @@ export interface FreelanceCopy {
     readonly whyUs: string;
     readonly packages: string;
     readonly process: string;
+    readonly revisions: string;
     readonly showcase: string;
     readonly faq: string;
     readonly contact: string;
@@ -57,6 +58,22 @@ export interface FreelanceCopy {
     readonly ctaButton: string;
     readonly customInquiryNote: string;
     readonly customInquiryCta: string;
+  };
+  readonly revisions: {
+    readonly badge: string;
+    readonly heading: string;
+    readonly subheading: string;
+    readonly minorTitle: string;
+    readonly minorNote: string;
+    readonly minorItems: readonly string[];
+    readonly majorTitle: string;
+    readonly majorNote: string;
+    readonly majorItems: readonly string[];
+    readonly packsTitle: string;
+    readonly requestsLabel: string;
+    readonly perRequestLabel: string;
+    readonly validity: string;
+    readonly packCta: string;
   };
   readonly process: {
     readonly badge: string;
@@ -109,6 +126,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       whyUs: 'Keunggulan',
       packages: 'Paket Biaya',
       process: 'Alur Kerja',
+      revisions: 'Revisi',
       showcase: 'Contoh Bisnis',
       faq: 'FAQ',
       contact: 'Kontak',
@@ -206,7 +224,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       badge: 'Pilihan Investasi',
       heading: 'Paket Pembuatan Website Bisnis',
       subheading:
-        'Biaya transparan sekali bayar, hasil milik usaha Anda seutuhnya. Tanpa biaya langganan bulanan tersembunyi.',
+        'Sekali bayar, sudah termasuk domain dan hosting tahun pertama. Hasilnya milik usaha Anda seutuhnya, tanpa langganan bulanan tersembunyi.',
       popularBadge: 'Paling Diminati',
       oneTimePayment: 'Sekali Bayar · Tanpa Biaya Bulanan',
       deliveryLabel: 'Estimasi Pengerjaan',
@@ -215,6 +233,36 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       customInquiryNote:
         'Punya kebutuhan khusus di luar paket atau ingin konsultasi awal? Kami siap berdiskusi santai via WhatsApp.',
       customInquiryCta: 'Konsultasi Bebas via WhatsApp',
+    },
+    revisions: {
+      badge: 'Revisi & Request',
+      heading: 'Revisi Minor Gratis, Request Major Harganya Jelas',
+      subheading:
+        'Patokannya sederhana: minor mengubah isi, major menambah bangunan. Tidak ada tagihan kejutan — kategori sebuah permintaan selalu saya sebutkan sebelum dikerjakan.',
+      minorTitle: 'Revisi Minor',
+      minorNote: 'Gratis selama hosting aktif',
+      minorItems: [
+        'Ganti teks, judul, dan perbaikan salah ketik',
+        'Ganti foto, logo, atau warna',
+        'Ubah harga, jam buka, alamat, dan nomor WhatsApp',
+        'Tukar atau perbarui item katalog yang sudah ada',
+        'Ubah urutan section',
+      ],
+      majorTitle: 'Request Major',
+      majorNote: 'Berbayar per paket request',
+      majorItems: [
+        'Halaman baru di luar struktur awal',
+        'Section baru yang belum pernah ada',
+        'Fitur atau integrasi baru (form, booking, pembayaran, multi-bahasa)',
+        'Penambahan lebih dari 10 item katalog sekaligus',
+        'Perombakan desain menyeluruh',
+      ],
+      packsTitle: 'Paket Request Major',
+      requestsLabel: 'request',
+      perRequestLabel: 'per request',
+      validity:
+        'Berlaku 12 bulan sejak pembelian. Sisa request tidak hangus selama masa itu, dan tidak ada langganan bulanan.',
+      packCta: 'Ambil Paket Ini',
     },
     process: {
       badge: 'Alur Kerja',
@@ -292,6 +340,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       whyUs: 'Why Us',
       packages: 'Pricing',
       process: 'Process',
+      revisions: 'Revisions',
       showcase: 'Case Studies',
       faq: 'FAQ',
       contact: 'Contact',
@@ -388,7 +437,8 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
     packages: {
       badge: 'Investment',
       heading: 'Transparent Business Website Packages',
-      subheading: 'One-time investment with full code ownership. No hidden monthly subscriptions or maintenance fees.',
+      subheading:
+        'One payment, with the first year of domain and hosting included. You own the result outright, with no hidden monthly subscription.',
       popularBadge: 'Most Popular',
       oneTimePayment: 'One-Time Payment · Zero Monthly Fees',
       deliveryLabel: 'Estimated Turnaround',
@@ -397,6 +447,36 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       customInquiryNote:
         'Have custom operational requirements or need initial guidance? Let us discuss freely via WhatsApp.',
       customInquiryCta: 'Free Consultation via WhatsApp',
+    },
+    revisions: {
+      badge: 'Revisions & Requests',
+      heading: 'Minor Revisions Free, Major Requests Clearly Priced',
+      subheading:
+        'Simple rule: minor changes the contents, major adds structure. No surprise invoices — I name the category of a request before starting it.',
+      minorTitle: 'Minor Revision',
+      minorNote: 'Free while hosting is active',
+      minorItems: [
+        'Text and heading edits, typo fixes',
+        'Swapping photos, logo, or colours',
+        'Updating prices, opening hours, address, WhatsApp number',
+        'Replacing or refreshing existing catalog items',
+        'Reordering sections',
+      ],
+      majorTitle: 'Major Request',
+      majorNote: 'Paid, sold in request packs',
+      majorItems: [
+        'A new page beyond the original structure',
+        'A new section that did not exist before',
+        'A new feature or integration (forms, booking, payments, multi-language)',
+        'Adding more than 10 catalog items at once',
+        'A full design overhaul',
+      ],
+      packsTitle: 'Major Request Packs',
+      requestsLabel: 'requests',
+      perRequestLabel: 'per request',
+      validity:
+        'Valid for 12 months from purchase. Unused requests keep until then, and there is no monthly subscription.',
+      packCta: 'Take This Pack',
     },
     process: {
       badge: 'Execution',

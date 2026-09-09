@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { freelanceCopy } from '../../src/lib/data/freelanceCopy';
 import {
   pricingPackages,
+  revisionPacks,
   faqItems,
   businessShowcases,
   getWhatsAppUrl,
@@ -26,6 +27,8 @@ describe('freelance copy & data contract', () => {
       expect(copy.hero.metrics).toHaveLength(4);
     }
   });
+
+  const toNumber = (priceIdr: string) => Number(priceIdr.replace(/[^0-9]/g, ''));
 
   it('provides three valid pricing packages priced in Rupiah without foreign currency', () => {
     expect(pricingPackages).toHaveLength(3);
@@ -54,6 +57,72 @@ describe('freelance copy & data contract', () => {
         expect(item.description[locale].length).toBeGreaterThan(0);
       }
     }
+  });
+
+  it('opens at a price that clears the domain and hosting it gives away', () => {
+    // Setiap paket menanggung domain (.co.id paling mahal, ~Rp 280.000) dan
+    // hosting tahun pertama. Paket termurah harus tetap menyisakan margin
+    // yang jelas di atas biaya itu, kalau tidak penjualan justru merugi.
+    const firstYearCost = 280_000 + 150_000;
+    const cheapest = Math.min(...pricingPackages.map((pkg) => toNumber(pkg.priceIdr)));
+
+    expect(cheapest).toBeGreaterThan(firstYearCost * 2);
+  });
+
+  it('keeps the schema.org price value in sync with the price shown to visitors', () => {
+    // Harga di rich result Google yang berbeda dari harga di halaman adalah
+    // pelanggaran structured data sekaligus sumber sengketa dengan klien.
+    for (const pkg of pricingPackages) {
+      expect(Number(pkg.priceValue)).toBe(toNumber(pkg.priceIdr));
+    }
+  });
+
+  it('orders the packages from cheapest to most expensive', () => {
+    const prices = pricingPackages.map((pkg) => toNumber(pkg.priceIdr));
+    expect([...prices].sort((a, b) => a - b)).toEqual(prices);
+  });
+
+  it('includes a free first-year domain in every package', () => {
+    for (const pkg of pricingPackages) {
+      const starterOffersDomain = pkg.features.id.some((feature) => /domain/i.test(feature));
+      const inheritsFromCheaperTier = pkg.features.id.some((feature) => /Semua fitur/i.test(feature));
+      expect(starterOffersDomain || inheritsFromCheaperTier).toBe(true);
+    }
+  });
+
+  it('sells major requests in packs that get cheaper per request as they grow', () => {
+    expect(revisionPacks.length).toBeGreaterThanOrEqual(3);
+
+    const perRequest = revisionPacks.map((pack) => toNumber(pack.perRequestIdr));
+    expect([...perRequest].sort((a, b) => b - a)).toEqual(perRequest);
+
+    for (const pack of revisionPacks) {
+      expect(pack.requests).toMatch(/^\d+ - \d+$/);
+      expect(pack.priceIdr).toMatch(/^Rp\s/);
+
+      // Harga per request harus benar-benar turun dari harga paket dibagi
+      // jumlah maksimum request, bukan angka pemanis yang dikarang.
+      const [min, max] = pack.requests.split(' - ').map(Number);
+      expect(min).toBeLessThan(max);
+      const honestPerRequest = toNumber(pack.priceIdr) / max;
+      expect(Math.abs(honestPerRequest - toNumber(pack.perRequestIdr))).toBeLessThanOrEqual(1_000);
+
+      for (const locale of locales) {
+        expect(pack.note[locale].length).toBeGreaterThan(0);
+        expect(pack.ctaMessage[locale].length).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('explains the minor versus major boundary in the FAQ', () => {
+    const answers = faqItems.flatMap((item) => [item.answer.id.toLowerCase(), item.answer.en.toLowerCase()]);
+    const joined = answers.join(' ');
+
+    expect(joined).toContain('minor');
+    expect(joined).toContain('major');
+    // Harga paket request harus tertulis di FAQ, bukan hanya di kartu harga.
+    expect(joined).toContain('400.000');
+    expect(joined).toContain('400,000');
   });
 
   it('provides bilingual FAQ items', () => {
