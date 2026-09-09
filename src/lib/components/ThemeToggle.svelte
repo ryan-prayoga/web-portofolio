@@ -21,7 +21,7 @@
   onclick={handleToggle}
   aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
   title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-  class="relative inline-flex h-8 w-8 cursor-pointer items-center justify-center text-muted hover:text-accent transition-colors active:scale-95"
+  class="drawably-icon-btn relative inline-flex size-9 sm:size-8.5 shrink-0 cursor-pointer items-center justify-center text-muted hover:text-accent transition-colors active:scale-95"
 >
   {#if isDark}
     <!-- Sun icon -->
@@ -30,10 +30,10 @@
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="1.75"
+      stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="h-4 w-4"
+      class="size-5 shrink-0"
       aria-hidden="true"
     >
       <circle cx="12" cy="12" r="4" />
@@ -53,13 +53,19 @@
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="1.75"
+      stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="h-4 w-4"
+      class="size-5 shrink-0"
       aria-hidden="true"
     >
       <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
     </svg>
   {/if}
 </button>
+
+<style>
+  :global(.drawably-icon-btn.drawably-button) {
+    padding: 0 !important;
+  }
+</style>

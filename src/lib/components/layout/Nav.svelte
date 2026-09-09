@@ -145,22 +145,26 @@
     {/each}
   </div>
 
-  <div class="nav-actions flex items-center gap-3.5">
+  <div class="nav-actions flex items-center gap-2.5 sm:gap-3.5">
     <span class="status text-muted hidden items-center gap-2 font-mono text-xs uppercase min-[900px]:inline-flex">
       <i class="bg-accent inline-block h-1.5 w-1.5 rounded-full" aria-hidden="true"></i>{t.status}
     </span>
     <ThemeToggle />
-    <div class="flex items-center gap-1 font-mono text-xs" role="group" aria-label={t.a11y.language}>
+    <div class="flex items-center gap-0.5 font-mono text-xs" role="group" aria-label={t.a11y.language}>
       <button
         type="button"
-        class="cursor-pointer {locale === 'en' ? 'font-semibold' : 'text-muted hover:text-accent'}"
+        class="cursor-pointer px-1.5 py-1 min-h-[36px] inline-flex items-center justify-center {locale === 'en'
+          ? 'font-semibold'
+          : 'text-muted hover:text-accent'}"
         aria-pressed={locale === 'en'}
         onclick={() => setLocale('en')}>EN</button
       >
       <span class="text-rule" aria-hidden="true">/</span>
       <button
         type="button"
-        class="cursor-pointer {locale === 'id' ? 'font-semibold' : 'text-muted hover:text-accent'}"
+        class="cursor-pointer px-1.5 py-1 min-h-[36px] inline-flex items-center justify-center {locale === 'id'
+          ? 'font-semibold'
+          : 'text-muted hover:text-accent'}"
         aria-pressed={locale === 'id'}
         onclick={() => setLocale('id')}>ID</button
       >
@@ -175,7 +179,7 @@
     <button
       id={toggleId}
       bind:this={toggleEl}
-      class="menu-btn border-rule inline-flex cursor-pointer border px-3 py-1.5 font-mono text-xs uppercase sm:hidden"
+      class="menu-btn border-rule inline-flex min-h-[36px] cursor-pointer items-center justify-center border px-3 py-1.5 font-mono text-xs uppercase sm:hidden"
       type="button"
       onclick={() => {
         closeFocus = 'toggle';

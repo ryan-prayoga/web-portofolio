@@ -63,6 +63,6 @@
     >
       CV (PDF) <span aria-hidden="true">↓</span>
     </a>
-    <span class="text-muted ml-auto font-mono text-xs uppercase">Tangerang, ID · UTC+7</span>
+    <span class="text-muted w-full sm:w-auto sm:ml-auto font-mono text-xs uppercase">Tangerang, ID · UTC+7</span>
   </div>
 </section>
