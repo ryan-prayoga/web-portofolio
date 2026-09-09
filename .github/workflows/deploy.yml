@@ -1,22 +1,18 @@
 name: Deploy web-portofolio
 
-# Trigger push SENGAJA masih mati sampai cutover Caddy static selesai
-# (runbook: docs/DEPLOY.md). Setelah cutover terverifikasi, nyalakan blok
-# push di bawah dengan menghapus komentarnya.
-#
-# on:
-#   push:
-#     branches: [main]
-#     paths:
-#       - 'src/**'
-#       - 'static/**'
-#       - 'package.json'
-#       - 'package-lock.json'
-#       - 'svelte.config.js'
-#       - 'vite.config.ts'
-#       - 'tsconfig.json'
-#       - '.github/workflows/deploy.yml'
+# CI/CD: Quality gate (GitHub runner) -> Atomic static release (Self-hosted VPS runner)
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'static/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'svelte.config.js'
+      - 'vite.config.ts'
+      - 'tsconfig.json'
+      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
 # Serialisasi deploy: dua push beruntun tidak boleh rilis out-of-order.

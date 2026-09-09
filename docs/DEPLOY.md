@@ -8,10 +8,9 @@ job `deploy` (self-hosted) merilisnya secara atomic ke
 
 ## Status sekarang
 
-- Trigger `push` **sengaja dimatikan** — hanya `workflow_dispatch`.
-- Situs live masih disajikan proses PM2 lama (`web-portofolio`,
-  adapter-node build lama). Jangan restart/utak-atik proses itu sebelum
-  cutover selesai.
+- **Cutover Selesai:** Situs v4 telah aktif dilayani oleh Caddy `file_server` di `/var/www/ryanprayoga.dev/current`.
+- Proses PM2 lama (`web-portofolio`) telah dinonaktifkan (`pm2 delete`).
+- Trigger `push` ke `main` di `.github/workflows/deploy.yml` telah aktif untuk continuous delivery.
 
 ## Langkah cutover (sekali jalan, urut)
 
