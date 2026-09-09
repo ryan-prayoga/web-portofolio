@@ -118,7 +118,7 @@
       rel="noopener noreferrer"
       class="mt-2 inline-block font-mono text-xs font-semibold text-accent hover:underline uppercase tracking-wide"
     >
-      Konsultasi Bebas via WhatsApp ↗
+      {t.packages.customInquiryCta}
     </a>
   </div>
 </section>

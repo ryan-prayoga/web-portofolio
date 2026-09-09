@@ -51,7 +51,7 @@
           </p>
 
           <div class="mt-4 flex flex-wrap gap-1.5">
-            {#each work.tags as tag, idx (idx)}
+            {#each work.tags[locale] as tag, idx (idx)}
               <span class="font-mono text-[10px] uppercase tracking-wider bg-rule/30 px-1.5 py-0.5 text-muted">
                 {tag}
               </span>
@@ -84,7 +84,7 @@
       rel="noopener noreferrer"
       class="mt-2 inline-block font-mono text-xs font-semibold text-accent hover:underline uppercase tracking-wide"
     >
-      Lihat Rekam Jejak Rekayasa Lengkap di ryanprayoga.dev ↗
+      {t.showcase.exploreCta}
     </a>
   </div>
 </section>

@@ -18,7 +18,7 @@
 
   const title = $derived(`${data.project.name} — Case Study · Ryan Prayoga`);
   const pageUrl = $derived(`${SITE_URL}/work/${slug}`);
-  const ogImage = $derived(data.project.thumbnail ? `${SITE_URL}/og/${slug}.png` : `${SITE_URL}/og-image.png`);
+  const ogImage = $derived(data.project.thumbnail ? `${SITE_URL}/og/${slug}.jpg` : `${SITE_URL}/og-image.jpg`);
   const externalLabel = $derived(
     data.project.destination.kind === 'site'
       ? t.caseStudy.visit
@@ -38,6 +38,7 @@
   <meta property="og:description" content={copy.summary} />
   <meta property="og:url" content={pageUrl} />
   <meta property="og:image" content={ogImage} />
+  <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content={title} />

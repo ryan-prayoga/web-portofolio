@@ -13,7 +13,7 @@
   const locale = $derived(localeStore.value);
 
   const SITE_URL = 'https://freelance.ryanprayoga.dev';
-  const OG_IMAGE = 'https://ryanprayoga.dev/og-image.png';
+  const OG_IMAGE = 'https://ryanprayoga.dev/og-image.jpg';
 
   const TITLE = $derived(
     locale === 'id'
@@ -99,6 +99,7 @@
   <meta property="og:description" content={DESCRIPTION} />
   <meta property="og:url" content={SITE_URL} />
   <meta property="og:image" content={OG_IMAGE} />
+  <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content={TITLE} />

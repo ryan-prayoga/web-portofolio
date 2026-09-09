@@ -74,6 +74,39 @@ test.describe('freelance landing page', () => {
     }
   });
 
+  test('renders pure English copy with no untranslated Indonesian strings', async ({ page }) => {
+    // Given a fresh visitor (default locale is English)
+    await page.goto('/freelance');
+
+    // When reading everything the visitor can actually see
+    const visibleText = await page.evaluate(() => document.body.innerText);
+
+    // Then no Indonesian string may leak through hardcoded markup
+    const indonesianMarkers = [
+      'Tanyakan',
+      'Hubungi',
+      'Rekam Jejak',
+      'Kredibilitas',
+      'Legalitas',
+      'Selamanya',
+      'Konsultasi',
+      'Lihat ',
+    ];
+    const leaked = indonesianMarkers.filter((marker) => visibleText.includes(marker));
+    expect(leaked, `Indonesian copy leaked into the English page: ${leaked.join(', ')}`).toEqual([]);
+  });
+
+  test('only links to business showcases that are verified live', async ({ page }) => {
+    await page.goto('/freelance');
+
+    const showcaseLinks = page.locator('#showcase a[href^="https://"]');
+    const hrefs = await showcaseLinks.evaluateAll((nodes) => nodes.map((node) => (node as HTMLAnchorElement).href));
+
+    expect(hrefs.some((href) => href.includes('kasbadminton.com'))).toBe(true);
+    expect(hrefs.some((href) => href.includes('putraselamatmakmur.com'))).toBe(true);
+    expect(hrefs.some((href) => href.includes('konveksipro'))).toBe(false);
+  });
+
   test('mobile viewport: ensures zero horizontal overflow', async ({ page }) => {
     const viewports = [
       { name: 'iphone-se', width: 375, height: 667 },

@@ -46,7 +46,7 @@
 
     <div>
       <span class="font-mono text-xs font-semibold text-ink uppercase tracking-wider block mb-3">
-        Hubungi & Profil
+        {t.footer.contactHeading}
       </span>
       <ul class="flex flex-col gap-2">
         <li>

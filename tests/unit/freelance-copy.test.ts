@@ -41,8 +41,11 @@ describe('freelance copy & data contract', () => {
     }
   });
 
-  it('provides verified business showcases for services, travel, rental, and enterprise', () => {
-    expect(businessShowcases.length).toBeGreaterThanOrEqual(4);
+  it('only showcases business systems that are verified live in production', () => {
+    // Kontrak: halaman jualan hanya boleh memajang sistem yang benar-benar
+    // jalan dan bisa diklik calon klien. Tambah entri baru hanya setelah
+    // URL-nya terverifikasi hidup.
+    expect(businessShowcases.map((item) => item.slug)).toEqual(['kasbadminton', 'putraselamatmakmur']);
     for (const item of businessShowcases) {
       expect(item.name.length).toBeGreaterThan(0);
       expect(item.href).toMatch(/^https:\/\//);
@@ -61,6 +64,31 @@ describe('freelance copy & data contract', () => {
         expect(item.answer[locale].length).toBeGreaterThan(20);
       }
     }
+  });
+
+  it('points every CTA at a real Indonesian WhatsApp number, never a placeholder', () => {
+    const number = FREELANCE_CONFIG.whatsappNumber;
+    // Format internasional tanpa '+', 62 + 9-13 digit.
+    expect(number).toMatch(/^62[1-9]\d{8,12}$/);
+    // Placeholder klasik yang pernah lolos ke produksi dan mematikan
+    // seluruh funnel penjualan halaman freelance.
+    expect(number).not.toBe('6281234567890');
+    expect(/^62(\d)\1+$/.test(number)).toBe(false);
+  });
+
+  it('keeps every copy key in sync between locales, including nested sections', () => {
+    const shape = (value: unknown): unknown => {
+      if (Array.isArray(value)) return value.map(shape);
+      if (value && typeof value === 'object') {
+        return Object.fromEntries(
+          Object.entries(value as Record<string, unknown>)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([key, nested]) => [key, shape(nested)]),
+        );
+      }
+      return typeof value;
+    };
+    expect(shape(freelanceCopy.id)).toEqual(shape(freelanceCopy.en));
   });
 
   it('generates valid WhatsApp URLs with encoded messages', () => {

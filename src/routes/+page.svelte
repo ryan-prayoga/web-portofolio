@@ -10,7 +10,7 @@
 
   const SITE_URL = 'https://ryanprayoga.dev';
   const PAGE_URL = SITE_URL;
-  const OG_IMAGE = `${SITE_URL}/og-image.png`;
+  const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
   const TITLE = 'Ryan Prayoga — Fullstack Developer & Sub Team Lead';
   const DESCRIPTION =
     'Fullstack Developer & Sub Team Lead — 4+ years shipping production web, mobile, and tooling systems for enterprise, government, and self-built products. Laravel, SvelteKit, Go, PostgreSQL.';
@@ -60,6 +60,7 @@
   <meta property="og:description" content={DESCRIPTION} />
   <meta property="og:url" content={PAGE_URL} />
   <meta property="og:image" content={OG_IMAGE} />
+  <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content={TITLE} />

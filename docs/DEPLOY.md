@@ -56,6 +56,8 @@ job `deploy` (self-hosted) merilisnya secara atomic ke
      }
 
      header {
+       Strict-Transport-Security "max-age=31536000"
+       X-Frame-Options "SAMEORIGIN"
        X-Content-Type-Options nosniff
        Referrer-Policy strict-origin-when-cross-origin
        Permissions-Policy "camera=(), microphone=(), geolocation=()"
@@ -73,7 +75,13 @@ job `deploy` (self-hosted) merilisnya secara atomic ke
 
      # Root menyajikan freelance.html hasil prerender adapter-static
      rewrite / /freelance.html
-     try_files {path} {path}.html /freelance.html
+
+     # JANGAN tambahkan fallback /freelance.html di akhir try_files.
+     # Fallback itu membuat URL yang tidak ada balas HTTP 200 (soft-404)
+     # dan Google mengindeks halaman sampah. Biarkan 404 asli jatuh ke
+     # handle_errors — alasan sama dengan larangan `status 200` pada
+     # snippet error_pages di /etc/caddy/Caddyfile.
+     try_files {path} {path}.html
 
      file_server
 
@@ -84,6 +92,8 @@ job `deploy` (self-hosted) merilisnya secara atomic ke
      }
 
      header {
+       Strict-Transport-Security "max-age=31536000"
+       X-Frame-Options "SAMEORIGIN"
        X-Content-Type-Options nosniff
        Referrer-Policy strict-origin-when-cross-origin
        Permissions-Policy "camera=(), microphone=(), geolocation=()"
@@ -118,6 +128,24 @@ job `deploy` (self-hosted) merilisnya secara atomic ke
 7. **Nyalakan auto-deploy** — di `.github/workflows/deploy.yml`,
    aktifkan blok `push` yang dikomentari, commit, push. Push berikutnya
    akan melewati gate quality penuh sebelum rilis.
+
+## Konfigurasi Caddy yang berlaku
+
+Setiap perubahan config di-backup ke `/etc/caddy/backup/`
+(`<nama>.caddy.<timestamp>`). Rollback config:
+
+```bash
+sudo cp /etc/caddy/backup/<file>.caddy.<timestamp> /etc/caddy/sites/<file>.caddy
+sudo caddy validate --config /etc/caddy/Caddyfile && sudo systemctl reload caddy
+```
+
+Invariant yang wajib dijaga di kedua blok:
+
+| Aturan                                            | Alasan                                     |
+| ------------------------------------------------- | ------------------------------------------ |
+| `try_files` tanpa fallback halaman                | fallback = soft-404 HTTP 200, racun SEO    |
+| `handle_errors` → `/404.html`                     | error tetap berstatus 404                  |
+| HSTS `max-age=31536000` tanpa `includeSubDomains` | subdomain lain belum tentu siap HTTPS-only |
 
 ## Rollback
 

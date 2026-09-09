@@ -54,6 +54,7 @@ export interface FreelanceCopy {
     readonly featuresLabel: string;
     readonly ctaButton: string;
     readonly customInquiryNote: string;
+    readonly customInquiryCta: string;
   };
   readonly process: {
     readonly badge: string;
@@ -72,12 +73,14 @@ export interface FreelanceCopy {
     readonly subheading: string;
     readonly liveDemo: string;
     readonly exploreNote: string;
+    readonly exploreCta: string;
   };
   readonly faq: {
     readonly badge: string;
     readonly heading: string;
     readonly subheading: string;
     readonly helpText: string;
+    readonly helpCta: string;
   };
   readonly cta: {
     readonly badge: string;
@@ -91,6 +94,7 @@ export interface FreelanceCopy {
     readonly tag: string;
     readonly description: string;
     readonly linksHeading: string;
+    readonly contactHeading: string;
     readonly backToTop: string;
     readonly rights: string;
   };
@@ -114,12 +118,12 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       title: 'Jasa Pembuatan Web Portofolio & Profil Bisnis yang ',
       titleHighlight: 'Kredibel & Cepat',
       subtitle:
-        'Tingkatkan reputasi usaha jasa, rental, travel, resto, kontraktor, dan UMKM Anda dengan website profil profesional. Tampilkan katalog layanan/produk, terima order via WhatsApp, dan bebas biaya server bulanan selamanya.',
+        'Tingkatkan reputasi usaha jasa, rental, travel, resto, kontraktor, dan UMKM Anda dengan website profil profesional. Tampilkan katalog layanan/produk, terima order via WhatsApp, dan tanpa biaya langganan bulanan.',
       ctaWhatsapp: 'Konsultasi via WhatsApp',
       ctaPackages: 'Lihat Pilihan Paket',
       metrics: [
         { value: '100', label: 'Skor Kecepatan Google', note: 'Akses instan di ponsel' },
-        { value: 'Rp 0', label: 'Biaya Server Bulanan', note: 'Hemat operasional selamanya' },
+        { value: 'Rp 0', label: 'Biaya Server Bulanan', note: 'Hemat biaya operasional' },
         { value: 'Direct WA', label: 'Terhubung ke Pelanggan', note: 'Order langsung ke WhatsApp' },
         { value: '4+ Thn', label: 'Pengalaman Rekayasa Web', note: 'Kualitas rapi & bergaransi' },
       ],
@@ -139,7 +143,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       ],
       customTitle: 'Website Bisnis Handcrafted oleh Ryan Prayoga',
       customPoints: [
-        'Rp 0 biaya server bulanan selamanya (arsitektur modern static deployment)',
+        'Rp 0 biaya server bulanan — arsitektur static modern, kode sepenuhnya milik Anda',
         'Kecepatan buka kilat di bawah 0.5 detik di semua smartphone (Skor Google 95-100)',
         'Desain kustom eksklusif yang mencerminkan identitas dan kredibilitas bisnis Anda',
         'Tombol WhatsApp terintegrasi rapi dengan template pesan pemesanan otomatis',
@@ -202,6 +206,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       ctaButton: 'Pesan via WhatsApp',
       customInquiryNote:
         'Punya kebutuhan khusus di luar paket atau ingin konsultasi awal? Kami siap berdiskusi santai via WhatsApp.',
+      customInquiryCta: 'Konsultasi Bebas via WhatsApp ↗',
     },
     process: {
       badge: 'Alur Kerja',
@@ -245,12 +250,14 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
         'Bukan sekadar gambar konsep. Berikut adalah beberapa contoh sistem nyata dan katalog bisnis yang telah kami buat:',
       liveDemo: 'Buka Website',
       exploreNote: 'Ingin berkonsultasi mengenai konsep website yang paling cocok untuk jenis usaha Anda?',
+      exploreCta: 'Lihat Rekam Jejak Rekayasa Lengkap di ryanprayoga.dev ↗',
     },
     faq: {
       badge: 'Tanya Jawab',
       heading: 'Pertanyaan Seputar Pembuatan Web',
       subheading: 'Informasi lengkap dan transparan sebelum Anda memulai pemesanan website usaha.',
       helpText: 'Ada pertanyaan lain mengenai kebutuhan bisnis Anda?',
+      helpCta: 'Tanyakan Langsung via WhatsApp ↗',
     },
     cta: {
       badge: 'Mulai Sekarang',
@@ -266,6 +273,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       description:
         'Dikerjakan oleh Ryan Prayoga — Fullstack Developer & Sub Team Lead. Membantu bisnis jasa, rental, travel, kuliner, dan UMKM memiliki website berkinerja tinggi.',
       linksHeading: 'Navigasi',
+      contactHeading: 'Hubungi & Profil',
       backToTop: 'Kembali ke atas ↑',
       rights: 'Hak Cipta Terpelihara.',
     },
@@ -374,6 +382,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       ctaButton: 'Order via WhatsApp',
       customInquiryNote:
         'Have custom operational requirements or need initial guidance? Let us discuss freely via WhatsApp.',
+      customInquiryCta: 'Free Consultation via WhatsApp ↗',
     },
     process: {
       badge: 'Execution',
@@ -417,12 +426,14 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       subheading: 'Real, live business systems and portfolios engineered to rigorous standards:',
       liveDemo: 'Visit Website',
       exploreNote: 'Want to discuss what structure works best for your specific business niche?',
+      exploreCta: 'See the Full Engineering Track Record at ryanprayoga.dev ↗',
     },
     faq: {
       badge: 'FAQ',
       heading: 'Frequently Asked Questions',
       subheading: 'Clear, transparent answers about custom website development for your business.',
       helpText: 'Have a specific question about your business setup?',
+      helpCta: 'Ask Directly via WhatsApp ↗',
     },
     cta: {
       badge: 'Get Started',
@@ -438,6 +449,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       description:
         'Engineered by Ryan Prayoga — Fullstack Developer & Sub Team Lead. Helping services, rental, travel, and local enterprises build trusted digital presence.',
       linksHeading: 'Navigation',
+      contactHeading: 'Contact & Profile',
       backToTop: 'Back to top ↑',
       rights: 'All rights reserved.',
     },

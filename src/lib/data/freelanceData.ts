@@ -2,10 +2,12 @@ import type { Locale } from '$lib/data/uiCopy';
 
 /**
  * Konfigurasi kontak layanan freelance pembuatan web portofolio & bisnis.
- * Nomor WhatsApp dapat disesuaikan sewaktu-waktu.
+ * whatsappNumber WAJIB format internasional tanpa '+' (62...), bukan angka
+ * placeholder — seluruh CTA halaman freelance bergantung pada nilai ini dan
+ * dijaga oleh tests/unit/freelance-copy.test.ts.
  */
 export const FREELANCE_CONFIG = {
-  whatsappNumber: '6281234567890',
+  whatsappNumber: '6283878727519',
   email: 'developer@ryanprayoga.dev',
   github: 'https://github.com/ryan-prayoga',
   linkedin: 'https://www.linkedin.com/in/ryanprayogaaa',
@@ -58,7 +60,7 @@ export const pricingPackages: readonly PricingPackage[] = [
         'Katalog Produk / Menu / Layanan (Hingga 6 item)',
         'Integrasi Peta Lokasi Google Maps & Alamat Usaha',
         'Tombol Chat WhatsApp Langsung (Direct Order)',
-        'Bebas Biaya Hosting Bulanan (Rp 0 Selamanya)',
+        'Hosting Gratis Tahun Pertama (Tanpa Biaya Bulanan)',
         'Garansi Perbaikan & Bantuan Revisi 7 Hari',
       ],
       en: [
@@ -67,7 +69,7 @@ export const pricingPackages: readonly PricingPackage[] = [
         'Product / Menu / Service Catalog (Up to 6 items)',
         'Google Maps Location & Contact Integration',
         'Direct WhatsApp Order & Inquiry Button',
-        'Zero Monthly Hosting Fees (Free Lifetime Hosting)',
+        'Free Hosting for the First Year (No Monthly Fees)',
         '7-Day Warranty & Revision Support',
       ],
     },
@@ -187,8 +189,8 @@ export const faqItems: readonly FaqItem[] = [
       en: 'Are there any recurring monthly subscription fees after delivery?',
     },
     answer: {
-      id: 'Tidak ada biaya bulanan sama sekali dari kami! Berbeda dengan platform seperti Shopify atau Wix yang menarik biaya bulanan Rp 150.000 - Rp 400.000 setiap bulan, website ini dibangun dengan arsitektur modern berbiaya server Rp 0 (gratis selamanya). Anda hanya perlu memperpanjang nama domain tahunan Anda sendiri jika menggunakan domain kustom.',
-      en: 'No monthly fees whatsoever from us! Unlike site builders that charge recurring monthly subscriptions, your website is built with modern static architecture hosted 100% free forever on enterprise infrastructure. You only pay for your own annual domain renewal.',
+      id: 'Tidak ada biaya bulanan. Berbeda dengan platform seperti Shopify atau Wix yang menarik Rp 150.000 - Rp 400.000 setiap bulan, website Anda dibangun sebagai file statis sehingga biaya servernya nihil. Hosting tahun pertama saya tanggung; setelahnya website dapat tetap saya hosting-kan atau dipindahkan ke akun Anda sendiri (Cloudflare Pages / Netlify — keduanya gratis) karena seluruh kode menjadi milik Anda. Biaya rutin satu-satunya adalah perpanjangan nama domain tahunan.',
+      en: 'No monthly fees. Unlike site builders charging Rp 150,000 - Rp 400,000 every month, your site ships as static files, so server cost is effectively zero. I cover hosting for the first year; after that I can keep hosting it, or you move it to your own account (Cloudflare Pages / Netlify, both free) since you own the full source code. Your only recurring cost is the annual domain renewal.',
     },
   },
   {
@@ -248,27 +250,12 @@ export type BusinessShowcaseItem = {
   readonly name: string;
   readonly category: Record<Locale, string>;
   readonly description: Record<Locale, string>;
-  readonly tags: readonly string[];
+  readonly tags: Record<Locale, readonly string[]>;
   readonly metrics: string;
   readonly href: string;
 };
 
 export const businessShowcases: readonly BusinessShowcaseItem[] = [
-  {
-    slug: 'konveksipro',
-    name: 'Konveksi Pro & Apparel',
-    category: {
-      id: 'Katalog Usaha Konveksi & Seragam',
-      en: 'Custom Apparel & Manufacturing Catalog',
-    },
-    description: {
-      id: 'Website katalog pakaian seragam, polo, dan jersey olahraga dengan panduan bahan kain, galeri portofolio produksi, dan integrasi order WhatsApp instan.',
-      en: 'Custom apparel and uniform manufacturing catalog featuring fabric guides, production gallery, and direct WhatsApp inquiry workflow.',
-    },
-    tags: ['Katalog Bisnis', 'Fast Load', 'WhatsApp Order', 'SEO Lokal'],
-    metrics: 'Lighthouse 99 · Sub-second',
-    href: 'https://konveksipro.ryanprayoga.dev',
-  },
   {
     slug: 'kasbadminton',
     name: 'Kas Badminton Community',
@@ -280,7 +267,10 @@ export const businessShowcases: readonly BusinessShowcaseItem[] = [
       id: 'Platform realtime pencatatan kas, iuran QRIS dinamis, dan laporan keuangan transparan yang digunakan oleh komunitas bulu tangkis aktif.',
       en: 'Realtime ledger and dynamic QRIS payment tracking system designed for active sports clubs and community organizations.',
     },
-    tags: ['Realtime SaaS', 'Go & SvelteKit', 'FinTech QRIS', 'PWA'],
+    tags: {
+      id: ['SaaS Realtime', 'Go & SvelteKit', 'FinTech QRIS', 'PWA'],
+      en: ['Realtime SaaS', 'Go & SvelteKit', 'FinTech QRIS', 'PWA'],
+    },
     metrics: 'Realtime SSE · PWA',
     href: 'https://kasbadminton.com',
   },
@@ -295,23 +285,11 @@ export const businessShowcases: readonly BusinessShowcaseItem[] = [
       id: 'Company profile resmi perusahaan pengadaan barang dan jasa industri dengan portofolio proyek terverifikasi, legalitas, dan kontak rekanan bisnis.',
       en: 'Official corporate website showcasing verified enterprise procurement projects, corporate credentials, and supplier inquiries.',
     },
-    tags: ['Company Profile', 'Kredibilitas B2B', 'Legalitas'],
+    tags: {
+      id: ['Company Profile', 'Kredibilitas B2B', 'Legalitas'],
+      en: ['Company Profile', 'B2B Credibility', 'Legal Documents'],
+    },
     metrics: 'B2B Verified · Fast Static',
     href: 'https://putraselamatmakmur.com',
-  },
-  {
-    slug: 'ryanprayoga',
-    name: 'ryanprayoga.dev (Portofolio Rekayasa Web)',
-    category: {
-      id: 'Bukti Kualitas Rekayasa & Kecepatan',
-      en: 'Engineering Craftsmanship Benchmark',
-    },
-    description: {
-      id: 'Website portofolio developer utama Ryan Prayoga: bukti standar performa skor 100 Google Lighthouse, zero-runtime dependency, dan dwibahasa.',
-      en: 'Core engineering portfolio by Ryan Prayoga: proof of 100/100 Google Lighthouse score, zero-runtime dependencies, and bilingual architecture.',
-    },
-    tags: ['Skor 100 Google', 'Zero-Lag', 'Dwibahasa', 'Engineering'],
-    metrics: 'Lighthouse 100/100',
-    href: 'https://ryanprayoga.dev',
   },
 ] as const;

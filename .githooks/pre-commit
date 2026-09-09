@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+# Gate lokal sebelum commit — cegat error murah (format/lint/type/unit) di
+# laptop, bukan 6 menit kemudian di GitHub Actions. E2E & build sengaja
+# tidak ikut: itu tugas CI, terlalu lambat untuk setiap commit.
+#
+# Lewati sekali jalan: git commit --no-verify
+set -e
+
+if [ -n "$SKIP_HOOKS" ]; then
+  echo "pre-commit: dilewati (SKIP_HOOKS)"
+  exit 0
+fi
+
+printf '\npre-commit: format → lint → svelte-check → unit\n\n'
+
+npm run format:check
+npm run lint
+npm run check
+npm run test:unit
+
+printf '\npre-commit: lolos\n'
