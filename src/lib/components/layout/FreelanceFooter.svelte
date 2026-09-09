@@ -54,9 +54,9 @@
             href={getWhatsAppUrl(defaultWaMessage)}
             target="_blank"
             rel="noopener noreferrer"
-            class="hover:text-accent transition-colors flex items-center gap-1.5"
+            class="hover:text-accent transition-colors"
           >
-            <span>💬</span> WhatsApp
+            WhatsApp ({FREELANCE_CONFIG.whatsappNumber})
           </a>
         </li>
         <li>

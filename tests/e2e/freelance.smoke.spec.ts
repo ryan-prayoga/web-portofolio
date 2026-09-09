@@ -11,7 +11,7 @@ test.describe('freelance landing page', () => {
 
     // Then
     expect(response?.status()).toBe(200);
-    await expect(page).toHaveTitle(/Web Portofolio|Web Portfolio/);
+    await expect(page).toHaveTitle(/Portofolio|Portfolio/);
     await expect(page.locator('main#top')).toBeVisible();
     await expect(page.locator('#why-us')).toBeVisible();
     await expect(page.locator('#services')).toBeVisible();

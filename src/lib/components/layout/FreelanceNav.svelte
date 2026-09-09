@@ -175,9 +175,8 @@
       target="_blank"
       rel="noopener noreferrer"
       use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-      class="bg-accent text-paper hidden min-[720px]:inline-flex items-center gap-1.5 px-3 py-1 font-mono text-xs font-medium uppercase transition-opacity hover:opacity-90"
+      class="bg-accent text-paper hidden min-[720px]:inline-flex items-center px-3 py-1 font-mono text-xs font-medium uppercase transition-opacity hover:opacity-90"
     >
-      <span>💬</span>
       {t.nav.ctaConsultation}
     </a>
 
@@ -249,9 +248,8 @@
         target="_blank"
         rel="noopener noreferrer"
         use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-        class="bg-accent text-paper flex items-center justify-center gap-2 py-3 font-mono text-xs uppercase tracking-wide"
+        class="bg-accent text-paper flex items-center justify-center py-3 font-mono text-xs uppercase tracking-wide"
       >
-        <span>💬</span>
         {t.nav.ctaConsultation}
       </a>
       <p class="text-muted font-mono text-xs text-center">Ryan Prayoga · Jasa Web Portofolio</p>

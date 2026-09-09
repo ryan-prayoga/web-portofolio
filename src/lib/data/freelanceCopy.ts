@@ -39,7 +39,7 @@ export interface FreelanceCopy {
     readonly heading: string;
     readonly subheading: string;
     readonly items: readonly {
-      readonly icon: string;
+      readonly tag: string;
       readonly title: string;
       readonly description: string;
     }[];
@@ -71,7 +71,6 @@ export interface FreelanceCopy {
     readonly heading: string;
     readonly subheading: string;
     readonly liveDemo: string;
-    readonly sourceCode: string;
     readonly exploreNote: string;
   };
   readonly faq: {
@@ -101,172 +100,172 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
   id: {
     nav: {
       services: 'Layanan',
-      whyUs: 'Kenapa Kustom',
-      packages: 'Paket & Biaya',
+      whyUs: 'Keunggulan',
+      packages: 'Paket Biaya',
       process: 'Alur Kerja',
-      showcase: 'Contoh Portofolio',
+      showcase: 'Contoh Bisnis',
       faq: 'FAQ',
       contact: 'Kontak',
-      personalPortfolio: 'Portofolio Pribadi ↗',
-      ctaConsultation: 'Konsultasi WA',
+      personalPortfolio: 'Portofolio Pengembang ↗',
+      ctaConsultation: 'Konsultasi WhatsApp',
     },
     hero: {
-      status: 'Menerima Proyek Portofolio Baru',
-      title: 'Jasa Pembuatan Web Portofolio Profesional yang ',
-      titleHighlight: 'Standout & Cepat',
+      status: '[Menerima Pembuatan Web Bisnis & Jasa]',
+      title: 'Jasa Pembuatan Web Portofolio & Profil Bisnis yang ',
+      titleHighlight: 'Kredibel & Cepat',
       subtitle:
-        'Tingkatkan personal branding, pikat recruiter perusahaan idaman, atau dapatkan klien internasional dengan web portofolio kustom berkinerja tinggi. Tanpa template pasaran, tanpa biaya hosting bulanan.',
-      ctaWhatsapp: 'Konsultasi Gratis via WhatsApp',
-      ctaPackages: 'Lihat Paket & Harga',
+        'Tingkatkan reputasi usaha jasa, rental, travel, resto, kontraktor, dan UMKM Anda dengan website profil profesional. Tampilkan katalog layanan/produk, terima order via WhatsApp, dan bebas biaya server bulanan selamanya.',
+      ctaWhatsapp: 'Konsultasi via WhatsApp',
+      ctaPackages: 'Lihat Pilihan Paket',
       metrics: [
-        { value: '100', label: 'Skor Lighthouse', note: 'Performa sub-second kilat' },
-        { value: 'Rp 0', label: 'Biaya Server Bulanan', note: 'Hosting gratis selamanya' },
-        { value: '100%', label: 'Kepemilikan Kode', note: 'Private GitHub repository' },
-        { value: '4+ Thn', label: 'Pengalaman Lead Dev', note: 'Standar kualitas enterprise' },
+        { value: '100', label: 'Skor Kecepatan Google', note: 'Akses instan di ponsel' },
+        { value: 'Rp 0', label: 'Biaya Server Bulanan', note: 'Hemat operasional selamanya' },
+        { value: 'Direct WA', label: 'Terhubung ke Pelanggan', note: 'Order langsung ke WhatsApp' },
+        { value: '4+ Thn', label: 'Pengalaman Rekayasa Web', note: 'Kualitas rapi & bergaransi' },
       ],
     },
     comparison: {
-      badge: 'Solusi Unggul',
-      heading: 'Kenapa Portofolio Kustom, Bukan Template Pasaran?',
+      badge: 'Solusi Efisien',
+      heading: 'Kenapa Website Custom, Bukan Template Pasaran?',
       subheading:
-        'Banyak profesional memakai Wix, Squarespace, atau template gratisan yang lambat dan klise. Inilah alasan kenapa website kustom buatan tangan jauh lebih menguntungkan:',
-      genericTitle: 'Template Builder Pasaran (Wix / WP)',
+        'Banyak pemilik usaha menggunakan template instan WordPress atau pembuat situs sewa yang membebani biaya rutin dan sering lambat diakses pelanggan. Inilah keunggulan website buatan tangan:',
+      genericTitle: 'Situs Template Sewa (Wix / WordPress Pasaran)',
       genericPoints: [
-        'Loading lambat (2-5 detik) karena tumpukan skrip bawaan yang tidak terpakai',
-        'Desain template klise yang mirip dengan ribuan pelamar atau kandidat lainnya',
-        'Biaya langganan platform membengkak setiap bulan (Rp 150rb - Rp 350rb/bln)',
-        'Sulit dikustomisasi secara leluasa dan minim optimasi SEO teknis',
-        'Terkunci pada platform (vendor lock-in), tidak memiliki kode sumber utuh',
+        'Beban biaya langganan bulanan terus berjalan (Rp 150rb - Rp 400rb/bulan selamanya)',
+        'Loading lambat di ponsel pelanggan karena tumpukan plugin berat yang tidak perlu',
+        'Desain pasaran dan tata letak kaku, sulit disesuaikan dengan alur pemesanan usaha',
+        'Rentan error atau gangguan spam/keamanan jika plugin tidak rutin diperbarui',
+        'Data dan website terkunci pada platform, tidak memiliki file kode utuh',
       ],
-      customTitle: 'Handcrafted Bersama Ryan Prayoga',
+      customTitle: 'Website Bisnis Handcrafted oleh Ryan Prayoga',
       customPoints: [
-        'Kecepatan kilat <0.5 detik (Skor 95-100 Google Lighthouse & Core Web Vitals hijau)',
-        'Desain berkarakter "Engineering Sketchbook" yang autentik dan berkesan profesional',
-        'Biaya hosting Rp 0 selamanya via Cloudflare Pages / Vercel modern static deployment',
-        'Full SEO metadata, kartu media sosial (Open Graph), dan Google Rich Snippets',
-        '100% kode sumber menjadi milik Anda sepenuhnya di akun GitHub pribadi',
+        'Rp 0 biaya server bulanan selamanya (arsitektur modern static deployment)',
+        'Kecepatan buka kilat di bawah 0.5 detik di semua smartphone (Skor Google 95-100)',
+        'Desain kustom eksklusif yang mencerminkan identitas dan kredibilitas bisnis Anda',
+        'Tombol WhatsApp terintegrasi rapi dengan template pesan pemesanan otomatis',
+        'Kode sumber 100% milik bisnis Anda, aman dari celah plugin dan bebas vendor lock-in',
       ],
     },
     services: {
-      badge: 'Fitur Lengkap',
-      heading: 'Semua yang Dibutuhkan Portofolio Standout',
+      badge: 'Fitur Utama',
+      heading: 'Semua Kebutuhan Portofolio Usaha Anda',
       subheading:
-        'Setiap website dirancang teliti dari segi desain visual, copywriting teknis, hingga arsitektur kode.',
+        'Setiap website dirancang untuk memudahkan calon pembeli melihat produk/layanan dan langsung melakukan pemesanan.',
       items: [
         {
-          icon: '🎨',
-          title: 'Desain Unik & Berkarakter',
+          tag: '[KATALOG]',
+          title: 'Katalog Portofolio & Layanan',
           description:
-            'Tampilan eksklusif dengan aksen sketsa tangan (Drawably), tipografi elegan, serta dukungan mode gelap (Dark Mode) dan terang yang nyaman di mata.',
+            'Tampilkan galeri foto proyek, paket tour, unit armada rental, atau menu kuliner secara bersih, rapi, dan memikat pelanggan.',
         },
         {
-          icon: '⚡',
-          title: 'Performa Ekstrem (Skor 100)',
+          tag: '[WHATSAPP]',
+          title: 'Direct Order & Chat WhatsApp',
           description:
-            'Dibangun dengan SvelteKit & Tailwind CSS 4 yang ultra-ringan. Buka instan tanpa loading berputar, membuat recruiter dan calon klien betah.',
+            'Tombol pemesanan langsung membuka chat WhatsApp admin dengan pesan otomatis yang rapi sesuai paket atau layanan yang dipilih.',
         },
         {
-          icon: '📄',
-          title: 'ATS & Recruiter-Friendly',
+          tag: '[PERFORMA]',
+          title: 'Kecepatan Buka Sub-Detik',
           description:
-            'Dilengkapi tombol download CV format ATS, highlight pencapaian dengan metrik terukur, dan ringkasan riwayat kerja yang mudah dipindai.',
+            'Dibangun dengan arsitektur modern ultra-ringan. Buka instan tanpa loading berputar sehingga calon pembeli tidak beralih ke kompetitor.',
         },
         {
-          icon: '🌐',
-          title: 'Sistem Dwibahasa (ID / EN)',
+          tag: '[GOOGLE SEO]',
+          title: 'Optimasi Google & Peta Lokasi',
           description:
-            'Siap untuk pasar karir lokal maupun remote luar negeri. Pengunjung dapat mengganti bahasa secara instan dalam satu klik.',
+            'Integrasi alamat Google Maps, jam buka, dan optimasi SEO lokal agar bisnis Anda mudah ditemukan saat dicari di internet.',
         },
         {
-          icon: '🔗',
-          title: 'Setup Custom Domain & HTTPS',
+          tag: '[DOMAIN]',
+          title: 'Domain Nama Usaha & SSL Aman',
           description:
-            'Bantuan integrasi domain pribadi (contoh: namamu.dev atau namamu.com) lengkap dengan sertifikat keamanan SSL otomatis.',
+            'Menggunakan alamat domain bisnis Anda sendiri (seperti namabisnis.com atau .id) lengkap dengan sertifikat keamanan resmi HTTPS.',
         },
         {
-          icon: '📱',
-          title: 'Mobile-First & Responsif',
+          tag: '[RESPONSIF]',
+          title: 'Optimal di Layar Smartphone',
           description:
-            'Tampilan sempurna di layar HP, tablet, maupun monitor desktop dengan navigasi drawer sentuh yang ergonomis.',
+            'Lebih dari 80% calon pembeli membuka website melalui ponsel. Tampilan dirancang khusus agar nyaman digunakan satu tangan.',
         },
       ],
     },
     packages: {
-      badge: 'Investasi Transparan',
-      heading: 'Paket Pembuatan Web Portofolio',
-      subheading: 'Sekali bayar, website dan kode sepenuhnya milik Anda. Tanpa biaya langganan bulanan dari kami.',
+      badge: 'Pilihan Investasi',
+      heading: 'Paket Pembuatan Website Bisnis',
+      subheading:
+        'Biaya transparan sekali bayar, hasil milik usaha Anda seutuhnya. Tanpa biaya langganan bulanan tersembunyi.',
       popularBadge: 'Paling Diminati',
-      oneTimePayment: 'Sekali Bayar · Tanpa Langganan',
+      oneTimePayment: 'Sekali Bayar · Tanpa Biaya Bulanan',
       deliveryLabel: 'Estimasi Pengerjaan',
-      featuresLabel: 'Fitur yang Didapatkan',
+      featuresLabel: 'Fasilitas yang Didapatkan',
       ctaButton: 'Pesan via WhatsApp',
       customInquiryNote:
-        'Punya kebutuhan khusus atau ingin konsultasi paket yang paling pas? Diskusikan langsung via WhatsApp gratis.',
+        'Punya kebutuhan khusus di luar paket atau ingin konsultasi awal? Kami siap berdiskusi santai via WhatsApp.',
     },
     process: {
-      badge: 'Metode Kerja',
-      heading: 'Alur Pengerjaan 4 Tahap yang Rapi',
-      subheading: 'Proses terstruktur agar website Anda selesai tepat waktu dengan kualitas terbaik.',
+      badge: 'Alur Kerja',
+      heading: 'Proses Pengerjaan 4 Tahap yang Jelas',
+      subheading: 'Alur kerja praktis agar website usaha Anda segera online tanpa menyita waktu operasional Anda.',
       steps: [
         {
           step: '01',
-          title: 'Konsultasi & Discovery',
+          title: 'Konsultasi & Kirim Materi',
           description:
-            'Diskusi santai mengenai profil Anda, target karir atau jenis klien yang disasar, materi yang sudah ada, dan preferensi gaya visual.',
-          output: 'Kesepakatan lingkup kerja & checklist materi awal',
+            'Kirimkan daftar layanan/produk, foto dokumentasi dari ponsel, dan nomor kontak admin usaha Anda via WhatsApp.',
+          output: 'Kesepakatan lingkup pengerjaan & jadwal rilis',
         },
         {
           step: '02',
-          title: 'Struktur Konten & Wireframe',
+          title: 'Penyusunan Desain & Katalog',
           description:
-            'Kurasi proyek unggulan, penulisan narasi pencapaian (STAR method), dan perancangan tata letak website agar mudah dinavigasi.',
-          output: 'Draft konten lengkap & arahan visual terkonfirmasi',
+            'Kami merapikan teks penawaran usaha Anda, menyusun tata letak katalog, dan menyiapkan alur tombol pemesanan WhatsApp.',
+          output: 'Tautan demo preview interaktif untuk ditinjau',
         },
         {
           step: '03',
-          title: 'Development & Optimasi',
+          title: 'Optimasi & Penyesuaian',
           description:
-            'Pengkodean sistem, integrasi aset visual, uji coba responsif di berbagai ukuran layar, serta pengujian performa Lighthouse 100.',
-          output: 'Tautan demo staging yang dapat dicoba langsung',
+            'Penyesuaian detail berdasarkan masukan Anda, uji coba tampilan responsif di ponsel, dan pengetesan kecepatan akses.',
+          output: 'Website teroptimasi siap rilis publik',
         },
         {
           step: '04',
-          title: 'Review, Domain & Launch',
+          title: 'Pemasangan Domain & Go Live',
           description:
-            'Sesi perbaikan minor, setup domain kustom, pendaftaran sitemap ke Google, dan penyerahan repositori kode ke GitHub Anda.',
-          output: 'Website portofolio live di internet & serah terima kode',
+            'Pemasangan domain bisnis Anda (contoh: namabisnis.com), pendaftaran ke Google, dan serah terima kepemilikan website.',
+          output: 'Website resmi live dan siap dipromosikan',
         },
       ],
     },
     showcase: {
       badge: 'Bukti Karya',
-      heading: 'Portofolio Nyata yang Terbukti Berjalan',
+      heading: 'Website & Sistem Nyata yang Telah Berjalan',
       subheading:
-        'Bukan sekadar gambar mock-up. Berikut adalah beberapa contoh sistem produksi yang telah kami luncurkan:',
-      liveDemo: 'Kunjungi Website',
-      sourceCode: 'Lihat Kode Sumber',
-      exploreNote: 'Ingin melihat seluruh daftar proyek dan studi kasus teknis mendalam?',
+        'Bukan sekadar gambar konsep. Berikut adalah beberapa contoh sistem nyata dan katalog bisnis yang telah kami buat:',
+      liveDemo: 'Buka Website',
+      exploreNote: 'Ingin berkonsultasi mengenai konsep website yang paling cocok untuk jenis usaha Anda?',
     },
     faq: {
       badge: 'Tanya Jawab',
-      heading: 'Pertanyaan yang Sering Diajukan',
-      subheading: 'Jawaban transparan untuk hal-hal umum seputar pembuatan website portofolio.',
-      helpText: 'Masih ada pertanyaan lain yang belum terjawab?',
+      heading: 'Pertanyaan Seputar Pembuatan Web',
+      subheading: 'Informasi lengkap dan transparan sebelum Anda memulai pemesanan website usaha.',
+      helpText: 'Ada pertanyaan lain mengenai kebutuhan bisnis Anda?',
     },
     cta: {
       badge: 'Mulai Sekarang',
-      heading: 'Siap Tampil Beda & Memikat Peluang Baru?',
+      heading: 'Siap Membuat Bisnis Anda Tampil Lebih Kredibel?',
       subheading:
-        'Jangan biarkan peluang kerja impian atau klien berbayar tinggi terlewat hanya karena portofolio Anda belum mencerminkan kapasitas Anda yang sesungguhnya. Hubungi Ryan sekarang untuk konsultasi santai.',
+        'Jangan biarkan calon pembeli ragu karena bisnis Anda belum memiliki website resmi. Hubungi Ryan sekarang untuk konsultasi gratis mengenai kebutuhan website usaha Anda.',
       whatsappButton: 'Chat WhatsApp Sekarang',
-      emailButton: 'Kirim Pesan via Email',
-      mainSiteLink: 'Lihat Portofolio Developer Ryan Prayoga ↗',
+      emailButton: 'Kirim Email Penawaran',
+      mainSiteLink: 'Lihat Profil Teknis Developer di ryanprayoga.dev ↗',
     },
     footer: {
-      tag: 'Jasa Pembuatan Web Portofolio Kustom & Performa Tinggi',
+      tag: 'Jasa Pembuatan Website Portofolio & Profil Bisnis Profesional',
       description:
-        'Dibuat langsung oleh Ryan Prayoga — Fullstack Developer & Sub Team Lead. Membantu engineer, desainer, dan profesional tampil standout di industri teknologi global.',
-      linksHeading: 'Navigasi Cepat',
+        'Dikerjakan oleh Ryan Prayoga — Fullstack Developer & Sub Team Lead. Membantu bisnis jasa, rental, travel, kuliner, dan UMKM memiliki website berkinerja tinggi.',
+      linksHeading: 'Navigasi',
       backToTop: 'Kembali ke atas ↑',
       rights: 'Hak Cipta Terpelihara.',
     },
@@ -274,172 +273,171 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
   en: {
     nav: {
       services: 'Services',
-      whyUs: 'Why Custom',
+      whyUs: 'Why Us',
       packages: 'Pricing',
       process: 'Process',
-      showcase: 'Showcase',
+      showcase: 'Case Studies',
       faq: 'FAQ',
       contact: 'Contact',
-      personalPortfolio: 'Personal Portfolio ↗',
-      ctaConsultation: 'Chat on WA',
+      personalPortfolio: 'Developer Portfolio ↗',
+      ctaConsultation: 'WhatsApp Inquiry',
     },
     hero: {
-      status: 'Open for New Portfolio Projects',
-      title: 'Professional Custom Web Portfolios that ',
-      titleHighlight: 'Stand Out & Convert',
+      status: '[Open for Business Website Projects]',
+      title: 'Professional Business Portfolio & Website Development That Is ',
+      titleHighlight: 'Fast & Trustworthy',
       subtitle:
-        'Elevate your personal branding, impress top-tier tech recruiters, or win international clients with a bespoke, high-performance portfolio website. Zero generic templates, zero monthly hosting fees.',
-      ctaWhatsapp: 'Free Consultation on WhatsApp',
-      ctaPackages: 'View Packages & Pricing',
+        'Elevate your services, rental, travel, dining, contractor, or local business with a high-performance profile website. Showcase your catalog, capture WhatsApp inquiries, and eliminate recurring monthly hosting costs.',
+      ctaWhatsapp: 'Free WhatsApp Consultation',
+      ctaPackages: 'View Pricing Packages',
       metrics: [
-        { value: '100', label: 'Lighthouse Score', note: 'Sub-second page loads' },
-        { value: '$0', label: 'Monthly Server Cost', note: 'Free lifetime static hosting' },
-        { value: '100%', label: 'Code Ownership', note: 'Private GitHub repository' },
-        { value: '4+ Yrs', label: 'Lead Dev Experience', note: 'Enterprise engineering rigor' },
+        { value: '100', label: 'Google Speed Score', note: 'Instant sub-second loading' },
+        { value: 'Rp 0', label: 'Monthly Server Cost', note: 'Save operational budget' },
+        { value: 'Direct WA', label: 'Customer Connection', note: 'Direct WhatsApp checkout' },
+        { value: '4+ Yrs', label: 'Web Engineering Rigor', note: 'Quality production craft' },
       ],
     },
     comparison: {
-      badge: 'Superior Choice',
-      heading: 'Why a Custom Portfolio Instead of Generic Templates?',
+      badge: 'Modern Approach',
+      heading: 'Why Handcrafted Over Generic Rented Builders?',
       subheading:
-        'Many professionals rely on Wix, Squarespace, or cluttered WordPress templates that load slowly and look identical. Here is why bespoke craftsmanship wins every time:',
-      genericTitle: 'Generic Site Builders (Wix / WP)',
+        'Many business owners struggle with clunky site builders that charge perpetual monthly fees and load sluggishly on mobile phones. Here is how handcrafted static engineering solves that:',
+      genericTitle: 'Generic Rented Site Builders (Wix / WordPress)',
       genericPoints: [
-        'Sluggish load times (2-5s) burdened by unused bundled plugins and trackers',
-        'Generic layout templates that blur into thousands of other candidates',
-        'Escalating recurring subscriptions ($12 - $35/month forever)',
-        'Painful code customizations and brittle technical SEO control',
-        'Vendor lock-in with zero ownership over clean, portable source code',
+        'Persistent monthly recurring subscription fees draining your operational budget',
+        'Sluggish load times on mobile devices caused by heavy unoptimized plugins',
+        'Generic templates with rigid layouts that do not match your exact customer flow',
+        'Frequent plugin breakages, vulnerability to spam, and maintenance overhead',
+        'Data and content locked to vendor platforms with zero code ownership',
       ],
-      customTitle: 'Handcrafted by Ryan Prayoga',
+      customTitle: 'Handcrafted Business Websites by Ryan Prayoga',
       customPoints: [
-        'Lightning-fast <0.5s loads (95-100 Google Lighthouse & all green Core Web Vitals)',
-        'Authentic "Engineering Sketchbook" aesthetic that makes an unforgettable impression',
-        '$0 lifetime hosting cost via modern Cloudflare Pages / Vercel deployments',
-        'Complete SEO meta tags, rich Open Graph social previews, and Schema.org markup',
-        '100% full source code ownership in your private GitHub repository',
+        'Rp 0 recurring monthly server costs through modern high-availability static infrastructure',
+        'Sub-second load times under 0.5s on all mobile devices (Google score 95-100)',
+        'Bespoke design custom-tailored to represent your business authority and branding',
+        'Seamless WhatsApp integration with pre-filled order messages for instant conversion',
+        '100% full source code ownership with zero plugin bloat or vendor lock-in',
       ],
     },
     services: {
-      badge: 'Key Capabilities',
-      heading: 'Everything a Standout Portfolio Needs',
+      badge: 'Core Features',
+      heading: 'Everything Your Business Website Needs',
       subheading:
-        'Every website is engineered with obsessive attention to visual craft, persuasive storytelling, and clean code.',
+        'Every website is built to make it frictionless for visitors to discover your catalog and contact your team.',
       items: [
         {
-          icon: '🎨',
-          title: 'Unique Hand-Crafted Aesthetic',
+          tag: '[CATALOG]',
+          title: 'Service & Portfolio Showcase',
           description:
-            'Bespoke visual styling with hand-drawn sketchbook accents (Drawably), refined typography, and seamless dark/light mode switches.',
+            'Display your project gallery, tour packages, rental units, or dining menus in a clean, visual layout.',
         },
         {
-          icon: '⚡',
-          title: 'Extreme Performance (Score 100)',
+          tag: '[WHATSAPP]',
+          title: 'Direct WhatsApp Inquiries',
           description:
-            'Engineered with lightweight SvelteKit and Tailwind CSS 4. Instantaneous page switches without loading spinners keep visitors engaged.',
+            'One-tap inquiry buttons that open WhatsApp with pre-formatted product or service details ready to send.',
         },
         {
-          icon: '📄',
-          title: 'ATS & Recruiter-Friendly',
+          tag: '[PERFORMANCE]',
+          title: 'Sub-Second Page Loads',
           description:
-            'Integrated one-click ATS resume download, structured impact highlights using the STAR method, and an easily scannable work history.',
+            'Built on modern ultra-lightweight architecture so pages open instantaneously without spinning loaders.',
         },
         {
-          icon: '🌐',
-          title: 'Instant Bilingual Support (ID / EN)',
+          tag: '[GOOGLE SEO]',
+          title: 'Local SEO & Maps Integration',
           description:
-            'Ready for both domestic opportunities and remote global contracts. Visitors toggle languages effortlessly in a single click.',
+            'Embedded Google Maps location, opening hours, and structured data to help customers find you on Google Search.',
         },
         {
-          icon: '🔗',
-          title: 'Custom Domain & SSL Setup',
+          tag: '[DOMAIN]',
+          title: 'Business Domain & SSL Security',
           description:
-            'Full assistance connecting your own custom domain (e.g. yourname.dev or yourname.com) with automatic HTTPS certificate setup.',
+            'Operate under your official domain name (e.g. yourbusiness.com) complete with automatic HTTPS security.',
         },
         {
-          icon: '📱',
-          title: 'Mobile-First & Ergonomic',
+          tag: '[RESPONSIVE]',
+          title: 'Mobile-First Smartphone Layout',
           description:
-            'Flawless rendering on smartphones, tablets, and wide monitors with accessible, focus-trapped touch navigation.',
+            'Over 80% of local customers browse on mobile. Layouts are optimized for fluid, one-handed touch navigation.',
         },
       ],
     },
     packages: {
-      badge: 'Transparent Investment',
-      heading: 'Web Portfolio Creation Packages',
-      subheading:
-        'One-time payment, full code ownership. No hidden platform subscriptions or recurring maintenance lock-in.',
+      badge: 'Investment',
+      heading: 'Transparent Business Website Packages',
+      subheading: 'One-time investment with full code ownership. No hidden monthly subscriptions or maintenance fees.',
       popularBadge: 'Most Popular',
-      oneTimePayment: 'One-Time Payment · No Recurring Fees',
+      oneTimePayment: 'One-Time Payment · Zero Monthly Fees',
       deliveryLabel: 'Estimated Turnaround',
       featuresLabel: 'Included Features',
       ctaButton: 'Order via WhatsApp',
       customInquiryNote:
-        'Have custom requirements or need guidance choosing the right package? Let’s chat freely on WhatsApp.',
+        'Have custom operational requirements or need initial guidance? Let us discuss freely via WhatsApp.',
     },
     process: {
-      badge: 'Methodology',
+      badge: 'Execution',
       heading: 'A Clear 4-Step Production Process',
-      subheading: 'Structured execution ensuring your website launches on schedule with uncompromising quality.',
+      subheading:
+        'A streamlined workflow designed to launch your business online without interrupting your daily operations.',
       steps: [
         {
           step: '01',
-          title: 'Consultation & Discovery',
+          title: 'Consultation & Materials',
           description:
-            'An informal discovery call to explore your career goals, target audience, existing materials, and visual tastes.',
-          output: 'Agreed project scope & content checklist',
+            'Share your service catalog, photos from your phone, and customer service contact details via WhatsApp.',
+          output: 'Agreed project scope & target launch date',
         },
         {
           step: '02',
-          title: 'Content Curation & Wireframing',
+          title: 'Design & Catalog Assembly',
           description:
-            'Curating top projects, refining impact summaries (STAR framework), and structuring layout hierarchy for clarity.',
-          output: 'Complete content draft & approved visual direction',
+            'We polish your marketing copy, arrange catalog presentation, and connect direct WhatsApp booking routes.',
+          output: 'Interactive staging preview link for review',
         },
         {
           step: '03',
-          title: 'Development & Optimization',
+          title: 'Optimization & Feedback',
           description:
-            'Writing clean code, responsive testing across mobile and desktop devices, and tuning for 100 Lighthouse performance.',
-          output: 'Interactive staging preview link for live testing',
+            'Refinements based on your review, responsive mobile checks, and tuning for top-tier Google speed scores.',
+          output: 'Polished website ready for public launch',
         },
         {
           step: '04',
-          title: 'Review, Domain Setup & Launch',
+          title: 'Domain Connection & Launch',
           description:
-            'Minor polish rounds, connecting your custom domain, submitting sitemaps to Google, and delivering GitHub source code.',
-          output: 'Live website online & complete code handover',
+            'Connecting your official business domain name, Google indexing registration, and complete code handover.',
+          output: 'Live website ready to share with customers',
         },
       ],
     },
     showcase: {
-      badge: 'Proof of Work',
-      heading: 'Live Production Work & Quality Proof',
-      subheading: 'Not theoretical UI mockups. Here are real, live systems engineered to production standards:',
-      liveDemo: 'Live Demo',
-      sourceCode: 'View Source',
-      exploreNote: 'Looking to explore Ryan’s complete engineering background and deep technical case studies?',
+      badge: 'Case Studies',
+      heading: 'Shipped Work & Production Systems',
+      subheading: 'Real, live business systems and portfolios engineered to rigorous standards:',
+      liveDemo: 'Visit Website',
+      exploreNote: 'Want to discuss what structure works best for your specific business niche?',
     },
     faq: {
       badge: 'FAQ',
       heading: 'Frequently Asked Questions',
-      subheading: 'Clear answers to common questions about custom portfolio development.',
-      helpText: 'Have a specific question not covered here?',
+      subheading: 'Clear, transparent answers about custom website development for your business.',
+      helpText: 'Have a specific question about your business setup?',
     },
     cta: {
       badge: 'Get Started',
-      heading: 'Ready to Stand Out & Unlock Better Opportunities?',
+      heading: 'Ready to Make Your Business Stand Out Online?',
       subheading:
-        'Do not let an outdated resume or generic template limit your career growth. Connect with Ryan today for an honest, friendly consultation.',
+        'Do not lose prospective clients due to a lack of an official online presence. Contact Ryan today for a friendly consultation.',
       whatsappButton: 'Chat on WhatsApp Now',
-      emailButton: 'Send an Email',
-      mainSiteLink: 'Visit Ryan Prayoga’s Developer Portfolio ↗',
+      emailButton: 'Send an Email Inquiry',
+      mainSiteLink: 'Explore Developer Engineering Portfolio at ryanprayoga.dev ↗',
     },
     footer: {
-      tag: 'Bespoke High-Performance Web Portfolio Development',
+      tag: 'Professional Business Website & Portfolio Development',
       description:
-        'Crafted by Ryan Prayoga — Fullstack Developer & Sub Team Lead. Empowering engineers, designers, and tech leaders to establish authoritative personal brands.',
-      linksHeading: 'Quick Links',
+        'Engineered by Ryan Prayoga — Fullstack Developer & Sub Team Lead. Helping services, rental, travel, and local enterprises build trusted digital presence.',
+      linksHeading: 'Navigation',
       backToTop: 'Back to top ↑',
       rights: 'All rights reserved.',
     },

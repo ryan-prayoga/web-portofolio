@@ -43,7 +43,7 @@
           {#if pkg.popular}
             <div class="mb-4">
               <span class="bg-accent text-paper font-mono text-[11px] font-bold uppercase tracking-wider px-2.5 py-1">
-                ★ {t.packages.popularBadge}
+                [{t.packages.popularBadge}]
               </span>
             </div>
           {/if}
@@ -57,7 +57,7 @@
 
           <div class="mt-5 flex items-baseline gap-2">
             <span class="font-display text-3xl sm:text-4xl font-extrabold text-accent">
-              {locale === 'id' ? pkg.priceIdr : pkg.priceUsd}
+              {pkg.priceIdr}
             </span>
             <span class="font-mono text-[11px] text-muted">
               / {locale === 'id' ? 'proyek' : 'project'}
@@ -83,7 +83,7 @@
             <ul class="flex flex-col gap-2.5 text-xs sm:text-sm text-ink/90">
               {#each pkg.features[locale] as feature, idx (idx)}
                 <li class="flex items-start gap-2">
-                  <span class="text-accent font-bold select-none mt-0.5" aria-hidden="true">✓</span>
+                  <span class="text-accent font-bold select-none mt-0.5" aria-hidden="true">[✓]</span>
                   <span>{feature}</span>
                 </li>
               {/each}
@@ -97,11 +97,10 @@
             target="_blank"
             rel="noopener noreferrer"
             use:drawButton={{ variant: pkg.popular ? 'solid' : 'outline', resketchOnHover: true }}
-            class="w-full flex items-center justify-center gap-2 py-3 font-mono text-xs font-semibold tracking-wide uppercase transition-all {pkg.popular
+            class="w-full flex items-center justify-center py-3 font-mono text-xs font-semibold tracking-wide uppercase transition-all {pkg.popular
               ? 'bg-accent text-paper hover:opacity-90'
               : 'border-rule hover:border-accent hover:text-accent'}"
           >
-            <span>💬</span>
             {t.packages.ctaButton}
           </a>
         </div>
@@ -111,7 +110,7 @@
 
   <div class="mt-10 p-6 bg-paper/60 border border-dashed border-rule rounded-none text-center max-w-2xl mx-auto">
     <p class="font-mono text-xs text-muted">
-      💡 {t.packages.customInquiryNote}
+      [Info] {t.packages.customInquiryNote}
     </p>
     <a
       href={getWhatsAppUrl(customInquiryWa)}

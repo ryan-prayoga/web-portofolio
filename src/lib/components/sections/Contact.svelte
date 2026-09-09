@@ -71,7 +71,7 @@
     const hours = Math.floor(absMinutes / 60);
     const mins = absMinutes % 60;
 
-    let timeStr = '';
+    let timeStr: string;
     if (hours > 0 && mins > 0) {
       timeStr = locale === 'id' ? `${hours}j ${mins}m` : `${hours}h ${mins}m`;
     } else if (hours > 0) {

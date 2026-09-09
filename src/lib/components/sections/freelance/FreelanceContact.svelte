@@ -44,18 +44,16 @@
         target="_blank"
         rel="noopener noreferrer"
         use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-        class="bg-accent text-paper inline-flex items-center gap-2 px-8 py-3.5 font-mono text-xs font-bold uppercase tracking-wide transition-all hover:opacity-90 shadow-sm"
+        class="bg-accent text-paper inline-flex items-center px-8 py-3.5 font-mono text-xs font-bold uppercase tracking-wide transition-all hover:opacity-90 shadow-sm"
       >
-        <span>💬</span>
         {t.cta.whatsappButton}
       </a>
 
       <a
-        href="mailto:{FREELANCE_CONFIG.email}?subject=Inquiry%20Pembuatan%20Web%20Portofolio"
+        href="mailto:{FREELANCE_CONFIG.email}?subject=Inquiry%20Pembuatan%20Web%20Bisnis"
         use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-        class="border-rule hover:border-accent hover:text-accent inline-flex items-center gap-2 border px-6 py-3.5 font-mono text-xs font-semibold tracking-wide uppercase transition-colors"
+        class="border-rule hover:border-accent hover:text-accent inline-flex items-center border px-6 py-3.5 font-mono text-xs font-semibold tracking-wide uppercase transition-colors"
       >
-        <span>✉</span>
         {t.cta.emailButton}
       </a>
     </div>

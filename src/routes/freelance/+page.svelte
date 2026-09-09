@@ -17,20 +17,20 @@
 
   const TITLE = $derived(
     locale === 'id'
-      ? 'Jasa Pembuatan Web Portofolio Standout & Kinerja Tinggi — Ryan Prayoga'
-      : 'Custom High-Performance Web Portfolio Development — Ryan Prayoga',
+      ? 'Jasa Pembuatan Web Portofolio & Profil Bisnis — Ryan Prayoga'
+      : 'Professional Business Portfolio & Website Development — Ryan Prayoga',
   );
 
   const DESCRIPTION = $derived(
     locale === 'id'
-      ? 'Jasa pembuatan website portofolio kustom untuk software engineer, desainer, dan profesional. Performa skor 100, dwibahasa, desain unik tanpa template, dan bebas biaya hosting selamanya.'
-      : 'Bespoke high-performance web portfolio development for engineers, designers, and tech leaders. Lighthouse 100, bilingual, custom design, and zero recurring hosting fees.',
+      ? 'Jasa pembuatan website portofolio dan profil bisnis profesional untuk usaha jasa, rental, travel, resto, dan UMKM. Tampilan kredibel, terhubung ke WhatsApp, dan bebas biaya hosting bulanan.'
+      : 'Custom business website and portfolio development for services, rentals, travel, dining, and local enterprises. High conversion, direct WhatsApp order, and zero monthly fees.',
   );
 
   const serviceJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
-    name: 'Ryan Prayoga — Jasa Pembuatan Web Portofolio',
+    name: 'Ryan Prayoga — Jasa Pembuatan Web Portofolio & Profil Bisnis',
     url: SITE_URL,
     image: 'https://ryanprayoga.dev/photo/ryan-700.jpg',
     priceRange: 'Rp 699.000 - Rp 2.999.000+',
@@ -48,14 +48,14 @@
     },
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Paket Pembuatan Web Portofolio',
+      name: 'Paket Pembuatan Website Bisnis & Portofolio',
       itemListElement: [
         {
           '@type': 'Offer',
           itemOffered: {
             '@type': 'Service',
-            name: 'Starter Portfolio',
-            description: 'Portofolio satu halaman responsif untuk fresh graduate & junior developer.',
+            name: 'Starter Bisnis',
+            description: 'Website profil satu halaman responsif untuk usaha baru, jasa perorangan, dan kuliner.',
           },
           price: '699000',
           priceCurrency: 'IDR',
@@ -64,8 +64,9 @@
           '@type': 'Offer',
           itemOffered: {
             '@type': 'Service',
-            name: 'Standout Pro Portfolio',
-            description: 'Portofolio multi-section dwibahasa dengan studi kasus mendalam dan performa 100.',
+            name: 'Portofolio Bisnis Pro',
+            description:
+              'Website bisnis multi-section lengkap dengan katalog portofolio, Google SEO, dan pemesanan WhatsApp.',
           },
           price: '1499000',
           priceCurrency: 'IDR',
@@ -74,8 +75,9 @@
           '@type': 'Offer',
           itemOffered: {
             '@type': 'Service',
-            name: 'Bespoke Executive Portfolio',
-            description: 'Website portofolio kustom penuh dari nol dengan integrasi blog/CMS dan email bisnis.',
+            name: 'Custom Korporat & Katalog',
+            description:
+              'Website bisnis kustom penuh dengan filter katalog, sistem update konten CMS, dan email resmi perusahaan.',
           },
           price: '2999000',
           priceCurrency: 'IDR',

@@ -43,9 +43,8 @@
         target="_blank"
         rel="noopener noreferrer"
         use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-        class="bg-accent text-paper inline-flex items-center gap-2 px-6 py-3 font-mono text-xs font-semibold tracking-wide uppercase transition-opacity hover:opacity-90"
+        class="bg-accent text-paper inline-flex items-center px-6 py-3 font-mono text-xs font-semibold tracking-wide uppercase transition-opacity hover:opacity-90"
       >
-        <span>💬</span>
         {t.hero.ctaWhatsapp}
       </a>
 

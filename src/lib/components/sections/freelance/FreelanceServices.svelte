@@ -30,8 +30,10 @@
         class="bg-paper p-6 transition-all hover:-translate-y-1 flex flex-col justify-between"
       >
         <div>
-          <span class="text-3xl select-none" aria-hidden="true">{item.icon}</span>
-          <h3 class="mt-4 font-display text-lg font-semibold text-ink tracking-tight">
+          <span class="font-mono text-xs font-semibold text-accent tracking-wider uppercase block mb-1">
+            {item.tag}
+          </span>
+          <h3 class="mt-2 font-display text-lg font-semibold text-ink tracking-tight">
             {item.title}
           </h3>
           <p class="mt-2 text-xs sm:text-sm leading-relaxed text-muted">

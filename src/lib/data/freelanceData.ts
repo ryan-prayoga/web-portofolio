@@ -1,7 +1,7 @@
 import type { Locale } from '$lib/data/uiCopy';
 
 /**
- * Konfigurasi kontak layanan freelance.
+ * Konfigurasi kontak layanan freelance pembuatan web portofolio & bisnis.
  * Nomor WhatsApp dapat disesuaikan sewaktu-waktu.
  */
 export const FREELANCE_CONFIG = {
@@ -34,12 +34,12 @@ export const pricingPackages: readonly PricingPackage[] = [
   {
     id: 'starter',
     name: {
-      id: 'Starter Portofolio',
-      en: 'Starter Portfolio',
+      id: 'Starter Bisnis',
+      en: 'Starter Business',
     },
     tag: {
-      id: 'Fresh Grad & Junior Dev',
-      en: 'Fresh Grad & Junior Dev',
+      id: 'Usaha Baru, Jasa & Kuliner',
+      en: 'New Business, Services & Dining',
     },
     priceIdr: 'Rp 699.000',
     priceUsd: '$49',
@@ -48,46 +48,44 @@ export const pricingPackages: readonly PricingPackage[] = [
       en: '2 - 4 business days',
     },
     description: {
-      id: 'Portofolio satu halaman (one-page) yang clean, cepat, dan profesional untuk mulai melamar kerja atau proyek.',
-      en: 'Clean, fast, single-page portfolio designed to make a strong impression on recruiters and clients.',
+      id: 'Website profil satu halaman (one-page) profesional untuk memperkenalkan bisnis, menampilkan katalog layanan/menu, dan menerima pesanan via WhatsApp.',
+      en: 'Clean, fast single-page profile to present your business, showcase your services or menu, and convert visitors into WhatsApp inquiries.',
     },
     features: {
       id: [
-        'Halaman Tunggal Responsif (Mobile & Desktop)',
-        'Dark & Light Mode otomatis',
-        'Bio, Keahlian (Skills), & Ringkasan Karir',
-        'Showcase 3 - 5 Proyek Unggulan',
-        'Tombol Unduh CV ATS (PDF)',
-        'Tombol Kontak Langsung (WhatsApp & Email)',
-        'Setup Hosting Gratis Selamanya (Cloudflare / Vercel)',
-        'Garansi Bug & Bantuan Revisi Minor 7 Hari',
+        'Website 1 Halaman Responsif (Tampilan optimal di HP & Laptop)',
+        'Profil Bisnis, Nilai Keunggulan & Jam Operasional',
+        'Katalog Produk / Menu / Layanan (Hingga 6 item)',
+        'Integrasi Peta Lokasi Google Maps & Alamat Usaha',
+        'Tombol Chat WhatsApp Langsung (Direct Order)',
+        'Bebas Biaya Hosting Bulanan (Rp 0 Selamanya)',
+        'Garansi Perbaikan & Bantuan Revisi 7 Hari',
       ],
       en: [
         'Responsive Single-Page Layout (Mobile & Desktop)',
-        'Automatic Dark & Light Mode',
-        'Bio, Skills Matrix, & Career Summary',
-        'Showcase of 3 - 5 Featured Projects',
-        'Integrated ATS Resume Download (PDF)',
-        'Direct Contact Links (WhatsApp & Email)',
-        'Free Lifetime Hosting Setup (Cloudflare / Vercel)',
-        '7-Day Bug Warranty & Minor Revision Support',
+        'Business Profile, Value Proposition & Operating Hours',
+        'Product / Menu / Service Catalog (Up to 6 items)',
+        'Google Maps Location & Contact Integration',
+        'Direct WhatsApp Order & Inquiry Button',
+        'Zero Monthly Hosting Fees (Free Lifetime Hosting)',
+        '7-Day Warranty & Revision Support',
       ],
     },
     ctaMessage: {
-      id: 'Halo Ryan, saya tertarik memesan Paket Starter Portofolio. Boleh konsultasi lebih lanjut?',
-      en: "Hi Ryan, I'm interested in the Starter Portfolio package. Can we discuss further?",
+      id: 'Halo Ryan, saya ingin konsultasi pembuatan website Paket Starter Bisnis untuk usaha saya.',
+      en: 'Hi Ryan, I would like to consult about the Starter Business package for my business.',
     },
   },
   {
     id: 'pro',
     popular: true,
     name: {
-      id: 'Standout Pro',
-      en: 'Standout Pro',
+      id: 'Portofolio Bisnis Pro',
+      en: 'Business Portfolio Pro',
     },
     tag: {
-      id: 'Paling Diminati · Mid & Senior Pro',
-      en: 'Most Popular · Mid & Senior Dev',
+      id: 'Paling Diminati · Rental, Travel, Resto & Kontraktor',
+      en: 'Most Popular · Rental, Travel, Resto & Contractors',
     },
     priceIdr: 'Rp 1.499.000',
     priceUsd: '$99',
@@ -96,47 +94,47 @@ export const pricingPackages: readonly PricingPackage[] = [
       en: '4 - 7 business days',
     },
     description: {
-      id: 'Portofolio multi-section dengan case study mendalam, dwibahasa, dan estetika unik sketchbook untuk memikat klien global.',
-      en: 'Full multi-section portfolio with deep case studies, bilingual support, and bespoke sketchbook aesthetics.',
+      id: 'Website bisnis multi-section lengkap dengan katalog portofolio proyek/unit, testimoni pelanggan, formulir pemesanan, dan optimasi Google agar mudah ditemukan.',
+      en: 'Complete multi-section business website with project/unit showcase, customer testimonials, and Google SEO to drive inbound leads.',
     },
     features: {
       id: [
-        'Semua fitur Paket Starter',
-        'Halaman / Modal Detail Case Study (STAR Method & Metrics)',
-        'Sistem Dwibahasa (Switch Instan ID / EN)',
-        'Desain Eksklusif "Engineering Sketchbook" (Drawably)',
-        'Skor Lighthouse 95 - 100 (Core Web Vitals Hijau)',
-        'Full SEO Meta, Social Share Card (Open Graph), & Schema.org',
-        'Bantuan Setup Custom Domain (contoh: namakamu.dev / .com)',
-        'Kode Sumber 100% Milik Anda (Private GitHub Repo)',
+        'Semua fitur Paket Starter Bisnis',
+        'Katalog Portofolio Proyek / Unit Rental / Menu Lengkap',
+        'Tombol Pesan / Booking WhatsApp Khusus Tiap Layanan',
+        'Bagian Ulasan / Testimoni Pelanggan & Legalitas Usaha',
+        'Kecepatan Kilat (<0.5 detik, Skor Google Lighthouse 95-100)',
+        'SEO Google Lokal & Kartu Media Sosial (WhatsApp & Instagram share)',
+        'Bantuan Penuh Setting Domain Usaha (.com / .id / .co.id)',
+        'Kepemilikan Kode 100% Tanpa Terkunci Vendor',
         'Garansi Bug & Dukungan 14 Hari',
       ],
       en: [
-        'All features in Starter Package',
-        'In-depth Case Study Pages/Modals (STAR Method & Metrics)',
-        'Instant Bilingual Switch (ID / EN)',
-        'Exclusive "Engineering Sketchbook" Aesthetic (Drawably)',
-        '95 - 100 Lighthouse Score (Green Core Web Vitals)',
-        'Full SEO Meta, Open Graph Cards, & Schema.org Person',
-        'Assistance with Custom Domain Setup (e.g. yourname.dev)',
-        '100% Source Code Ownership (Private GitHub Repo)',
-        '14-Day Bug Warranty & Priority Support',
+        'All features in Starter Business Package',
+        'Full Project / Rental Unit / Service Showcase',
+        'Dedicated WhatsApp Booking Button for Each Service',
+        'Customer Testimonials & Business Verification Section',
+        'Sub-Second Load Time (95-100 Google Lighthouse Score)',
+        'Local Google SEO & Social Share Cards (WhatsApp/IG preview)',
+        'Full Setup Support for Custom Domain (.com / .id)',
+        '100% Code Ownership with Zero Vendor Lock-in',
+        '14-Day Bug Warranty & Support',
       ],
     },
     ctaMessage: {
-      id: 'Halo Ryan, saya ingin konsultasi dan pesan Paket Standout Pro Portofolio. Bagaimana langkah awalnya?',
-      en: 'Hi Ryan, I would like to order the Standout Pro Portfolio package. How do we get started?',
+      id: 'Halo Ryan, saya tertarik memesan Paket Portofolio Bisnis Pro untuk usaha saya. Bagaimana langkah awalnya?',
+      en: 'Hi Ryan, I am interested in the Business Portfolio Pro package for my business. How do we get started?',
     },
   },
   {
     id: 'bespoke',
     name: {
-      id: 'Bespoke Executive',
-      en: 'Bespoke Executive',
+      id: 'Custom Korporat & Katalog',
+      en: 'Custom Corporate & Catalog',
     },
     tag: {
-      id: 'Tech Lead, Founder & Agency',
-      en: 'Tech Lead, Founder & Agency',
+      id: 'Travel Skala Besar, Multi-Cabang & Agensi',
+      en: 'Multi-Branch, Travel & Full Agencies',
     },
     priceIdr: 'Rp 2.999.000+',
     priceUsd: '$199+',
@@ -145,34 +143,34 @@ export const pricingPackages: readonly PricingPackage[] = [
       en: '7 - 14 business days',
     },
     description: {
-      id: 'Website personal branding kustom penuh dari nol. Dilengkapi integrasi blog/CMS, visual khusus, domain dan email bisnis.',
-      en: 'Fully customized executive personal branding site with custom design, blog/CMS integration, and business email setup.',
+      id: 'Website eksklusif dari nol dengan fitur kustom, filter katalog produk/paket travel/unit rental, sistem update konten sendiri (CMS), dan email bisnis resmi.',
+      en: 'Bespoke website built from scratch with custom catalog filters, easy content management (CMS), and corporate email setup.',
     },
     features: {
       id: [
-        'Semua fitur Paket Standout Pro',
-        'Desain 100% Kustom (Bisa dari wireframe/Figma pribadi)',
-        'Integrasi Blog Teknis Markdown / Headless CMS',
-        'Animasi Interaktif Lanjutan & Custom UI Elements',
-        'Setup Domain Kustom + Email Bisnis Profesional (halo@namamu.com)',
-        'Google Search Console & Google Analytics Terkonfigurasi',
-        'Sesi Diskusi 1-on-1 & Panduan Manajemen Konten',
+        'Semua fitur Paket Bisnis Pro',
+        'Desain 100% Kustom Mengikuti Branding Perusahaan',
+        'Fitur Filter Pencarian Katalog / Paket Wisata / Unit Rental',
+        'Dashboard CMS untuk Update Promo, Menu, & Artikel Sendiri',
+        'Setup Domain Bisnis + Email Resmi Perusahaan (info@namabisnis.com)',
+        'Pendaftaran ke Google Search Console & Google Analytics Bisnis',
+        'Sesi Konsultasi Strategi Digital 1-on-1',
         'Garansi Perbaikan & Support Prioritas 30 Hari',
       ],
       en: [
-        'All features in Standout Pro Package',
-        '100% Custom Design (From scratch or your Figma design)',
-        'Technical Blog / Markdown Headless CMS Integration',
-        'Advanced Interactive Animations & Bespoke UI Elements',
-        'Custom Domain + Professional Business Email Setup',
-        'Google Search Console & Privacy-Friendly Analytics',
-        '1-on-1 Strategy Call & Content Management Guide',
+        'All features in Business Pro Package',
+        '100% Custom Design Aligned with Corporate Branding',
+        'Interactive Filter for Tour Packages, Rental Units, or Products',
+        'Admin CMS Dashboard to Update Promotions, Menus & Articles',
+        'Custom Domain + Corporate Email Setup (info@yourbusiness.com)',
+        'Google Search Console & Business Analytics Setup',
+        '1-on-1 Digital Strategy Session',
         '30-Day Bug Warranty & Priority Support',
       ],
     },
     ctaMessage: {
-      id: 'Halo Ryan, saya tertarik dengan Paket Bespoke Executive untuk portofolio kustom. Boleh jadwalkan diskusi?',
-      en: "Hi Ryan, I'm interested in the Bespoke Executive package for a custom portfolio. Can we schedule a chat?",
+      id: 'Halo Ryan, saya ingin konsultasi Paket Custom Korporat untuk kebutuhan website bisnis kami. Boleh jadwalkan diskusi?',
+      en: 'Hi Ryan, I would like to consult about the Custom Corporate package for our business website. Can we schedule a call?',
     },
   },
 ] as const;
@@ -189,58 +187,131 @@ export const faqItems: readonly FaqItem[] = [
       en: 'Are there any recurring monthly subscription fees after delivery?',
     },
     answer: {
-      id: 'Tidak ada biaya bulanan sama sekali dari kami! Website dibangun dengan arsitektur statis modern yang dapat di-hosting 100% gratis selamanya di platform kelas dunia seperti Cloudflare Pages atau Vercel. Anda hanya perlu memperpanjang domain tahunan Anda sendiri (sekitar Rp 120rb - Rp 180rb/tahun) jika menggunakan domain kustom.',
-      en: 'No monthly fees whatsoever! The site is built with modern static architecture that can be hosted 100% free forever on platforms like Cloudflare Pages or Vercel. You only pay for your own annual domain renewal (typically $10 - $15/year) if using a custom domain.',
+      id: 'Tidak ada biaya bulanan sama sekali dari kami! Berbeda dengan platform seperti Shopify atau Wix yang menarik biaya bulanan Rp 150.000 - Rp 400.000 setiap bulan, website ini dibangun dengan arsitektur modern berbiaya server Rp 0 (gratis selamanya). Anda hanya perlu memperpanjang nama domain tahunan Anda sendiri jika menggunakan domain kustom.',
+      en: 'No monthly fees whatsoever from us! Unlike site builders that charge recurring monthly subscriptions, your website is built with modern static architecture hosted 100% free forever on enterprise infrastructure. You only pay for your own annual domain renewal.',
     },
   },
   {
     question: {
-      id: 'Bagaimana jika saya belum memiliki materi CV, foto, atau tulisan proyek?',
-      en: 'What if I don’t have ready-to-use resume copy, photos, or project write-ups?',
+      id: 'Usaha apa saja yang cocok menggunakan layanan pembuatan website ini?',
+      en: 'What types of businesses benefit most from this portfolio service?',
     },
     answer: {
-      id: 'Tenang saja, kami akan membantu memandu Anda! Kami menyediakan kuesioner ringkas dan template STAR method untuk merangkum proyek Anda agar terdengar meyakinkan bagi recruiter dan klien. Kami juga memberikan tips pemilihan foto profil yang representatif.',
-      en: 'No worries at all! We will guide you with a straightforward questionnaire and the STAR framework to showcase your projects compellingly for recruiters and clients, along with photo guidelines.',
+      id: 'Sangat cocok untuk penyedia jasa (service AC, bengkel, salon, klinik, studio foto, konsultan), rental (mobil, motor, studio, kamera), agen travel & tour wisata, restoran/cafe/catering, konveksi/percetakan, kontraktor/interior, hingga company profile UMKM dan korporasi yang ingin tampil kredibel di hadapan klien.',
+      en: 'Ideal for service providers (contractors, clinics, studios, salons, consultants), rentals (cars, cameras, venues), travel & tour agencies, restaurants/cafes, manufacturing/workshops, and businesses that need to establish instant credibility with prospective clients.',
     },
   },
   {
     question: {
-      id: 'Berapa lama proses pembuatan portofolio?',
-      en: 'How long does it take to build and launch the portfolio?',
+      id: 'Bagaimana jika saya belum memiliki foto bagus atau tulisan profil usaha?',
+      en: 'What if I do not have professional photos or finished copy ready?',
     },
     answer: {
-      id: 'Rata-rata pengerjaan berkisar antara 2 hingga 7 hari kerja tergantung paket yang Anda pilih dan kelengkapan materi awal. Kami mengutamakan ketepatan waktu dengan progres transparan setiap tahapnya.',
-      en: 'Turnaround typically ranges from 2 to 7 business days depending on the selected package and content readiness. We maintain transparent progress updates throughout.',
+      id: 'Tenang saja, kami akan memandu Anda! Cukup kirimkan foto-foto produk atau dokumentasi kerja dari ponsel, rincian harga/layanan yang biasa Anda kirim via chat, dan alamat lokasi usaha. Kami akan merapikan teksnya menjadi kalimat penawaran yang meyakinkan bagi calon pelanggan.',
+      en: 'No worries at all! You only need to share your service list, photos from your phone, and contact details. We will structure and polish the content into clear, compelling messaging for your prospective customers.',
     },
   },
   {
     question: {
-      id: 'Apakah saya mendapatkan seluruh kode sumbernya?',
-      en: 'Do I get 100% of the source code?',
+      id: 'Apakah pesanan dari website langsung terhubung ke WhatsApp admin usaha saya?',
+      en: 'Will inquiries from the website connect directly to my business WhatsApp?',
     },
     answer: {
-      id: 'Ya, 100%! Seluruh kode sumber diserahkan ke akun GitHub pribadi Anda lengkap dengan lisensi kepemilikan penuh, tanpa vendor lock-in. Anda bebas memodifikasi, menambah konten, atau mendeploy ulang kapan saja.',
-      en: 'Yes, 100%! The full codebase is delivered to your personal GitHub account with complete ownership and zero vendor lock-in. You can modify, expand, or redeploy whenever you want.',
+      id: 'Ya, setiap tombol pemesanan atau pertanyaan akan langsung membuka aplikasi WhatsApp pelanggan dengan teks otomatis yang rapi (misalnya menyebutkan nama produk/paket yang dipilih). Anda dan admin dapat langsung merespons pelanggan dengan cepat.',
+      en: 'Yes, every order or inquiry button opens WhatsApp with pre-formatted messages specifying the exact service or package of interest, enabling prompt customer follow-up.',
     },
   },
   {
     question: {
-      id: 'Apakah bisa menggunakan domain pribadi seperti namasaya.com atau namasaya.dev?',
-      en: 'Can I use my own domain such as myname.com or myname.dev?',
+      id: 'Apakah bisa menggunakan nama domain bisnis sendiri seperti namabisnis.com?',
+      en: 'Can I use my own custom business domain like mybusiness.com?',
     },
     answer: {
-      id: 'Sangat bisa! Kami akan memandu atau membantu langsung proses pointing DNS dari registrar domain Anda (Niagahoster, Namecheap, Domainesia, Cloudflare, dll.) hingga sertifikat HTTPS aktif.',
-      en: 'Absolutely! We will guide or assist directly in configuring DNS records from your registrar (Namecheap, Cloudflare, GoDaddy, etc.) complete with automatic SSL/HTTPS.',
+      id: 'Sangat bisa! Kami akan membantu proses pendaftaran domain atau konfigurasi DNS dari penyedia domain Anda (.com, .id, .co.id, dll.) hingga sertifikat keamanan HTTPS aktif beroperasi.',
+      en: 'Absolutely! We provide end-to-end setup for your business domain (.com, .id, etc.) including automated SSL/HTTPS certificates.',
     },
   },
   {
     question: {
-      id: 'Bagaimana cara pemesanan dan pembayarannya?',
-      en: 'How do the ordering and payment processes work?',
+      id: 'Berapa lama waktu pengerjaan website sampai live?',
+      en: 'How long does it take until the website is live?',
     },
     answer: {
-      id: 'Cukup klik tombol WhatsApp untuk konsultasi awal gratis. Setelah menyepakati paket dan cakupan kerja, pembayaran dilakukan dengan DP 50% di awal dan pelunasan 50% setelah website selesai direview dan siap go-live.',
-      en: 'Simply tap the WhatsApp button for a free initial consultation. After agreeing on the scope and package, payment is split into 50% upfront deposit and 50% upon final review before go-live.',
+      id: 'Rata-rata pengerjaan berkisar antara 2 hingga 7 hari kerja tergantung paket dan kelengkapan materi awal Anda. Progres pengerjaan dapat Anda pantau secara langsung melalui tautan demo preview.',
+      en: 'Development typically takes 2 to 7 business days depending on the selected package and material readiness, with a live staging link provided to review progress.',
     },
+  },
+] as const;
+
+export type BusinessShowcaseItem = {
+  readonly slug: string;
+  readonly name: string;
+  readonly category: Record<Locale, string>;
+  readonly description: Record<Locale, string>;
+  readonly tags: readonly string[];
+  readonly metrics: string;
+  readonly href: string;
+};
+
+export const businessShowcases: readonly BusinessShowcaseItem[] = [
+  {
+    slug: 'konveksipro',
+    name: 'Konveksi Pro & Apparel',
+    category: {
+      id: 'Katalog Usaha Konveksi & Seragam',
+      en: 'Custom Apparel & Manufacturing Catalog',
+    },
+    description: {
+      id: 'Website katalog pakaian seragam, polo, dan jersey olahraga dengan panduan bahan kain, galeri portofolio produksi, dan integrasi order WhatsApp instan.',
+      en: 'Custom apparel and uniform manufacturing catalog featuring fabric guides, production gallery, and direct WhatsApp inquiry workflow.',
+    },
+    tags: ['Katalog Bisnis', 'Fast Load', 'WhatsApp Order', 'SEO Lokal'],
+    metrics: 'Lighthouse 99 · Sub-second',
+    href: 'https://konveksipro.ryanprayoga.dev',
+  },
+  {
+    slug: 'kasbadminton',
+    name: 'Kas Badminton Community',
+    category: {
+      id: 'Aplikasi Kas & FinTech Komunitas Olahraga',
+      en: 'Sports Community FinTech & Ledger',
+    },
+    description: {
+      id: 'Platform realtime pencatatan kas, iuran QRIS dinamis, dan laporan keuangan transparan yang digunakan oleh komunitas bulu tangkis aktif.',
+      en: 'Realtime ledger and dynamic QRIS payment tracking system designed for active sports clubs and community organizations.',
+    },
+    tags: ['Realtime SaaS', 'Go & SvelteKit', 'FinTech QRIS', 'PWA'],
+    metrics: 'Realtime SSE · PWA',
+    href: 'https://kasbadminton.com',
+  },
+  {
+    slug: 'putraselamatmakmur',
+    name: 'Putra Selamat Makmur',
+    category: {
+      id: 'Profil Perusahaan & Pengadaan Bisnis',
+      en: 'Corporate Profile & Procurement',
+    },
+    description: {
+      id: 'Company profile resmi perusahaan pengadaan barang dan jasa industri dengan portofolio proyek terverifikasi, legalitas, dan kontak rekanan bisnis.',
+      en: 'Official corporate website showcasing verified enterprise procurement projects, corporate credentials, and supplier inquiries.',
+    },
+    tags: ['Company Profile', 'Kredibilitas B2B', 'Legalitas'],
+    metrics: 'B2B Verified · Fast Static',
+    href: 'https://putraselamatmakmur.com',
+  },
+  {
+    slug: 'ryanprayoga',
+    name: 'ryanprayoga.dev (Portofolio Rekayasa Web)',
+    category: {
+      id: 'Bukti Kualitas Rekayasa & Kecepatan',
+      en: 'Engineering Craftsmanship Benchmark',
+    },
+    description: {
+      id: 'Website portofolio developer utama Ryan Prayoga: bukti standar performa skor 100 Google Lighthouse, zero-runtime dependency, dan dwibahasa.',
+      en: 'Core engineering portfolio by Ryan Prayoga: proof of 100/100 Google Lighthouse score, zero-runtime dependencies, and bilingual architecture.',
+    },
+    tags: ['Skor 100 Google', 'Zero-Lag', 'Dwibahasa', 'Engineering'],
+    metrics: 'Lighthouse 100/100',
+    href: 'https://ryanprayoga.dev',
   },
 ] as const;
