@@ -151,25 +151,18 @@
       <i class="bg-accent inline-block h-1.5 w-1.5 rounded-full" aria-hidden="true"></i>{t.status}
     </span>
     <ThemeToggle />
-    <div class="flex items-center gap-0.5 font-mono text-xs" role="group" aria-label={t.a11y.language}>
-      <button
-        type="button"
-        class="cursor-pointer px-1.5 py-1 min-h-[36px] inline-flex items-center justify-center {locale === 'en'
-          ? 'font-semibold'
-          : 'text-muted hover:text-accent'}"
-        aria-pressed={locale === 'en'}
-        onclick={() => setLocale('en')}>EN</button
-      >
-      <span class="text-rule" aria-hidden="true">/</span>
-      <button
-        type="button"
-        class="cursor-pointer px-1.5 py-1 min-h-[36px] inline-flex items-center justify-center {locale === 'id'
-          ? 'font-semibold'
-          : 'text-muted hover:text-accent'}"
-        aria-pressed={locale === 'id'}
-        onclick={() => setLocale('id')}>ID</button
-      >
-    </div>
+    <button
+      type="button"
+      use:drawButton={{ variant: 'outline', resketchOnHover: true }}
+      onclick={() => setLocale(locale === 'en' ? 'id' : 'en')}
+      aria-label={locale === 'en' ? 'Switch to Indonesian' : 'Switch to English'}
+      title={locale === 'en' ? 'Switch to Indonesian' : 'Switch to English'}
+      class="lang-btn inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-2.5 !py-1 font-mono text-xs uppercase transition-colors active:scale-95"
+    >
+      <span class={locale === 'en' ? 'font-bold text-accent' : 'text-muted'}>EN</span>
+      <span class="text-rule mx-1 select-none" aria-hidden="true">/</span>
+      <span class={locale === 'id' ? 'font-bold text-accent' : 'text-muted'}>ID</span>
+    </button>
     <a
       href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}
       download
@@ -181,7 +174,7 @@
       id={toggleId}
       bind:this={toggleEl}
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="menu-btn inline-flex min-h-[36px] cursor-pointer items-center justify-center font-mono text-xs uppercase sm:hidden transition-colors active:scale-95"
+      class="menu-btn sm:!hidden inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-3 !py-1 font-mono text-xs uppercase transition-colors active:scale-95"
       type="button"
       onclick={() => {
         closeFocus = 'toggle';
@@ -248,3 +241,12 @@
     </div>
   </div>
 {/if}
+
+<style>
+  @media (min-width: 640px) {
+    :global(.menu-btn.drawably-button),
+    :global(.menu-btn) {
+      display: none !important;
+    }
+  }
+</style>
