@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Icon from '$lib/components/Icon.svelte';
   import { localeStore } from '$lib/stores/locale.svelte';
   import { freelanceCopy } from '$lib/data/freelanceCopy';
   import { drawCard, drawBadge } from '$lib/actions/drawably';
@@ -30,8 +31,11 @@
         class="bg-paper p-6 transition-all hover:-translate-y-1 flex flex-col justify-between"
       >
         <div>
-          <span class="font-mono text-xs font-semibold text-accent tracking-wider uppercase block mb-1">
-            {item.tag}
+          <span class="text-accent mb-3 flex items-center gap-2">
+            <span class="border-accent/40 bg-accent-soft/30 border p-1.5">
+              <Icon name={item.icon} size={18} />
+            </span>
+            <span class="font-mono text-xs font-semibold tracking-wider uppercase">{item.tag}</span>
           </span>
           <h3 class="mt-2 font-display text-lg font-semibold text-ink tracking-tight">
             {item.title}

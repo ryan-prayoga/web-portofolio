@@ -1,3 +1,4 @@
+import type { IconName } from '$lib/data/icons';
 import type { Locale } from '$lib/data/uiCopy';
 
 export interface FreelanceCopy {
@@ -39,6 +40,7 @@ export interface FreelanceCopy {
     readonly heading: string;
     readonly subheading: string;
     readonly items: readonly {
+      readonly icon: IconName;
       readonly tag: string;
       readonly title: string;
       readonly description: string;
@@ -110,11 +112,11 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       showcase: 'Contoh Bisnis',
       faq: 'FAQ',
       contact: 'Kontak',
-      personalPortfolio: 'Portofolio Pengembang ↗',
+      personalPortfolio: 'Portofolio Pengembang',
       ctaConsultation: 'Konsultasi WhatsApp',
     },
     hero: {
-      status: '[Menerima Pembuatan Web Bisnis & Jasa]',
+      status: 'Menerima Pembuatan Web Bisnis & Jasa',
       title: 'Jasa Pembuatan Web Portofolio & Profil Bisnis yang ',
       titleHighlight: 'Kredibel & Cepat',
       subtitle:
@@ -157,37 +159,43 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
         'Setiap website dirancang untuk memudahkan calon pembeli melihat produk/layanan dan langsung melakukan pemesanan.',
       items: [
         {
-          tag: '[KATALOG]',
+          icon: 'gallery',
+          tag: 'KATALOG',
           title: 'Katalog Portofolio & Layanan',
           description:
             'Tampilkan galeri foto proyek, paket tour, unit armada rental, atau menu kuliner secara bersih, rapi, dan memikat pelanggan.',
         },
         {
-          tag: '[WHATSAPP]',
+          icon: 'message',
+          tag: 'WHATSAPP',
           title: 'Direct Order & Chat WhatsApp',
           description:
             'Tombol pemesanan langsung membuka chat WhatsApp admin dengan pesan otomatis yang rapi sesuai paket atau layanan yang dipilih.',
         },
         {
-          tag: '[PERFORMA]',
+          icon: 'bolt',
+          tag: 'PERFORMA',
           title: 'Kecepatan Buka Sub-Detik',
           description:
             'Dibangun dengan arsitektur modern ultra-ringan. Buka instan tanpa loading berputar sehingga calon pembeli tidak beralih ke kompetitor.',
         },
         {
-          tag: '[GOOGLE SEO]',
+          icon: 'mapPin',
+          tag: 'GOOGLE SEO',
           title: 'Optimasi Google & Peta Lokasi',
           description:
             'Integrasi alamat Google Maps, jam buka, dan optimasi SEO lokal agar bisnis Anda mudah ditemukan saat dicari di internet.',
         },
         {
-          tag: '[DOMAIN]',
+          icon: 'globe',
+          tag: 'DOMAIN',
           title: 'Domain Nama Usaha & SSL Aman',
           description:
             'Menggunakan alamat domain bisnis Anda sendiri (seperti namabisnis.com atau .id) lengkap dengan sertifikat keamanan resmi HTTPS.',
         },
         {
-          tag: '[RESPONSIF]',
+          icon: 'phone',
+          tag: 'RESPONSIF',
           title: 'Optimal di Layar Smartphone',
           description:
             'Lebih dari 80% calon pembeli membuka website melalui ponsel. Tampilan dirancang khusus agar nyaman digunakan satu tangan.',
@@ -206,7 +214,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       ctaButton: 'Pesan via WhatsApp',
       customInquiryNote:
         'Punya kebutuhan khusus di luar paket atau ingin konsultasi awal? Kami siap berdiskusi santai via WhatsApp.',
-      customInquiryCta: 'Konsultasi Bebas via WhatsApp ↗',
+      customInquiryCta: 'Konsultasi Bebas via WhatsApp',
     },
     process: {
       badge: 'Alur Kerja',
@@ -250,14 +258,14 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
         'Bukan sekadar gambar konsep. Berikut adalah beberapa contoh sistem nyata dan katalog bisnis yang telah kami buat:',
       liveDemo: 'Buka Website',
       exploreNote: 'Ingin berkonsultasi mengenai konsep website yang paling cocok untuk jenis usaha Anda?',
-      exploreCta: 'Lihat Rekam Jejak Rekayasa Lengkap di ryanprayoga.dev ↗',
+      exploreCta: 'Lihat Rekam Jejak Rekayasa Lengkap di ryanprayoga.dev',
     },
     faq: {
       badge: 'Tanya Jawab',
       heading: 'Pertanyaan Seputar Pembuatan Web',
       subheading: 'Informasi lengkap dan transparan sebelum Anda memulai pemesanan website usaha.',
       helpText: 'Ada pertanyaan lain mengenai kebutuhan bisnis Anda?',
-      helpCta: 'Tanyakan Langsung via WhatsApp ↗',
+      helpCta: 'Tanyakan Langsung via WhatsApp',
     },
     cta: {
       badge: 'Mulai Sekarang',
@@ -266,7 +274,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
         'Jangan biarkan calon pembeli ragu karena bisnis Anda belum memiliki website resmi. Hubungi Ryan sekarang untuk konsultasi gratis mengenai kebutuhan website usaha Anda.',
       whatsappButton: 'Chat WhatsApp Sekarang',
       emailButton: 'Kirim Email Penawaran',
-      mainSiteLink: 'Lihat Profil Teknis Developer di ryanprayoga.dev ↗',
+      mainSiteLink: 'Lihat Profil Teknis Developer di ryanprayoga.dev',
     },
     footer: {
       tag: 'Jasa Pembuatan Website Portofolio & Profil Bisnis Profesional',
@@ -274,7 +282,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
         'Dikerjakan oleh Ryan Prayoga — Fullstack Developer & Sub Team Lead. Membantu bisnis jasa, rental, travel, kuliner, dan UMKM memiliki website berkinerja tinggi.',
       linksHeading: 'Navigasi',
       contactHeading: 'Hubungi & Profil',
-      backToTop: 'Kembali ke atas ↑',
+      backToTop: 'Kembali ke atas',
       rights: 'Hak Cipta Terpelihara.',
     },
   },
@@ -287,11 +295,11 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       showcase: 'Case Studies',
       faq: 'FAQ',
       contact: 'Contact',
-      personalPortfolio: 'Developer Portfolio ↗',
+      personalPortfolio: 'Developer Portfolio',
       ctaConsultation: 'WhatsApp Inquiry',
     },
     hero: {
-      status: '[Open for Business Website Projects]',
+      status: 'Open for Business Website Projects',
       title: 'Professional Business Portfolio & Website Development That Is ',
       titleHighlight: 'Fast & Trustworthy',
       subtitle:
@@ -334,37 +342,43 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
         'Every website is built to make it frictionless for visitors to discover your catalog and contact your team.',
       items: [
         {
-          tag: '[CATALOG]',
+          icon: 'gallery',
+          tag: 'CATALOG',
           title: 'Service & Portfolio Showcase',
           description:
             'Display your project gallery, tour packages, rental units, or dining menus in a clean, visual layout.',
         },
         {
-          tag: '[WHATSAPP]',
+          icon: 'message',
+          tag: 'WHATSAPP',
           title: 'Direct WhatsApp Inquiries',
           description:
             'One-tap inquiry buttons that open WhatsApp with pre-formatted product or service details ready to send.',
         },
         {
-          tag: '[PERFORMANCE]',
+          icon: 'bolt',
+          tag: 'PERFORMANCE',
           title: 'Sub-Second Page Loads',
           description:
             'Built on modern ultra-lightweight architecture so pages open instantaneously without spinning loaders.',
         },
         {
-          tag: '[GOOGLE SEO]',
+          icon: 'mapPin',
+          tag: 'GOOGLE SEO',
           title: 'Local SEO & Maps Integration',
           description:
             'Embedded Google Maps location, opening hours, and structured data to help customers find you on Google Search.',
         },
         {
-          tag: '[DOMAIN]',
+          icon: 'globe',
+          tag: 'DOMAIN',
           title: 'Business Domain & SSL Security',
           description:
             'Operate under your official domain name (e.g. yourbusiness.com) complete with automatic HTTPS security.',
         },
         {
-          tag: '[RESPONSIVE]',
+          icon: 'phone',
+          tag: 'RESPONSIVE',
           title: 'Mobile-First Smartphone Layout',
           description:
             'Over 80% of local customers browse on mobile. Layouts are optimized for fluid, one-handed touch navigation.',
@@ -382,7 +396,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       ctaButton: 'Order via WhatsApp',
       customInquiryNote:
         'Have custom operational requirements or need initial guidance? Let us discuss freely via WhatsApp.',
-      customInquiryCta: 'Free Consultation via WhatsApp ↗',
+      customInquiryCta: 'Free Consultation via WhatsApp',
     },
     process: {
       badge: 'Execution',
@@ -426,14 +440,14 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       subheading: 'Real, live business systems and portfolios engineered to rigorous standards:',
       liveDemo: 'Visit Website',
       exploreNote: 'Want to discuss what structure works best for your specific business niche?',
-      exploreCta: 'See the Full Engineering Track Record at ryanprayoga.dev ↗',
+      exploreCta: 'See the Full Engineering Track Record at ryanprayoga.dev',
     },
     faq: {
       badge: 'FAQ',
       heading: 'Frequently Asked Questions',
       subheading: 'Clear, transparent answers about custom website development for your business.',
       helpText: 'Have a specific question about your business setup?',
-      helpCta: 'Ask Directly via WhatsApp ↗',
+      helpCta: 'Ask Directly via WhatsApp',
     },
     cta: {
       badge: 'Get Started',
@@ -442,7 +456,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
         'Do not lose prospective clients due to a lack of an official online presence. Contact Ryan today for a friendly consultation.',
       whatsappButton: 'Chat on WhatsApp Now',
       emailButton: 'Send an Email Inquiry',
-      mainSiteLink: 'Explore Developer Engineering Portfolio at ryanprayoga.dev ↗',
+      mainSiteLink: 'Explore Developer Engineering Portfolio at ryanprayoga.dev',
     },
     footer: {
       tag: 'Professional Business Website & Portfolio Development',
@@ -450,7 +464,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
         'Engineered by Ryan Prayoga — Fullstack Developer & Sub Team Lead. Helping services, rental, travel, and local enterprises build trusted digital presence.',
       linksHeading: 'Navigation',
       contactHeading: 'Contact & Profile',
-      backToTop: 'Back to top ↑',
+      backToTop: 'Back to top',
       rights: 'All rights reserved.',
     },
   },

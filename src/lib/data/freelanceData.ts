@@ -60,7 +60,7 @@ export const pricingPackages: readonly PricingPackage[] = [
         'Katalog Produk / Menu / Layanan (Hingga 6 item)',
         'Integrasi Peta Lokasi Google Maps & Alamat Usaha',
         'Tombol Chat WhatsApp Langsung (Direct Order)',
-        'Hosting Gratis Tahun Pertama (Tanpa Biaya Bulanan)',
+        'Hosting Gratis Tahun Pertama (Perpanjangan Rp 150.000/tahun)',
         'Garansi Perbaikan & Bantuan Revisi 7 Hari',
       ],
       en: [
@@ -69,7 +69,7 @@ export const pricingPackages: readonly PricingPackage[] = [
         'Product / Menu / Service Catalog (Up to 6 items)',
         'Google Maps Location & Contact Integration',
         'Direct WhatsApp Order & Inquiry Button',
-        'Free Hosting for the First Year (No Monthly Fees)',
+        'Free Hosting for the First Year (Rp 150,000/year renewal)',
         '7-Day Warranty & Revision Support',
       ],
     },
@@ -189,8 +189,8 @@ export const faqItems: readonly FaqItem[] = [
       en: 'Are there any recurring monthly subscription fees after delivery?',
     },
     answer: {
-      id: 'Tidak ada biaya bulanan. Berbeda dengan platform seperti Shopify atau Wix yang menarik Rp 150.000 - Rp 400.000 setiap bulan, website Anda dibangun sebagai file statis sehingga biaya servernya nihil. Hosting tahun pertama saya tanggung; setelahnya website dapat tetap saya hosting-kan atau dipindahkan ke akun Anda sendiri (Cloudflare Pages / Netlify — keduanya gratis) karena seluruh kode menjadi milik Anda. Biaya rutin satu-satunya adalah perpanjangan nama domain tahunan.',
-      en: 'No monthly fees. Unlike site builders charging Rp 150,000 - Rp 400,000 every month, your site ships as static files, so server cost is effectively zero. I cover hosting for the first year; after that I can keep hosting it, or you move it to your own account (Cloudflare Pages / Netlify, both free) since you own the full source code. Your only recurring cost is the annual domain renewal.',
+      id: 'Tidak ada biaya bulanan. Berbeda dengan platform seperti Shopify atau Wix yang menarik Rp 150.000 - Rp 400.000 setiap bulan, website Anda dibangun sebagai file statis sehingga biaya servernya nihil. Hosting tahun pertama saya tanggung penuh; perpanjangan setelahnya hanya Rp 150.000 per tahun (bukan per bulan). Anda juga bebas memindahkan website ke akun sendiri seperti Cloudflare Pages atau Netlify yang gratis, karena seluruh kode menjadi milik Anda. Di luar itu, biaya rutin satu-satunya adalah perpanjangan nama domain tahunan.',
+      en: 'No monthly fees. Unlike site builders charging Rp 150,000 - Rp 400,000 every month, your site ships as static files, so server cost is effectively zero. I cover hosting for the first year in full; renewal after that is Rp 150,000 per year — per year, not per month. You are also free to move the site to your own Cloudflare Pages or Netlify account for free, since you own the full source code. Beyond that, your only recurring cost is the annual domain renewal.',
     },
   },
   {

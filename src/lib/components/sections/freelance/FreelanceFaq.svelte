@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Icon from '$lib/components/Icon.svelte';
   import { localeStore } from '$lib/stores/locale.svelte';
   import { freelanceCopy } from '$lib/data/freelanceCopy';
   import { faqItems, getWhatsAppUrl } from '$lib/data/freelanceData';
@@ -50,14 +51,8 @@
           <span class="font-display text-base sm:text-lg font-semibold text-ink tracking-tight">
             {item.question[locale]}
           </span>
-          <span
-            class="font-mono text-lg text-accent select-none font-bold transition-transform duration-200 {openIndex ===
-            index
-              ? 'rotate-45'
-              : ''}"
-            aria-hidden="true"
-          >
-            +
+          <span class="text-accent shrink-0 transition-transform duration-200 {openIndex === index ? 'rotate-45' : ''}">
+            <Icon name="plus" size={18} strokeWidth={2} />
           </span>
         </button>
 
@@ -78,9 +73,10 @@
       href={getWhatsAppUrl(faqWaMessage)}
       target="_blank"
       rel="noopener noreferrer"
-      class="mt-2 inline-block font-mono text-xs font-semibold text-accent hover:underline uppercase tracking-wide"
+      class="text-accent mt-2 inline-flex items-center gap-1 font-mono text-xs font-semibold tracking-wide uppercase hover:underline"
     >
       {t.faq.helpCta}
+      <Icon name="arrowUpRight" size={13} />
     </a>
   </div>
 </section>

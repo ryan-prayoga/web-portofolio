@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Icon from '$lib/components/Icon.svelte';
   import { localeStore } from '$lib/stores/locale.svelte';
   import { freelanceCopy } from '$lib/data/freelanceCopy';
   import { businessShowcases, FREELANCE_CONFIG } from '$lib/data/freelanceData';
@@ -60,14 +61,18 @@
         </div>
 
         <div class="mt-6 pt-4 border-t border-rule flex items-center justify-between font-mono text-xs">
-          <span class="text-muted">[Live System]</span>
+          <span class="text-muted flex items-center gap-1.5">
+            <Icon name="pulse" size={14} class="text-accent" />
+            {locale === 'id' ? 'Sistem Live' : 'Live System'}
+          </span>
           <a
             href={work.href}
             target="_blank"
             rel="noopener noreferrer"
             class="text-accent hover:underline flex items-center gap-1 font-semibold"
           >
-            {t.showcase.liveDemo} ↗
+            {t.showcase.liveDemo}
+            <Icon name="arrowUpRight" size={13} />
           </a>
         </div>
       </div>
@@ -82,9 +87,10 @@
       href="{FREELANCE_CONFIG.mainPortfolioUrl}#work"
       target="_blank"
       rel="noopener noreferrer"
-      class="mt-2 inline-block font-mono text-xs font-semibold text-accent hover:underline uppercase tracking-wide"
+      class="text-accent mt-2 inline-flex items-center gap-1 font-mono text-xs font-semibold tracking-wide uppercase hover:underline"
     >
       {t.showcase.exploreCta}
+      <Icon name="arrowUpRight" size={13} />
     </a>
   </div>
 </section>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Icon from '$lib/components/Icon.svelte';
   import { localeStore, type Locale } from '$lib/stores/locale.svelte';
   import { freelanceCopy } from '$lib/data/freelanceCopy';
   import { FREELANCE_CONFIG, getWhatsAppUrl } from '$lib/data/freelanceData';
@@ -168,6 +169,7 @@
       title="Lihat Portofolio Developer Utama"
     >
       {t.nav.personalPortfolio}
+      <Icon name="arrowUpRight" size={12} />
     </a>
 
     <a
@@ -175,8 +177,9 @@
       target="_blank"
       rel="noopener noreferrer"
       use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-      class="bg-accent text-paper hidden min-[720px]:inline-flex items-center px-3 py-1 font-mono text-xs font-medium uppercase transition-opacity hover:opacity-90"
+      class="bg-accent text-paper hidden items-center gap-1.5 px-3 py-1 font-mono text-xs font-medium uppercase transition-opacity min-[720px]:inline-flex hover:opacity-90"
     >
+      <Icon name="message" size={13} />
       {t.nav.ctaConsultation}
     </a>
 
@@ -236,9 +239,10 @@
       {/each}
       <a
         href={FREELANCE_CONFIG.mainPortfolioUrl}
-        class="text-accent font-mono text-sm tracking-wide uppercase transition-colors pt-2 border-t border-rule"
+        class="text-accent border-rule flex items-center gap-1.5 border-t pt-2 font-mono text-sm tracking-wide uppercase transition-colors"
       >
         {t.nav.personalPortfolio}
+        <Icon name="arrowUpRight" size={14} />
       </a>
     </div>
 
@@ -248,8 +252,9 @@
         target="_blank"
         rel="noopener noreferrer"
         use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-        class="bg-accent text-paper flex items-center justify-center py-3 font-mono text-xs uppercase tracking-wide"
+        class="bg-accent text-paper flex items-center justify-center gap-2 py-3 font-mono text-xs tracking-wide uppercase"
       >
+        <Icon name="message" size={15} />
         {t.nav.ctaConsultation}
       </a>
       <p class="text-muted font-mono text-xs text-center">Ryan Prayoga · Jasa Web Portofolio</p>

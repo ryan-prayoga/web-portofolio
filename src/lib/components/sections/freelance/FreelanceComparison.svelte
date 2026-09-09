@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Icon from '$lib/components/Icon.svelte';
   import { localeStore } from '$lib/stores/locale.svelte';
   import { freelanceCopy } from '$lib/data/freelanceCopy';
   import { drawCard, drawBadge } from '$lib/actions/drawably';
@@ -30,14 +31,14 @@
       class="bg-paper/40 p-6 sm:p-8 opacity-90 border border-dashed border-rule"
     >
       <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-muted font-semibold">
-        <span class="text-rose-500 font-bold" aria-hidden="true">[✕]</span>
+        <Icon name="close" size={15} strokeWidth={2.25} class="text-rose-500" />
         <h3>{t.comparison.genericTitle}</h3>
       </div>
 
       <ul class="mt-6 flex flex-col gap-4 text-xs sm:text-sm text-muted">
         {#each t.comparison.genericPoints as point, idx (idx)}
           <li class="flex items-start gap-2.5">
-            <span class="text-rose-500/80 font-mono text-xs select-none mt-0.5" aria-hidden="true">✕</span>
+            <Icon name="close" size={14} class="text-rose-500/80 mt-0.5 shrink-0" />
             <span>{point}</span>
           </li>
         {/each}
@@ -51,7 +52,7 @@
     >
       <div class="flex items-center justify-between gap-2">
         <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-accent font-semibold">
-          <span class="text-accent font-bold" aria-hidden="true">[✓]</span>
+          <Icon name="check" size={15} strokeWidth={2.25} class="text-accent" />
           <h3>{t.comparison.customTitle}</h3>
         </div>
         <span class="bg-accent text-paper font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 font-bold">
@@ -62,7 +63,7 @@
       <ul class="mt-6 flex flex-col gap-4 text-xs sm:text-sm text-ink font-medium">
         {#each t.comparison.customPoints as point, idx (idx)}
           <li class="flex items-start gap-2.5">
-            <span class="text-accent font-mono text-xs font-bold select-none mt-0.5" aria-hidden="true">✓</span>
+            <Icon name="check" size={14} strokeWidth={2.25} class="text-accent mt-0.5 shrink-0" />
             <span>{point}</span>
           </li>
         {/each}

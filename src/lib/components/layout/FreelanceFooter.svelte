@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Icon from '$lib/components/Icon.svelte';
   import { localeStore } from '$lib/stores/locale.svelte';
   import { freelanceCopy } from '$lib/data/freelanceCopy';
   import { FREELANCE_CONFIG, getWhatsAppUrl } from '$lib/data/freelanceData';
@@ -54,13 +55,18 @@
             href={getWhatsAppUrl(defaultWaMessage)}
             target="_blank"
             rel="noopener noreferrer"
-            class="hover:text-accent transition-colors"
+            class="hover:text-accent flex items-center gap-1.5 transition-colors"
           >
+            <Icon name="message" size={13} class="text-accent shrink-0" />
             WhatsApp ({FREELANCE_CONFIG.whatsappNumber})
           </a>
         </li>
         <li>
-          <a href="mailto:{FREELANCE_CONFIG.email}" class="hover:text-accent transition-colors">
+          <a
+            href="mailto:{FREELANCE_CONFIG.email}"
+            class="hover:text-accent flex items-center gap-1.5 transition-colors"
+          >
+            <Icon name="mail" size={13} class="text-accent shrink-0" />
             Email ({FREELANCE_CONFIG.email})
           </a>
         </li>
@@ -71,7 +77,8 @@
             rel="noopener noreferrer"
             class="text-accent hover:underline flex items-center gap-1"
           >
-            ryanprayoga.dev ↗
+            ryanprayoga.dev
+            <Icon name="arrowUpRight" size={13} />
           </a>
         </li>
       </ul>
@@ -80,8 +87,12 @@
 
   <div class="pt-6 flex flex-wrap justify-between items-center gap-4 uppercase text-[11px]">
     <span>© 2026 {profile.name}. {t.footer.rights}</span>
-    <span>{profile.location}</span>
-    <a href="#top" onclick={toTop} class="no-print hover:text-accent transition-colors">
+    <span class="flex items-center gap-1.5">
+      <Icon name="mapPin" size={13} class="text-accent" />
+      {profile.location}
+    </span>
+    <a href="#top" onclick={toTop} class="no-print hover:text-accent flex items-center gap-1.5 transition-colors">
+      <Icon name="arrowUp" size={13} />
       {t.footer.backToTop}
     </a>
   </div>

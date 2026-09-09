@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Icon from '$lib/components/Icon.svelte';
   import { localeStore } from '$lib/stores/locale.svelte';
   import { freelanceCopy } from '$lib/data/freelanceCopy';
   import { pricingPackages, getWhatsAppUrl } from '$lib/data/freelanceData';
@@ -42,8 +43,11 @@
         <div>
           {#if pkg.popular}
             <div class="mb-4">
-              <span class="bg-accent text-paper font-mono text-[11px] font-bold uppercase tracking-wider px-2.5 py-1">
-                [{t.packages.popularBadge}]
+              <span
+                class="bg-accent text-paper inline-flex items-center gap-1.5 px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider uppercase"
+              >
+                <Icon name="star" size={12} strokeWidth={2} />
+                {t.packages.popularBadge}
               </span>
             </div>
           {/if}
@@ -72,7 +76,10 @@
           </p>
 
           <div class="mt-4 pt-4 border-t border-rule font-mono text-xs text-muted flex items-center justify-between">
-            <span>{t.packages.deliveryLabel}:</span>
+            <span class="flex items-center gap-1.5">
+              <Icon name="clock" size={13} />
+              {t.packages.deliveryLabel}:
+            </span>
             <span class="font-semibold text-ink">{pkg.duration[locale]}</span>
           </div>
 
@@ -83,7 +90,7 @@
             <ul class="flex flex-col gap-2.5 text-xs sm:text-sm text-ink/90">
               {#each pkg.features[locale] as feature, idx (idx)}
                 <li class="flex items-start gap-2">
-                  <span class="text-accent font-bold select-none mt-0.5" aria-hidden="true">[✓]</span>
+                  <Icon name="check" size={14} strokeWidth={2.25} class="text-accent mt-0.5 shrink-0" />
                   <span>{feature}</span>
                 </li>
               {/each}
@@ -97,10 +104,11 @@
             target="_blank"
             rel="noopener noreferrer"
             use:drawButton={{ variant: pkg.popular ? 'solid' : 'outline', resketchOnHover: true }}
-            class="w-full flex items-center justify-center py-3 font-mono text-xs font-semibold tracking-wide uppercase transition-all {pkg.popular
+            class="flex w-full items-center justify-center gap-2 py-3 font-mono text-xs font-semibold tracking-wide uppercase transition-all {pkg.popular
               ? 'bg-accent text-paper hover:opacity-90'
               : 'border-rule hover:border-accent hover:text-accent'}"
           >
+            <Icon name="message" size={15} />
             {t.packages.ctaButton}
           </a>
         </div>
@@ -109,16 +117,18 @@
   </div>
 
   <div class="mt-10 p-6 bg-paper/60 border border-dashed border-rule rounded-none text-center max-w-2xl mx-auto">
-    <p class="font-mono text-xs text-muted">
-      [Info] {t.packages.customInquiryNote}
+    <p class="text-muted flex items-center justify-center gap-2 font-mono text-xs">
+      <Icon name="info" size={14} class="text-accent shrink-0" />
+      {t.packages.customInquiryNote}
     </p>
     <a
       href={getWhatsAppUrl(customInquiryWa)}
       target="_blank"
       rel="noopener noreferrer"
-      class="mt-2 inline-block font-mono text-xs font-semibold text-accent hover:underline uppercase tracking-wide"
+      class="text-accent mt-2 inline-flex items-center gap-1 font-mono text-xs font-semibold tracking-wide uppercase hover:underline"
     >
       {t.packages.customInquiryCta}
+      <Icon name="arrowUpRight" size={13} />
     </a>
   </div>
 </section>

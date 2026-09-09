@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Icon from '$lib/components/Icon.svelte';
   import { localeStore } from '$lib/stores/locale.svelte';
   import { freelanceCopy } from '$lib/data/freelanceCopy';
   import { getWhatsAppUrl } from '$lib/data/freelanceData';
@@ -21,7 +22,7 @@
         use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
         class="cursor-pointer px-3 py-1 font-mono text-xs tracking-wider uppercase inline-flex items-center gap-1.5"
       >
-        <span class="text-accent font-bold" aria-hidden="true">[✓]</span>
+        <Icon name="check" size={14} strokeWidth={2.25} class="text-accent" />
         {t.hero.status}
       </span>
     </div>
@@ -43,8 +44,9 @@
         target="_blank"
         rel="noopener noreferrer"
         use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-        class="bg-accent text-paper inline-flex items-center px-6 py-3 font-mono text-xs font-semibold tracking-wide uppercase transition-opacity hover:opacity-90"
+        class="bg-accent text-paper inline-flex items-center gap-2 px-6 py-3 font-mono text-xs font-semibold tracking-wide uppercase transition-opacity hover:opacity-90"
       >
+        <Icon name="message" size={15} />
         {t.hero.ctaWhatsapp}
       </a>
 
@@ -53,7 +55,8 @@
         use:drawButton={{ variant: 'outline', resketchOnHover: true }}
         class="border-rule hover:border-accent hover:text-accent inline-flex items-center gap-2 border px-6 py-3 font-mono text-xs font-semibold tracking-wide uppercase transition-colors"
       >
-        {t.hero.ctaPackages} <span aria-hidden="true">↓</span>
+        {t.hero.ctaPackages}
+        <Icon name="arrowDown" size={14} />
       </a>
     </div>
   </div>
