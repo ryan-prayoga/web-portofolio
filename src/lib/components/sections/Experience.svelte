@@ -29,9 +29,14 @@
         <div class="grid gap-4 sm:grid-cols-[minmax(0,13rem)_1fr] sm:gap-8">
           <div>
             <span
-              use:drawBadge={{ variant: i === 0 ? 'scribble' : 'outline' }}
-              class="inline-block px-2.5 py-0.5 font-mono text-xs font-semibold uppercase"
+              use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
+              class="inline-block px-2.5 py-0.5 font-mono text-xs font-semibold uppercase {i === 0
+                ? 'text-accent'
+                : ''}"
             >
+              {#if i === 0}
+                <span class="text-accent font-bold mr-1" aria-hidden="true">●</span>
+              {/if}
               {role.period}
             </span>
             <p class="text-muted mt-2 font-mono text-[0.65rem] tracking-wider uppercase">{role.duration}</p>

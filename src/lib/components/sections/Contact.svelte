@@ -32,7 +32,7 @@
       {t.contact.emailCta} <span aria-hidden="true">↗</span>
     </span>
     <span
-      class="group-hover:text-accent mt-3 block text-2xl font-semibold tracking-tight break-all transition-colors sm:text-4xl"
+      class="group-hover:text-accent mt-3 block text-2xl font-display font-bold tracking-tight break-all transition-colors sm:text-4xl"
     >
       {email?.label}
     </span>

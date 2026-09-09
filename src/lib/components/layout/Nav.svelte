@@ -2,6 +2,7 @@
   import { page } from '$app/state';
   import { localeStore, type Locale } from '$lib/stores/locale.svelte';
   import { uiCopy } from '$lib/data/uiCopy';
+  import { drawButton } from '$lib/actions/drawably';
   import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
@@ -179,7 +180,8 @@
     <button
       id={toggleId}
       bind:this={toggleEl}
-      class="menu-btn border-rule inline-flex min-h-[36px] cursor-pointer items-center justify-center border px-3 py-1.5 font-mono text-xs uppercase sm:hidden"
+      use:drawButton={{ variant: 'outline', resketchOnHover: true }}
+      class="menu-btn inline-flex min-h-[36px] cursor-pointer items-center justify-center font-mono text-xs uppercase sm:hidden transition-colors active:scale-95"
       type="button"
       onclick={() => {
         closeFocus = 'toggle';
@@ -198,26 +200,51 @@
   <div
     id={menuId}
     bind:this={menuEl}
-    class="bg-paper fixed inset-0 z-55 grid content-center px-6 pt-20 pb-8"
+    class="bg-paper/98 fixed inset-0 z-55 flex flex-col justify-between px-6 pt-24 pb-8 backdrop-blur-md"
     role="dialog"
     aria-modal="true"
     aria-label={t.a11y.mobileNav}
   >
-    {#each navItems as item, i (item.href)}
+    <div class="mb-2">
+      <span class="text-muted font-mono text-[0.65rem] tracking-widest uppercase">Navigation / Directory</span>
+    </div>
+
+    <div class="my-auto flex flex-col">
+      {#each navItems as item, i (item.href)}
+        <a
+          href={onHome ? item.href : `/${item.href}`}
+          onclick={goTo(item.href.slice(1))}
+          class="border-rule group flex items-baseline justify-between border-t py-4 text-3xl font-display font-bold tracking-tight text-ink hover:text-accent transition-colors active:scale-[0.99]"
+        >
+          <div class="flex items-baseline gap-4">
+            <span class="text-accent font-mono text-sm font-semibold" aria-hidden="true">0{i + 1}</span>
+            <span class="group-hover:translate-x-1.5 transition-transform duration-200">{item.label}</span>
+          </div>
+          <span
+            class="text-muted/40 font-mono text-sm group-hover:text-accent group-hover:translate-x-1 transition-all"
+            aria-hidden="true">→</span
+          >
+        </a>
+      {/each}
       <a
-        href={onHome ? item.href : `/${item.href}`}
-        onclick={goTo(item.href.slice(1))}
-        class="border-rule flex items-baseline gap-4 border-t py-4 text-3xl font-semibold tracking-tight"
+        href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}
+        download
+        class="border-rule group text-accent flex items-baseline justify-between border-t border-b py-4 text-3xl font-display font-bold tracking-tight hover:opacity-85 transition-opacity active:scale-[0.99]"
       >
-        <span class="text-accent font-mono text-sm" aria-hidden="true">0{i + 1}</span>{item.label}
+        <div class="flex items-baseline gap-4">
+          <span class="font-mono text-sm font-semibold" aria-hidden="true">↓</span>
+          <span class="group-hover:translate-x-1.5 transition-transform duration-200">{t.hero.downloadCv}</span>
+        </div>
+        <span class="text-accent/60 font-mono text-xs tracking-wider uppercase" aria-hidden="true">[PDF]</span>
       </a>
-    {/each}
-    <a
-      href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}
-      download
-      class="border-rule text-accent flex items-baseline gap-4 border-t border-b py-4 text-3xl font-semibold tracking-tight"
+    </div>
+
+    <div
+      class="pt-4 border-t border-rule/60 flex items-center justify-between text-muted font-mono text-xs uppercase"
+      aria-hidden="true"
     >
-      <span class="font-mono text-sm" aria-hidden="true">↓</span>{t.hero.downloadCv}
-    </a>
+      <span>Tangerang, ID · UTC+7</span>
+      <span class="text-accent font-semibold">[✓] OPEN TO WORK</span>
+    </div>
   </div>
 {/if}
