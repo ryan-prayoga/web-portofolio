@@ -51,7 +51,7 @@
         <a
           href={email?.url}
           use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-          class="border-rule hover:border-accent hover:text-accent inline-flex items-center gap-2 border px-5 py-2.5 font-mono text-xs tracking-wide uppercase transition-colors"
+          class="hover:text-accent inline-flex items-center gap-2 px-5 py-2.5 font-mono text-xs tracking-wide uppercase transition-colors active:scale-95"
         >
           {t.hero.contact}
         </a>
@@ -59,7 +59,8 @@
           href={github?.url}
           target="_blank"
           rel="noopener noreferrer"
-          class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline"
+          use:drawButton={{ variant: 'outline', resketchOnHover: true }}
+          class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2.5 font-mono text-xs tracking-wide uppercase transition-colors active:scale-95"
         >
           GitHub <span aria-hidden="true">↗</span>
         </a>
@@ -67,7 +68,8 @@
           href={linkedin?.url}
           target="_blank"
           rel="noopener noreferrer"
-          class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline"
+          use:drawButton={{ variant: 'outline', resketchOnHover: true }}
+          class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2.5 font-mono text-xs tracking-wide uppercase transition-colors active:scale-95"
         >
           LinkedIn <span aria-hidden="true">↗</span>
         </a>

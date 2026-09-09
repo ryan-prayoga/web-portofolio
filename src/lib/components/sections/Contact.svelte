@@ -3,7 +3,7 @@
   import { uiCopy } from '$lib/data/uiCopy';
   import { socials } from '$lib/data/socials';
   import { reveal } from '$lib/actions/reveal';
-  import { drawCard, drawBadge } from '$lib/actions/drawably';
+  import { drawCard, drawBadge, drawButton } from '$lib/actions/drawably';
 
   const t = $derived(uiCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -39,12 +39,13 @@
     <p class="text-muted/70 mt-2 text-xs font-mono">Fastest response time · Open for direct conversation</p>
   </a>
 
-  <div class="no-print mt-8 flex flex-wrap items-center gap-5 pt-2" use:reveal>
+  <div class="no-print mt-8 flex flex-wrap items-center gap-3.5 pt-2" use:reveal>
     <a
       href={github?.url}
       target="_blank"
       rel="noopener noreferrer"
-      class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline"
+      use:drawButton={{ variant: 'outline', resketchOnHover: true }}
+      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-mono text-xs uppercase transition-colors active:scale-95"
     >
       GitHub <span aria-hidden="true">↗</span>
     </a>
@@ -52,14 +53,16 @@
       href={linkedin?.url}
       target="_blank"
       rel="noopener noreferrer"
-      class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline"
+      use:drawButton={{ variant: 'outline', resketchOnHover: true }}
+      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-mono text-xs uppercase transition-colors active:scale-95"
     >
       LinkedIn <span aria-hidden="true">↗</span>
     </a>
     <a
       href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}
       download
-      class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline"
+      use:drawButton={{ variant: 'outline', resketchOnHover: true }}
+      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-mono text-xs uppercase transition-colors active:scale-95"
     >
       CV (PDF) <span aria-hidden="true">↓</span>
     </a>

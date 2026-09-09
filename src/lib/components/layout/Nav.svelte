@@ -166,9 +166,10 @@
     <a
       href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}
       download
-      class="nav-cv border-ink hover:text-accent hover:border-accent hidden border-b font-mono text-xs uppercase sm:inline"
+      use:drawButton={{ variant: 'outline', resketchOnHover: true }}
+      class="nav-cv hidden sm:inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-3 !py-1 font-mono text-xs uppercase transition-colors text-ink hover:text-accent active:scale-95"
     >
-      CV <span aria-hidden="true">↓</span>
+      CV <span aria-hidden="true" class="ml-1">↓</span>
     </a>
     <button
       id={toggleId}
@@ -243,6 +244,13 @@
 {/if}
 
 <style>
+  @media (max-width: 639.98px) {
+    :global(.nav-cv.drawably-button),
+    :global(.nav-cv) {
+      display: none !important;
+    }
+  }
+
   @media (min-width: 640px) {
     :global(.menu-btn.drawably-button),
     :global(.menu-btn) {
