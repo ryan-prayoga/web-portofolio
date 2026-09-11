@@ -7,6 +7,7 @@ on:
     paths:
       - 'src/**'
       - 'static/**'
+      - 'tests/**'
       - 'package.json'
       - 'package-lock.json'
       - 'svelte.config.js'
