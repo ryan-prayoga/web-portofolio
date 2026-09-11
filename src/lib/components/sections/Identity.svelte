@@ -5,6 +5,7 @@
   import { projects } from '$lib/data/projects';
   import { socials } from '$lib/data/socials';
   import { drawCard, drawButton, drawBadge } from '$lib/actions/drawably';
+  import SketchRevealAvatar from '$lib/components/sections/SketchRevealAvatar.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -76,24 +77,7 @@
       </div>
     </div>
 
-    <div
-      use:drawCard={{ resketchOnHover: true }}
-      class="order-first w-36 shrink-0 cursor-pointer overflow-hidden p-2 sm:order-none sm:w-44"
-      title="Hover to re-sketch"
-    >
-      <picture class="block overflow-hidden">
-        <source type="image/avif" srcset="/photo/ryan-480.avif" />
-        <source type="image/webp" srcset="/photo/ryan-480.webp" />
-        <img
-          src="/photo/ryan-480.jpg"
-          alt={t.hero.photoAlt}
-          width="480"
-          height="600"
-          class="block h-auto w-full grayscale contrast-105 transition-all hover:grayscale-0"
-          fetchpriority="high"
-        />
-      </picture>
-    </div>
+    <SketchRevealAvatar class="order-first sm:order-none" />
   </div>
 
   <div class="mt-14">

@@ -9,6 +9,9 @@ export interface UiCopy {
     downloadCv: string;
     contact: string;
     photoAlt: string;
+    sketchHintHover: string;
+    sketchHintTap: string;
+    sketchHintReset: string;
   };
   facts: { years: string; led: string; shipped: string; based: string };
   experience: { label: string; heading: string };
@@ -50,6 +53,9 @@ export const uiCopy: Record<Locale, UiCopy> = {
       downloadCv: 'Download CV',
       contact: 'Email me',
       photoAlt: 'Ryan Prayoga',
+      sketchHintHover: 'hover to erase ✎',
+      sketchHintTap: 'tap to erase ✎',
+      sketchHintReset: 'tap to re-sketch ↺',
     },
     facts: { years: 'Years experience', led: 'Engineers led', shipped: 'Systems shipped', based: 'Based in' },
     experience: { label: 'Experience', heading: 'Where I have worked' },
@@ -100,6 +106,9 @@ export const uiCopy: Record<Locale, UiCopy> = {
       downloadCv: 'Unduh CV',
       contact: 'Kirim email',
       photoAlt: 'Ryan Prayoga',
+      sketchHintHover: 'sorot untuk hapus ✎',
+      sketchHintTap: 'ketuk untuk hapus ✎',
+      sketchHintReset: 'ketuk untuk sketsa ulang ↺',
     },
     facts: { years: 'Tahun pengalaman', led: 'Engineer dipimpin', shipped: 'Sistem dirilis', based: 'Berbasis di' },
     experience: { label: 'Pengalaman', heading: 'Tempat saya bekerja' },
