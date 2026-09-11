@@ -11,10 +11,7 @@
 
 <section id="experience" class="mx-auto max-w-5xl px-6 py-14" aria-labelledby="experience-heading">
   <div use:reveal>
-    <span
-      use:drawBadge={{ variant: 'outline' }}
-      class="px-2.5 py-0.5 font-sans text-xs font-semibold tracking-wide uppercase"
-    >
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
       {t.experience.label}
     </span>
     <h2 id="experience-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -33,20 +30,18 @@
           <div>
             <span
               use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-              class="inline-block px-2.5 py-0.5 font-sans text-xs font-semibold uppercase {i === 0
-                ? 'text-accent'
-                : ''}"
+              class="inline-block px-3 py-1 font-display text-sm uppercase {i === 0 ? 'text-accent' : ''}"
             >
               {#if i === 0}
                 <span class="text-accent font-bold mr-1" aria-hidden="true">●</span>
               {/if}
               {role.period}
             </span>
-            <p class="text-muted mt-2 font-sans text-xs font-medium uppercase">{role.duration}</p>
+            <p class="text-muted mt-2 font-display text-xs sm:text-sm uppercase">{role.duration}</p>
           </div>
           <div>
             <h3 class="text-xl font-semibold tracking-tight">{role.title}</h3>
-            <p class="text-muted mt-0.5 text-sm font-medium">{role.company} — {role.location}</p>
+            <p class="text-muted mt-0.5 text-sm sm:text-base font-display">{role.company} — {role.location}</p>
             <p class="mt-3.5 max-w-prose leading-relaxed text-sm">{role.summary}</p>
             <ul class="mt-4 space-y-2.5">
               {#each role.bullets as bullet (bullet)}

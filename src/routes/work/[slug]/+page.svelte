@@ -52,7 +52,7 @@
 <main class="mx-auto max-w-3xl px-6 pt-28 pb-20">
   <a
     href="/#work"
-    class="text-muted hover:text-accent inline-flex items-center gap-1.5 font-sans text-xs font-semibold tracking-wide uppercase transition-colors"
+    class="text-muted hover:text-accent inline-flex items-center gap-1.5 font-display text-sm tracking-wide uppercase transition-colors"
   >
     <Icon name="arrowLeft" size={13} />
     {t.caseStudy.back}
@@ -60,14 +60,11 @@
 
   <header class="mt-8">
     <div class="flex items-center gap-2">
-      <span
-        use:drawBadge={{ variant: 'outline' }}
-        class="px-2.5 py-0.5 font-sans text-xs font-semibold tracking-wide uppercase"
-      >
+      <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
         {data.project.category}
       </span>
-      <span class="text-rule font-sans text-xs" aria-hidden="true">/</span>
-      <span class="text-muted font-sans text-xs font-medium">{data.project.year}</span>
+      <span class="text-rule font-display text-sm" aria-hidden="true">/</span>
+      <span class="text-muted font-display text-sm">{data.project.year}</span>
     </div>
 
     <h1 class="mt-4 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{data.project.name}</h1>
@@ -79,7 +76,7 @@
         target="_blank"
         rel="noopener noreferrer"
         use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-        class="bg-accent text-paper inline-flex items-center gap-2 px-4 py-2 font-sans text-xs font-semibold tracking-wide uppercase transition-opacity hover:opacity-90"
+        class="bg-accent text-paper inline-flex items-center gap-2 px-4 py-2 font-display text-base tracking-wide uppercase transition-opacity hover:opacity-90"
       >
         {externalLabel}
         <Icon name="arrowUpRight" size={13} />
@@ -87,7 +84,7 @@
 
       <div class="flex flex-wrap gap-2">
         {#each data.project.stack as tech (tech)}
-          <span use:drawBadge={{ variant: 'outline' }} class="px-2.5 py-0.5 font-sans text-xs font-medium text-muted">
+          <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm text-muted">
             {tech}
           </span>
         {/each}
@@ -118,30 +115,21 @@
   {/if}
 
   <section class="mt-12" aria-label={t.caseStudy.problem}>
-    <span
-      use:drawBadge={{ variant: 'outline' }}
-      class="px-2.5 py-0.5 font-sans text-xs font-semibold tracking-wide uppercase"
-    >
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
       {t.caseStudy.problem}
     </span>
     <p class="mt-4 max-w-prose leading-relaxed text-base">{study.problem}</p>
   </section>
 
   <section class="mt-10" aria-label={t.caseStudy.role}>
-    <span
-      use:drawBadge={{ variant: 'outline' }}
-      class="px-2.5 py-0.5 font-sans text-xs font-semibold tracking-wide uppercase"
-    >
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
       {t.caseStudy.role}
     </span>
     <p class="mt-4 max-w-prose leading-relaxed text-base">{study.role}</p>
   </section>
 
   <section class="mt-12" aria-label={t.caseStudy.decisions}>
-    <span
-      use:drawBadge={{ variant: 'outline' }}
-      class="px-2.5 py-0.5 font-sans text-xs font-semibold tracking-wide uppercase"
-    >
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
       {t.caseStudy.decisions}
     </span>
     <div class="mt-6 space-y-4">
@@ -155,10 +143,7 @@
   </section>
 
   <section class="mt-12" aria-label={t.caseStudy.results}>
-    <span
-      use:drawBadge={{ variant: 'outline' }}
-      class="px-2.5 py-0.5 font-sans text-xs font-semibold tracking-wide uppercase"
-    >
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
       {t.caseStudy.results}
     </span>
     <div use:drawCard={{ resketchOnHover: true }} class="mt-6 p-6">

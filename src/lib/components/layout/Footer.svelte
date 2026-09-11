@@ -15,7 +15,7 @@
 </script>
 
 <footer
-  class="border-rule text-muted mx-auto flex max-w-5xl flex-wrap justify-between gap-x-8 gap-y-2 border-t px-6 py-8 font-sans text-xs uppercase font-medium"
+  class="border-rule text-muted mx-auto flex max-w-5xl flex-wrap justify-between gap-x-8 gap-y-2 border-t px-6 py-8 font-display text-sm uppercase"
 >
   <span>© 2026 {profile.name}</span>
   <span>{profile.location}</span>

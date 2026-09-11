@@ -91,10 +91,7 @@
 
 <section id="contact" class="mx-auto max-w-5xl px-6 py-14 pb-20" aria-labelledby="contact-heading">
   <div use:reveal>
-    <span
-      use:drawBadge={{ variant: 'outline' }}
-      class="px-2.5 py-0.5 font-sans text-xs font-semibold tracking-wide uppercase"
-    >
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
       {t.contact.label}
     </span>
     <h2 id="contact-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{t.contact.heading}</h2>
@@ -107,7 +104,7 @@
     use:drawCard={{ resketchOnHover: true }}
     class="group mt-8 block cursor-pointer p-8 transition-transform hover:-translate-y-0.5 sm:p-10"
   >
-    <span class="text-accent inline-flex items-center gap-1 font-sans text-xs font-semibold tracking-wide uppercase">
+    <span class="text-accent inline-flex items-center gap-1 font-display text-sm font-semibold tracking-wide uppercase">
       {t.contact.emailCta}
       <Icon name="arrowUpRight" size={13} />
     </span>
@@ -116,7 +113,7 @@
     >
       {email?.label}
     </span>
-    <p class="text-muted/70 mt-2 text-xs font-sans">Fastest response time · Open for direct conversation</p>
+    <p class="text-muted/70 mt-2 text-sm font-display">Fastest response time · Open for direct conversation</p>
   </a>
 
   <div class="no-print mt-8 flex flex-wrap items-center gap-3.5 pt-2" use:reveal>
@@ -125,7 +122,7 @@
       target="_blank"
       rel="noopener noreferrer"
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-sans text-xs font-semibold uppercase transition-colors active:scale-95"
+      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-display text-base uppercase transition-colors active:scale-95"
     >
       GitHub <Icon name="arrowUpRight" size={13} />
     </a>
@@ -134,7 +131,7 @@
       target="_blank"
       rel="noopener noreferrer"
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-sans text-xs font-semibold uppercase transition-colors active:scale-95"
+      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-display text-base uppercase transition-colors active:scale-95"
     >
       LinkedIn <Icon name="arrowUpRight" size={13} />
     </a>
@@ -142,11 +139,11 @@
       href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}
       download
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-sans text-xs font-semibold uppercase transition-colors active:scale-95"
+      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-display text-base uppercase transition-colors active:scale-95"
     >
       CV (PDF) <Icon name="arrowDown" size={13} />
     </a>
-    <div class="mt-4 flex w-full flex-col font-sans text-xs uppercase sm:mt-0 sm:w-auto sm:ml-auto sm:items-end">
+    <div class="mt-4 flex w-full flex-col font-display text-sm uppercase sm:mt-0 sm:w-auto sm:ml-auto sm:items-end">
       <span class="text-muted">Tangerang, ID · UTC+7</span>
       {#if now}
         <div class="mt-1 flex items-center gap-1.5 tabular-nums text-ink">

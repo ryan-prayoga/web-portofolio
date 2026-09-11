@@ -11,7 +11,7 @@
   <div class="inline-block">
     <span
       use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-      class="cursor-default px-3 py-1 font-sans text-xs font-semibold tracking-wide uppercase text-accent"
+      class="cursor-default px-3 py-1 font-display text-sm tracking-wide uppercase text-accent"
     >
       // {t.services.badge}
     </span>
@@ -35,7 +35,7 @@
             <span class="border-accent/40 bg-accent-soft/30 border p-1.5">
               <Icon name={item.icon} size={18} />
             </span>
-            <span class="font-sans text-xs font-semibold tracking-wide uppercase">{item.tag}</span>
+            <span class="font-display text-sm font-semibold tracking-wide uppercase">{item.tag}</span>
           </span>
           <h3 class="mt-2 font-display text-lg font-semibold text-ink tracking-tight">
             {item.title}

@@ -11,7 +11,7 @@
   <div class="inline-block">
     <span
       use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-      class="cursor-default px-3 py-1 font-sans text-xs font-semibold tracking-wide uppercase text-accent"
+      class="cursor-default px-3 py-1 font-display text-sm tracking-wide uppercase text-accent"
     >
       // {t.comparison.badge}
     </span>
@@ -27,7 +27,7 @@
   <div class="mt-12 grid gap-8 md:grid-cols-2">
     <!-- Generic Builders Card -->
     <div use:drawCard={{ resketchOnHover: true }} class="bg-paper/40 p-6 opacity-90 sm:p-8">
-      <div class="flex items-center gap-2 font-sans text-xs uppercase tracking-wide text-muted font-semibold">
+      <div class="flex items-center gap-2 font-display text-sm uppercase tracking-wide text-muted font-semibold">
         <Icon name="close" size={15} strokeWidth={2.25} class="text-rose-500" />
         <h3>{t.comparison.genericTitle}</h3>
       </div>
@@ -48,11 +48,11 @@
       class="bg-accent-soft/30 drawably-accent relative overflow-hidden p-6 shadow-sm sm:p-8"
     >
       <div class="flex items-center justify-between gap-2">
-        <div class="flex items-center gap-2 font-sans text-xs uppercase tracking-wide text-accent font-semibold">
+        <div class="flex items-center gap-2 font-display text-sm uppercase tracking-wide text-accent font-semibold">
           <Icon name="check" size={15} strokeWidth={2.25} class="text-accent" />
           <h3>{t.comparison.customTitle}</h3>
         </div>
-        <span class="bg-accent text-paper font-sans text-[11px] uppercase tracking-wide px-2.5 py-0.5 font-bold">
+        <span class="bg-accent text-paper font-display text-xs uppercase tracking-wide px-2.5 py-0.5 font-bold">
           Recommended
         </span>
       </div>

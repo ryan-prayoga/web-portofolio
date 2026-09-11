@@ -28,7 +28,7 @@
       <div class="inline-block">
         <span
           use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-          class="cursor-pointer px-3 py-1 font-sans text-xs font-semibold tracking-wide uppercase"
+          class="cursor-pointer px-3.5 py-1 font-display text-sm tracking-wide uppercase"
         >
           <span class="text-accent mr-1 font-bold" aria-hidden="true">[✓]</span>
           {t.status}
@@ -38,7 +38,7 @@
       <h1 class="mt-5 text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
         {profile.name}<span class="text-accent">.</span>
       </h1>
-      <p class="mt-2.5 text-lg font-medium text-accent sm:text-xl">{profile.role}</p>
+      <p class="mt-2 text-xl sm:text-2xl font-display font-semibold text-accent">{profile.role}</p>
       <p class="mt-5 max-w-prose leading-relaxed text-muted">{t.hero.positioning}</p>
 
       <div class="no-print mt-8 flex flex-wrap items-center gap-4">
@@ -46,7 +46,7 @@
           href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}
           download
           use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-          class="bg-accent text-paper inline-flex items-center gap-2 px-5 py-2.5 font-sans text-xs font-semibold tracking-wide uppercase transition-opacity hover:opacity-90"
+          class="bg-accent text-paper inline-flex items-center gap-2 px-5 py-2 font-display text-base tracking-wide uppercase transition-opacity hover:opacity-90"
         >
           {t.hero.downloadCv}
           <Icon name="arrowDown" size={13} />
@@ -54,7 +54,7 @@
         <a
           href={email?.url}
           use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-          class="hover:text-accent inline-flex items-center gap-2 px-5 py-2.5 font-sans text-xs font-semibold tracking-wide uppercase transition-colors active:scale-95"
+          class="hover:text-accent inline-flex items-center gap-2 px-5 py-2 font-display text-base tracking-wide uppercase transition-colors active:scale-95"
         >
           {t.hero.contact}
         </a>
@@ -63,7 +63,7 @@
           target="_blank"
           rel="noopener noreferrer"
           use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-          class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2.5 font-sans text-xs font-semibold tracking-wide uppercase transition-colors active:scale-95"
+          class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-display text-base tracking-wide uppercase transition-colors active:scale-95"
         >
           GitHub <Icon name="arrowUpRight" size={13} />
         </a>
@@ -72,7 +72,7 @@
           target="_blank"
           rel="noopener noreferrer"
           use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-          class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2.5 font-sans text-xs font-semibold tracking-wide uppercase transition-colors active:scale-95"
+          class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-display text-base tracking-wide uppercase transition-colors active:scale-95"
         >
           LinkedIn <Icon name="arrowUpRight" size={13} />
         </a>
@@ -84,10 +84,8 @@
 
   <div class="mt-14">
     <div class="mb-3 flex items-center justify-between">
-      <span class="text-muted font-sans text-[0.7rem] font-semibold tracking-wider uppercase"
-        >Key Production Proofs</span
-      >
-      <span class="text-muted/60 hidden font-sans text-xs sm:inline">hover card to re-sketch ✎</span>
+      <span class="text-muted font-display text-xs font-semibold tracking-wider uppercase">Key Production Proofs</span>
+      <span class="text-muted/60 hidden font-display text-xs sm:inline">hover card to re-sketch ✎</span>
     </div>
     <dl class="grid grid-cols-2 gap-4 sm:grid-cols-4">
       {#each facts as fact (fact.label)}
@@ -96,7 +94,7 @@
           class="group cursor-pointer p-4 transition-transform hover:-translate-y-0.5"
           title="Hover to re-sketch frame"
         >
-          <dt class="text-muted font-sans text-[0.7rem] font-semibold tracking-wider uppercase">{fact.label}</dt>
+          <dt class="text-muted font-display text-xs sm:text-sm tracking-wider uppercase">{fact.label}</dt>
           <dd
             class="text-accent mt-1 {fact.value.length > 6
               ? 'text-lg sm:text-xl leading-snug'
@@ -104,7 +102,7 @@
           >
             {fact.value}
           </dd>
-          <p class="text-muted/75 mt-1 font-sans text-xs">{fact.note}</p>
+          <p class="text-muted/75 mt-1 font-display text-xs sm:text-sm">{fact.note}</p>
         </div>
       {/each}
     </dl>

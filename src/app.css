@@ -82,6 +82,12 @@
   font-family: inherit !important;
 }
 
+.drawably-button,
+.drawably-badge {
+  font-family: var(--font-hand) !important;
+  letter-spacing: 0.02em;
+}
+
 .drawably-accent {
   --drawably-ink: var(--color-accent) !important;
   --drawably-stroke: var(--color-accent) !important;

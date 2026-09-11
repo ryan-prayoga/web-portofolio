@@ -11,10 +11,7 @@
 
 <section id="education" class="mx-auto max-w-5xl px-6 py-14" aria-labelledby="education-heading">
   <div use:reveal>
-    <span
-      use:drawBadge={{ variant: 'outline' }}
-      class="px-2.5 py-0.5 font-sans text-xs font-semibold tracking-wide uppercase"
-    >
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
       {t.education.label}
     </span>
     <h2 id="education-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -29,9 +26,9 @@
         use:reveal
         use:drawCard={{ resketchOnHover: true }}
       >
-        <span class="text-accent font-sans text-xs font-semibold uppercase">{entry.note}</span>
+        <span class="text-accent font-display text-sm font-semibold uppercase">{entry.note}</span>
         <h3 class="mt-2 font-semibold tracking-tight text-lg">{entry.program}</h3>
-        <p class="text-muted mt-1 text-sm">{entry.school}</p>
+        <p class="text-muted mt-1 font-display text-sm sm:text-base">{entry.school}</p>
       </div>
     {/each}
 
@@ -40,7 +37,7 @@
       use:reveal
       use:drawCard={{ resketchOnHover: true }}
     >
-      <p class="text-accent font-sans text-xs font-semibold tracking-wider uppercase">{t.education.languages}</p>
+      <p class="text-accent font-display text-sm font-semibold tracking-wider uppercase">{t.education.languages}</p>
       <p class="text-muted mt-2 text-sm">
         {profile.languages.map((language) => `${language.name} (${language.level})`).join(' · ')}
       </p>

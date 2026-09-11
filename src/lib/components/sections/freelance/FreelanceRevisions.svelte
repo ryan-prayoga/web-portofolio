@@ -13,7 +13,7 @@
   <div class="inline-block">
     <span
       use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-      class="text-accent cursor-default px-3 py-1 font-sans text-xs font-semibold tracking-wide uppercase"
+      class="text-accent cursor-default px-3 py-1 font-display text-sm tracking-wide uppercase"
     >
       // {t.revisions.badge}
     </span>
@@ -33,7 +33,7 @@
         <h3 class="font-display text-ink text-lg font-bold tracking-tight">
           {t.revisions.minorTitle}
         </h3>
-        <span class="text-accent flex items-center gap-1.5 font-sans text-xs font-semibold uppercase">
+        <span class="text-accent flex items-center gap-1.5 font-display text-sm font-semibold uppercase">
           <Icon name="check" size={13} strokeWidth={2.25} />
           {t.revisions.minorNote}
         </span>
@@ -55,7 +55,7 @@
         <h3 class="font-display text-ink text-lg font-bold tracking-tight">
           {t.revisions.majorTitle}
         </h3>
-        <span class="text-muted flex items-center gap-1.5 font-sans text-xs font-semibold uppercase">
+        <span class="text-muted flex items-center gap-1.5 font-display text-sm font-semibold uppercase">
           <Icon name="info" size={13} />
           {t.revisions.majorNote}
         </span>
@@ -73,7 +73,7 @@
   </div>
 
   <!-- Paket request major -->
-  <span class="text-ink mt-12 block font-sans text-xs font-semibold tracking-wider uppercase">
+  <span class="text-ink mt-12 block font-display text-sm font-semibold tracking-wider uppercase">
     {t.revisions.packsTitle}
   </span>
 
@@ -81,14 +81,14 @@
     {#each revisionPacks as pack (pack.id)}
       <div use:drawCard={{ resketchOnHover: true }} class="bg-paper flex flex-col justify-between p-6">
         <div>
-          <span class="text-muted font-sans text-xs font-semibold tracking-wide uppercase">
+          <span class="text-muted font-display text-sm font-semibold tracking-wide uppercase">
             {pack.requests}
             {t.revisions.requestsLabel}
           </span>
           <p class="font-display text-accent mt-2 text-2xl font-extrabold tracking-tight">
             {pack.priceIdr}
           </p>
-          <p class="text-muted mt-1 font-sans text-xs">
+          <p class="text-muted mt-1 font-display text-xs sm:text-sm">
             {pack.perRequestIdr}
             {t.revisions.perRequestLabel}
           </p>
@@ -102,7 +102,7 @@
           target="_blank"
           rel="noopener noreferrer"
           use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-          class="hover:text-accent mt-6 flex items-center justify-center gap-2 py-2.5 font-sans text-xs font-semibold tracking-wide uppercase transition-colors"
+          class="hover:text-accent mt-6 flex items-center justify-center gap-2 py-2.5 font-display text-base tracking-wide uppercase transition-colors"
         >
           <Icon name="message" size={14} />
           {t.revisions.packCta}
@@ -111,7 +111,7 @@
     {/each}
   </div>
 
-  <p class="text-muted mt-6 flex items-start justify-center gap-2 text-center font-sans text-xs">
+  <p class="text-muted mt-6 flex items-start justify-center gap-2 text-center font-display text-xs sm:text-sm">
     <Icon name="clock" size={14} class="text-accent mt-0.5 shrink-0" />
     {t.revisions.validity}
   </p>

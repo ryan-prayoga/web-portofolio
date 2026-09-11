@@ -11,10 +11,7 @@
 
 <section id="skills" class="mx-auto max-w-5xl px-6 py-14" aria-labelledby="skills-heading">
   <div use:reveal>
-    <span
-      use:drawBadge={{ variant: 'outline' }}
-      class="px-2.5 py-0.5 font-sans text-xs font-semibold tracking-wide uppercase"
-    >
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
       {t.skills.label}
     </span>
     <h2 id="skills-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{t.skills.heading}</h2>
@@ -30,16 +27,16 @@
         use:drawCard={{ resketchOnHover: true }}
       >
         <div class="flex items-center justify-between">
-          <dt class="font-sans text-xs font-semibold tracking-wide uppercase text-accent">
+          <dt class="font-display text-sm font-semibold tracking-wide uppercase text-accent">
             {group.title}
           </dt>
-          <span class="text-muted/60 font-sans text-xs">0{index + 1}</span>
+          <span class="text-muted/60 font-display text-sm">0{index + 1}</span>
         </div>
         <dd class="mt-4 flex flex-wrap gap-2">
           {#each group.items as item (item)}
             <span
               use:drawBadge={{ variant: 'outline' }}
-              class="px-2.5 py-0.5 font-sans text-xs font-medium text-muted hover:text-ink transition-colors"
+              class="px-3 py-1 font-display text-sm text-muted hover:text-ink transition-colors"
             >
               {item}
             </span>

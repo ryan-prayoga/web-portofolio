@@ -21,19 +21,19 @@
   );
 </script>
 
-<footer class="border-rule text-muted mx-auto max-w-5xl border-t px-6 py-12 font-sans text-xs">
+<footer class="border-rule text-muted mx-auto max-w-5xl border-t px-6 py-12 font-display text-sm">
   <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-[2fr_1fr_1fr] pb-8 border-b border-rule">
     <div>
       <a href="#top" onclick={toTop} class="font-display text-xl font-bold text-ink tracking-tight">
         Ryan Prayoga<span class="text-accent">.</span>
       </a>
-      <p class="mt-2 max-w-sm text-xs leading-relaxed text-muted">
+      <p class="mt-2 max-w-sm text-sm leading-relaxed text-muted font-sans">
         {t.footer.description}
       </p>
     </div>
 
     <div>
-      <span class="font-sans text-xs font-semibold text-ink uppercase tracking-wide block mb-3">
+      <span class="font-display text-sm font-semibold text-ink uppercase tracking-wide block mb-3">
         {t.footer.linksHeading}
       </span>
       <ul class="flex flex-col gap-2">
@@ -47,7 +47,7 @@
     </div>
 
     <div>
-      <span class="font-sans text-xs font-semibold text-ink uppercase tracking-wide block mb-3">
+      <span class="font-display text-sm font-semibold text-ink uppercase tracking-wide block mb-3">
         {t.footer.contactHeading}
       </span>
       <ul class="flex flex-col gap-2">
@@ -86,7 +86,7 @@
     </div>
   </div>
 
-  <div class="pt-6 flex flex-wrap justify-between items-center gap-4 uppercase text-[11px]">
+  <div class="pt-6 flex flex-wrap justify-between items-center gap-4 uppercase font-display text-xs sm:text-sm">
     <span>© 2026 {profile.name}. {t.footer.rights}</span>
     <span class="flex items-center gap-1.5">
       <Icon name="mapPin" size={13} class="text-accent" />

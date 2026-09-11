@@ -15,10 +15,7 @@
 
 <section id="work" class="mx-auto max-w-5xl px-6 py-14" aria-labelledby="work-heading">
   <div use:reveal>
-    <span
-      use:drawBadge={{ variant: 'outline' }}
-      class="px-2.5 py-0.5 font-sans text-xs font-semibold tracking-wide uppercase"
-    >
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
       {t.work.label}
     </span>
     <h2 id="work-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{t.work.heading}</h2>
@@ -35,9 +32,9 @@
       >
         <div class="flex min-w-0 flex-col p-5 sm:p-7">
           <div class="flex items-center gap-2">
-            <span class="text-accent font-sans text-xs font-bold" aria-hidden="true">0{index + 1}</span>
+            <span class="text-accent font-display text-sm font-bold" aria-hidden="true">0{index + 1}</span>
             <span class="text-rule" aria-hidden="true">/</span>
-            <p class="text-muted font-sans text-xs font-medium uppercase">
+            <p class="text-muted font-display text-sm uppercase">
               {project.category}
               <span class="text-rule mx-1" aria-hidden="true">/</span>
               {project.year}
@@ -54,7 +51,7 @@
 
           <ul class="mt-4 flex flex-wrap gap-2">
             {#each project.stack as tech (tech)}
-              <li use:drawBadge={{ variant: 'outline' }} class="px-2.5 py-0.5 font-sans text-xs font-medium text-muted">
+              <li use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm text-muted">
                 {tech}
               </li>
             {/each}
@@ -64,7 +61,7 @@
             <a
               href="/work/{project.slug}"
               use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-              class="bg-accent text-paper inline-flex items-center gap-2 px-4 py-1.5 font-sans text-xs font-semibold tracking-wide uppercase transition-opacity hover:opacity-85"
+              class="bg-accent text-paper inline-flex items-center gap-2 px-4 py-1.5 font-display text-base tracking-wide uppercase transition-opacity hover:opacity-85"
             >
               {t.work.caseStudy}
               <Icon name="arrowRight" size={13} />
@@ -74,7 +71,7 @@
               href={project.destination.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-muted hover:text-accent inline-flex items-center gap-1.5 font-sans text-xs font-semibold uppercase underline-offset-4 hover:underline"
+              class="text-muted hover:text-accent inline-flex items-center gap-1.5 font-display text-base uppercase underline-offset-4 hover:underline"
             >
               {project.destination.kind === 'site' ? t.work.visit : t.work.source}
               <Icon name="arrowUpRight" size={13} />
@@ -114,8 +111,8 @@
   </div>
 
   <div class="mt-16 flex items-center justify-between" use:reveal>
-    <p class="text-muted font-sans text-xs font-semibold tracking-wider uppercase">{t.work.moreLabel}</p>
-    <span class="text-muted/60 hidden font-sans text-xs sm:inline">client delivery, desktop & civic platforms</span>
+    <p class="text-muted font-display text-sm font-semibold tracking-wider uppercase">{t.work.moreLabel}</p>
+    <span class="text-muted/60 hidden font-display text-xs sm:inline">client delivery, desktop & civic platforms</span>
   </div>
 
   <div class="mt-4 grid gap-4 sm:grid-cols-2" use:reveal>
@@ -127,7 +124,7 @@
         use:drawCard={{ resketchOnHover: true }}
         class="group flex min-w-0 flex-col p-6 transition-transform hover:-translate-y-0.5"
       >
-        <p class="text-muted font-sans text-xs font-medium uppercase">{project.category} / {project.year}</p>
+        <p class="text-muted font-display text-sm uppercase">{project.category} / {project.year}</p>
         <h3 class="group-hover:text-accent mt-2 font-semibold tracking-tight transition-colors">
           {project.name}
           <span class="text-muted group-hover:text-accent ml-1 inline-flex items-center text-sm" aria-hidden="true">
@@ -140,7 +137,7 @@
         <p class="text-muted mt-2 text-sm leading-relaxed">{copy[project.slug].summary}</p>
         <ul class="mt-4 flex flex-wrap gap-2">
           {#each project.stack as tech (tech)}
-            <li use:drawBadge={{ variant: 'outline' }} class="px-2.5 py-0.5 font-sans text-xs font-medium text-muted">
+            <li use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm text-muted">
               {tech}
             </li>
           {/each}

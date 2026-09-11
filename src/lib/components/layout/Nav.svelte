@@ -140,7 +140,7 @@
       <a
         href={onHome ? item.href : `/${item.href}`}
         onclick={goTo(item.href.slice(1))}
-        class="text-muted hover:text-accent font-sans text-xs font-semibold tracking-wide uppercase transition-colors"
+        class="text-muted hover:text-accent font-display text-sm tracking-wide uppercase transition-colors"
       >
         {item.label}
       </a>
@@ -148,9 +148,7 @@
   </div>
 
   <div class="nav-actions flex items-center gap-2 sm:gap-2.5">
-    <span
-      class="status text-muted hidden items-center gap-2 font-sans text-xs font-medium uppercase min-[900px]:inline-flex"
-    >
+    <span class="status text-muted hidden items-center gap-2 font-display text-sm uppercase min-[900px]:inline-flex">
       <i class="bg-accent inline-block h-1.5 w-1.5 rounded-full" aria-hidden="true"></i>{t.status}
     </span>
     <ThemeToggle />
@@ -160,7 +158,7 @@
       onclick={() => setLocale(locale === 'en' ? 'id' : 'en')}
       aria-label={locale === 'en' ? 'Switch to Indonesian' : 'Switch to English'}
       title={locale === 'en' ? 'Switch to Indonesian' : 'Switch to English'}
-      class="lang-btn inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-2.5 !py-1 font-sans text-xs font-semibold uppercase transition-colors active:scale-95"
+      class="lang-btn inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-2.5 !py-1 font-display text-sm uppercase transition-colors active:scale-95"
     >
       <span class={locale === 'en' ? 'font-bold text-accent' : 'text-muted'}>EN</span>
       <span class="text-rule mx-1 select-none" aria-hidden="true">/</span>
@@ -170,7 +168,7 @@
       href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}
       download
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="nav-cv hidden sm:inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-2.5 !py-1 font-sans text-xs font-semibold uppercase transition-colors text-ink hover:text-accent active:scale-95"
+      class="nav-cv hidden sm:inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-2.5 !py-1 font-display text-sm uppercase transition-colors text-ink hover:text-accent active:scale-95"
     >
       CV <Icon name="arrowDown" size={12} class="ml-1 inline-block" />
     </a>
@@ -178,7 +176,7 @@
       id={toggleId}
       bind:this={toggleEl}
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="menu-btn sm:!hidden inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-3 !py-1 font-sans text-xs font-semibold uppercase transition-colors active:scale-95"
+      class="menu-btn sm:!hidden inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-3 !py-1 font-display text-sm uppercase transition-colors active:scale-95"
       type="button"
       onclick={() => {
         closeFocus = 'toggle';
@@ -203,8 +201,7 @@
     aria-label={t.a11y.mobileNav}
   >
     <div class="mb-2">
-      <span class="text-muted font-sans text-[0.7rem] font-semibold tracking-widest uppercase"
-        >Navigation / Directory</span
+      <span class="text-muted font-display text-xs font-semibold tracking-widest uppercase">Navigation / Directory</span
       >
     </div>
 
@@ -216,7 +213,7 @@
           class="border-rule group flex items-baseline justify-between border-t py-4 text-3xl font-display font-bold tracking-tight text-ink hover:text-accent transition-colors active:scale-[0.99]"
         >
           <div class="flex items-baseline gap-4">
-            <span class="text-accent font-sans text-sm font-bold" aria-hidden="true">0{i + 1}</span>
+            <span class="text-accent font-display text-base font-bold" aria-hidden="true">0{i + 1}</span>
             <span class="group-hover:translate-x-1.5 transition-transform duration-200">{item.label}</span>
           </div>
           <Icon
@@ -235,14 +232,12 @@
           <Icon name="arrowDown" size={18} class="text-accent" />
           <span class="group-hover:translate-x-1.5 transition-transform duration-200">{t.hero.downloadCv}</span>
         </div>
-        <span class="text-accent/60 font-sans text-xs font-semibold tracking-wider uppercase" aria-hidden="true"
-          >[PDF]</span
-        >
+        <span class="text-accent/60 font-display text-sm tracking-wider uppercase" aria-hidden="true">[PDF]</span>
       </a>
     </div>
 
     <div
-      class="pt-4 border-t border-rule/60 flex items-center justify-between text-muted font-sans text-xs uppercase font-medium"
+      class="pt-4 border-t border-rule/60 flex items-center justify-between text-muted font-display text-sm uppercase"
       aria-hidden="true"
     >
       <span>Tangerang, ID · UTC+7</span>

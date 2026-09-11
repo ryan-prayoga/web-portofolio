@@ -20,7 +20,7 @@
     <div class="inline-block">
       <span
         use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-        class="cursor-pointer px-3 py-1 font-sans text-xs font-semibold tracking-wide uppercase inline-flex items-center gap-1.5"
+        class="cursor-pointer px-3.5 py-1 font-display text-sm tracking-wide uppercase inline-flex items-center gap-1.5"
       >
         <Icon name="check" size={14} strokeWidth={2.25} class="text-accent" />
         {t.hero.status}
@@ -44,7 +44,7 @@
         target="_blank"
         rel="noopener noreferrer"
         use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-        class="bg-accent text-paper inline-flex items-center gap-2 px-6 py-3 font-sans text-xs font-semibold tracking-wide uppercase transition-opacity hover:opacity-90"
+        class="bg-accent text-paper inline-flex items-center gap-2 px-6 py-2.5 font-display text-base tracking-wide uppercase transition-opacity hover:opacity-90"
       >
         <Icon name="message" size={15} />
         {t.hero.ctaWhatsapp}
@@ -53,7 +53,7 @@
       <a
         href="#packages"
         use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-        class="hover:text-accent inline-flex items-center gap-2 px-6 py-3 font-sans text-xs font-semibold tracking-wide uppercase transition-colors"
+        class="hover:text-accent inline-flex items-center gap-2 px-6 py-2.5 font-display text-base tracking-wide uppercase transition-colors"
       >
         {t.hero.ctaPackages}
         <Icon name="arrowDown" size={14} />
@@ -68,10 +68,10 @@
         <p class="font-display text-2xl sm:text-3xl font-bold text-accent tracking-tight">
           {metric.value}
         </p>
-        <p class="mt-1 font-sans text-[0.7rem] font-semibold uppercase tracking-wider text-ink">
+        <p class="mt-1 font-display text-xs sm:text-sm tracking-wider uppercase text-ink">
           {metric.label}
         </p>
-        <p class="mt-1 text-[11px] text-muted font-sans">
+        <p class="mt-1 font-display text-xs text-muted">
           {metric.note}
         </p>
       </div>
