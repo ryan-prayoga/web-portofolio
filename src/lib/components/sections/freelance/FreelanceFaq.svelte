@@ -26,7 +26,7 @@
   <div class="inline-block">
     <span
       use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-      class="cursor-default px-3 py-1 font-mono text-xs tracking-wider uppercase text-accent"
+      class="cursor-default px-3 py-1 font-sans text-xs font-semibold tracking-wide uppercase text-accent"
     >
       // {t.faq.badge}
     </span>
@@ -66,14 +66,14 @@
   </div>
 
   <div class="mt-10 text-center">
-    <p class="font-mono text-xs text-muted">
+    <p class="font-sans text-xs text-muted">
       {t.faq.helpText}
     </p>
     <a
       href={getWhatsAppUrl(faqWaMessage)}
       target="_blank"
       rel="noopener noreferrer"
-      class="text-accent mt-2 inline-flex items-center gap-1 font-mono text-xs font-semibold tracking-wide uppercase hover:underline"
+      class="text-accent mt-2 inline-flex items-center gap-1 font-sans text-xs font-semibold tracking-wide uppercase hover:underline"
     >
       {t.faq.helpCta}
       <Icon name="arrowUpRight" size={13} />

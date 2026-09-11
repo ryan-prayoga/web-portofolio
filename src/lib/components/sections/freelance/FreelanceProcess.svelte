@@ -10,7 +10,7 @@
   <div class="inline-block">
     <span
       use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-      class="cursor-default px-3 py-1 font-mono text-xs tracking-wider uppercase text-accent"
+      class="cursor-default px-3 py-1 font-sans text-xs font-semibold tracking-wide uppercase text-accent"
     >
       // {t.process.badge}
     </span>
@@ -41,8 +41,8 @@
           </p>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-rule font-mono text-[11px] text-accent font-medium">
-          <span class="text-muted block text-[10px] uppercase tracking-wider">Deliverable:</span>
+        <div class="mt-6 pt-4 border-t border-rule font-sans text-xs text-accent font-semibold">
+          <span class="text-muted block text-[10px] uppercase tracking-wider font-sans">Deliverable:</span>
           {step.output}
         </div>
       </div>

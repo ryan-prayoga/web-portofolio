@@ -753,7 +753,7 @@
   <button
     type="button"
     onclick={handleToggle}
-    class="no-print text-muted hover:text-accent hover:border-accent/40 bg-paper/90 border-ink/15 mt-2.5 inline-flex max-w-full cursor-pointer items-center justify-center gap-1.5 rounded-sm border px-2.5 py-1 font-mono text-[0.62rem] tracking-wider uppercase shadow-xs transition-colors active:scale-95 sm:text-[0.65rem]"
+    class="no-print text-muted hover:text-accent hover:border-accent/40 bg-paper/90 border-ink/15 mt-2.5 inline-flex max-w-full cursor-pointer items-center justify-center gap-1.5 rounded-sm border px-2.5 py-1 font-sans text-[0.7rem] font-semibold tracking-wide uppercase shadow-xs transition-colors active:scale-95 sm:text-xs"
     title={isRevealed
       ? isCoarse
         ? t.hero.sketchHintReset

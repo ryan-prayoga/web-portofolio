@@ -11,7 +11,10 @@
 
 <section id="experience" class="mx-auto max-w-5xl px-6 py-14" aria-labelledby="experience-heading">
   <div use:reveal>
-    <span use:drawBadge={{ variant: 'outline' }} class="px-2.5 py-0.5 font-mono text-xs tracking-wider uppercase">
+    <span
+      use:drawBadge={{ variant: 'outline' }}
+      class="px-2.5 py-0.5 font-sans text-xs font-semibold tracking-wide uppercase"
+    >
       {t.experience.label}
     </span>
     <h2 id="experience-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -30,7 +33,7 @@
           <div>
             <span
               use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-              class="inline-block px-2.5 py-0.5 font-mono text-xs font-semibold uppercase {i === 0
+              class="inline-block px-2.5 py-0.5 font-sans text-xs font-semibold uppercase {i === 0
                 ? 'text-accent'
                 : ''}"
             >
@@ -39,7 +42,7 @@
               {/if}
               {role.period}
             </span>
-            <p class="text-muted mt-2 font-mono text-[0.65rem] tracking-wider uppercase">{role.duration}</p>
+            <p class="text-muted mt-2 font-sans text-xs font-medium uppercase">{role.duration}</p>
           </div>
           <div>
             <h3 class="text-xl font-semibold tracking-tight">{role.title}</h3>

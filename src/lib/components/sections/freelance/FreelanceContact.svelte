@@ -23,7 +23,7 @@
     <div class="inline-block">
       <span
         use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-        class="cursor-default px-3 py-1 font-mono text-xs tracking-wider uppercase text-accent"
+        class="cursor-default px-3 py-1 font-sans text-xs font-semibold tracking-wide uppercase text-accent"
       >
         // {t.cta.badge}
       </span>
@@ -45,7 +45,7 @@
         target="_blank"
         rel="noopener noreferrer"
         use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-        class="bg-accent text-paper inline-flex items-center gap-2 px-8 py-3.5 font-mono text-xs font-bold tracking-wide uppercase shadow-sm transition-all hover:opacity-90"
+        class="bg-accent text-paper inline-flex items-center gap-2 px-8 py-3.5 font-sans text-xs font-bold tracking-wide uppercase shadow-sm transition-all hover:opacity-90"
       >
         <Icon name="message" size={16} />
         {t.cta.whatsappButton}
@@ -54,7 +54,7 @@
       <a
         href="mailto:{FREELANCE_CONFIG.email}?subject=Inquiry%20Pembuatan%20Web%20Bisnis"
         use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-        class="hover:text-accent inline-flex items-center gap-2 px-6 py-3.5 font-mono text-xs font-semibold tracking-wide uppercase transition-colors"
+        class="hover:text-accent inline-flex items-center gap-2 px-6 py-3.5 font-sans text-xs font-semibold tracking-wide uppercase transition-colors"
       >
         <Icon name="mail" size={16} />
         {t.cta.emailButton}
@@ -62,7 +62,7 @@
     </div>
 
     <div
-      class="mt-12 pt-8 border-t border-rule/60 flex flex-wrap justify-center items-center gap-6 font-mono text-xs text-muted"
+      class="mt-12 pt-8 border-t border-rule/60 flex flex-wrap justify-center items-center gap-6 font-sans text-xs text-muted"
     >
       <span class="flex items-center gap-1.5">
         <Icon name="mapPin" size={14} class="text-accent" />

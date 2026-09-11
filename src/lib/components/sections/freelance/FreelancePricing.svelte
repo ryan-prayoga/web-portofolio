@@ -19,7 +19,7 @@
   <div class="inline-block">
     <span
       use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-      class="cursor-default px-3 py-1 font-mono text-xs tracking-wider uppercase text-accent"
+      class="cursor-default px-3 py-1 font-sans text-xs font-semibold tracking-wide uppercase text-accent"
     >
       // {t.packages.badge}
     </span>
@@ -44,7 +44,7 @@
           {#if pkg.popular}
             <div class="mb-4">
               <span
-                class="bg-accent text-paper inline-flex items-center gap-1.5 px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider uppercase"
+                class="bg-accent text-paper inline-flex items-center gap-1.5 px-2.5 py-1 font-sans text-[11px] font-bold tracking-wide uppercase"
               >
                 <Icon name="star" size={12} strokeWidth={2} />
                 {t.packages.popularBadge}
@@ -52,7 +52,7 @@
             </div>
           {/if}
 
-          <span class="font-mono text-xs uppercase tracking-wider text-muted block">
+          <span class="font-sans text-xs uppercase tracking-wide text-muted block font-medium">
             {pkg.tag[locale]}
           </span>
           <h3 class="mt-2 font-display text-xl sm:text-2xl font-bold text-ink tracking-tight">
@@ -63,11 +63,11 @@
             <span class="font-display text-3xl sm:text-4xl font-extrabold text-accent">
               {pkg.priceIdr}
             </span>
-            <span class="font-mono text-[11px] text-muted">
+            <span class="font-sans text-xs text-muted">
               / {locale === 'id' ? 'proyek' : 'project'}
             </span>
           </div>
-          <p class="mt-1 font-mono text-[11px] text-muted uppercase tracking-wider">
+          <p class="mt-1 font-sans text-xs text-muted uppercase tracking-wide font-medium">
             {t.packages.oneTimePayment}
           </p>
 
@@ -75,7 +75,7 @@
             {pkg.description[locale]}
           </p>
 
-          <div class="mt-4 pt-4 border-t border-rule font-mono text-xs text-muted flex items-center justify-between">
+          <div class="mt-4 pt-4 border-t border-rule font-sans text-xs text-muted flex items-center justify-between">
             <span class="flex items-center gap-1.5">
               <Icon name="clock" size={13} />
               {t.packages.deliveryLabel}:
@@ -84,7 +84,7 @@
           </div>
 
           <div class="mt-6">
-            <span class="font-mono text-xs font-semibold uppercase tracking-wider text-ink block mb-3">
+            <span class="font-sans text-xs font-semibold uppercase tracking-wide text-ink block mb-3">
               {t.packages.featuresLabel}:
             </span>
             <ul class="flex flex-col gap-2.5 text-xs sm:text-sm text-ink/90">
@@ -104,7 +104,7 @@
             target="_blank"
             rel="noopener noreferrer"
             use:drawButton={{ variant: pkg.popular ? 'solid' : 'outline', resketchOnHover: true }}
-            class="flex w-full items-center justify-center gap-2 py-3 font-mono text-xs font-semibold tracking-wide uppercase transition-all {pkg.popular
+            class="flex w-full items-center justify-center gap-2 py-3 font-sans text-xs font-semibold tracking-wide uppercase transition-all {pkg.popular
               ? 'bg-accent text-paper hover:opacity-90'
               : 'hover:text-accent'}"
           >
@@ -117,7 +117,7 @@
   </div>
 
   <div class="mt-10 p-6 bg-paper/60 border border-dashed border-rule rounded-none text-center max-w-2xl mx-auto">
-    <p class="text-muted flex items-center justify-center gap-2 font-mono text-xs">
+    <p class="text-muted flex items-center justify-center gap-2 font-sans text-xs">
       <Icon name="info" size={14} class="text-accent shrink-0" />
       {t.packages.customInquiryNote}
     </p>
@@ -125,7 +125,7 @@
       href={getWhatsAppUrl(customInquiryWa)}
       target="_blank"
       rel="noopener noreferrer"
-      class="text-accent mt-2 inline-flex items-center gap-1 font-mono text-xs font-semibold tracking-wide uppercase hover:underline"
+      class="text-accent mt-2 inline-flex items-center gap-1 font-sans text-xs font-semibold tracking-wide uppercase hover:underline"
     >
       {t.packages.customInquiryCta}
       <Icon name="arrowUpRight" size={13} />

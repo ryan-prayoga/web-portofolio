@@ -137,7 +137,7 @@
   <div class="flex items-center gap-3">
     <a
       href="#top"
-      class="brand font-display text-lg font-semibold tracking-tight whitespace-nowrap"
+      class="brand font-display text-xl font-bold tracking-tight whitespace-nowrap"
       onclick={goTo('top')}
       aria-label="Ryan Prayoga Freelance"
     >
@@ -145,7 +145,7 @@
     </a>
     <span
       use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-      class="hidden cursor-default font-mono text-[10px] tracking-wider uppercase sm:inline-block px-1.5 py-0.5 text-accent"
+      class="hidden cursor-default font-sans text-[0.65rem] font-semibold tracking-wider uppercase sm:inline-block px-1.5 py-0.5 text-accent"
     >
       Freelance
     </span>
@@ -156,7 +156,7 @@
       <a
         href={item.href}
         onclick={goTo(item.href.slice(1))}
-        class="text-muted hover:text-accent font-mono text-xs tracking-wide uppercase transition-colors"
+        class="text-muted hover:text-accent font-sans text-xs font-semibold tracking-wide uppercase transition-colors"
       >
         {item.label}
       </a>
@@ -166,7 +166,7 @@
   <div class="nav-actions flex items-center gap-2 sm:gap-3">
     <a
       href={FREELANCE_CONFIG.mainPortfolioUrl}
-      class="text-muted hover:text-accent hidden font-mono text-xs tracking-wide uppercase transition-colors sm:inline-flex items-center gap-1"
+      class="text-muted hover:text-accent hidden font-sans text-xs font-semibold tracking-wide uppercase transition-colors sm:inline-flex items-center gap-1"
       title="Lihat Portofolio Developer Utama"
     >
       {t.nav.personalPortfolio}
@@ -178,7 +178,7 @@
       target="_blank"
       rel="noopener noreferrer"
       use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-      class="bg-accent text-paper hidden items-center gap-1.5 px-3 py-1 font-mono text-xs font-medium uppercase transition-opacity min-[720px]:inline-flex hover:opacity-90"
+      class="bg-accent text-paper hidden items-center gap-1.5 px-3 py-1 font-sans text-xs font-semibold uppercase transition-opacity min-[720px]:inline-flex hover:opacity-90"
     >
       <Icon name="message" size={13} />
       {t.nav.ctaConsultation}
@@ -192,7 +192,7 @@
       onclick={() => setLocale(locale === 'en' ? 'id' : 'en')}
       aria-label={locale === 'en' ? 'Ganti ke Bahasa Indonesia' : 'Switch to English'}
       title={locale === 'en' ? 'Ganti ke Bahasa Indonesia' : 'Switch to English'}
-      class="lang-btn inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-2.5 !py-1 font-mono text-xs uppercase transition-colors active:scale-95"
+      class="lang-btn inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-2.5 !py-1 font-sans text-xs font-semibold uppercase transition-colors active:scale-95"
     >
       <span class={locale === 'en' ? 'font-bold text-accent' : 'text-muted'}>EN</span>
       <span class="text-rule mx-1 select-none" aria-hidden="true">/</span>
@@ -203,7 +203,7 @@
       id={toggleId}
       bind:this={toggleEl}
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="menu-btn min-[1120px]:!hidden inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-3 !py-1 font-mono text-xs uppercase transition-colors active:scale-95"
+      class="menu-btn min-[1120px]:!hidden inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-3 !py-1 font-sans text-xs font-semibold uppercase transition-colors active:scale-95"
       type="button"
       onclick={() => {
         closeFocus = 'toggle';
@@ -228,7 +228,7 @@
     aria-label="Freelance navigation menu"
   >
     <div class="flex flex-col gap-6">
-      <span class="text-muted font-mono text-xs tracking-wider uppercase">// Navigasi Freelance</span>
+      <span class="text-muted font-sans text-xs font-semibold tracking-wider uppercase">// Navigasi Freelance</span>
       {#each navItems as item (item.href)}
         <a
           href={item.href}
@@ -240,7 +240,7 @@
       {/each}
       <a
         href={FREELANCE_CONFIG.mainPortfolioUrl}
-        class="text-accent border-rule flex items-center gap-1.5 border-t pt-2 font-mono text-sm tracking-wide uppercase transition-colors"
+        class="text-accent border-rule flex items-center gap-1.5 border-t pt-2 font-sans text-sm font-semibold tracking-wide uppercase transition-colors"
       >
         {t.nav.personalPortfolio}
         <Icon name="arrowUpRight" size={14} />
@@ -253,12 +253,12 @@
         target="_blank"
         rel="noopener noreferrer"
         use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-        class="bg-accent text-paper flex items-center justify-center gap-2 py-3 font-mono text-xs tracking-wide uppercase"
+        class="bg-accent text-paper flex items-center justify-center gap-2 py-3 font-sans text-xs font-semibold tracking-wide uppercase"
       >
         <Icon name="message" size={15} />
         {t.nav.ctaConsultation}
       </a>
-      <p class="text-muted font-mono text-xs text-center">Ryan Prayoga · Jasa Web Portofolio</p>
+      <p class="text-muted font-sans text-xs text-center font-medium">Ryan Prayoga · Jasa Web Portofolio</p>
     </div>
   </div>
 {/if}

@@ -12,14 +12,14 @@
 
 /* ═══════════════════════════════════════════════
    SELF-HOSTED FONTS — The Engineering Sketchbook
-   - Shantell Sans: Handwritten architectural marker font (headings, badges, proofs)
-   - Hanken Grotesk: Warm, highly readable body grotesque (kasbadminton)
-   - JetBrains Mono: Developer monospace (kasbadminton)
+   - Patrick Hand: Natural handwritten architectural/pencil font (headings, brand, sketch notes)
+   - Hanken Grotesk: Warm, highly readable body & UI control grotesque
+   - JetBrains Mono: Developer monospace (code, technical metrics)
    ═══════════════════════════════════════════════ */
 @font-face {
-  font-family: 'Shantell Sans';
-  src: url('/fonts/shantell-sans.woff2') format('woff2');
-  font-weight: 300 800;
+  font-family: 'Patrick Hand';
+  src: url('/fonts/patrick-hand.woff2') format('woff2');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -52,8 +52,8 @@
   --color-accent-soft: #f4e9e3;
 
   --font-sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
-  --font-display: 'Shantell Sans', cursive, sans-serif;
-  --font-hand: 'Shantell Sans', cursive, sans-serif;
+  --font-display: 'Patrick Hand', cursive, sans-serif;
+  --font-hand: 'Patrick Hand', cursive, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
