@@ -56,85 +56,197 @@
     angle: 0,
     visible: false,
     type: 'eraser' as 'eraser' | 'pencil',
+    isLifting: false,
   };
 
-  // --- ERASER MOTION (Chalkboard wiping) ---
-  // Constant-cadence sweeps across portrait
+  // --- ERASER MOTION (Natural diagonal chalkboard wiping) ---
   function getEraserPoint(p: number, width: number, height: number) {
-    const sweeps = 8;
     const clampedP = Math.min(1, Math.max(0, p));
+    const sweeps = 8;
 
-    // Smooth sinusoidal descent from top to bottom
-    const y = (0.5 - 0.5 * Math.cos(clampedP * Math.PI)) * height;
+    // Steady top-to-bottom progression from slightly above (-15) to past the bottom (height + 35)
+    const y = -15 + (height + 50) * Math.pow(clampedP, 1.05);
 
-    // Steady back-and-forth cosine sweeps
-    const sweepCos = Math.cos(clampedP * sweeps * Math.PI);
-    const x = width / 2 + (width / 2 - 20) * sweepCos;
+    // Natural rhythmic sweeping across canvas width
+    const sweepPhase = clampedP * sweeps * Math.PI;
+    const sweepCos = Math.cos(sweepPhase);
+    const x = width / 2 + (width / 2 + 10) * sweepCos;
 
-    // Natural tilt with horizontal movement
-    const angle = -Math.sin(clampedP * sweeps * Math.PI) * 0.22;
+    // Organic eraser tilt leaning into the swipe direction
+    const angle = -Math.sin(sweepPhase) * 0.16;
 
     return { x, y, angle };
   }
 
-  // --- PENCIL SKETCH MOTION (Catmull-Rom spline along facial landmarks) ---
-  // Keypoints matching Ryan's exact curly hair, eyes, nose, smile, collar & shirt
-  const portraitKeypoints = [
-    { x: 0.38, y: 0.12 },
-    { x: 0.5, y: 0.08 },
-    { x: 0.65, y: 0.11 },
-    { x: 0.74, y: 0.2 },
-    { x: 0.73, y: 0.35 },
-    { x: 0.67, y: 0.54 },
-    { x: 0.5, y: 0.68 }, // chin
-    { x: 0.33, y: 0.54 },
-    { x: 0.27, y: 0.35 },
-    { x: 0.33, y: 0.18 },
-    { x: 0.44, y: 0.22 }, // bangs curl
-    { x: 0.48, y: 0.28 },
-    { x: 0.54, y: 0.23 },
-    { x: 0.31, y: 0.31 }, // left brow
-    { x: 0.37, y: 0.295 },
-    { x: 0.43, y: 0.31 },
-    { x: 0.33, y: 0.375 }, // left eye
-    { x: 0.375, y: 0.375 }, // left pupil
-    { x: 0.42, y: 0.375 },
-    { x: 0.55, y: 0.31 }, // right brow
-    { x: 0.615, y: 0.295 },
-    { x: 0.67, y: 0.31 },
-    { x: 0.56, y: 0.375 }, // right eye
-    { x: 0.615, y: 0.375 }, // right pupil
-    { x: 0.66, y: 0.375 },
-    { x: 0.49, y: 0.36 }, // nose bridge
-    { x: 0.47, y: 0.44 },
-    { x: 0.49, y: 0.465 }, // nose tip
-    { x: 0.53, y: 0.46 },
-    { x: 0.4, y: 0.555 }, // left smile corner
-    { x: 0.49, y: 0.54 }, // teeth
-    { x: 0.58, y: 0.555 }, // right smile corner
-    { x: 0.49, y: 0.595 }, // lower lip
-    { x: 0.48, y: 0.72 }, // neck V
-    { x: 0.32, y: 0.76 }, // left collar
-    { x: 0.4, y: 0.83 },
-    { x: 0.48, y: 0.8 }, // center placket
-    { x: 0.58, y: 0.83 },
-    { x: 0.65, y: 0.76 }, // right collar
-    { x: 0.48, y: 0.9 }, // shirt buttons
-    { x: 0.22, y: 0.48 }, // cheek & hair shading
-    { x: 0.78, y: 0.48 },
-    { x: 0.2, y: 0.7 }, // shoulder shading
-    { x: 0.8, y: 0.7 },
+  // --- PENCIL SKETCH MOTION (13 Natural Facial Feature Strokes with Pen-Up Glides) ---
+  const portraitStrokes: { x: number; y: number }[][] = [
+    // 1. Hair outline & crown curls
+    [
+      { x: 0.28, y: 0.24 },
+      { x: 0.31, y: 0.16 },
+      { x: 0.4, y: 0.1 },
+      { x: 0.52, y: 0.08 },
+      { x: 0.66, y: 0.1 },
+      { x: 0.76, y: 0.16 },
+      { x: 0.78, y: 0.28 },
+    ],
+    // 2. Forehead bangs & curls
+    [
+      { x: 0.74, y: 0.25 },
+      { x: 0.64, y: 0.23 },
+      { x: 0.54, y: 0.25 },
+      { x: 0.47, y: 0.22 },
+      { x: 0.4, y: 0.26 },
+      { x: 0.34, y: 0.25 },
+    ],
+    // 3. Left Eyebrow
+    [
+      { x: 0.31, y: 0.33 },
+      { x: 0.37, y: 0.31 },
+      { x: 0.44, y: 0.33 },
+    ],
+    // 4. Left Eye & Iris
+    [
+      { x: 0.34, y: 0.395 },
+      { x: 0.39, y: 0.385 },
+      { x: 0.44, y: 0.395 },
+      { x: 0.39, y: 0.405 },
+      { x: 0.39, y: 0.395 },
+    ],
+    // 5. Right Eyebrow
+    [
+      { x: 0.58, y: 0.33 },
+      { x: 0.65, y: 0.31 },
+      { x: 0.71, y: 0.33 },
+    ],
+    // 6. Right Eye & Iris
+    [
+      { x: 0.59, y: 0.385 },
+      { x: 0.65, y: 0.375 },
+      { x: 0.7, y: 0.385 },
+      { x: 0.65, y: 0.395 },
+      { x: 0.65, y: 0.385 },
+    ],
+    // 7. Nose Bridge & Tip
+    [
+      { x: 0.51, y: 0.34 },
+      { x: 0.5, y: 0.42 },
+      { x: 0.52, y: 0.48 },
+      { x: 0.47, y: 0.48 },
+      { x: 0.54, y: 0.48 },
+    ],
+    // 8. Smile & Lips
+    [
+      { x: 0.42, y: 0.54 },
+      { x: 0.48, y: 0.555 },
+      { x: 0.54, y: 0.545 },
+      { x: 0.61, y: 0.55 },
+      { x: 0.53, y: 0.58 },
+      { x: 0.45, y: 0.565 },
+    ],
+    // 9. Jawline & Chin
+    [
+      { x: 0.29, y: 0.44 },
+      { x: 0.33, y: 0.55 },
+      { x: 0.43, y: 0.635 },
+      { x: 0.53, y: 0.66 },
+      { x: 0.63, y: 0.635 },
+      { x: 0.71, y: 0.55 },
+      { x: 0.74, y: 0.44 },
+    ],
+    // 10. Shirt Collar & Placket
+    [
+      { x: 0.33, y: 0.73 },
+      { x: 0.42, y: 0.81 },
+      { x: 0.52, y: 0.75 },
+      { x: 0.62, y: 0.81 },
+      { x: 0.7, y: 0.73 },
+      { x: 0.52, y: 0.75 },
+      { x: 0.52, y: 0.85 },
+      { x: 0.52, y: 0.94 },
+    ],
+    // 11. Left hair dark shading
+    [
+      { x: 0.25, y: 0.28 },
+      { x: 0.35, y: 0.18 },
+      { x: 0.28, y: 0.34 },
+      { x: 0.37, y: 0.22 },
+    ],
+    // 12. Right hair dark shading
+    [
+      { x: 0.7, y: 0.18 },
+      { x: 0.79, y: 0.26 },
+      { x: 0.68, y: 0.24 },
+      { x: 0.77, y: 0.32 },
+    ],
+    // 13. Shoulder & chest shading
+    [
+      { x: 0.2, y: 0.8 },
+      { x: 0.35, y: 0.88 },
+      { x: 0.22, y: 0.88 },
+      { x: 0.34, y: 0.96 },
+      { x: 0.66, y: 0.86 },
+      { x: 0.8, y: 0.82 },
+      { x: 0.68, y: 0.94 },
+      { x: 0.82, y: 0.9 },
+    ],
   ];
 
-  // Precompute chord lengths for uniform arc-length speed
-  const segmentLengths: number[] = [];
-  let totalSplineLength = 0;
-  for (let i = 0; i < portraitKeypoints.length - 1; i++) {
-    const dx = portraitKeypoints[i + 1].x - portraitKeypoints[i].x;
-    const dy = (portraitKeypoints[i + 1].y - portraitKeypoints[i].y) * 1.25; // aspect weight
-    const len = Math.hypot(dx, dy);
-    segmentLengths.push(len);
-    totalSplineLength += len;
+  interface SplineSegment {
+    isDrawing: boolean;
+    p0: { x: number; y: number };
+    p1: { x: number; y: number };
+    p2: { x: number; y: number };
+    p3: { x: number; y: number };
+    len: number;
+    startDist: number;
+  }
+
+  const pencilSegments: SplineSegment[] = [];
+  let totalPencilLength = 0;
+
+  for (let sIdx = 0; sIdx < portraitStrokes.length; sIdx++) {
+    const stroke = portraitStrokes[sIdx];
+    for (let i = 0; i < stroke.length - 1; i++) {
+      const p0 = stroke[Math.max(0, i - 1)];
+      const p1 = stroke[i];
+      const p2 = stroke[i + 1];
+      const p3 = stroke[Math.min(stroke.length - 1, i + 2)];
+      const dx = p2.x - p1.x;
+      const dy = (p2.y - p1.y) * 1.25;
+      const len = Math.hypot(dx, dy);
+
+      pencilSegments.push({
+        isDrawing: true,
+        p0,
+        p1,
+        p2,
+        p3,
+        len,
+        startDist: totalPencilLength,
+      });
+      totalPencilLength += len;
+    }
+
+    // Air reposition segment between strokes
+    if (sIdx < portraitStrokes.length - 1) {
+      const p1 = stroke[stroke.length - 1];
+      const p2 = portraitStrokes[sIdx + 1][0];
+      const dx = p2.x - p1.x;
+      const dy = (p2.y - p1.y) * 1.25;
+      const len = Math.max(0.04, Math.hypot(dx, dy) * 0.65);
+
+      pencilSegments.push({
+        isDrawing: false,
+        p0: p1,
+        p1,
+        p2,
+        p3: p2,
+        len,
+        startDist: totalPencilLength,
+      });
+      totalPencilLength += len;
+    }
   }
 
   function catmullRom(p0: number, p1: number, p2: number, p3: number, t: number): number {
@@ -150,49 +262,56 @@
 
   function getPencilPoint(p: number, width: number, height: number) {
     const clampedP = Math.min(1, Math.max(0, p));
-    const targetDist = clampedP * totalSplineLength;
+    const targetDist = clampedP * totalPencilLength;
 
-    let accumulated = 0;
-    let seg = 0;
-    for (let i = 0; i < segmentLengths.length; i++) {
-      if (accumulated + segmentLengths[i] >= targetDist || i === segmentLengths.length - 1) {
-        seg = i;
+    let seg = pencilSegments[0];
+    for (let i = 0; i < pencilSegments.length; i++) {
+      const s = pencilSegments[i];
+      if (targetDist <= s.startDist + s.len || i === pencilSegments.length - 1) {
+        seg = s;
         break;
       }
-      accumulated += segmentLengths[i];
     }
 
-    const segLen = segmentLengths[seg] || 0.001;
-    const localT = Math.min(1, Math.max(0, (targetDist - accumulated) / segLen));
+    const localT = Math.min(1, Math.max(0, (targetDist - seg.startDist) / (seg.len || 0.001)));
 
-    const p0 = portraitKeypoints[Math.max(0, seg - 1)];
-    const p1 = portraitKeypoints[seg];
-    const p2 = portraitKeypoints[Math.min(portraitKeypoints.length - 1, seg + 1)];
-    const p3 = portraitKeypoints[Math.min(portraitKeypoints.length - 1, seg + 2)];
+    let xNorm: number;
+    let yNorm: number;
+    let dxNorm: number;
+    let dyNorm: number;
 
-    const baseX = catmullRom(p0.x, p1.x, p2.x, p3.x, localT) * width;
-    const baseY = catmullRom(p0.y, p1.y, p2.y, p3.y, localT) * height;
+    if (seg.isDrawing) {
+      xNorm = catmullRom(seg.p0.x, seg.p1.x, seg.p2.x, seg.p3.x, localT);
+      yNorm = catmullRom(seg.p0.y, seg.p1.y, seg.p2.y, seg.p3.y, localT);
+      dxNorm = catmullRomDerivative(seg.p0.x, seg.p1.x, seg.p2.x, seg.p3.x, localT);
+      dyNorm = catmullRomDerivative(seg.p0.y, seg.p1.y, seg.p2.y, seg.p3.y, localT);
+    } else {
+      // Smooth hermite air glide
+      const st = localT * localT * (3 - 2 * localT);
+      xNorm = seg.p1.x + (seg.p2.x - seg.p1.x) * st;
+      yNorm = seg.p1.y + (seg.p2.y - seg.p1.y) * st;
+      dxNorm = (seg.p2.x - seg.p1.x) * 6 * localT * (1 - localT);
+      dyNorm = (seg.p2.y - seg.p1.y) * 6 * localT * (1 - localT);
+    }
 
-    const dx = catmullRomDerivative(p0.x, p1.x, p2.x, p3.x, localT) * width;
-    const dy = catmullRomDerivative(p0.y, p1.y, p2.y, p3.y, localT) * height;
-    const mag = Math.hypot(dx, dy) || 1;
+    const x = xNorm * width;
+    const y = yNorm * height;
 
-    // Normal vector perpendicular to curve
-    const nx = -dy / mag;
-    const ny = dx / mag;
+    // Organic hand tilt: comfortably anchored around -45° (right-handed artist grip)
+    // with gentle dynamic response to drawing direction
+    const strokeAngle = Math.atan2(dyNorm * height, dxNorm * width);
+    let angleDev = 0;
+    if (Math.hypot(dxNorm, dyNorm) > 0.001) {
+      angleDev = Math.sin(strokeAngle) * 0.16;
+    }
+    const angle = -0.75 + angleDev; // ~ -43° ± 9°
 
-    // Transverse hatching motion (smooth sinusoidal oscillation along contour)
-    const hatchOsc = Math.sin(clampedP * 70 * Math.PI * 2);
-    const hatchAmp = 8;
-
-    const x = baseX + nx * hatchOsc * hatchAmp;
-    const y = baseY + ny * hatchOsc * hatchAmp;
-
-    // Natural drawing tilt angle
-    const tangentAngle = Math.atan2(dy, dx);
-    const pencilAngle = tangentAngle - Math.PI / 4;
-
-    return { x, y, angle: pencilAngle };
+    return {
+      x,
+      y,
+      angle,
+      isDrawing: seg.isDrawing,
+    };
   }
 
   function initMask(fillWithWhite: boolean) {
@@ -206,53 +325,53 @@
     }
   }
 
-  // --- TOOL DRAWING (Classroom Chalkboard Eraser - NO RED/WHITE FLAG) ---
+  // --- TOOL DRAWING (Classroom Chalkboard Eraser - Authentic Warm Hardwood) ---
   function drawEraserTool(ctx: CanvasRenderingContext2D, x: number, y: number, angle: number) {
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(angle);
 
-    const w = 48;
-    const h = 24;
+    const w = 54;
+    const h = 26;
 
-    // Soft drop shadow on chalkboard
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.32)';
+    // Soft drop shadow
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.28)';
     ctx.beginPath();
-    ctx.roundRect(-w / 2 + 3, -h / 2 + 4, w, h, 3);
+    ctx.ellipse(2, 6, w * 0.46, h * 0.32, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // Solid hardwood handle (natural oak / golden amber)
-    ctx.fillStyle = '#b45309'; // warm amber hardwood
+    // Solid hardwood handle (natural carved amber oak)
+    ctx.fillStyle = '#b45309';
     ctx.beginPath();
-    ctx.roundRect(-w / 2, -h / 2 - 5, w, 11, [4, 4, 0, 0]);
+    ctx.roundRect(-w / 2, -h / 2 - 5, w, 12, [5, 5, 0, 0]);
     ctx.fill();
 
     // Woodgrain highlight
     ctx.fillStyle = '#d97706';
     ctx.beginPath();
-    ctx.roundRect(-w / 2 + 3, -h / 2 - 3, w - 6, 3, 1);
+    ctx.roundRect(-w / 2 + 4, -h / 2 - 3, w - 8, 3.5, 1.5);
     ctx.fill();
 
     // Dark grip groove
     ctx.strokeStyle = '#78350f';
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(-w / 2 + 6, -h / 2 + 1);
-    ctx.lineTo(w / 2 - 6, -h / 2 + 1);
+    ctx.moveTo(-w / 2 + 8, -h / 2 + 2);
+    ctx.lineTo(w / 2 - 8, -h / 2 + 2);
     ctx.stroke();
 
-    // Dark charcoal / black wool felt bottom pad (authentic classroom duster)
-    ctx.fillStyle = '#1f2937'; // dark charcoal felt
+    // Dark charcoal wool felt bottom pad
+    ctx.fillStyle = '#1f2937';
     ctx.beginPath();
-    ctx.roundRect(-w / 2, -h / 2 + 6, w, h - 6, [0, 0, 3, 3]);
+    ctx.roundRect(-w / 2, -h / 2 + 7, w, h - 7, [0, 0, 4, 4]);
     ctx.fill();
 
     // Felt texture stripe (slate charcoal)
     ctx.fillStyle = '#374151';
-    ctx.fillRect(-w / 2 + 2, -h / 2 + 8, w - 4, 3);
+    ctx.fillRect(-w / 2 + 2, -h / 2 + 9, w - 4, 3.5);
 
     // Chalk dust trace along bottom rubbing edge
-    ctx.fillStyle = 'rgba(241, 245, 249, 0.45)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
     ctx.beginPath();
     ctx.roundRect(-w / 2 + 2, h / 2 - 3, w - 4, 2.5, [0, 0, 2, 2]);
     ctx.fill();
@@ -261,68 +380,70 @@
     ctx.strokeStyle = 'rgba(15, 23, 42, 0.45)';
     ctx.lineWidth = 1.1;
     ctx.beginPath();
-    ctx.roundRect(-w / 2, -h / 2 - 5, w, h + 5, 3);
+    ctx.roundRect(-w / 2, -h / 2 - 5, w, h + 5, 4);
     ctx.stroke();
 
     ctx.restore();
   }
 
-  // --- TOOL DRAWING (Artist Cedar Pencil) ---
-  function drawPencilTool(ctx: CanvasRenderingContext2D, x: number, y: number, angle: number) {
+  // --- TOOL DRAWING (Artist Cedar Pencil with Lift Dynamic) ---
+  function drawPencilTool(ctx: CanvasRenderingContext2D, x: number, y: number, angle: number, isLifting: boolean) {
     ctx.save();
-    ctx.translate(x, y);
+    const liftOffset = isLifting ? -3.5 : 0;
+    ctx.translate(x, y + liftOffset);
     ctx.rotate(angle);
 
     const pw = 8;
-    const ph = 36;
+    const ph = 38;
 
-    // Soft graphite shadow under tip
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.22)';
+    // Shadow under tip (detaches when lifted)
+    const shadowDist = isLifting ? 5.5 : 2;
+    ctx.fillStyle = isLifting ? 'rgba(0, 0, 0, 0.12)' : 'rgba(0, 0, 0, 0.24)';
     ctx.beginPath();
-    ctx.ellipse(2, 2, 5, 2.2, 0.4, 0, Math.PI * 2);
+    ctx.ellipse(shadowDist, shadowDist, isLifting ? 4 : 5, 2.2, 0.4, 0, Math.PI * 2);
     ctx.fill();
 
-    // Sharpened natural cedar cone
-    ctx.fillStyle = '#fed7aa'; // light cedar wood
+    // Natural sharpened cedar cone
+    ctx.fillStyle = '#fed7aa';
     ctx.beginPath();
-    ctx.moveTo(0, 0); // graphite tip touches paper
-    ctx.lineTo(-pw / 2, ph * 0.36);
-    ctx.lineTo(pw / 2, ph * 0.36);
+    ctx.moveTo(0, 0); // lead tip touches the page
+    ctx.lineTo(-pw / 2, ph * 0.35);
+    ctx.lineTo(pw / 2, ph * 0.35);
     ctx.closePath();
     ctx.fill();
 
-    // Dark graphite core lead tip
+    // Dark graphite core tip
     ctx.fillStyle = '#0f172a';
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.lineTo(-pw * 0.2, ph * 0.13);
-    ctx.lineTo(pw * 0.2, ph * 0.13);
+    ctx.lineTo(-pw * 0.18, ph * 0.12);
+    ctx.lineTo(pw * 0.18, ph * 0.12);
     ctx.closePath();
     ctx.fill();
 
     // Hexagonal amber pencil barrel
     ctx.fillStyle = '#f59e0b';
     ctx.beginPath();
-    ctx.roundRect(-pw / 2, ph * 0.36, pw, ph * 0.64, [0, 0, 2, 2]);
+    ctx.roundRect(-pw / 2, ph * 0.35, pw, ph * 0.65, [0, 0, 2, 2]);
     ctx.fill();
 
     // Facet highlight stripe
-    ctx.fillStyle = '#fde68a';
-    ctx.fillRect(-pw * 0.18, ph * 0.36, pw * 0.36, ph * 0.64);
+    ctx.fillStyle = '#fef08a';
+    ctx.fillRect(-pw * 0.16, ph * 0.35, pw * 0.32, ph * 0.65);
 
-    // Pencil barrel ferrule / back band
+    // Metal ferrule ring
     ctx.fillStyle = '#64748b';
     ctx.fillRect(-pw / 2, ph - 3, pw, 3);
 
-    // Pencil contour outline
-    ctx.strokeStyle = 'rgba(15, 23, 42, 0.4)';
+    // Thin crisp outline
+    ctx.strokeStyle = 'rgba(15, 23, 42, 0.38)';
     ctx.lineWidth = 0.9;
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.lineTo(-pw / 2, ph * 0.36);
+    ctx.lineTo(-pw / 2, ph * 0.35);
     ctx.lineTo(-pw / 2, ph);
     ctx.lineTo(pw / 2, ph);
-    ctx.lineTo(pw / 2, ph * 0.36);
+    ctx.lineTo(pw / 2, ph * 0.35);
     ctx.closePath();
     ctx.stroke();
 
@@ -402,7 +523,7 @@
       if (toolPos.type === 'eraser') {
         drawEraserTool(ctx, toolPos.x, toolPos.y, toolPos.angle);
       } else {
-        drawPencilTool(ctx, toolPos.x, toolPos.y, toolPos.angle);
+        drawPencilTool(ctx, toolPos.x, toolPos.y, toolPos.angle, toolPos.isLifting);
       }
     }
   }
@@ -417,10 +538,10 @@
     const height = canvasEl.height;
 
     // Calm, luxurious pacing:
-    // Erase duration: ~2.4s (speed = 0.42)
-    // Sketch duration: ~3.2s (speed = 0.31)
-    const eraseSpeed = 0.42;
-    const sketchSpeed = 0.31;
+    // Erase duration: ~2.4s (speed = 0.41)
+    // Sketch duration: ~3.4s (speed = 0.29)
+    const eraseSpeed = 0.41;
+    const sketchSpeed = 0.29;
 
     if (targetProgress > currentVisualProgress) {
       // --- ERASING FORWARD (Sketch -> Photo) ---
@@ -436,9 +557,9 @@
         const p = prevP + ((currentVisualProgress - prevP) * s) / subSteps;
         const pt = getEraserPoint(p, width, height);
 
-        // Broad felt eraser wipe (width ~46px)
+        // Broad felt eraser wipe (width ~ 36% of canvas, approx 58px)
         maskCtx.globalCompositeOperation = 'destination-out';
-        maskCtx.lineWidth = Math.max(38, width * 0.23);
+        maskCtx.lineWidth = Math.max(48, width * 0.36);
         maskCtx.lineCap = 'round';
         maskCtx.lineJoin = 'round';
 
@@ -449,11 +570,11 @@
           maskCtx.stroke();
         }
 
-        // Soft circular eraser head dab
-        const brushR = Math.max(26, width * 0.15);
-        const grad = maskCtx.createRadialGradient(pt.x, pt.y, brushR * 0.3, pt.x, pt.y, brushR);
+        // Soft rounded felt head dab along path
+        const brushR = Math.max(30, width * 0.2);
+        const grad = maskCtx.createRadialGradient(pt.x, pt.y, brushR * 0.4, pt.x, pt.y, brushR);
         grad.addColorStop(0, 'rgba(0,0,0,1)');
-        grad.addColorStop(0.8, 'rgba(0,0,0,0.9)');
+        grad.addColorStop(0.85, 'rgba(0,0,0,0.95)');
         grad.addColorStop(1, 'rgba(0,0,0,0)');
         maskCtx.fillStyle = grad;
         maskCtx.beginPath();
@@ -493,41 +614,56 @@
         const p = prevSketchPortion + ((sketchPortion - prevSketchPortion) * s) / subSteps;
         const pt = getPencilPoint(p, width, height);
 
-        // Draw textured pencil lines tracing facial features onto mask
-        maskCtx.globalCompositeOperation = 'source-over';
-        const strokeW = p > 0.86 ? Math.max(32, width * 0.18) : Math.max(24, width * 0.13);
-        maskCtx.lineWidth = strokeW;
-        maskCtx.lineCap = 'round';
-        maskCtx.lineJoin = 'round';
-        maskCtx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
+        if (pt.isDrawing) {
+          maskCtx.globalCompositeOperation = 'source-over';
 
-        if (prevStrokePt) {
+          // 1. Crisp pencil stroke
+          const strokeW = Math.max(12, width * 0.075);
+          maskCtx.lineWidth = strokeW;
+          maskCtx.lineCap = 'round';
+          maskCtx.lineJoin = 'round';
+          maskCtx.strokeStyle = 'rgba(255, 255, 255, 0.96)';
+
+          if (prevStrokePt) {
+            maskCtx.beginPath();
+            maskCtx.moveTo(prevStrokePt.x, prevStrokePt.y);
+            maskCtx.lineTo(pt.x, pt.y);
+            maskCtx.stroke();
+          }
+
+          // 2. Soft colored pencil bloom around drawn feature
+          const bloomR = Math.max(34, width * 0.22);
+          const grad = maskCtx.createRadialGradient(pt.x, pt.y, bloomR * 0.2, pt.x, pt.y, bloomR);
+          grad.addColorStop(0, 'rgba(255, 255, 255, 0.45)');
+          grad.addColorStop(0.65, 'rgba(255, 255, 255, 0.22)');
+          grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+          maskCtx.fillStyle = grad;
           maskCtx.beginPath();
-          maskCtx.moveTo(prevStrokePt.x, prevStrokePt.y);
-          maskCtx.lineTo(pt.x, pt.y);
-          maskCtx.stroke();
+          maskCtx.arc(pt.x, pt.y, bloomR, 0, Math.PI * 2);
+          maskCtx.fill();
+
+          prevStrokePt = { x: pt.x, y: pt.y };
+        } else {
+          // Pen lifted in air: break stroke line
+          prevStrokePt = null;
         }
-
-        const dabR = strokeW * 0.7;
-        maskCtx.fillStyle = 'rgba(255, 255, 255, 0.92)';
-        maskCtx.beginPath();
-        maskCtx.arc(pt.x, pt.y, dabR, 0, Math.PI * 2);
-        maskCtx.fill();
-
-        prevStrokePt = { x: pt.x, y: pt.y };
       }
 
       const finalPt = getPencilPoint(sketchPortion, width, height);
       toolPos.x = finalPt.x;
       toolPos.y = finalPt.y;
       toolPos.angle = finalPt.angle;
+      toolPos.isLifting = !finalPt.isDrawing;
 
-      spawnParticles(finalPt.x, finalPt.y, false, 0);
+      if (finalPt.isDrawing && Math.random() < 0.25) {
+        spawnParticles(finalPt.x, finalPt.y, false, 0);
+      }
 
-      // In final stage, expand full mask opacity smoothly
-      if (sketchPortion > 0.88) {
-        const fadeAlpha = (sketchPortion - 0.88) / 0.12;
-        maskCtx.fillStyle = `rgba(255, 255, 255, ${fadeAlpha * 0.25})`;
+      // Progressive tonal wash smoothly builds up as drawing nears completion
+      if (sketchPortion > 0.7) {
+        const washAlpha = Math.pow((sketchPortion - 0.7) / 0.3, 1.8) * 0.22;
+        maskCtx.globalCompositeOperation = 'source-over';
+        maskCtx.fillStyle = `rgba(255, 255, 255, ${washAlpha})`;
         maskCtx.fillRect(0, 0, width, height);
       }
 
