@@ -78,196 +78,112 @@
     return { x, y, angle };
   }
 
-  // --- PENCIL SKETCH MOTION (13 Natural Facial Feature Strokes with Pen-Up Glides) ---
-  const portraitStrokes: { x: number; y: number }[][] = [
-    // 1. Hair outline & crown curls
-    [
-      { x: 0.28, y: 0.24 },
-      { x: 0.31, y: 0.16 },
-      { x: 0.4, y: 0.1 },
-      { x: 0.52, y: 0.08 },
-      { x: 0.66, y: 0.1 },
-      { x: 0.76, y: 0.16 },
-      { x: 0.78, y: 0.28 },
-    ],
-    // 2. Forehead bangs & curls
-    [
-      { x: 0.74, y: 0.25 },
-      { x: 0.64, y: 0.23 },
-      { x: 0.54, y: 0.25 },
-      { x: 0.47, y: 0.22 },
-      { x: 0.4, y: 0.26 },
-      { x: 0.34, y: 0.25 },
-    ],
-    // 3. Left Eyebrow
-    [
-      { x: 0.31, y: 0.33 },
-      { x: 0.37, y: 0.31 },
-      { x: 0.44, y: 0.33 },
-    ],
-    // 4. Left Eye & Iris
-    [
-      { x: 0.34, y: 0.395 },
-      { x: 0.39, y: 0.385 },
-      { x: 0.44, y: 0.395 },
-      { x: 0.39, y: 0.405 },
-      { x: 0.39, y: 0.395 },
-    ],
-    // 5. Right Eyebrow
-    [
-      { x: 0.58, y: 0.33 },
-      { x: 0.65, y: 0.31 },
-      { x: 0.71, y: 0.33 },
-    ],
-    // 6. Right Eye & Iris
-    [
-      { x: 0.59, y: 0.385 },
-      { x: 0.65, y: 0.375 },
-      { x: 0.7, y: 0.385 },
-      { x: 0.65, y: 0.395 },
-      { x: 0.65, y: 0.385 },
-    ],
-    // 7. Nose Bridge & Tip
-    [
-      { x: 0.51, y: 0.34 },
-      { x: 0.5, y: 0.42 },
-      { x: 0.52, y: 0.48 },
-      { x: 0.47, y: 0.48 },
-      { x: 0.54, y: 0.48 },
-    ],
-    // 8. Smile & Lips
-    [
-      { x: 0.42, y: 0.54 },
-      { x: 0.48, y: 0.555 },
-      { x: 0.54, y: 0.545 },
-      { x: 0.61, y: 0.55 },
-      { x: 0.53, y: 0.58 },
-      { x: 0.45, y: 0.565 },
-    ],
-    // 9. Jawline & Chin
-    [
-      { x: 0.29, y: 0.44 },
-      { x: 0.33, y: 0.55 },
-      { x: 0.43, y: 0.635 },
-      { x: 0.53, y: 0.66 },
-      { x: 0.63, y: 0.635 },
-      { x: 0.71, y: 0.55 },
-      { x: 0.74, y: 0.44 },
-    ],
-    // 10. Shirt Collar & Placket
-    [
-      { x: 0.33, y: 0.73 },
-      { x: 0.42, y: 0.81 },
-      { x: 0.52, y: 0.75 },
-      { x: 0.62, y: 0.81 },
-      { x: 0.7, y: 0.73 },
-      { x: 0.52, y: 0.75 },
-      { x: 0.52, y: 0.85 },
-      { x: 0.52, y: 0.94 },
-    ],
-    // 11. Left hair dark shading
-    [
-      { x: 0.25, y: 0.28 },
-      { x: 0.35, y: 0.18 },
-      { x: 0.28, y: 0.34 },
-      { x: 0.37, y: 0.22 },
-    ],
-    // 12. Right hair dark shading
-    [
-      { x: 0.7, y: 0.18 },
-      { x: 0.79, y: 0.26 },
-      { x: 0.68, y: 0.24 },
-      { x: 0.77, y: 0.32 },
-    ],
-    // 13. Shoulder & chest shading
-    [
-      { x: 0.2, y: 0.8 },
-      { x: 0.35, y: 0.88 },
-      { x: 0.22, y: 0.88 },
-      { x: 0.34, y: 0.96 },
-      { x: 0.66, y: 0.86 },
-      { x: 0.8, y: 0.82 },
-      { x: 0.68, y: 0.94 },
-      { x: 0.82, y: 0.9 },
-    ],
-  ];
-
-  interface SplineSegment {
-    isDrawing: boolean;
+  // --- PENCIL SKETCH MOTION: Slanted Diagonal Hatching ("Garis Nyerong Sesuai Alur Sketsa") ---
+  // In Ryan's colored-pencil artwork, the grain and shading follow diagonal strokes
+  // slanted from bottom-left to top-right at ~42° (slope dy/dx = -0.90).
+  // The pencil sweeps across the canvas in rhythmic back-and-forth hatching strokes.
+  interface HatchingSegment {
+    isStroke: boolean;
     p0: { x: number; y: number };
     p1: { x: number; y: number };
-    p2: { x: number; y: number };
-    p3: { x: number; y: number };
+    p2?: { x: number; y: number };
     len: number;
     startDist: number;
+    angle: number;
+    isUpRight: boolean;
   }
 
-  const pencilSegments: SplineSegment[] = [];
-  let totalPencilLength = 0;
+  interface HatchingPath {
+    strokes: HatchingSegment[];
+    totalLength: number;
+    width: number;
+    height: number;
+  }
 
-  for (let sIdx = 0; sIdx < portraitStrokes.length; sIdx++) {
-    const stroke = portraitStrokes[sIdx];
-    for (let i = 0; i < stroke.length - 1; i++) {
-      const p0 = stroke[Math.max(0, i - 1)];
-      const p1 = stroke[i];
-      const p2 = stroke[i + 1];
-      const p3 = stroke[Math.min(stroke.length - 1, i + 2)];
-      const dx = p2.x - p1.x;
-      const dy = (p2.y - p1.y) * 1.25;
-      const len = Math.hypot(dx, dy);
+  let cachedHatchingPath: HatchingPath = {
+    strokes: [],
+    totalLength: 0,
+    width: 0,
+    height: 0,
+  };
 
-      pencilSegments.push({
-        isDrawing: true,
-        p0,
-        p1,
-        p2,
-        p3,
-        len,
-        startDist: totalPencilLength,
-      });
-      totalPencilLength += len;
+  function buildDiagonalHatching(width: number, height: number, numSweeps = 18, slope = 0.9, mgn = 16): HatchingPath {
+    const C_max = slope * width + height;
+    const strokes: HatchingSegment[] = [];
+    let totalLength = 0;
+
+    for (let k = 0; k < numSweeps; k++) {
+      const frac = (k + 0.5) / numSweeps;
+      const C = -mgn + frac * (C_max + 2 * mgn);
+
+      const x_min_y = (C - (height + mgn)) / slope;
+      const x_max_y = (C + mgn) / slope;
+
+      const x_start = Math.max(-mgn, x_min_y);
+      const x_end = Math.min(width + mgn, x_max_y);
+
+      if (x_start < x_end) {
+        const pt1 = { x: x_start, y: C - slope * x_start }; // bottom-left end
+        const pt2 = { x: x_end, y: C - slope * x_end }; // top-right end
+
+        const isUpRight = k % 2 === 0;
+        const pA = isUpRight ? pt1 : pt2;
+        const pB = isUpRight ? pt2 : pt1;
+
+        // Smooth turnaround connecting curve around the canvas boundary
+        if (strokes.length > 0) {
+          const prevStroke = strokes[strokes.length - 1];
+          const prevEnd = prevStroke.isStroke ? prevStroke.p1 : (prevStroke.p2 ?? prevStroke.p1);
+          const midX = (prevEnd.x + pA.x) / 2 + (isUpRight ? -6 : 6);
+          const midY = (prevEnd.y + pA.y) / 2 + (isUpRight ? 6 : -6);
+          const turnDist = Math.hypot(pA.x - prevEnd.x, pA.y - prevEnd.y) * 1.15;
+
+          strokes.push({
+            isStroke: false,
+            p0: prevEnd,
+            p1: { x: midX, y: midY },
+            p2: pA,
+            len: turnDist,
+            startDist: totalLength,
+            angle: isUpRight ? -0.42 : -0.52,
+            isUpRight,
+          });
+          totalLength += turnDist;
+        }
+
+        const strokeLen = Math.hypot(pB.x - pA.x, pB.y - pA.y);
+        strokes.push({
+          isStroke: true,
+          p0: pA,
+          p1: pB,
+          len: strokeLen,
+          startDist: totalLength,
+          isUpRight,
+          angle: isUpRight ? -0.4 : -0.54,
+        });
+        totalLength += strokeLen;
+      }
     }
 
-    // Air reposition segment between strokes
-    if (sIdx < portraitStrokes.length - 1) {
-      const p1 = stroke[stroke.length - 1];
-      const p2 = portraitStrokes[sIdx + 1][0];
-      const dx = p2.x - p1.x;
-      const dy = (p2.y - p1.y) * 1.25;
-      const len = Math.max(0.04, Math.hypot(dx, dy) * 0.65);
-
-      pencilSegments.push({
-        isDrawing: false,
-        p0: p1,
-        p1,
-        p2,
-        p3: p2,
-        len,
-        startDist: totalPencilLength,
-      });
-      totalPencilLength += len;
-    }
-  }
-
-  function catmullRom(p0: number, p1: number, p2: number, p3: number, t: number): number {
-    const t2 = t * t;
-    const t3 = t2 * t;
-    return 0.5 * (2 * p1 + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 + (-p0 + 3 * p1 - 3 * p2 + p3) * t3);
-  }
-
-  function catmullRomDerivative(p0: number, p1: number, p2: number, p3: number, t: number): number {
-    const t2 = t * t;
-    return 0.5 * (-p0 + p2 + 2 * (2 * p0 - 5 * p1 + 4 * p2 - p3) * t + 3 * (-p0 + 3 * p1 - 3 * p2 + p3) * t2);
+    return { strokes, totalLength, width, height };
   }
 
   function getPencilPoint(p: number, width: number, height: number) {
-    const clampedP = Math.min(1, Math.max(0, p));
-    const targetDist = clampedP * totalPencilLength;
+    if (
+      cachedHatchingPath.totalLength === 0 ||
+      cachedHatchingPath.width !== width ||
+      cachedHatchingPath.height !== height
+    ) {
+      cachedHatchingPath = buildDiagonalHatching(width, height);
+    }
 
-    let seg = pencilSegments[0];
-    for (let i = 0; i < pencilSegments.length; i++) {
-      const s = pencilSegments[i];
-      if (targetDist <= s.startDist + s.len || i === pencilSegments.length - 1) {
+    const clampedP = Math.min(1, Math.max(0, p));
+    const targetDist = clampedP * cachedHatchingPath.totalLength;
+
+    let seg = cachedHatchingPath.strokes[0];
+    for (let i = 0; i < cachedHatchingPath.strokes.length; i++) {
+      const s = cachedHatchingPath.strokes[i];
+      if (targetDist <= s.startDist + s.len || i === cachedHatchingPath.strokes.length - 1) {
         seg = s;
         break;
       }
@@ -275,42 +191,23 @@
 
     const localT = Math.min(1, Math.max(0, (targetDist - seg.startDist) / (seg.len || 0.001)));
 
-    let xNorm: number;
-    let yNorm: number;
-    let dxNorm: number;
-    let dyNorm: number;
-
-    if (seg.isDrawing) {
-      xNorm = catmullRom(seg.p0.x, seg.p1.x, seg.p2.x, seg.p3.x, localT);
-      yNorm = catmullRom(seg.p0.y, seg.p1.y, seg.p2.y, seg.p3.y, localT);
-      dxNorm = catmullRomDerivative(seg.p0.x, seg.p1.x, seg.p2.x, seg.p3.x, localT);
-      dyNorm = catmullRomDerivative(seg.p0.y, seg.p1.y, seg.p2.y, seg.p3.y, localT);
+    let x: number;
+    let y: number;
+    if (seg.isStroke || !seg.p2) {
+      x = seg.p0.x + (seg.p1.x - seg.p0.x) * localT;
+      y = seg.p0.y + (seg.p1.y - seg.p0.y) * localT;
     } else {
-      // Smooth hermite air glide
-      const st = localT * localT * (3 - 2 * localT);
-      xNorm = seg.p1.x + (seg.p2.x - seg.p1.x) * st;
-      yNorm = seg.p1.y + (seg.p2.y - seg.p1.y) * st;
-      dxNorm = (seg.p2.x - seg.p1.x) * 6 * localT * (1 - localT);
-      dyNorm = (seg.p2.y - seg.p1.y) * 6 * localT * (1 - localT);
+      const u = 1 - localT;
+      x = u * u * seg.p0.x + 2 * u * localT * seg.p1.x + localT * localT * seg.p2.x;
+      y = u * u * seg.p0.y + 2 * u * localT * seg.p1.y + localT * localT * seg.p2.y;
     }
-
-    const x = xNorm * width;
-    const y = yNorm * height;
-
-    // Organic hand tilt: comfortably anchored around -45° (right-handed artist grip)
-    // with gentle dynamic response to drawing direction
-    const strokeAngle = Math.atan2(dyNorm * height, dxNorm * width);
-    let angleDev = 0;
-    if (Math.hypot(dxNorm, dyNorm) > 0.001) {
-      angleDev = Math.sin(strokeAngle) * 0.16;
-    }
-    const angle = -0.75 + angleDev; // ~ -43° ± 9°
 
     return {
       x,
       y,
-      angle,
-      isDrawing: seg.isDrawing,
+      angle: seg.angle,
+      isDrawing: true,
+      isUpRight: seg.isUpRight,
     };
   }
 
@@ -614,41 +511,45 @@
         const p = prevSketchPortion + ((sketchPortion - prevSketchPortion) * s) / subSteps;
         const pt = getPencilPoint(p, width, height);
 
-        if (pt.isDrawing) {
-          maskCtx.globalCompositeOperation = 'source-over';
+        maskCtx.globalCompositeOperation = 'source-over';
+        maskCtx.lineCap = 'round';
+        maskCtx.lineJoin = 'round';
+
+        if (prevStrokePt) {
+          // Soft textured feathering along the stroke edge for paper texture
+          maskCtx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+          maskCtx.lineWidth = Math.max(34, width * 0.14);
+          maskCtx.beginPath();
+          maskCtx.moveTo(prevStrokePt.x, prevStrokePt.y);
+          maskCtx.lineTo(pt.x, pt.y);
+          maskCtx.stroke();
+
+          // Main crisp hatching stroke following the sketch slant (~42 deg)
           maskCtx.strokeStyle = 'rgba(255, 255, 255, 1)';
-          maskCtx.lineWidth = Math.max(14, width * 0.095);
-          maskCtx.lineCap = 'round';
-          maskCtx.lineJoin = 'round';
-
-          if (prevStrokePt) {
-            maskCtx.beginPath();
-            maskCtx.moveTo(prevStrokePt.x, prevStrokePt.y);
-            maskCtx.lineTo(pt.x, pt.y);
-            maskCtx.stroke();
-          }
-
-          prevStrokePt = { x: pt.x, y: pt.y };
-        } else {
-          // Pen lifted in air: break stroke line
-          prevStrokePt = null;
+          maskCtx.lineWidth = Math.max(22, width * 0.1);
+          maskCtx.beginPath();
+          maskCtx.moveTo(prevStrokePt.x, prevStrokePt.y);
+          maskCtx.lineTo(pt.x, pt.y);
+          maskCtx.stroke();
         }
+
+        prevStrokePt = { x: pt.x, y: pt.y };
       }
 
       const finalPt = getPencilPoint(sketchPortion, width, height);
       toolPos.x = finalPt.x;
       toolPos.y = finalPt.y;
       toolPos.angle = finalPt.angle;
-      toolPos.isLifting = !finalPt.isDrawing;
+      toolPos.isLifting = false;
 
-      if (finalPt.isDrawing && Math.random() < 0.25) {
-        spawnParticles(finalPt.x, finalPt.y, false, 0);
+      if (Math.random() < 0.22) {
+        spawnParticles(finalPt.x, finalPt.y, false, finalPt.isUpRight ? 1 : -1);
       }
 
-      // Progressive tonal wash smoothly builds up across the portrait as drawing nears completion
-      if (sketchPortion > 0.45) {
-        const washFactor = (sketchPortion - 0.45) / 0.55;
-        const frameAlpha = Math.min(0.045, washFactor * 0.04 * (dt / 0.016));
+      // Final microscopic polish only in the very last 10%
+      if (sketchPortion > 0.9) {
+        const washFactor = (sketchPortion - 0.9) / 0.1;
+        const frameAlpha = Math.min(0.06, washFactor * 0.05 * (dt / 0.016));
         maskCtx.globalCompositeOperation = 'source-over';
         maskCtx.fillStyle = `rgba(255, 255, 255, ${frameAlpha})`;
         maskCtx.fillRect(0, 0, width, height);
