@@ -160,6 +160,15 @@ html {
   scroll-padding-top: 4.5rem;
 }
 
+/*
+ * SvelteKit adapter-static pre-renders in English. If the user previously
+ * chose Indonesian, hold visibility until client hydration completes (~20-50ms)
+ * to avoid flashing English text before switching to Indonesian.
+ */
+html.locale-id:not(.hydrated) body {
+  visibility: hidden;
+}
+
 body {
   background-color: var(--color-paper);
   color: var(--color-ink);

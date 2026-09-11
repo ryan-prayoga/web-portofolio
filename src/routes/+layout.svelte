@@ -19,6 +19,7 @@
 
   onMount(() => {
     localeStore.init();
+    document.documentElement.classList.add('hydrated');
 
     const enableTestTeardown = new URLSearchParams(window.location.search).has('test-teardown');
     const teardownApp = () => (appMounted = false);

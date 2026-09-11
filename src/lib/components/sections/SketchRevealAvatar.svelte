@@ -29,6 +29,7 @@
   let lastTimestamp = 0;
   let sketchImg: HTMLImageElement | null = null;
   let isSketchLoaded = false;
+  let isCanvasReady = $state(false);
 
   // Offscreen canvas for cumulative stroke masking
   let maskCanvas: HTMLCanvasElement | null = null;
@@ -644,6 +645,9 @@
 
     initMask(currentVisualProgress === 0);
     redrawCanvas();
+    if (isSketchLoaded) {
+      isCanvasReady = true;
+    }
   }
 
   onMount(() => {
@@ -722,13 +726,33 @@
       bind:this={containerEl}
       class="group relative block aspect-4/5 w-full overflow-hidden select-none outline-none"
     >
-      <!-- Base Layer: Real Photo (Authentic original full-color portrait) -->
+      <!-- Layer 1: Real Photo (Authentic original full-color portrait revealed on erase) -->
       <picture class="block h-full w-full overflow-hidden">
         <source type="image/avif" srcset="/photo/ryan-480.avif 1x, /photo/ryan-700.avif 2x" />
         <source type="image/webp" srcset="/photo/ryan-480.webp 1x, /photo/ryan-700.webp 2x" />
         <img
           src="/photo/ryan-480.jpg"
           srcset="/photo/ryan-480.jpg 1x, /photo/ryan-700.jpg 2x"
+          alt={t.hero.photoAlt}
+          width="480"
+          height="600"
+          class="block h-full w-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+
+      <!-- Layer 2: Static Sketch (Visible in SSR/HTML before canvas loads, eliminates real photo flash) -->
+      <picture
+        class="pointer-events-none absolute inset-0 block h-full w-full overflow-hidden transition-opacity duration-150 {isCanvasReady
+          ? 'opacity-0 invisible'
+          : 'opacity-100'}"
+        aria-hidden={isCanvasReady}
+      >
+        <source type="image/webp" srcset="/photo/ryan-sketch-480.webp 1x, /photo/ryan-sketch-700.webp 2x" />
+        <img
+          src="/photo/ryan-sketch-480.jpg"
+          srcset="/photo/ryan-sketch-480.jpg 1x, /photo/ryan-sketch-700.jpg 2x"
           alt={t.hero.photoAlt}
           width="480"
           height="600"
