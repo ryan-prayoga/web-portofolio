@@ -79,7 +79,7 @@ test.describe('SketchRevealAvatar interactivity', () => {
     await context.close();
   });
 
-  test('captures screenshots of sketch and revealed photo states', async ({ page }) => {
+  test('captures screenshots of sketch and revealed photo states', async ({ page }, testInfo) => {
     await page.goto('/');
     await page.waitForTimeout(800);
 
@@ -89,7 +89,7 @@ test.describe('SketchRevealAvatar interactivity', () => {
     const box = await avatarCard.boundingBox();
     if (box) {
       await page.screenshot({
-        path: '/Users/ryanprayoga/.gemini/antigravity/brain/8fd13374-bb70-4067-8180-c003afd6b8f9/screenshot-sketch.png',
+        path: testInfo.outputPath('screenshot-sketch.png'),
         clip: {
           x: Math.max(0, box.x - 20),
           y: Math.max(0, box.y - 20),
@@ -102,7 +102,7 @@ test.describe('SketchRevealAvatar interactivity', () => {
       await page.waitForTimeout(1000);
 
       await page.screenshot({
-        path: '/Users/ryanprayoga/.gemini/antigravity/brain/8fd13374-bb70-4067-8180-c003afd6b8f9/screenshot-photo.png',
+        path: testInfo.outputPath('screenshot-photo.png'),
         clip: {
           x: Math.max(0, box.x - 20),
           y: Math.max(0, box.y - 20),
@@ -121,7 +121,7 @@ test.describe('SketchRevealAvatar interactivity', () => {
       await page.waitForTimeout(1200);
 
       await page.screenshot({
-        path: '/Users/ryanprayoga/.gemini/antigravity/brain/8fd13374-bb70-4067-8180-c003afd6b8f9/screenshot-sketch-dark.png',
+        path: testInfo.outputPath('screenshot-sketch-dark.png'),
         clip: {
           x: Math.max(0, box.x - 20),
           y: Math.max(0, box.y - 20),
