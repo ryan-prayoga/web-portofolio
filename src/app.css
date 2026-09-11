@@ -51,10 +51,11 @@
   --color-accent: #a33b14;
   --color-accent-soft: #f4e9e3;
 
-  --font-sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Patrick Hand', cursive, system-ui, -apple-system, sans-serif;
   --font-display: 'Patrick Hand', cursive, sans-serif;
   --font-hand: 'Patrick Hand', cursive, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-grotesk: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
 }
 
 :root {
