@@ -4,6 +4,7 @@
   import { caseStudies } from '$lib/data/caseStudies';
   import { projectCopy } from '$lib/data/projectCopy';
   import { drawCard, drawBadge, drawButton } from '$lib/actions/drawably';
+  import Icon from '$lib/components/Icon.svelte';
   import type { FeaturedSlug } from '$lib/data/projects';
 
   let { data } = $props();
@@ -53,7 +54,7 @@
     href="/#work"
     class="text-muted hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs tracking-wide uppercase transition-colors"
   >
-    <span aria-hidden="true">←</span>
+    <Icon name="arrowLeft" size={13} />
     {t.caseStudy.back}
   </a>
 
@@ -80,12 +81,16 @@
         use:drawButton={{ variant: 'solid', resketchOnHover: true }}
         class="bg-accent text-paper inline-flex items-center gap-2 px-4 py-2 font-mono text-xs tracking-wide uppercase transition-opacity hover:opacity-90"
       >
-        {externalLabel} <span aria-hidden="true">↗</span>
+        {externalLabel}
+        <Icon name="arrowUpRight" size={13} />
       </a>
 
-      <div class="flex flex-wrap gap-1.5">
+      <div class="flex flex-wrap gap-2">
         {#each data.project.stack as tech (tech)}
-          <span class="bg-muted/10 text-muted px-2 py-0.5 font-mono text-[0.65rem] uppercase">
+          <span
+            use:drawBadge={{ variant: 'outline' }}
+            class="px-2 py-0.5 font-mono text-[0.65rem] text-muted uppercase"
+          >
             {tech}
           </span>
         {/each}

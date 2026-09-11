@@ -87,6 +87,23 @@
   --drawably-stroke: var(--color-accent) !important;
 }
 
+/*
+ * Drawably button:
+ * Menghilangkan background CSS tombol saat Drawably aktif agar tidak muncul
+ * kotak persegi ganda di belakang sketsa SVG (double border).
+ * Varian solid menggunakan warna aksen sketsa dengan teks kontras warna paper.
+ */
+.drawably-button {
+  background-color: transparent !important;
+}
+
+.drawably-button--solid {
+  --drawably-ink: var(--color-accent) !important;
+  --drawably-stroke: var(--color-accent) !important;
+  --drawably-fill: var(--color-accent) !important;
+  color: var(--color-paper) !important;
+}
+
 /* ═══════════════════════════════════════════════
    VIEW TRANSITIONS (THEME REVEAL) — Kas Badminton style
    Reveal lingkaran ber-blur dari pojok kanan atas

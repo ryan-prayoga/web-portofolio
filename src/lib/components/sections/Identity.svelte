@@ -6,6 +6,7 @@
   import { socials } from '$lib/data/socials';
   import { drawCard, drawButton, drawBadge } from '$lib/actions/drawably';
   import SketchRevealAvatar from '$lib/components/sections/SketchRevealAvatar.svelte';
+  import Icon from '$lib/components/Icon.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -47,7 +48,8 @@
           use:drawButton={{ variant: 'solid', resketchOnHover: true }}
           class="bg-accent text-paper inline-flex items-center gap-2 px-5 py-2.5 font-mono text-xs tracking-wide uppercase transition-opacity hover:opacity-90"
         >
-          {t.hero.downloadCv} <span aria-hidden="true">↓</span>
+          {t.hero.downloadCv}
+          <Icon name="arrowDown" size={13} />
         </a>
         <a
           href={email?.url}
@@ -63,7 +65,7 @@
           use:drawButton={{ variant: 'outline', resketchOnHover: true }}
           class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2.5 font-mono text-xs tracking-wide uppercase transition-colors active:scale-95"
         >
-          GitHub <span aria-hidden="true">↗</span>
+          GitHub <Icon name="arrowUpRight" size={13} />
         </a>
         <a
           href={linkedin?.url}
@@ -72,7 +74,7 @@
           use:drawButton={{ variant: 'outline', resketchOnHover: true }}
           class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2.5 font-mono text-xs tracking-wide uppercase transition-colors active:scale-95"
         >
-          LinkedIn <span aria-hidden="true">↗</span>
+          LinkedIn <Icon name="arrowUpRight" size={13} />
         </a>
       </div>
     </div>

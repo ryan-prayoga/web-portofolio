@@ -1,5 +1,6 @@
 <script lang="ts">
   import { localeStore } from '$lib/stores/locale.svelte';
+  import Icon from '$lib/components/Icon.svelte';
 
   const copy = $derived(
     localeStore.value === 'id'
@@ -19,8 +20,9 @@
   <p class="text-muted mt-3">{copy.body}</p>
   <a
     href="/"
-    class="border-rule hover:border-accent hover:text-accent mt-8 inline-flex border px-4 py-2 font-mono text-xs tracking-wide uppercase transition-colors"
+    class="border-rule hover:border-accent hover:text-accent mt-8 inline-flex items-center gap-1.5 border px-4 py-2 font-mono text-xs tracking-wide uppercase transition-colors"
   >
-    ← {copy.back}
+    <Icon name="arrowLeft" size={13} />
+    {copy.back}
   </a>
 </main>

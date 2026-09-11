@@ -34,7 +34,10 @@
         </div>
         <dd class="mt-4 flex flex-wrap gap-2">
           {#each group.items as item (item)}
-            <span class="bg-muted/10 text-muted hover:text-ink px-2.5 py-1 font-mono text-xs transition-colors">
+            <span
+              use:drawBadge={{ variant: 'outline' }}
+              class="px-2.5 py-0.5 font-mono text-xs text-muted hover:text-ink transition-colors"
+            >
               {item}
             </span>
           {/each}

@@ -4,6 +4,7 @@
   import { uiCopy } from '$lib/data/uiCopy';
   import { drawButton } from '$lib/actions/drawably';
   import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+  import Icon from '$lib/components/Icon.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -146,7 +147,7 @@
     {/each}
   </div>
 
-  <div class="nav-actions flex items-center gap-2.5 sm:gap-3.5">
+  <div class="nav-actions flex items-center gap-2 sm:gap-2.5">
     <span class="status text-muted hidden items-center gap-2 font-mono text-xs uppercase min-[900px]:inline-flex">
       <i class="bg-accent inline-block h-1.5 w-1.5 rounded-full" aria-hidden="true"></i>{t.status}
     </span>
@@ -167,9 +168,9 @@
       href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}
       download
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="nav-cv hidden sm:inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-3 !py-1 font-mono text-xs uppercase transition-colors text-ink hover:text-accent active:scale-95"
+      class="nav-cv hidden sm:inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-2.5 !py-1 font-mono text-xs uppercase transition-colors text-ink hover:text-accent active:scale-95"
     >
-      CV <span aria-hidden="true" class="ml-1">↓</span>
+      CV <Icon name="arrowDown" size={12} class="ml-1 inline-block" />
     </a>
     <button
       id={toggleId}
@@ -214,10 +215,11 @@
             <span class="text-accent font-mono text-sm font-semibold" aria-hidden="true">0{i + 1}</span>
             <span class="group-hover:translate-x-1.5 transition-transform duration-200">{item.label}</span>
           </div>
-          <span
-            class="text-muted/40 font-mono text-sm group-hover:text-accent group-hover:translate-x-1 transition-all"
-            aria-hidden="true">→</span
-          >
+          <Icon
+            name="arrowRight"
+            size={20}
+            class="text-muted/40 group-hover:text-accent group-hover:translate-x-1 transition-all"
+          />
         </a>
       {/each}
       <a
@@ -226,7 +228,7 @@
         class="border-rule group text-accent flex items-baseline justify-between border-t border-b py-4 text-3xl font-display font-bold tracking-tight hover:opacity-85 transition-opacity active:scale-[0.99]"
       >
         <div class="flex items-baseline gap-4">
-          <span class="font-mono text-sm font-semibold" aria-hidden="true">↓</span>
+          <Icon name="arrowDown" size={18} class="text-accent" />
           <span class="group-hover:translate-x-1.5 transition-transform duration-200">{t.hero.downloadCv}</span>
         </div>
         <span class="text-accent/60 font-mono text-xs tracking-wider uppercase" aria-hidden="true">[PDF]</span>

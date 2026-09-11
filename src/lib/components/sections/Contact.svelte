@@ -5,6 +5,7 @@
   import { socials } from '$lib/data/socials';
   import { reveal } from '$lib/actions/reveal';
   import { drawCard, drawBadge, drawButton } from '$lib/actions/drawably';
+  import Icon from '$lib/components/Icon.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -103,8 +104,9 @@
     use:drawCard={{ resketchOnHover: true }}
     class="group mt-8 block cursor-pointer p-8 transition-transform hover:-translate-y-0.5 sm:p-10"
   >
-    <span class="text-accent font-mono text-xs tracking-wide uppercase">
-      {t.contact.emailCta} <span aria-hidden="true">↗</span>
+    <span class="text-accent inline-flex items-center gap-1 font-mono text-xs tracking-wide uppercase">
+      {t.contact.emailCta}
+      <Icon name="arrowUpRight" size={13} />
     </span>
     <span
       class="group-hover:text-accent mt-3 block text-2xl font-display font-bold tracking-tight break-all transition-colors sm:text-4xl"
@@ -122,7 +124,7 @@
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
       class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-mono text-xs uppercase transition-colors active:scale-95"
     >
-      GitHub <span aria-hidden="true">↗</span>
+      GitHub <Icon name="arrowUpRight" size={13} />
     </a>
     <a
       href={linkedin?.url}
@@ -131,7 +133,7 @@
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
       class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-mono text-xs uppercase transition-colors active:scale-95"
     >
-      LinkedIn <span aria-hidden="true">↗</span>
+      LinkedIn <Icon name="arrowUpRight" size={13} />
     </a>
     <a
       href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}
@@ -139,7 +141,7 @@
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
       class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-mono text-xs uppercase transition-colors active:scale-95"
     >
-      CV (PDF) <span aria-hidden="true">↓</span>
+      CV (PDF) <Icon name="arrowDown" size={13} />
     </a>
     <div class="mt-4 flex w-full flex-col font-mono text-xs uppercase sm:mt-0 sm:w-auto sm:ml-auto sm:items-end">
       <span class="text-muted">Tangerang, ID · UTC+7</span>

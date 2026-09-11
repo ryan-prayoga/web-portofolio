@@ -5,6 +5,7 @@
   import { projectCopy } from '$lib/data/projectCopy';
   import { reveal } from '$lib/actions/reveal';
   import { drawCard, drawBadge, drawButton } from '$lib/actions/drawably';
+  import Icon from '$lib/components/Icon.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
   const copy = $derived(projectCopy[localeStore.value]);
@@ -48,9 +49,12 @@
 
           <p class="text-muted mt-3 max-w-prose text-sm leading-relaxed">{copy[project.slug].summary}</p>
 
-          <ul class="mt-4 flex flex-wrap gap-1.5">
+          <ul class="mt-4 flex flex-wrap gap-2">
             {#each project.stack as tech (tech)}
-              <li class="bg-muted/10 text-muted px-2 py-0.5 font-mono text-[0.65rem] uppercase">
+              <li
+                use:drawBadge={{ variant: 'outline' }}
+                class="px-2 py-0.5 font-mono text-[0.65rem] text-muted uppercase"
+              >
                 {tech}
               </li>
             {/each}
@@ -62,16 +66,18 @@
               use:drawButton={{ variant: 'solid', resketchOnHover: true }}
               class="bg-accent text-paper inline-flex items-center gap-2 px-4 py-1.5 font-mono text-xs tracking-wide uppercase transition-opacity hover:opacity-85"
             >
-              {t.work.caseStudy} <span aria-hidden="true">→</span>
+              {t.work.caseStudy}
+              <Icon name="arrowRight" size={13} />
             </a>
 
             <a
               href={project.destination.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-muted hover:text-accent font-mono text-xs uppercase underline-offset-4 hover:underline"
+              class="text-muted hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs uppercase underline-offset-4 hover:underline"
             >
-              {project.destination.kind === 'site' ? t.work.visit : t.work.source} <span aria-hidden="true">↗</span>
+              {project.destination.kind === 'site' ? t.work.visit : t.work.source}
+              <Icon name="arrowUpRight" size={13} />
             </a>
           </div>
         </div>
@@ -79,7 +85,7 @@
         {#if base}
           <a
             href="/work/{project.slug}"
-            class="relative block w-full aspect-[1100/688] overflow-hidden md:aspect-auto md:min-h-full"
+            class="relative block w-full aspect-[1100/688] overflow-hidden rounded-lg border border-rule/40 md:aspect-auto md:min-h-full"
             aria-hidden="true"
             tabindex="-1"
           >
@@ -126,15 +132,19 @@
         <p class="text-muted font-mono text-[0.65rem] tracking-wider uppercase">{project.category} / {project.year}</p>
         <h3 class="group-hover:text-accent mt-2 font-semibold tracking-tight transition-colors">
           {project.name}
-          <span class="text-muted group-hover:text-accent ml-1 text-sm" aria-hidden="true">↗</span>
+          <span class="text-muted group-hover:text-accent ml-1 inline-flex items-center text-sm" aria-hidden="true">
+            <Icon name="arrowUpRight" size={13} />
+          </span>
           <span class="sr-only">
             ({project.destination.kind === 'source' ? t.work.source : t.work.visit})
           </span>
         </h3>
         <p class="text-muted mt-2 text-sm leading-relaxed">{copy[project.slug].summary}</p>
-        <ul class="mt-4 flex flex-wrap gap-1.5">
+        <ul class="mt-4 flex flex-wrap gap-2">
           {#each project.stack as tech (tech)}
-            <li class="bg-muted/10 text-muted px-2 py-0.5 font-mono text-[0.6rem] uppercase">{tech}</li>
+            <li use:drawBadge={{ variant: 'outline' }} class="px-2 py-0.5 font-mono text-[0.6rem] text-muted uppercase">
+              {tech}
+            </li>
           {/each}
         </ul>
       </a>

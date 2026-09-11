@@ -2,6 +2,7 @@
   import { localeStore } from '$lib/stores/locale.svelte';
   import { uiCopy } from '$lib/data/uiCopy';
   import { profile } from '$lib/data/profile';
+  import Icon from '$lib/components/Icon.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
 
@@ -18,10 +19,12 @@
 >
   <span>© 2026 {profile.name}</span>
   <span>{profile.location}</span>
-  <a href="/freelance" class="hover:text-accent transition-colors">
-    {localeStore.value === 'id' ? 'Jasa Web Portofolio' : 'Freelance Service'} ↗
+  <a href="/freelance" class="hover:text-accent inline-flex items-center gap-1 transition-colors">
+    {localeStore.value === 'id' ? 'Jasa Web Portofolio' : 'Freelance Service'}
+    <Icon name="arrowUpRight" size={12} />
   </a>
-  <a href="#top" onclick={toTop} class="no-print hover:text-accent"
-    >{t.footer.backToTop} <span aria-hidden="true">↑</span></a
-  >
+  <a href="#top" onclick={toTop} class="no-print hover:text-accent inline-flex items-center gap-1">
+    {t.footer.backToTop}
+    <Icon name="arrowUp" size={12} />
+  </a>
 </footer>
