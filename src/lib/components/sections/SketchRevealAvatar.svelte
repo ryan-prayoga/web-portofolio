@@ -639,10 +639,12 @@
     coarseMedia.addEventListener('change', onCoarseChange);
     reducedMedia.addEventListener('change', onReducedChange);
 
+    const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
+    const isRetina = dpr > 1;
     const img = new Image();
-    img.src = '/photo/ryan-sketch-480.webp';
+    img.src = isRetina ? '/photo/ryan-sketch-700.webp' : '/photo/ryan-sketch-480.webp';
     img.onerror = () => {
-      img.src = '/photo/ryan-sketch-480.jpg';
+      img.src = isRetina ? '/photo/ryan-sketch-700.jpg' : '/photo/ryan-sketch-480.jpg';
     };
     img.onload = () => {
       sketchImg = img;
@@ -696,16 +698,17 @@
       bind:this={containerEl}
       class="group relative block aspect-4/5 w-full overflow-hidden select-none outline-none"
     >
-      <!-- Base Layer: Real Photo (Semantic <picture> for SEO and Performance) -->
+      <!-- Base Layer: Real Photo (Authentic original full-color portrait) -->
       <picture class="block h-full w-full overflow-hidden">
-        <source type="image/avif" srcset="/photo/ryan-480.avif" />
-        <source type="image/webp" srcset="/photo/ryan-480.webp" />
+        <source type="image/avif" srcset="/photo/ryan-480.avif 1x, /photo/ryan-700.avif 2x" />
+        <source type="image/webp" srcset="/photo/ryan-480.webp 1x, /photo/ryan-700.webp 2x" />
         <img
           src="/photo/ryan-480.jpg"
+          srcset="/photo/ryan-480.jpg 1x, /photo/ryan-700.jpg 2x"
           alt={t.hero.photoAlt}
           width="480"
           height="600"
-          class="block h-full w-full object-cover grayscale contrast-105 transition-all duration-700 group-hover:grayscale-0"
+          class="block h-full w-full object-cover"
           fetchpriority="high"
         />
       </picture>
