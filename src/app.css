@@ -19,7 +19,7 @@
 @font-face {
   font-family: 'Patrick Hand';
   src: url('/fonts/patrick-hand.woff2') format('woff2');
-  font-weight: 400;
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
