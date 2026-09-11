@@ -59,13 +59,13 @@
     isLifting: false,
   };
 
-  // --- ERASER MOTION (Natural diagonal chalkboard wiping) ---
+  // --- ERASER MOTION (Natural diagonal chalkboard wiping with compact sweeps) ---
   function getEraserPoint(p: number, width: number, height: number) {
     const clampedP = Math.min(1, Math.max(0, p));
-    const sweeps = 8;
+    const sweeps = 14;
 
-    // Steady top-to-bottom progression from slightly above (-15) to past the bottom (height + 35)
-    const y = -15 + (height + 50) * Math.pow(clampedP, 1.05);
+    // Steady top-to-bottom progression from slightly above (-10) to past the bottom (height + 25)
+    const y = -10 + (height + 35) * Math.pow(clampedP, 1.05);
 
     // Natural rhythmic sweeping across canvas width
     const sweepPhase = clampedP * sweeps * Math.PI;
@@ -331,56 +331,56 @@
     ctx.translate(x, y);
     ctx.rotate(angle);
 
-    const w = 54;
-    const h = 26;
+    const w = 38;
+    const h = 18;
 
     // Soft drop shadow
     ctx.fillStyle = 'rgba(0, 0, 0, 0.28)';
     ctx.beginPath();
-    ctx.ellipse(2, 6, w * 0.46, h * 0.32, 0, 0, Math.PI * 2);
+    ctx.ellipse(1.5, 4.5, w * 0.46, h * 0.32, 0, 0, Math.PI * 2);
     ctx.fill();
 
     // Solid hardwood handle (natural carved amber oak)
     ctx.fillStyle = '#b45309';
     ctx.beginPath();
-    ctx.roundRect(-w / 2, -h / 2 - 5, w, 12, [5, 5, 0, 0]);
+    ctx.roundRect(-w / 2, -h / 2 - 4, w, 9, [3.5, 3.5, 0, 0]);
     ctx.fill();
 
     // Woodgrain highlight
     ctx.fillStyle = '#d97706';
     ctx.beginPath();
-    ctx.roundRect(-w / 2 + 4, -h / 2 - 3, w - 8, 3.5, 1.5);
+    ctx.roundRect(-w / 2 + 3, -h / 2 - 2.5, w - 6, 2.5, 1);
     ctx.fill();
 
     // Dark grip groove
     ctx.strokeStyle = '#78350f';
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 0.8;
     ctx.beginPath();
-    ctx.moveTo(-w / 2 + 8, -h / 2 + 2);
-    ctx.lineTo(w / 2 - 8, -h / 2 + 2);
+    ctx.moveTo(-w / 2 + 6, -h / 2 + 1.5);
+    ctx.lineTo(w / 2 - 6, -h / 2 + 1.5);
     ctx.stroke();
 
     // Dark charcoal wool felt bottom pad
     ctx.fillStyle = '#1f2937';
     ctx.beginPath();
-    ctx.roundRect(-w / 2, -h / 2 + 7, w, h - 7, [0, 0, 4, 4]);
+    ctx.roundRect(-w / 2, -h / 2 + 5, w, h - 5, [0, 0, 3, 3]);
     ctx.fill();
 
     // Felt texture stripe (slate charcoal)
     ctx.fillStyle = '#374151';
-    ctx.fillRect(-w / 2 + 2, -h / 2 + 9, w - 4, 3.5);
+    ctx.fillRect(-w / 2 + 2, -h / 2 + 6.5, w - 4, 2.5);
 
     // Chalk dust trace along bottom rubbing edge
     ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
     ctx.beginPath();
-    ctx.roundRect(-w / 2 + 2, h / 2 - 3, w - 4, 2.5, [0, 0, 2, 2]);
+    ctx.roundRect(-w / 2 + 2, h / 2 - 2.5, w - 4, 2, [0, 0, 1.5, 1.5]);
     ctx.fill();
 
     // Eraser outline
     ctx.strokeStyle = 'rgba(15, 23, 42, 0.45)';
-    ctx.lineWidth = 1.1;
+    ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.roundRect(-w / 2, -h / 2 - 5, w, h + 5, 4);
+    ctx.roundRect(-w / 2, -h / 2 - 4, w, h + 4, 3);
     ctx.stroke();
 
     ctx.restore();
@@ -557,9 +557,9 @@
         const p = prevP + ((currentVisualProgress - prevP) * s) / subSteps;
         const pt = getEraserPoint(p, width, height);
 
-        // Broad felt eraser wipe (width ~ 36% of canvas, approx 58px)
+        // Compact felt eraser wipe (width ~ 19% of canvas, approx 28-32px)
         maskCtx.globalCompositeOperation = 'destination-out';
-        maskCtx.lineWidth = Math.max(48, width * 0.36);
+        maskCtx.lineWidth = Math.max(26, width * 0.19);
         maskCtx.lineCap = 'round';
         maskCtx.lineJoin = 'round';
 
@@ -570,9 +570,9 @@
           maskCtx.stroke();
         }
 
-        // Soft rounded felt head dab along path
-        const brushR = Math.max(30, width * 0.2);
-        const grad = maskCtx.createRadialGradient(pt.x, pt.y, brushR * 0.4, pt.x, pt.y, brushR);
+        // Soft compact felt head dab along path
+        const brushR = Math.max(16, width * 0.11);
+        const grad = maskCtx.createRadialGradient(pt.x, pt.y, brushR * 0.35, pt.x, pt.y, brushR);
         grad.addColorStop(0, 'rgba(0,0,0,1)');
         grad.addColorStop(0.85, 'rgba(0,0,0,0.95)');
         grad.addColorStop(1, 'rgba(0,0,0,0)');
@@ -589,7 +589,7 @@
       toolPos.y = finalPt.y;
       toolPos.angle = finalPt.angle;
 
-      const swipeDir = Math.cos(currentVisualProgress * 8 * Math.PI) < 0 ? -1 : 1;
+      const swipeDir = Math.cos(currentVisualProgress * 14 * Math.PI) < 0 ? -1 : 1;
       spawnParticles(finalPt.x, finalPt.y, true, swipeDir);
 
       if (currentVisualProgress >= 1) {
@@ -616,31 +616,47 @@
 
         if (pt.isDrawing) {
           maskCtx.globalCompositeOperation = 'source-over';
-
-          // 1. Crisp pencil stroke
-          const strokeW = Math.max(12, width * 0.075);
-          maskCtx.lineWidth = strokeW;
+          maskCtx.strokeStyle = 'rgba(255, 255, 255, 0.98)';
           maskCtx.lineCap = 'round';
           maskCtx.lineJoin = 'round';
-          maskCtx.strokeStyle = 'rgba(255, 255, 255, 0.96)';
 
           if (prevStrokePt) {
-            maskCtx.beginPath();
-            maskCtx.moveTo(prevStrokePt.x, prevStrokePt.y);
-            maskCtx.lineTo(pt.x, pt.y);
-            maskCtx.stroke();
-          }
+            const dx = pt.x - prevStrokePt.x;
+            const dy = pt.y - prevStrokePt.y;
+            const dist = Math.hypot(dx, dy);
 
-          // 2. Soft colored pencil bloom around drawn feature
-          const bloomR = Math.max(34, width * 0.22);
-          const grad = maskCtx.createRadialGradient(pt.x, pt.y, bloomR * 0.2, pt.x, pt.y, bloomR);
-          grad.addColorStop(0, 'rgba(255, 255, 255, 0.45)');
-          grad.addColorStop(0.65, 'rgba(255, 255, 255, 0.22)');
-          grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-          maskCtx.fillStyle = grad;
-          maskCtx.beginPath();
-          maskCtx.arc(pt.x, pt.y, bloomR, 0, Math.PI * 2);
-          maskCtx.fill();
+            if (dist > 0.05) {
+              const nx = -dy / dist;
+              const ny = dx / dist;
+
+              // 1. Crisp precision pencil stroke (sharp lead line)
+              const strokeW = Math.max(3.5, width * 0.022);
+              maskCtx.lineWidth = strokeW;
+              maskCtx.beginPath();
+              maskCtx.moveTo(prevStrokePt.x, prevStrokePt.y);
+              maskCtx.lineTo(pt.x, pt.y);
+              maskCtx.stroke();
+
+              // 2. Hand-drawn parallel scribble line (feathered double scratch)
+              const scribbleW = Math.max(2, width * 0.012);
+              const jitterOff = Math.sin(p * 100 * Math.PI) * 1.6;
+              maskCtx.lineWidth = scribbleW;
+              maskCtx.beginPath();
+              maskCtx.moveTo(prevStrokePt.x + nx * jitterOff, prevStrokePt.y + ny * jitterOff);
+              maskCtx.lineTo(pt.x + nx * jitterOff, pt.y + ny * jitterOff);
+              maskCtx.stroke();
+
+              // 3. Diagonal pencil scratch / hatching line across contour (nyoret garis pensil)
+              const scratchLen = Math.max(5, width * 0.03);
+              const sx = (nx * 0.65 + (dx / dist) * 0.65) * scratchLen * 0.5;
+              const sy = (ny * 0.65 + (dy / dist) * 0.65) * scratchLen * 0.5;
+              maskCtx.lineWidth = Math.max(1.8, width * 0.011);
+              maskCtx.beginPath();
+              maskCtx.moveTo(pt.x - sx, pt.y - sy);
+              maskCtx.lineTo(pt.x + sx, pt.y + sy);
+              maskCtx.stroke();
+            }
+          }
 
           prevStrokePt = { x: pt.x, y: pt.y };
         } else {
@@ -659,11 +675,12 @@
         spawnParticles(finalPt.x, finalPt.y, false, 0);
       }
 
-      // Progressive tonal wash smoothly builds up as drawing nears completion
-      if (sketchPortion > 0.7) {
-        const washAlpha = Math.pow((sketchPortion - 0.7) / 0.3, 1.8) * 0.22;
+      // Progressive tonal wash builds up smoothly across the whole portrait behind the scribbles
+      if (sketchPortion > 0.35) {
+        const washFactor = (sketchPortion - 0.35) / 0.65;
+        const frameAlpha = Math.min(0.045, washFactor * 0.035 * (dt / 0.016));
         maskCtx.globalCompositeOperation = 'source-over';
-        maskCtx.fillStyle = `rgba(255, 255, 255, ${washAlpha})`;
+        maskCtx.fillStyle = `rgba(255, 255, 255, ${frameAlpha})`;
         maskCtx.fillRect(0, 0, width, height);
       }
 
