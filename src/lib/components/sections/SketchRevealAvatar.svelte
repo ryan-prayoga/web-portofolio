@@ -62,7 +62,7 @@
   // --- ERASER MOTION (Natural diagonal chalkboard wiping with compact sweeps) ---
   function getEraserPoint(p: number, width: number, height: number) {
     const clampedP = Math.min(1, Math.max(0, p));
-    const sweeps = 14;
+    const sweeps = 13;
 
     // Steady top-to-bottom progression from slightly above (-10) to past the bottom (height + 25)
     const y = -10 + (height + 35) * Math.pow(clampedP, 1.05);
@@ -537,11 +537,11 @@
     const width = canvasEl.width;
     const height = canvasEl.height;
 
-    // Calm, luxurious pacing:
-    // Erase duration: ~2.4s (speed = 0.41)
-    // Sketch duration: ~3.4s (speed = 0.29)
-    const eraseSpeed = 0.41;
-    const sketchSpeed = 0.29;
+    // Balanced, responsive pacing ("pas waktu animasinya"):
+    // Erase duration: ~1.7s (speed = 0.58)
+    // Sketch duration: ~2.1s (speed = 0.48)
+    const eraseSpeed = 0.58;
+    const sketchSpeed = 0.48;
 
     if (targetProgress > currentVisualProgress) {
       // --- ERASING FORWARD (Sketch -> Photo) ---
@@ -589,7 +589,7 @@
       toolPos.y = finalPt.y;
       toolPos.angle = finalPt.angle;
 
-      const swipeDir = Math.cos(currentVisualProgress * 14 * Math.PI) < 0 ? -1 : 1;
+      const swipeDir = Math.cos(currentVisualProgress * 13 * Math.PI) < 0 ? -1 : 1;
       spawnParticles(finalPt.x, finalPt.y, true, swipeDir);
 
       if (currentVisualProgress >= 1) {
@@ -616,46 +616,16 @@
 
         if (pt.isDrawing) {
           maskCtx.globalCompositeOperation = 'source-over';
-          maskCtx.strokeStyle = 'rgba(255, 255, 255, 0.98)';
+          maskCtx.strokeStyle = 'rgba(255, 255, 255, 1)';
+          maskCtx.lineWidth = Math.max(14, width * 0.095);
           maskCtx.lineCap = 'round';
           maskCtx.lineJoin = 'round';
 
           if (prevStrokePt) {
-            const dx = pt.x - prevStrokePt.x;
-            const dy = pt.y - prevStrokePt.y;
-            const dist = Math.hypot(dx, dy);
-
-            if (dist > 0.05) {
-              const nx = -dy / dist;
-              const ny = dx / dist;
-
-              // 1. Crisp precision pencil stroke (sharp lead line)
-              const strokeW = Math.max(3.5, width * 0.022);
-              maskCtx.lineWidth = strokeW;
-              maskCtx.beginPath();
-              maskCtx.moveTo(prevStrokePt.x, prevStrokePt.y);
-              maskCtx.lineTo(pt.x, pt.y);
-              maskCtx.stroke();
-
-              // 2. Hand-drawn parallel scribble line (feathered double scratch)
-              const scribbleW = Math.max(2, width * 0.012);
-              const jitterOff = Math.sin(p * 100 * Math.PI) * 1.6;
-              maskCtx.lineWidth = scribbleW;
-              maskCtx.beginPath();
-              maskCtx.moveTo(prevStrokePt.x + nx * jitterOff, prevStrokePt.y + ny * jitterOff);
-              maskCtx.lineTo(pt.x + nx * jitterOff, pt.y + ny * jitterOff);
-              maskCtx.stroke();
-
-              // 3. Diagonal pencil scratch / hatching line across contour (nyoret garis pensil)
-              const scratchLen = Math.max(5, width * 0.03);
-              const sx = (nx * 0.65 + (dx / dist) * 0.65) * scratchLen * 0.5;
-              const sy = (ny * 0.65 + (dy / dist) * 0.65) * scratchLen * 0.5;
-              maskCtx.lineWidth = Math.max(1.8, width * 0.011);
-              maskCtx.beginPath();
-              maskCtx.moveTo(pt.x - sx, pt.y - sy);
-              maskCtx.lineTo(pt.x + sx, pt.y + sy);
-              maskCtx.stroke();
-            }
+            maskCtx.beginPath();
+            maskCtx.moveTo(prevStrokePt.x, prevStrokePt.y);
+            maskCtx.lineTo(pt.x, pt.y);
+            maskCtx.stroke();
           }
 
           prevStrokePt = { x: pt.x, y: pt.y };
@@ -675,10 +645,10 @@
         spawnParticles(finalPt.x, finalPt.y, false, 0);
       }
 
-      // Progressive tonal wash builds up smoothly across the whole portrait behind the scribbles
-      if (sketchPortion > 0.35) {
-        const washFactor = (sketchPortion - 0.35) / 0.65;
-        const frameAlpha = Math.min(0.045, washFactor * 0.035 * (dt / 0.016));
+      // Progressive tonal wash smoothly builds up across the portrait as drawing nears completion
+      if (sketchPortion > 0.45) {
+        const washFactor = (sketchPortion - 0.45) / 0.55;
+        const frameAlpha = Math.min(0.045, washFactor * 0.04 * (dt / 0.016));
         maskCtx.globalCompositeOperation = 'source-over';
         maskCtx.fillStyle = `rgba(255, 255, 255, ${frameAlpha})`;
         maskCtx.fillRect(0, 0, width, height);
