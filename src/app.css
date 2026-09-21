@@ -191,6 +191,13 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 4.5rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 /*

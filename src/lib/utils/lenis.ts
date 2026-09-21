@@ -41,6 +41,17 @@ export function initLenis(): (() => void) | undefined {
 
   rafId = requestAnimationFrame(raf);
 
+  const onResize = () => {
+    lenisInstance?.resize();
+  };
+  window.addEventListener('resize', onResize, { passive: true });
+
+  if (typeof document !== 'undefined' && document.fonts?.ready) {
+    document.fonts.ready.then(() => {
+      lenisInstance?.resize();
+    });
+  }
+
   // Smooth scroll handler for anchor links (e.g. href="#work", href="#top")
   function onAnchorClick(event: MouseEvent) {
     const link = (event.target as HTMLElement)?.closest('a');
@@ -71,6 +82,7 @@ export function initLenis(): (() => void) | undefined {
   document.addEventListener('click', onAnchorClick);
 
   return () => {
+    window.removeEventListener('resize', onResize);
     document.removeEventListener('click', onAnchorClick);
     if (rafId !== null) {
       cancelAnimationFrame(rafId);

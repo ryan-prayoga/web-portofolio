@@ -105,3 +105,90 @@ test('mobile viewport: verifies theme toggle icon sizing and ensures zero horizo
     await page.screenshot({ path: testInfo.outputPath(`mobile-${vp.name}-toggled.png`), fullPage: false });
   }
 });
+
+test('notebook margin line: verifies hidden scrollbar, proportional scroll progress, and non-overlapping positioning', async ({
+  page,
+}, testInfo) => {
+  // Test mobile viewport first
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+
+  // Verify native scrollbar is hidden via CSS
+  const scrollbarWidth = await page.evaluate(() => getComputedStyle(document.documentElement).scrollbarWidth);
+  expect(scrollbarWidth).toBe('none');
+
+  // Verify NotebookMargin is mounted
+  const marginContainer = page.locator('div[style*="left: max(10px"]');
+  await expect(marginContainer).toBeVisible();
+
+  // Check initial stroke offset at top of page (should be ~100)
+  const linePath = marginContainer.locator('path');
+  const initialOffset = await linePath.evaluate((el) => {
+    return parseFloat(el.style.strokeDashoffset);
+  });
+  expect(initialOffset).toBeGreaterThanOrEqual(95);
+
+  // Check horizontal position on mobile (should be at left ~10px)
+  const mobileMarginBox = await marginContainer.boundingBox();
+  expect(mobileMarginBox).not.toBeNull();
+  // Stroke center is at 10px, container width is 16px centered with translateX(-50%), so left edge is at 2px
+  expect(mobileMarginBox!.x).toBeCloseTo(2, 0);
+
+  // First card in experience section
+  const firstCard = page.locator('#experience article').first();
+  await expect(firstCard).toBeVisible();
+  const cardBox = await firstCard.boundingBox();
+  expect(cardBox).not.toBeNull();
+  // Card should have plenty of breathing room (>= 10px) from the margin line
+  const marginLineCenter = mobileMarginBox!.x + mobileMarginBox!.width / 2;
+  expect(cardBox!.x - marginLineCenter).toBeGreaterThanOrEqual(10);
+
+  // Scroll 50% of the page
+  await page.evaluate(() => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    window.scrollTo(0, maxScroll * 0.5);
+  });
+  await page.waitForTimeout(300);
+
+  const midOffset = await linePath.evaluate((el) => {
+    return parseFloat(el.style.strokeDashoffset);
+  });
+  // Progress at 50% scroll must be around 50%, NOT completed (not 0)
+  expect(midOffset).toBeGreaterThan(25);
+  expect(midOffset).toBeLessThan(75);
+
+  // Take mobile screenshot during mid-scroll
+  await page.screenshot({ path: testInfo.outputPath('notebook-margin-mobile-mid.png'), fullPage: false });
+
+  // Scroll to absolute bottom of page
+  await page.evaluate(() => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    window.scrollTo({ top: maxScroll, behavior: 'instant' });
+  });
+  await page.waitForFunction(() => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    return Math.abs(window.scrollY - maxScroll) < 5;
+  });
+  await page.waitForTimeout(100);
+
+  const bottomOffset = await linePath.evaluate((el) => {
+    return parseFloat(el.style.strokeDashoffset);
+  });
+  // At the bottom, progress should reach 100% (offset ~ 0)
+  expect(bottomOffset).toBeLessThanOrEqual(5);
+
+  // Now test desktop viewport
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto('/');
+  await page.waitForTimeout(300);
+
+  const desktopMarginBox = await marginContainer.boundingBox();
+  expect(desktopMarginBox).not.toBeNull();
+  // On desktop 1280px, container 1024px starts at (1280 - 1024) / 2 = 128px.
+  // Line center is at 128 + 8 = 136px. With 16px width centered (-50%), x is around 128px.
+  expect(desktopMarginBox!.x).toBeGreaterThan(120);
+  expect(desktopMarginBox!.x).toBeLessThan(135);
+
+  // Capture desktop screenshot
+  await page.screenshot({ path: testInfo.outputPath('notebook-margin-desktop.png'), fullPage: false });
+});
