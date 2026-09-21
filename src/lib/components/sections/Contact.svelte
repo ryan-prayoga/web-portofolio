@@ -102,11 +102,15 @@
     href={email?.url}
     use:reveal
     use:drawCard={{ resketchOnHover: true }}
-    class="group mt-8 block cursor-pointer p-8 transition-transform hover:-translate-y-0.5 sm:p-10"
+    class="group mt-8 block cursor-pointer p-8 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5 sm:p-10"
   >
     <span class="text-accent inline-flex items-center gap-1 font-display text-sm font-semibold tracking-wide uppercase">
       {t.contact.emailCta}
-      <Icon name="arrowUpRight" size={13} />
+      <span
+        class="inline-flex items-center transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+      >
+        <Icon name="arrowUpRight" size={13} />
+      </span>
     </span>
     <span
       class="group-hover:text-accent mt-3 block text-2xl font-display font-bold tracking-tight break-all transition-colors sm:text-4xl"

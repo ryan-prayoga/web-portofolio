@@ -1,6 +1,9 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import { fade } from 'svelte/transition';
+  import { cubicOut } from 'svelte/easing';
   import { localeStore, type Locale } from '$lib/stores/locale.svelte';
+  import { motionFlags } from '$lib/stores/motion.svelte';
   import { uiCopy } from '$lib/data/uiCopy';
   import { drawButton } from '$lib/actions/drawably';
   import ThemeToggle from '$lib/components/ThemeToggle.svelte';
@@ -195,6 +198,7 @@
   <div
     id={menuId}
     bind:this={menuEl}
+    transition:fade={{ duration: motionFlags.reduced ? 0 : 200, easing: cubicOut }}
     class="bg-paper/98 fixed inset-0 z-55 flex flex-col justify-between px-6 pt-24 pb-8 backdrop-blur-md"
     role="dialog"
     aria-modal="true"

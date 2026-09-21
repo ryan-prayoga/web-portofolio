@@ -22,7 +22,7 @@
   <div class="mt-8 grid gap-4 sm:grid-cols-2">
     {#each entries as entry (entry.school)}
       <div
-        class="group cursor-pointer p-6 transition-transform hover:-translate-y-0.5"
+        class="group cursor-pointer p-6 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5"
         use:reveal
         use:drawCard={{ resketchOnHover: true }}
       >
@@ -33,7 +33,7 @@
     {/each}
 
     <div
-      class="group cursor-pointer p-6 transition-transform hover:-translate-y-0.5 sm:col-span-2"
+      class="group cursor-pointer p-6 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5 sm:col-span-2"
       use:reveal
       use:drawCard={{ resketchOnHover: true }}
     >

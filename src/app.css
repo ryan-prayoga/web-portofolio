@@ -235,11 +235,44 @@ h4 {
   transition:
     opacity var(--duration-slow) var(--ease-smooth-out),
     transform var(--duration-slow) var(--ease-smooth-out);
+  will-change: opacity, transform;
 }
 
 .reveal.in {
   opacity: 1;
   transform: none;
+}
+
+/* ═══════════════════════════════════════════════
+   ACCORDION EXPAND (transitions-dev 21)
+   grid-template-rows 0fr → 1fr smooth height animation
+   ═══════════════════════════════════════════════ */
+.t-acc-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-fast) var(--ease-smooth-out);
+}
+
+.t-acc[data-open='true'] .t-acc-panel {
+  grid-template-rows: 1fr;
+  transition: grid-template-rows var(--duration-fast) var(--ease-smooth-out);
+}
+
+.t-acc-panel-inner {
+  overflow: hidden;
+  opacity: 0;
+  filter: blur(var(--blur-small));
+  transition:
+    opacity var(--duration-fast) var(--ease-smooth-out),
+    filter var(--duration-fast) var(--ease-smooth-out);
+}
+
+.t-acc[data-open='true'] .t-acc-panel-inner {
+  opacity: 1;
+  filter: blur(0);
+  transition:
+    opacity var(--duration-fast) var(--ease-smooth-out),
+    filter var(--duration-fast) var(--ease-smooth-out);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -250,6 +283,10 @@ h4 {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  .t-acc-panel,
+  .t-acc-panel-inner {
+    transition: none !important;
   }
 }
 

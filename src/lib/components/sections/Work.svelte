@@ -26,7 +26,7 @@
     {#each featured as project, index (project.slug)}
       {@const base = project.thumbnail?.replace('.webp', '')}
       <article
-        class="group grid overflow-hidden p-3 transition-transform hover:-translate-y-0.5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]"
+        class="group grid overflow-hidden p-3 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]"
         use:reveal
         use:drawCard={{ resketchOnHover: true }}
       >
@@ -122,12 +122,15 @@
         target="_blank"
         rel="noopener noreferrer"
         use:drawCard={{ resketchOnHover: true }}
-        class="group flex min-w-0 flex-col p-6 transition-transform hover:-translate-y-0.5"
+        class="group flex min-w-0 flex-col p-6 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5"
       >
         <p class="text-muted font-display text-sm uppercase">{project.category} / {project.year}</p>
         <h3 class="group-hover:text-accent mt-2 font-semibold tracking-tight transition-colors">
           {project.name}
-          <span class="text-muted group-hover:text-accent ml-1 inline-flex items-center text-sm" aria-hidden="true">
+          <span
+            class="text-muted group-hover:text-accent ml-1 inline-flex items-center text-sm transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            aria-hidden="true"
+          >
             <Icon name="arrowUpRight" size={13} />
           </span>
           <span class="sr-only">

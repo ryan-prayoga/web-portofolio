@@ -20,7 +20,8 @@
   <div class="mt-8 grid gap-5 sm:grid-cols-2">
     {#each groups as group, index (group.key)}
       <div
-        class="group cursor-pointer p-6 transition-transform hover:-translate-y-0.5 sm:p-7 {index === 0
+        class="group cursor-pointer p-6 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5 sm:p-7 {index ===
+        0
           ? 'sm:col-span-2'
           : ''}"
         use:reveal

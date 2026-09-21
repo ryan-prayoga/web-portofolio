@@ -28,7 +28,7 @@
     {#each t.services.items as item (item.title)}
       <div
         use:drawCard={{ resketchOnHover: true }}
-        class="bg-paper p-6 transition-all hover:-translate-y-1 flex flex-col justify-between"
+        class="bg-paper p-6 transition-[transform,box-shadow] duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-1 flex flex-col justify-between"
       >
         <div>
           <span class="text-accent mb-3 flex items-center gap-2">

@@ -41,7 +41,11 @@
 
   <div class="mt-12 flex flex-col gap-4">
     {#each faqItems as item, index (item.question.id)}
-      <div use:drawCard={{ resketchOnHover: true }} class="bg-paper transition-all overflow-hidden">
+      <div
+        use:drawCard={{ resketchOnHover: true }}
+        class="t-acc bg-paper transition-all overflow-hidden"
+        data-open={openIndex === index}
+      >
         <button
           type="button"
           class="w-full p-6 text-left flex items-center justify-between gap-4 cursor-pointer"
@@ -61,11 +65,13 @@
           </span>
         </button>
 
-        {#if openIndex === index}
-          <div class="px-6 pb-6 pt-1 text-xs sm:text-sm leading-relaxed text-muted border-t border-rule/50">
-            {item.answer[locale]}
+        <div class="t-acc-panel">
+          <div class="t-acc-panel-inner">
+            <div class="px-6 pb-6 pt-1 text-xs sm:text-sm leading-relaxed text-muted border-t border-rule/50">
+              {item.answer[locale]}
+            </div>
           </div>
-        {/if}
+        </div>
       </div>
     {/each}
   </div>

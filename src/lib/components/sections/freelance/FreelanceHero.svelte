@@ -64,7 +64,10 @@
   <!-- Proof Metrics Grid -->
   <div class="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-4">
     {#each t.hero.metrics as metric, idx (idx)}
-      <div use:drawCard={{ resketchOnHover: true }} class="bg-paper p-5 transition-transform hover:-translate-y-0.5">
+      <div
+        use:drawCard={{ resketchOnHover: true }}
+        class="bg-paper p-5 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5"
+      >
         <p class="font-display text-2xl sm:text-3xl font-bold text-accent tracking-tight">
           {metric.value}
         </p>

@@ -22,7 +22,7 @@
   <div class="mt-8 space-y-6">
     {#each roles as role, i (role.title)}
       <article
-        class="group cursor-pointer p-6 transition-transform hover:-translate-y-0.5 sm:p-8"
+        class="group cursor-pointer p-6 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5 sm:p-8"
         use:reveal
         use:drawCard={{ resketchOnHover: true }}
       >

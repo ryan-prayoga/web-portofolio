@@ -31,7 +31,7 @@
     {#each businessShowcases as work (work.slug)}
       <div
         use:drawCard={{ resketchOnHover: true }}
-        class="bg-paper flex flex-col justify-between p-6 transition-all hover:-translate-y-1 sm:p-8"
+        class="bg-paper flex flex-col justify-between p-6 transition-[transform,box-shadow] duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-1 sm:p-8"
       >
         <div>
           <div class="flex items-center justify-between gap-2 mb-3">

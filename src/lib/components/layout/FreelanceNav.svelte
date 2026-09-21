@@ -1,6 +1,9 @@
 <script lang="ts">
+  import { fade } from 'svelte/transition';
+  import { cubicOut } from 'svelte/easing';
   import Icon from '$lib/components/Icon.svelte';
   import { localeStore, type Locale } from '$lib/stores/locale.svelte';
+  import { motionFlags } from '$lib/stores/motion.svelte';
   import { freelanceCopy } from '$lib/data/freelanceCopy';
   import { FREELANCE_CONFIG, getWhatsAppUrl } from '$lib/data/freelanceData';
   import { drawButton, drawBadge } from '$lib/actions/drawably';
@@ -222,6 +225,7 @@
   <div
     id={menuId}
     bind:this={menuEl}
+    transition:fade={{ duration: motionFlags.reduced ? 0 : 200, easing: cubicOut }}
     class="bg-paper/98 fixed inset-0 z-55 flex flex-col justify-between px-6 pt-24 pb-8 backdrop-blur-md"
     role="dialog"
     aria-modal="true"

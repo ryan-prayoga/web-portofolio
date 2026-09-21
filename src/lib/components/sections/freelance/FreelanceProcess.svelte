@@ -27,7 +27,7 @@
     {#each t.process.steps as step (step.step)}
       <div
         use:drawCard={{ resketchOnHover: true }}
-        class="bg-paper p-6 flex flex-col justify-between transition-all hover:-translate-y-1"
+        class="bg-paper p-6 flex flex-col justify-between transition-[transform,box-shadow] duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-1"
       >
         <div>
           <span class="font-display text-3xl font-bold text-accent/80 select-none block">

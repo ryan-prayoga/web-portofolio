@@ -91,7 +91,7 @@
       {#each facts as fact (fact.label)}
         <div
           use:drawCard={{ resketchOnHover: true }}
-          class="group cursor-pointer p-4 transition-transform hover:-translate-y-0.5"
+          class="group cursor-pointer p-4 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5"
           title="Hover to re-sketch frame"
         >
           <dt class="text-muted font-display text-xs sm:text-sm tracking-wider uppercase">{fact.label}</dt>
