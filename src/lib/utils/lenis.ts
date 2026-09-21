@@ -31,7 +31,7 @@ export function initLenis(): (() => void) | undefined {
     gestureOrientation: 'vertical',
     smoothWheel: true,
     wheelMultiplier: 1.0,
-    touchMultiplier: 1.2,
+    touchMultiplier: 1.0,
   });
 
   function raf(time: number) {

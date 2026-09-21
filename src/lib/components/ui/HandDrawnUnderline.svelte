@@ -29,7 +29,6 @@
     }
 
     // Trigger only when heading is comfortably inside the viewport (20% above bottom)
-    // so the user actually sees the pencil stroke drawing in real-time as they arrive!
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -58,35 +57,23 @@
   aria-hidden="true"
 >
   <svg
-    class="w-full h-3.5 overflow-visible block"
+    class="w-full h-3 overflow-visible block"
     viewBox="0 0 200 12"
     preserveAspectRatio="none"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <!-- Primary hand-drawn pencil stroke -->
+    <!-- Single clean organic hand-drawn pencil/ink stroke -->
     <path
-      d="M -2 7 C 35 10.5, 70 4, 110 7.5 C 150 10, 175 4.5, 203 7"
+      d="M -1 7 C 35 10, 75 4.5, 115 7.5 C 150 9.5, 180 4.5, 202 6.5"
       stroke={color}
       stroke-width={strokeWidth}
       stroke-linecap="round"
       stroke-linejoin="round"
       class="opacity-95"
-      style="stroke-dasharray: 240; stroke-dashoffset: {isDrawn
+      style="stroke-dasharray: 230; stroke-dashoffset: {isDrawn
         ? 0
-        : 240}; transition: stroke-dashoffset {duration}ms cubic-bezier(0.2, 0.8, 0.25, 1), opacity 300ms ease;"
-    />
-
-    <!-- Companion sketch stroke for authentic hand-drawn rough pencil texture -->
-    <path
-      d="M 2 8 C 45 6.5, 85 9.5, 125 6 C 160 8, 185 6, 199 8.5"
-      stroke={color}
-      stroke-width={strokeWidth * 0.75}
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="opacity-70"
-      style="stroke-dasharray: 240; stroke-dashoffset: {isDrawn ? 0 : 240}; transition: stroke-dashoffset {duration +
-        150}ms cubic-bezier(0.25, 0.85, 0.3, 1) 80ms, opacity 300ms ease;"
+        : 230}; transition: stroke-dashoffset {duration}ms cubic-bezier(0.2, 0.8, 0.25, 1), opacity 300ms ease;"
     />
   </svg>
 </span>
