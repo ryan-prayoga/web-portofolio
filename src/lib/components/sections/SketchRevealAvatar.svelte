@@ -764,7 +764,7 @@
       <!-- Canvas Layer: Chalkboard Eraser & Pencil Sketch Rendering -->
       <canvas
         bind:this={canvasEl}
-        class="pointer-events-none absolute inset-0 h-full w-full transition-opacity duration-300 {isReduced &&
+        class="pointer-events-none absolute inset-0 h-full w-full transition-opacity duration-[var(--duration-fast)] {isReduced &&
         isRevealed
           ? 'opacity-0'
           : 'opacity-100'}"
@@ -787,7 +787,10 @@
         : t.hero.sketchHintHover}
   >
     {#if isRevealed}
-      <span class="inline-block transition-transform duration-300" aria-hidden="true">↺</span>
+      <span
+        class="inline-block transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)]"
+        aria-hidden="true">↺</span
+      >
       <span class="truncate">{t.hero.sketchHintReset}</span>
     {:else}
       <span class="text-accent inline-block animate-pulse font-bold" aria-hidden="true">✎</span>

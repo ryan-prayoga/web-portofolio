@@ -51,7 +51,12 @@
           <span class="font-display text-base sm:text-lg font-semibold text-ink tracking-tight">
             {item.question[locale]}
           </span>
-          <span class="text-accent shrink-0 transition-transform duration-200 {openIndex === index ? 'rotate-45' : ''}">
+          <span
+            class="text-accent shrink-0 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] {openIndex ===
+            index
+              ? 'rotate-45'
+              : ''}"
+          >
             <Icon name="plus" size={18} strokeWidth={2} />
           </span>
         </button>

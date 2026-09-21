@@ -214,7 +214,10 @@
         >
           <div class="flex items-baseline gap-4">
             <span class="text-accent font-display text-base font-bold" aria-hidden="true">0{i + 1}</span>
-            <span class="group-hover:translate-x-1.5 transition-transform duration-200">{item.label}</span>
+            <span
+              class="group-hover:translate-x-1.5 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)]"
+              >{item.label}</span
+            >
           </div>
           <Icon
             name="arrowRight"
@@ -230,7 +233,10 @@
       >
         <div class="flex items-baseline gap-4">
           <Icon name="arrowDown" size={18} class="text-accent" />
-          <span class="group-hover:translate-x-1.5 transition-transform duration-200">{t.hero.downloadCv}</span>
+          <span
+            class="group-hover:translate-x-1.5 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)]"
+            >{t.hero.downloadCv}</span
+          >
         </div>
         <span class="text-accent/60 font-display text-sm tracking-wider uppercase" aria-hidden="true">[PDF]</span>
       </a>
