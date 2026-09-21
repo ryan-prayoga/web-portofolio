@@ -4,6 +4,7 @@
   import { experience } from '$lib/data/experience';
   import { reveal } from '$lib/actions/reveal';
   import { drawCard, drawBadge } from '$lib/actions/drawably';
+  import HandDrawnUnderline from '$lib/components/ui/HandDrawnUnderline.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
   const roles = $derived(experience[localeStore.value]);
@@ -14,9 +15,12 @@
     <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
       {t.experience.label}
     </span>
-    <h2 id="experience-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
-      {t.experience.heading}
-    </h2>
+    <div class="inline-block relative">
+      <h2 id="experience-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+        {t.experience.heading}
+      </h2>
+      <HandDrawnUnderline class="w-full -mt-0.5" />
+    </div>
   </div>
 
   <div class="mt-8 space-y-6">

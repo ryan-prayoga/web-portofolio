@@ -6,6 +6,7 @@
   import { socials } from '$lib/data/socials';
   import { drawCard, drawButton, drawBadge } from '$lib/actions/drawably';
   import SketchRevealAvatar from '$lib/components/sections/SketchRevealAvatar.svelte';
+  import HandDrawnUnderline from '$lib/components/ui/HandDrawnUnderline.svelte';
   import Icon from '$lib/components/Icon.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
@@ -38,7 +39,10 @@
       <h1 class="mt-5 text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
         {profile.name}<span class="text-accent">.</span>
       </h1>
-      <p class="mt-2 text-xl sm:text-2xl font-display font-semibold text-accent">{profile.role}</p>
+      <div class="inline-block relative">
+        <p class="mt-2 text-xl sm:text-2xl font-display font-semibold text-accent">{profile.role}</p>
+        <HandDrawnUnderline class="w-full -mt-0.5" delay={400} />
+      </div>
       <p class="mt-5 max-w-prose leading-relaxed text-muted">{t.hero.positioning}</p>
 
       <div class="no-print mt-8 flex flex-wrap items-center gap-4">

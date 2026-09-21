@@ -4,6 +4,7 @@
   import { profile } from '$lib/data/profile';
   import { reveal } from '$lib/actions/reveal';
   import { drawCard, drawBadge } from '$lib/actions/drawably';
+  import HandDrawnUnderline from '$lib/components/ui/HandDrawnUnderline.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
   const entries = [profile.education.university, profile.education.smk];
@@ -14,9 +15,12 @@
     <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
       {t.education.label}
     </span>
-    <h2 id="education-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
-      {t.education.heading}
-    </h2>
+    <div class="inline-block relative">
+      <h2 id="education-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+        {t.education.heading}
+      </h2>
+      <HandDrawnUnderline class="w-full -mt-0.5" />
+    </div>
   </div>
 
   <div class="mt-8 grid gap-4 sm:grid-cols-2">

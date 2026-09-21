@@ -64,6 +64,7 @@
   --drawably-paper: var(--color-paper);
   --drawably-stroke: var(--color-ink);
   --drawably-width: 1.5;
+  --color-notebook-line: rgba(20, 22, 26, 0.05);
 
   /* Motion tokens (transitions-polish) */
   --duration-stagger: 40ms;
@@ -108,6 +109,7 @@
   --drawably-ink: var(--color-ink);
   --drawably-paper: var(--color-paper);
   --drawably-stroke: var(--color-ink);
+  --color-notebook-line: rgba(242, 240, 236, 0.038);
 }
 
 .drawably-host {
@@ -202,11 +204,34 @@ html.locale-id:not(.hydrated) body {
 
 body {
   background-color: var(--color-paper);
+  background-image:
+    radial-gradient(circle at 50% 50%, transparent 80%, rgba(20, 22, 26, 0.015) 100%),
+    repeating-linear-gradient(
+      transparent,
+      transparent 31px,
+      var(--color-notebook-line) 31px,
+      var(--color-notebook-line) 32px
+    );
+  background-size:
+    100% 100%,
+    100% 32px;
+  background-attachment: local;
   color: var(--color-ink);
   font-family: var(--font-sans);
   font-feature-settings: 'tnum' 1;
   -webkit-font-smoothing: antialiased;
   line-height: 1.6;
+}
+
+:root.dark body {
+  background-image:
+    radial-gradient(circle at 50% 50%, transparent 80%, rgba(0, 0, 0, 0.2) 100%),
+    repeating-linear-gradient(
+      transparent,
+      transparent 31px,
+      var(--color-notebook-line) 31px,
+      var(--color-notebook-line) 32px
+    );
 }
 
 h1,
@@ -304,6 +329,7 @@ h4 {
   }
   body {
     font-size: 11pt;
+    background-image: none !important;
   }
   .no-print {
     display: none !important;

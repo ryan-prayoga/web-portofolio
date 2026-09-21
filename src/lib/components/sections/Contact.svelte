@@ -5,6 +5,7 @@
   import { socials } from '$lib/data/socials';
   import { reveal } from '$lib/actions/reveal';
   import { drawCard, drawBadge, drawButton } from '$lib/actions/drawably';
+  import HandDrawnUnderline from '$lib/components/ui/HandDrawnUnderline.svelte';
   import Icon from '$lib/components/Icon.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
@@ -94,7 +95,10 @@
     <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
       {t.contact.label}
     </span>
-    <h2 id="contact-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{t.contact.heading}</h2>
+    <div class="inline-block relative">
+      <h2 id="contact-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{t.contact.heading}</h2>
+      <HandDrawnUnderline class="w-full -mt-0.5" />
+    </div>
     <p class="text-muted mt-2.5 max-w-prose leading-relaxed">{t.contact.body}</p>
   </div>
 

@@ -5,6 +5,7 @@
   import { projectCopy } from '$lib/data/projectCopy';
   import { reveal } from '$lib/actions/reveal';
   import { drawCard, drawBadge, drawButton } from '$lib/actions/drawably';
+  import HandDrawnUnderline from '$lib/components/ui/HandDrawnUnderline.svelte';
   import Icon from '$lib/components/Icon.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
@@ -18,7 +19,10 @@
     <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
       {t.work.label}
     </span>
-    <h2 id="work-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{t.work.heading}</h2>
+    <div class="inline-block relative">
+      <h2 id="work-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{t.work.heading}</h2>
+      <HandDrawnUnderline class="w-full -mt-0.5" />
+    </div>
     <p class="text-muted mt-2.5 max-w-prose leading-relaxed">{t.work.intro}</p>
   </div>
 
