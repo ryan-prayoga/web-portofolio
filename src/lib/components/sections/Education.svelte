@@ -3,7 +3,7 @@
   import { uiCopy } from '$lib/data/uiCopy';
   import { profile } from '$lib/data/profile';
   import { reveal } from '$lib/actions/reveal';
-  import { drawCard, drawBadge } from '$lib/actions/drawably';
+  import { drawCard } from '$lib/actions/drawably';
   import HandDrawnUnderline from '$lib/components/ui/HandDrawnUnderline.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
@@ -12,14 +12,11 @@
 
 <section id="education" class="mx-auto max-w-5xl px-6 py-14" aria-labelledby="education-heading">
   <div use:reveal>
-    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
-      {t.education.label}
-    </span>
     <div class="inline-block relative">
-      <h2 id="education-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+      <h2 id="education-heading" class="text-2xl font-semibold tracking-tight sm:text-3xl">
         {t.education.heading}
       </h2>
-      <HandDrawnUnderline class="w-full -mt-0.5" />
+      <HandDrawnUnderline class="w-full mt-1" />
     </div>
   </div>
 

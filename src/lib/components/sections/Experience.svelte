@@ -12,14 +12,11 @@
 
 <section id="experience" class="mx-auto max-w-5xl px-6 py-14" aria-labelledby="experience-heading">
   <div use:reveal>
-    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
-      {t.experience.label}
-    </span>
     <div class="inline-block relative">
-      <h2 id="experience-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+      <h2 id="experience-heading" class="text-2xl font-semibold tracking-tight sm:text-3xl">
         {t.experience.heading}
       </h2>
-      <HandDrawnUnderline class="w-full -mt-0.5" />
+      <HandDrawnUnderline class="w-full mt-1" />
     </div>
   </div>
 

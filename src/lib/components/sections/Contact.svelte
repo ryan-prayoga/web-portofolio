@@ -4,7 +4,7 @@
   import { uiCopy } from '$lib/data/uiCopy';
   import { socials } from '$lib/data/socials';
   import { reveal } from '$lib/actions/reveal';
-  import { drawCard, drawBadge, drawButton } from '$lib/actions/drawably';
+  import { drawCard, drawButton } from '$lib/actions/drawably';
   import HandDrawnUnderline from '$lib/components/ui/HandDrawnUnderline.svelte';
   import Icon from '$lib/components/Icon.svelte';
 
@@ -92,12 +92,9 @@
 
 <section id="contact" class="mx-auto max-w-5xl px-6 py-14 pb-20" aria-labelledby="contact-heading">
   <div use:reveal>
-    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
-      {t.contact.label}
-    </span>
     <div class="inline-block relative">
-      <h2 id="contact-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{t.contact.heading}</h2>
-      <HandDrawnUnderline class="w-full -mt-0.5" />
+      <h2 id="contact-heading" class="text-2xl font-semibold tracking-tight sm:text-3xl">{t.contact.heading}</h2>
+      <HandDrawnUnderline class="w-full mt-1" />
     </div>
     <p class="text-muted mt-2.5 max-w-prose leading-relaxed">{t.contact.body}</p>
   </div>

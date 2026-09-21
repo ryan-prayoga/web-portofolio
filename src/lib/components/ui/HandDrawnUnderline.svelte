@@ -6,9 +6,16 @@
     strokeWidth?: number;
     color?: string;
     delay?: number; // ms
+    duration?: number; // ms
   }
 
-  let { class: className = '', strokeWidth = 2.5, color = 'var(--color-accent)', delay = 150 }: Props = $props();
+  let {
+    class: className = '',
+    strokeWidth = 2.5,
+    color = 'var(--color-accent)',
+    delay = 250,
+    duration = 1200,
+  }: Props = $props();
 
   let isDrawn = $state(false);
   let containerEl: HTMLElement | null = $state(null);
@@ -32,7 +39,7 @@
           }
         }
       },
-      { threshold: 0.2, rootMargin: '0px 0px -5% 0px' },
+      { threshold: 0.15, rootMargin: '0px 0px -5% 0px' },
     );
 
     observer.observe(containerEl);
@@ -49,23 +56,23 @@
   aria-hidden="true"
 >
   <svg
-    class="w-full h-3 overflow-visible block"
+    class="w-full h-3.5 overflow-visible block"
     viewBox="0 0 200 12"
     preserveAspectRatio="none"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <!-- Organic hand-drawn pen/pencil stroke -->
+    <!-- Organic hand-drawn pen/pencil stroke with natural handwritten wave -->
     <path
-      d="M 2 7 Q 55 12 110 5.5 Q 165 -0.5 198 6.5"
+      d="M 2 7 C 45 11, 75 4.5, 115 7.5 C 145 9.5, 175 4, 198 6.5"
       stroke={color}
       stroke-width={strokeWidth}
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] {isDrawn
-        ? 'opacity-90 [stroke-dashoffset:0]'
-        : 'opacity-0 [stroke-dashoffset:220]'}"
-      style="stroke-dasharray: 220;"
+      class="opacity-90"
+      style="stroke-dasharray: 240; stroke-dashoffset: {isDrawn
+        ? 0
+        : 240}; transition: stroke-dashoffset {duration}ms cubic-bezier(0.25, 1, 0.5, 1), opacity 400ms ease;"
     />
   </svg>
 </span>

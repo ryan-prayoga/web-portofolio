@@ -29,28 +29,50 @@
   });
 </script>
 
-<!-- Notebook Margin Ruler Line that draws down with scroll -->
+<!-- Notebook Margin Line with organic hand-drawn wobble, starting below header -->
 <div
-  class="pointer-events-none fixed top-0 bottom-0 z-10 select-none transition-opacity duration-500 {isMounted
+  class="pointer-events-none fixed top-[4.75rem] bottom-8 z-20 select-none transition-opacity duration-500 {isMounted
     ? 'opacity-100'
     : 'opacity-0'}"
-  style="left: max(12px, calc((100vw - 1080px) / 2));"
+  style="left: max(12px, calc((100vw - 1070px) / 2));"
   aria-hidden="true"
 >
-  <!-- Background guide line (faint rule) -->
-  <div class="absolute top-0 bottom-0 w-[1px] bg-[var(--color-rule)] opacity-40"></div>
-
-  <!-- Active drawn ink margin line (drawn with scroll progress) -->
-  <div
-    class="absolute top-0 w-[1.5px] bg-accent/60 transition-[height] duration-75 ease-out"
-    style="height: {scrollProgress}%;"
+  <svg
+    class="w-5 h-full overflow-visible block"
+    viewBox="0 0 20 1000"
+    preserveAspectRatio="none"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
   >
-    <!-- Little pencil lead dot indicator at the active drawing tip -->
-    <div
-      class="absolute -bottom-1 -left-[2px] h-2 w-2 rounded-full bg-accent shadow-xs transition-opacity duration-300 {scrollProgress >
-      0.5
-        ? 'opacity-100 scale-100'
-        : 'opacity-0 scale-50'}"
-    ></div>
-  </div>
+    <!-- Background pencil draft guide (faint wobbly rule) -->
+    <path
+      d="M 10 0 C 9.2 70, 10.8 150, 10.1 230 C 9.4 310, 10.7 390, 9.8 470 C 9.1 550, 10.6 630, 10.2 710 C 9.5 790, 10.8 870, 10 1000"
+      stroke="var(--color-rule)"
+      stroke-width="1.2"
+      stroke-linecap="round"
+      class="opacity-35"
+      vector-effect="non-scaling-stroke"
+    />
+
+    <!-- Active hand-drawn ink margin stroke (drawn down with scroll progress) -->
+    <path
+      d="M 10 0 C 9.2 70, 10.8 150, 10.1 230 C 9.4 310, 10.7 390, 9.8 470 C 9.1 550, 10.6 630, 10.2 710 C 9.5 790, 10.8 870, 10 1000"
+      stroke="var(--color-accent)"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      pathLength="100"
+      class="opacity-75 transition-[stroke-dashoffset] duration-150 ease-out"
+      style="stroke-dasharray: 100; stroke-dashoffset: {Math.max(0, 100 - scrollProgress)};"
+      vector-effect="non-scaling-stroke"
+    />
+  </svg>
+
+  <!-- Hand-drawn pencil lead / ink tip dot at current scroll point -->
+  <div
+    class="absolute -left-[3px] h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-accent shadow-xs transition-[top,opacity] duration-150 ease-out {scrollProgress >
+    0.5
+      ? 'opacity-90 scale-100'
+      : 'opacity-0 scale-50'}"
+    style="top: {scrollProgress}%;"
+  ></div>
 </div>

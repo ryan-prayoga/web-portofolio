@@ -16,12 +16,9 @@
 
 <section id="work" class="mx-auto max-w-5xl px-6 py-14" aria-labelledby="work-heading">
   <div use:reveal>
-    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
-      {t.work.label}
-    </span>
     <div class="inline-block relative">
-      <h2 id="work-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{t.work.heading}</h2>
-      <HandDrawnUnderline class="w-full -mt-0.5" />
+      <h2 id="work-heading" class="text-2xl font-semibold tracking-tight sm:text-3xl">{t.work.heading}</h2>
+      <HandDrawnUnderline class="w-full mt-1" />
     </div>
     <p class="text-muted mt-2.5 max-w-prose leading-relaxed">{t.work.intro}</p>
   </div>

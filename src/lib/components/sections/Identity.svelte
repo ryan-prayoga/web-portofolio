@@ -4,7 +4,7 @@
   import { profile } from '$lib/data/profile';
   import { projects } from '$lib/data/projects';
   import { socials } from '$lib/data/socials';
-  import { drawCard, drawButton, drawBadge } from '$lib/actions/drawably';
+  import { drawCard, drawButton } from '$lib/actions/drawably';
   import SketchRevealAvatar from '$lib/components/sections/SketchRevealAvatar.svelte';
   import HandDrawnUnderline from '$lib/components/ui/HandDrawnUnderline.svelte';
   import Icon from '$lib/components/Icon.svelte';
@@ -26,17 +26,7 @@
 <header class="mx-auto max-w-5xl px-6 pt-28 pb-14 sm:pt-36">
   <div class="grid items-start gap-10 sm:grid-cols-[1fr_auto]">
     <div>
-      <div class="inline-block">
-        <span
-          use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-          class="cursor-pointer px-3.5 py-1 font-display text-sm tracking-wide uppercase"
-        >
-          <span class="text-accent mr-1 font-bold" aria-hidden="true">[✓]</span>
-          {t.status}
-        </span>
-      </div>
-
-      <h1 class="mt-5 text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+      <h1 class="text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
         {profile.name}<span class="text-accent">.</span>
       </h1>
       <div class="inline-block relative">

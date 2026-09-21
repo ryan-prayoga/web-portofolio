@@ -12,12 +12,9 @@
 
 <section id="skills" class="mx-auto max-w-5xl px-6 py-14" aria-labelledby="skills-heading">
   <div use:reveal>
-    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
-      {t.skills.label}
-    </span>
     <div class="inline-block relative">
-      <h2 id="skills-heading" class="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">{t.skills.heading}</h2>
-      <HandDrawnUnderline class="w-full -mt-0.5" />
+      <h2 id="skills-heading" class="text-2xl font-semibold tracking-tight sm:text-3xl">{t.skills.heading}</h2>
+      <HandDrawnUnderline class="w-full mt-1" />
     </div>
   </div>
 
