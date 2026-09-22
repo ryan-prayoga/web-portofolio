@@ -1,6 +1,6 @@
 # ryanprayoga.dev
 
-Portfolio personal Ryan Prayoga — Fullstack Developer & Sub Team Lead.
+Portfolio personal Ryan Prayoga — Fullstack Developer.
 Fully static, zero runtime dependency, dwibahasa (EN/ID).
 
 **Live:** https://ryanprayoga.dev

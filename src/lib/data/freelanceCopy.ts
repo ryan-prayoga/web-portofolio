@@ -327,7 +327,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
     footer: {
       tag: 'Jasa Pembuatan Website Portofolio & Profil Bisnis Profesional',
       description:
-        'Dikerjakan oleh Ryan Prayoga — Fullstack Developer & Sub Team Lead. Membantu bisnis jasa, rental, travel, kuliner, dan UMKM memiliki website berkinerja tinggi.',
+        'Dikerjakan oleh Ryan Prayoga — Fullstack Developer. Membantu bisnis jasa, rental, travel, kuliner, dan UMKM memiliki website berkinerja tinggi.',
       linksHeading: 'Navigasi',
       contactHeading: 'Hubungi & Profil',
       backToTop: 'Kembali ke atas',
@@ -541,7 +541,7 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
     footer: {
       tag: 'Professional Business Website & Portfolio Development',
       description:
-        'Engineered by Ryan Prayoga — Fullstack Developer & Sub Team Lead. Helping services, rental, travel, and local enterprises build trusted digital presence.',
+        'Engineered by Ryan Prayoga — Fullstack Developer. Helping services, rental, travel, and local enterprises build trusted digital presence.',
       linksHeading: 'Navigation',
       contactHeading: 'Contact & Profile',
       backToTop: 'Back to top',

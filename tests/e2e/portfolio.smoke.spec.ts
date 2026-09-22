@@ -10,7 +10,7 @@ test('renders the portfolio shell from a production build', async ({ page }, tes
 
   // Then
   expect(response?.status()).toBe(200);
-  await expect(page).toHaveTitle('Ryan Prayoga — Fullstack Developer & Sub Team Lead');
+  await expect(page).toHaveTitle('Ryan Prayoga — Fullstack Developer');
   await expect(page.locator('main#top')).toBeVisible();
   await expect(page.locator('#experience')).toBeVisible();
   await expect(page.locator('#work')).toBeVisible();
