@@ -150,15 +150,15 @@ test('notebook margin line: verifies hidden scrollbar, proportional scroll progr
   await page.evaluate(() => {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     window.scrollTo(0, maxScroll * 0.5);
+    window.dispatchEvent(new Event('scroll'));
   });
-  await page.waitForTimeout(300);
 
-  const midOffset = await linePath.evaluate((el) => {
-    return parseFloat(el.style.strokeDashoffset);
-  });
   // Progress at 50% scroll must be around 500 (50%), NOT completed (not 0)
-  expect(midOffset).toBeGreaterThan(250);
-  expect(midOffset).toBeLessThan(750);
+  await expect(async () => {
+    const midOffset = await linePath.evaluate((el) => parseFloat(el.style.strokeDashoffset));
+    expect(midOffset).toBeGreaterThan(250);
+    expect(midOffset).toBeLessThan(750);
+  }).toPass({ timeout: 5000 });
 
   // Take mobile screenshot during mid-scroll
   await page.screenshot({ path: testInfo.outputPath('notebook-margin-mobile-mid.png'), fullPage: false });
@@ -166,19 +166,15 @@ test('notebook margin line: verifies hidden scrollbar, proportional scroll progr
   // Scroll to absolute bottom of page
   await page.evaluate(() => {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    window.scrollTo({ top: maxScroll, behavior: 'instant' });
+    window.scrollTo(0, maxScroll);
+    window.dispatchEvent(new Event('scroll'));
   });
-  await page.waitForFunction(() => {
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    return Math.abs(window.scrollY - maxScroll) < 5;
-  });
-  await page.waitForTimeout(100);
 
-  const bottomOffset = await linePath.evaluate((el) => {
-    return parseFloat(el.style.strokeDashoffset);
-  });
   // At the bottom, progress should reach 100% (offset ~ 0)
-  expect(bottomOffset).toBeLessThanOrEqual(50);
+  await expect(async () => {
+    const bottomOffset = await linePath.evaluate((el) => parseFloat(el.style.strokeDashoffset));
+    expect(bottomOffset).toBeLessThanOrEqual(50);
+  }).toPass({ timeout: 5000 });
 
   // Now test desktop viewport
   await page.setViewportSize({ width: 1280, height: 800 });
