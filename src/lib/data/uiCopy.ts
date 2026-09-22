@@ -13,7 +13,7 @@ export interface UiCopy {
     sketchHintTap: string;
     sketchHintReset: string;
   };
-  facts: { years: string; led: string; shipped: string; based: string };
+  facts: { years: string; apps: string; shipped: string; based: string };
   experience: { label: string; heading: string };
   work: {
     label: string;
@@ -49,7 +49,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
     status: 'Open to work',
     hero: {
       positioning:
-        'I build and ship production web, mobile, and tooling systems — and lead the engineers who keep them running. 4+ years across enterprise, government, and my own shipped products.',
+        'I build and ship production web, mobile, and tooling systems. 4+ years across enterprise, government, and my own shipped products.',
       downloadCv: 'Download CV',
       contact: 'Email me',
       photoAlt: 'Ryan Prayoga',
@@ -57,7 +57,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
       sketchHintTap: 'tap to erase ✎',
       sketchHintReset: 'tap to re-sketch ↺',
     },
-    facts: { years: 'Years experience', led: 'Engineers led', shipped: 'Systems shipped', based: 'Based in' },
+    facts: { years: 'Years experience', apps: 'Production apps', shipped: 'Systems shipped', based: 'Based in' },
     experience: { label: 'Experience', heading: 'Where I have worked' },
     work: {
       label: 'Selected work',
@@ -75,7 +75,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
     contact: {
       label: 'Contact',
       heading: 'Let’s talk.',
-      body: 'Open for fullstack, backend, and team lead roles.',
+      body: 'Open for fullstack and backend roles.',
       emailCta: 'Send email',
     },
     footer: { note: '', backToTop: 'Back to top' },
@@ -102,7 +102,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
     status: 'Terbuka untuk peluang',
     hero: {
       positioning:
-        'Saya membangun dan merilis sistem web, mobile, dan tooling production — sekaligus memimpin engineer yang menjaganya tetap jalan. 4+ tahun di enterprise, government, dan produk rilisan sendiri.',
+        'Saya membangun dan merilis sistem web, mobile, dan tooling production. 4+ tahun di enterprise, government, dan produk rilisan sendiri.',
       downloadCv: 'Unduh CV',
       contact: 'Kirim email',
       photoAlt: 'Ryan Prayoga',
@@ -110,7 +110,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
       sketchHintTap: 'ketuk untuk hapus ✎',
       sketchHintReset: 'ketuk untuk sketsa ulang ↺',
     },
-    facts: { years: 'Tahun pengalaman', led: 'Engineer dipimpin', shipped: 'Sistem dirilis', based: 'Berbasis di' },
+    facts: { years: 'Tahun pengalaman', apps: 'Aplikasi production', shipped: 'Sistem dirilis', based: 'Berbasis di' },
     experience: { label: 'Pengalaman', heading: 'Tempat saya bekerja' },
     work: {
       label: 'Karya pilihan',
@@ -128,7 +128,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
     contact: {
       label: 'Kontak',
       heading: 'Ngobrol, yuk.',
-      body: 'Terbuka untuk peran fullstack, backend, dan team lead.',
+      body: 'Terbuka untuk peran fullstack dan backend.',
       emailCta: 'Kirim email',
     },
     footer: { note: '', backToTop: 'Ke atas' },

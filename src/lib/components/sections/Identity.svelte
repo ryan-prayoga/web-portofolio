@@ -16,7 +16,7 @@
 
   const facts = $derived([
     { value: profile.experienceYears, label: t.facts.years, note: 'Enterprise & SaaS' },
-    { value: String(profile.teamSize), label: t.facts.led, note: 'Scrum & Code Review' },
+    { value: profile.productionApps, label: t.facts.apps, note: 'Web, Mobile, APIs' },
     { value: String(projects.length), label: t.facts.shipped, note: 'Rust, Go, Svelte, Swift' },
     { value: 'Tangerang, ID', label: t.facts.based, note: 'WIB · UTC+7' },
   ]);

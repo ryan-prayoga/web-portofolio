@@ -121,12 +121,12 @@ test('notebook margin line: verifies hidden scrollbar, proportional scroll progr
   const marginContainer = page.locator('div[style*="left: max(10px"]');
   await expect(marginContainer).toBeVisible();
 
-  // Check initial stroke offset at top of page (should be ~100)
+  // Check initial stroke offset at top of page (should be ~1000)
   const linePath = marginContainer.locator('path');
   const initialOffset = await linePath.evaluate((el) => {
     return parseFloat(el.style.strokeDashoffset);
   });
-  expect(initialOffset).toBeGreaterThanOrEqual(95);
+  expect(initialOffset).toBeGreaterThanOrEqual(950);
 
   // Check horizontal position on mobile (should be at left ~10px)
   const mobileMarginBox = await marginContainer.boundingBox();
@@ -153,9 +153,9 @@ test('notebook margin line: verifies hidden scrollbar, proportional scroll progr
   const midOffset = await linePath.evaluate((el) => {
     return parseFloat(el.style.strokeDashoffset);
   });
-  // Progress at 50% scroll must be around 50%, NOT completed (not 0)
-  expect(midOffset).toBeGreaterThan(25);
-  expect(midOffset).toBeLessThan(75);
+  // Progress at 50% scroll must be around 500 (50%), NOT completed (not 0)
+  expect(midOffset).toBeGreaterThan(250);
+  expect(midOffset).toBeLessThan(750);
 
   // Take mobile screenshot during mid-scroll
   await page.screenshot({ path: testInfo.outputPath('notebook-margin-mobile-mid.png'), fullPage: false });
@@ -175,7 +175,7 @@ test('notebook margin line: verifies hidden scrollbar, proportional scroll progr
     return parseFloat(el.style.strokeDashoffset);
   });
   // At the bottom, progress should reach 100% (offset ~ 0)
-  expect(bottomOffset).toBeLessThanOrEqual(5);
+  expect(bottomOffset).toBeLessThanOrEqual(50);
 
   // Now test desktop viewport
   await page.setViewportSize({ width: 1280, height: 800 });

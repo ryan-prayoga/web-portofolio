@@ -43,7 +43,7 @@
     founder: {
       '@type': 'Person',
       name: 'Ryan Prayoga',
-      jobTitle: 'Fullstack Developer & Sub Team Lead',
+      jobTitle: 'Fullstack Developer',
       url: 'https://ryanprayoga.dev',
       sameAs: [FREELANCE_CONFIG.github, FREELANCE_CONFIG.linkedin],
     },

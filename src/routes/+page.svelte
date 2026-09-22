@@ -11,9 +11,9 @@
   const SITE_URL = 'https://ryanprayoga.dev';
   const PAGE_URL = SITE_URL;
   const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
-  const TITLE = 'Ryan Prayoga — Fullstack Developer & Sub Team Lead';
+  const TITLE = 'Ryan Prayoga — Fullstack Developer';
   const DESCRIPTION =
-    'Fullstack Developer & Sub Team Lead — 4+ years shipping production web, mobile, and tooling systems for enterprise, government, and self-built products. Laravel, SvelteKit, Go, PostgreSQL.';
+    'Fullstack Developer — 4+ years shipping production web, mobile, and tooling systems for enterprise, government, and self-built products. Laravel, SvelteKit, Go, PostgreSQL.';
 
   const email = socials.find((s) => s.name === 'Email');
   const github = socials.find((s) => s.name === 'GitHub');
@@ -26,7 +26,7 @@
     url: SITE_URL,
     // Person.image = foto orangnya (rich result), bukan screenshot situs
     image: `${SITE_URL}/photo/ryan-700.jpg`,
-    jobTitle: 'Fullstack Developer & Sub Team Lead',
+    jobTitle: 'Fullstack Developer',
     worksFor: { '@type': 'Organization', name: profile.company },
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universitas Pasundan' },
     address: { '@type': 'PostalAddress', addressLocality: 'Tangerang', addressCountry: 'ID' },

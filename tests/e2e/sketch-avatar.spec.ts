@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('SketchRevealAvatar interactivity', () => {
-  test('renders initial sketch avatar with hint badge and toggles on hover/leave', async ({ page }) => {
+  test('renders initial sketch avatar with hint badge and toggles on hover/leave', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'Hover interaction is desktop-specific; mobile uses touch tap');
     // Given
     await page.goto('/');
 

@@ -7,7 +7,10 @@
   import HandDrawnUnderline from '$lib/components/ui/HandDrawnUnderline.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
+  const locale = $derived(localeStore.value);
   const entries = [profile.education.university, profile.education.smk];
+  const formatNote = (note: string | Record<string, string>) =>
+    typeof note === 'string' ? note : (note[locale] ?? note.en);
 </script>
 
 <section id="education" class="mx-auto max-w-5xl px-6 py-14" aria-labelledby="education-heading">
@@ -27,7 +30,7 @@
         use:reveal
         use:drawCard={{ resketchOnHover: true }}
       >
-        <span class="text-accent font-display text-sm font-semibold uppercase">{entry.note}</span>
+        <span class="text-accent font-display text-sm font-semibold uppercase">{formatNote(entry.note)}</span>
         <h3 class="mt-2 font-semibold tracking-tight text-lg">{entry.program}</h3>
         <p class="text-muted mt-1 font-display text-sm sm:text-base">{entry.school}</p>
       </div>

@@ -110,6 +110,7 @@ test.describe('freelance landing page', () => {
 
   test('draws card outlines once, never a sketch stacked on a CSS border', async ({ page }) => {
     await page.goto('/freelance');
+    await page.waitForSelector('.drawably-card');
 
     // Drawably menggambar garis tepi sendiri sebagai SVG. Kalau elemen yang
     // sama juga punya border CSS, pengunjung melihat dua garis: satu lurus,
