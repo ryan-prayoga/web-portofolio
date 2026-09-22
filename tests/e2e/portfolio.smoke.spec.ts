@@ -15,7 +15,10 @@ test('renders the portfolio shell from a production build', async ({ page }, tes
   await expect(page.locator('#experience')).toBeVisible();
   await expect(page.locator('#work')).toBeVisible();
   expect(browserErrors).toEqual([]);
-  await page.screenshot({ path: testInfo.outputPath('portfolio-smoke.png'), fullPage: true });
+  await page.screenshot({
+    path: testInfo.outputPath('portfolio-smoke.png'),
+    fullPage: testInfo.project.name !== 'mobile-webkit',
+  });
 });
 
 test('toggles light and dark mode with smooth theme transition', async ({ page }) => {

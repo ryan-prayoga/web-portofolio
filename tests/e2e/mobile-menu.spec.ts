@@ -150,7 +150,10 @@ test.describe('mobile menu', () => {
         return [...(candidates ?? [])].filter((element) => element.tabIndex >= 0 && !element.closest('[inert]')).length;
       }),
     ).toBe(0);
-    await page.screenshot({ path: testInfo.outputPath('mobile-menu-open.png'), fullPage: true });
+    await page.screenshot({
+      path: testInfo.outputPath('mobile-menu-open.png'),
+      fullPage: testInfo.project.name !== 'mobile-webkit',
+    });
 
     const menuLinks = menu.getByRole('link');
     const linkCount = await menuLinks.count();

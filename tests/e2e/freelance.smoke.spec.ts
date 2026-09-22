@@ -22,7 +22,10 @@ test.describe('freelance landing page', () => {
     await expect(page.locator('#faq')).toBeVisible();
     await expect(page.locator('#contact')).toBeVisible();
     expect(browserErrors).toEqual([]);
-    await page.screenshot({ path: testInfo.outputPath('freelance-smoke.png'), fullPage: true });
+    await page.screenshot({
+      path: testInfo.outputPath('freelance-smoke.png'),
+      fullPage: testInfo.project.name !== 'mobile-webkit',
+    });
   });
 
   test('toggles language between Indonesian and English', async ({ page }) => {
