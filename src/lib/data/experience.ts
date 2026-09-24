@@ -17,6 +17,21 @@ export interface ExperienceRole {
 export const experience: Record<Locale, readonly ExperienceRole[]> = {
   en: [
     {
+      title: 'Freelance Fullstack Developer',
+      company: 'Putra Selamat Makmur',
+      location: 'Tangerang, Indonesia',
+      period: 'May 2026 — Present',
+      duration: '5 mos',
+      summary:
+        'Delivered an end-to-end company profile and internal management web application for an industrial forklift-service client (Putra Selamat Makmur). Scoped, built, shipped, and SEO-tuned from scratch.',
+      bullets: [
+        'Architected and developed high-performance web platform using SvelteKit, TypeScript, and Tailwind CSS',
+        'Engineered backend services in Go and deployed on Linux VPS with Caddy reverse proxy for zero-downtime static delivery',
+        'Implemented interactive service catalog, WhatsApp business inquiry routing, and verified client portfolio showcase',
+        'Optimized local SEO, OpenGraph metadata, and Schema.org structured data, achieving top search visibility and sub-second page loads',
+      ],
+    },
+    {
       title: 'Fullstack Developer',
       company: 'PT Traspac Makmur Sejahtera',
       location: 'Jakarta, Indonesia',
@@ -36,6 +51,21 @@ export const experience: Record<Locale, readonly ExperienceRole[]> = {
     },
   ],
   id: [
+    {
+      title: 'Freelance Fullstack Developer',
+      company: 'Putra Selamat Makmur',
+      location: 'Tangerang, Indonesia',
+      period: 'Mei 2026 — Sekarang',
+      duration: '5 bln',
+      summary:
+        'Membangun dan merilis company profile serta aplikasi web manajemen internal dari nol untuk klien pengadaan & rental forklift (Putra Selamat Makmur). Bertanggung jawab penuh mulai dari perancangan arsitektur hingga optimasi SEO.',
+      bullets: [
+        'Merancang dan mengembangkan platform web berkinerja tinggi menggunakan SvelteKit, TypeScript, dan Tailwind CSS',
+        'Membangun backend service dengan Go dan mendeploy di VPS Linux dengan web server Caddy untuk pengiriman statis zero-downtime',
+        'Mengimplementasikan katalog layanan interaktif, integrasi pemesanan langsung ke WhatsApp bisnis, dan showcase portofolio klien',
+        'Mengoptimalkan SEO lokal, metadata OpenGraph, dan structured data Schema.org hingga mencapai skor performa tinggi dan indeks Google teratas',
+      ],
+    },
     {
       title: 'Fullstack Developer',
       company: 'PT Traspac Makmur Sejahtera',
