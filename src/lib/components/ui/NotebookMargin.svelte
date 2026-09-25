@@ -14,25 +14,19 @@
     }
 
     const updateProgress = () => {
-      // Calculate true document bottom using footer boundary
-      const footer = document.querySelector('footer');
-      const footerBottom = footer
-        ? footer.getBoundingClientRect().bottom + window.scrollY
-        : Math.max(
-            document.documentElement.scrollHeight,
-            document.body?.scrollHeight ?? 0,
-            document.documentElement.offsetHeight,
-          );
+      const scrollingEl = document.scrollingElement || document.documentElement;
+      const scrollHeight = Math.max(
+        scrollingEl.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body?.scrollHeight ?? 0,
+        document.documentElement.offsetHeight,
+      );
 
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-      const maxScroll = footerBottom - viewportHeight;
+      const maxScroll = Math.max(1, scrollHeight - viewportHeight);
+      const scrollTop = Math.max(0, window.scrollY || document.documentElement.scrollTop || 0);
 
-      if (maxScroll > 0) {
-        const scrollTop = window.scrollY || document.documentElement.scrollTop;
-        scrollProgress = Math.min(100, Math.max(0, (scrollTop / maxScroll) * 100));
-      } else {
-        scrollProgress = 0;
-      }
+      scrollProgress = Math.min(100, Math.max(0, (scrollTop / maxScroll) * 100));
     };
 
     let ro: ResizeObserver | undefined;
@@ -86,10 +80,10 @@
   Synchronized directly with scroll for buttery 60/120fps motion.
 -->
 <div
-  class="pointer-events-none fixed top-18 bottom-6 z-20 select-none transition-opacity duration-500 {isMounted
+  class="notebook-margin pointer-events-none fixed top-18 z-20 select-none transition-opacity duration-500 {isMounted
     ? 'opacity-100'
     : 'opacity-0'}"
-  style="left: max(10px, calc((100vw - 1024px) / 2 + 8px)); transform: translateX(-50%); bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));"
+  style="left: max(10px, calc((100vw - 1024px) / 2 + 8px)); transform: translateX(-50%);"
   aria-hidden="true"
 >
   <svg
@@ -99,7 +93,7 @@
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <!-- Single clean organic hand-drawn margin line (1000 unit stroke dash for universal WebKit/Blink parity) -->
+    <!-- Single clean organic hand-drawn margin line (1000 unit stroke with 2000 gap prevents wrap-around artifacts in WebKit/Blink) -->
     <path
       d="M 8 0
          C 6 60, 10 120, 7 180
@@ -113,8 +107,20 @@
       stroke-linecap="round"
       pathLength="1000"
       class="opacity-80"
-      style="stroke-dasharray: 1000 1000; stroke-dashoffset: {Math.max(0, 1000 - (scrollProgress / 100) * 1000)};"
+      style="stroke-dasharray: 1000 2000; stroke-dashoffset: {Math.max(0, 1000 - (scrollProgress / 100) * 1000)};"
       vector-effect="non-scaling-stroke"
     />
   </svg>
 </div>
+
+<style>
+  .notebook-margin {
+    bottom: max(0.5rem, env(safe-area-inset-bottom, 0.5rem));
+  }
+
+  @media (min-width: 640px) {
+    .notebook-margin {
+      bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));
+    }
+  }
+</style>
