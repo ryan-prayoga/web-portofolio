@@ -20,8 +20,8 @@ export const experience: Record<Locale, readonly ExperienceRole[]> = {
       title: 'Freelance Fullstack Developer',
       company: 'Putra Selamat Makmur',
       location: 'Tangerang, Indonesia',
-      period: 'May 2026 — Present',
-      duration: '5 mos',
+      period: 'May 2026 — Oct 2026',
+      duration: '6 mos',
       summary:
         'Delivered an end-to-end company profile and internal management web application for an industrial forklift-service client (Putra Selamat Makmur). Scoped, built, shipped, and SEO-tuned from scratch.',
       bullets: [
@@ -70,8 +70,8 @@ export const experience: Record<Locale, readonly ExperienceRole[]> = {
       title: 'Freelance Fullstack Developer',
       company: 'Putra Selamat Makmur',
       location: 'Tangerang, Indonesia',
-      period: 'Mei 2026 — Sekarang',
-      duration: '5 bln',
+      period: 'Mei 2026 — Okt 2026',
+      duration: '6 bln',
       summary:
         'Membangun dan merilis company profile serta aplikasi web manajemen internal dari nol untuk klien pengadaan & rental forklift (Putra Selamat Makmur). Bertanggung jawab penuh mulai dari perancangan arsitektur hingga optimasi SEO.',
       bullets: [

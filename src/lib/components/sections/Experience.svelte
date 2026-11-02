@@ -8,6 +8,7 @@
 
   const t = $derived(uiCopy[localeStore.value]);
   const roles = $derived(experience[localeStore.value]);
+  const isCurrent = (period: string) => /Present|Sekarang/.test(period);
 </script>
 
 <section id="experience" class="mx-auto max-w-5xl px-6 py-14" aria-labelledby="experience-heading">
@@ -21,7 +22,7 @@
   </div>
 
   <div class="mt-8 space-y-6">
-    {#each roles as role, i (role.title)}
+    {#each roles as role (role.title)}
       <article
         class="group cursor-pointer p-6 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5 sm:p-8"
         use:reveal
@@ -31,9 +32,11 @@
           <div>
             <span
               use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-              class="inline-block px-3 py-1 font-display text-sm uppercase {i === 0 ? 'text-accent' : ''}"
+              class="inline-block px-3 py-1 font-display text-sm uppercase {isCurrent(role.period)
+                ? 'text-accent'
+                : ''}"
             >
-              {#if i === 0}
+              {#if isCurrent(role.period)}
                 <span class="text-accent font-bold mr-1" aria-hidden="true">●</span>
               {/if}
               {role.period}
