@@ -40,11 +40,12 @@ export const experience: Record<Locale, readonly ExperienceRole[]> = {
       summary:
         'Led a 5-person engineering team (2 FE, 2 BE) in an R&D division. Main PIC across multiple concurrent projects — architecture decisions, development, and long-term maintenance.',
       bullets: [
-        'Kept 3–5 concurrent projects on track, adjusting priorities based on team capacity and client/stakeholder needs',
-        'Grew engineers from junior-level to production-ready through hands-on coaching and bi-annual reviews',
-        'Established code review practices and coding standards for the team',
-        'Distributed tasks and managed weekly sprints across frontend and backend teams',
-        'Acted as the main bridge between the team and stakeholders — from scoping requirements to delivery updates',
+        'Mentored 3 engineers to concrete career outcomes: one converted from contract to permanent employee, one promoted a grade after a long plateau, and one secured an approved salary increase',
+        'Introduced AI-assisted development practices to the team and coached engineers on presenting project demos, speeding up delivery with fewer bugs',
+        'Resolved a slow data-loading bottleneck on a government project through code optimization and database indexing',
+        'Kept 3–5 concurrent confidential government projects on track, adjusting priorities to team capacity and stakeholder needs',
+        'Established code review practices and coding standards, and managed weekly sprints across frontend and backend teams',
+        'Acted as the main bridge between the team and stakeholders, from scoping requirements to delivery updates',
       ],
     },
     {
@@ -90,11 +91,12 @@ export const experience: Record<Locale, readonly ExperienceRole[]> = {
       summary:
         'Memimpin tim engineering 5 orang (2 FE, 2 BE) di divisi R&D. PIC utama beberapa proyek paralel — keputusan arsitektur, development, dan maintenance jangka panjang.',
       bullets: [
-        'Menjaga 3–5 proyek paralel tetap on-track, menyesuaikan prioritas dengan kapasitas tim dan kebutuhan klien/stakeholder',
-        'Membina engineer dari level junior sampai siap production lewat coaching langsung dan review dua kali setahun',
-        'Menetapkan praktik code review dan standar koding untuk tim',
-        'Membagi tugas dan mengelola sprint mingguan lintas tim frontend dan backend',
-        'Jadi jembatan utama tim dengan stakeholder — dari scoping kebutuhan sampai update delivery',
+        'Membina 3 engineer hingga mencapai hasil nyata: satu diangkat dari kontrak menjadi karyawan tetap, satu naik grade setelah lama tidak naik, dan satu mendapat kenaikan gaji yang disetujui',
+        'Memperkenalkan praktik pengembangan berbantuan AI ke tim dan melatih anggota mendemokan proyek, sehingga pengerjaan lebih cepat dengan bug lebih sedikit',
+        'Menyelesaikan bottleneck load data yang lambat pada proyek pemerintah lewat optimasi kode dan indexing database',
+        'Menjaga 3–5 proyek pemerintah bersifat rahasia berjalan paralel, menyesuaikan prioritas dengan kapasitas tim dan kebutuhan stakeholder',
+        'Menetapkan praktik code review dan standar koding, serta mengelola sprint mingguan lintas tim frontend dan backend',
+        'Menjadi jembatan utama tim dengan stakeholder, dari scoping kebutuhan sampai update delivery',
       ],
     },
     {
