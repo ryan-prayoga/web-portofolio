@@ -5,18 +5,20 @@
  */
 export const profile = {
   name: 'Ryan Prayoga',
-  role: 'Fullstack Developer',
+  role: 'Fullstack Developer · Team Lead',
   location: 'Tangerang, Indonesia',
   company: 'PT Traspac Makmur Sejahtera',
   experienceYears: '4+',
+  /** 2 FE + 2 BE — tim 5 orang termasuk lead, sesuai CV */
+  teamSize: 4,
   productionApps: '10+',
   education: {
     university: {
       school: 'Universitas Pasundan (UNPAS), Bandung',
       program: 'S1 Teknik Informatika',
       note: {
-        en: 'Undergraduate',
-        id: 'Mahasiswa Aktif',
+        en: 'Expected Feb 2027',
+        id: 'Ekspektasi Lulus Feb 2027',
       },
     },
     smk: {
