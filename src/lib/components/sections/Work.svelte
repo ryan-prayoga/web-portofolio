@@ -72,7 +72,7 @@
               href={project.destination.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-muted hover:text-accent inline-flex items-center gap-1.5 font-display text-base uppercase underline-offset-4 hover:underline"
+              class="text-muted hover:text-accent -my-2.5 inline-flex items-center gap-1.5 py-2.5 font-display text-base uppercase underline-offset-4 hover:underline"
             >
               {project.destination.kind === 'site' ? t.work.visit : t.work.source}
               <Icon name="arrowUpRight" size={13} />
@@ -113,7 +113,7 @@
 
   <div class="mt-16 flex items-center justify-between" use:reveal>
     <p class="text-muted font-display text-sm font-semibold tracking-wider uppercase">{t.work.moreLabel}</p>
-    <span class="text-muted/60 hidden font-display text-xs sm:inline">client delivery, desktop & civic platforms</span>
+    <span class="text-muted/60 hidden font-display text-xs sm:inline">{t.work.moreNote}</span>
   </div>
 
   <div class="mt-4 grid gap-4 sm:grid-cols-2" use:reveal>

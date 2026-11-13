@@ -5,6 +5,7 @@
   import { localeStore } from '$lib/stores/locale.svelte';
   import { page } from '$app/state';
   import { initLenis } from '$lib/utils/lenis';
+  import { defaultLocaleFor, isFreelanceUrl } from '$lib/utils/routeLocale';
   import Nav from '$lib/components/layout/Nav.svelte';
   import Footer from '$lib/components/layout/Footer.svelte';
   import FreelanceNav from '$lib/components/layout/FreelanceNav.svelte';
@@ -14,11 +15,14 @@
   let { children } = $props();
   let appMounted = $state(true);
 
-  const isFreelance = $derived(
-    page.url.pathname.startsWith('/freelance') ||
-      page.url.hostname === 'freelance.ryanprayoga.dev' ||
-      page.url.hostname.startsWith('freelance.'),
-  );
+  const isFreelance = $derived(isFreelanceUrl(page.url));
+
+  // Bahasa bawaan route harus terpasang SEBELUM child dirender: sinkron untuk
+  // SSR/prerender + hidrasi, lalu $effect.pre untuk navigasi client-side.
+  localeStore.setRouteDefault(defaultLocaleFor(page.url));
+  $effect.pre(() => {
+    localeStore.setRouteDefault(defaultLocaleFor(page.url));
+  });
 
   onMount(() => {
     localeStore.init();

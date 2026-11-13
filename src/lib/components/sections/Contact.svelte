@@ -118,7 +118,7 @@
     >
       {email?.label}
     </span>
-    <p class="text-muted/70 mt-2 text-sm font-display">Fastest response time · Open for direct conversation</p>
+    <p class="text-muted/70 mt-2 text-sm font-display">{t.contact.emailNote}</p>
   </a>
 
   <div class="no-print mt-8 flex flex-wrap items-center gap-3.5 pt-2" use:reveal>

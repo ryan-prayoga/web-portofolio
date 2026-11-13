@@ -27,7 +27,6 @@
     // Person.image = foto orangnya (rich result), bukan screenshot situs
     image: `${SITE_URL}/photo/ryan-700.jpg`,
     jobTitle: 'Fullstack Developer',
-    worksFor: { '@type': 'Organization', name: profile.company },
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universitas Pasundan' },
     address: { '@type': 'PostalAddress', addressLocality: 'Tangerang', addressCountry: 'ID' },
     sameAs: [github?.url, linkedin?.url].filter(Boolean),
@@ -54,8 +53,19 @@
   <meta name="author" content="Ryan Prayoga" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href={PAGE_URL} />
+  <!-- Preload sketsa avatar hanya di halaman yang menampilkannya, dan sesuai DPR
+       (imagesrcset) supaya layar retina tidak mengunduh dua ukuran. -->
+  <link
+    rel="preload"
+    as="image"
+    type="image/webp"
+    href="/photo/ryan-sketch-480.webp"
+    imagesrcset="/photo/ryan-sketch-480.webp 1x, /photo/ryan-sketch-700.webp 2x"
+  />
   <meta property="og:type" content="profile" />
   <meta property="og:site_name" content="Ryan Prayoga" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="id_ID" />
   <meta property="og:title" content={TITLE} />
   <meta property="og:description" content={DESCRIPTION} />
   <meta property="og:url" content={PAGE_URL} />

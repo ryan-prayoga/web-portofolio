@@ -33,6 +33,7 @@
     '@type': 'ProfessionalService',
     name: 'Ryan Prayoga — Jasa Pembuatan Web Portofolio & Profil Bisnis',
     url: SITE_URL,
+    inLanguage: 'id',
     image: 'https://ryanprayoga.dev/photo/ryan-700.jpg',
     priceRange: `${pricingPackages[0].priceIdr} - ${pricingPackages[pricingPackages.length - 1].priceIdr}`,
     address: {
@@ -74,6 +75,8 @@
   <link rel="canonical" href={SITE_URL} />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Ryan Prayoga Freelance" />
+  <meta property="og:locale" content={locale === 'id' ? 'id_ID' : 'en_US'} />
+  <meta property="og:locale:alternate" content={locale === 'id' ? 'en_US' : 'id_ID'} />
   <meta property="og:title" content={TITLE} />
   <meta property="og:description" content={DESCRIPTION} />
   <meta property="og:url" content={SITE_URL} />

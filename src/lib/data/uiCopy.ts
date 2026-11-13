@@ -12,6 +12,9 @@ export interface UiCopy {
     sketchHintHover: string;
     sketchHintTap: string;
     sketchHintReset: string;
+    proofsLabel: string;
+    resketchHint: string;
+    resketchTitle: string;
   };
   facts: { years: string; apps: string; shipped: string; based: string };
   experience: { label: string; heading: string };
@@ -25,10 +28,11 @@ export interface UiCopy {
     npm: string;
     clientTag: string;
     moreLabel: string;
+    moreNote: string;
   };
   skills: { label: string; heading: string };
   education: { label: string; heading: string; languages: string };
-  contact: { label: string; heading: string; body: string; emailCta: string };
+  contact: { label: string; heading: string; body: string; emailCta: string; emailNote: string };
   footer: { note: string; backToTop: string };
   a11y: { home: string; toggleMenu: string; mobileNav: string; language: string; sectionNav: string };
   caseStudy: {
@@ -56,6 +60,9 @@ export const uiCopy: Record<Locale, UiCopy> = {
       sketchHintHover: 'hover to erase ✎',
       sketchHintTap: 'tap to erase ✎',
       sketchHintReset: 'tap to re-sketch ↺',
+      proofsLabel: 'Key production proofs',
+      resketchHint: 'hover card to re-sketch ✎',
+      resketchTitle: 'Hover to re-sketch frame',
     },
     facts: { years: 'Years experience', apps: 'Production apps', shipped: 'Systems shipped', based: 'Based in' },
     experience: { label: 'Experience', heading: 'Where I have worked' },
@@ -69,6 +76,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
       npm: 'View on npm',
       clientTag: 'Client work',
       moreLabel: 'More projects',
+      moreNote: 'client delivery, desktop & civic platforms',
     },
     skills: { label: 'Skills', heading: 'What I work with' },
     education: { label: 'Education', heading: 'Education & languages', languages: 'Languages' },
@@ -77,6 +85,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
       heading: 'Let’s talk.',
       body: 'Open for fullstack and backend roles.',
       emailCta: 'Send email',
+      emailNote: 'Fastest response time · Open for direct conversation',
     },
     footer: { note: '', backToTop: 'Back to top' },
     a11y: {
@@ -109,6 +118,9 @@ export const uiCopy: Record<Locale, UiCopy> = {
       sketchHintHover: 'sorot untuk hapus ✎',
       sketchHintTap: 'ketuk untuk hapus ✎',
       sketchHintReset: 'ketuk untuk sketsa ulang ↺',
+      proofsLabel: 'Bukti kerja production',
+      resketchHint: 'sorot kartu untuk sketsa ulang ✎',
+      resketchTitle: 'Sorot untuk sketsa ulang bingkai',
     },
     facts: { years: 'Tahun pengalaman', apps: 'Aplikasi production', shipped: 'Sistem dirilis', based: 'Berbasis di' },
     experience: { label: 'Pengalaman', heading: 'Tempat saya bekerja' },
@@ -122,6 +134,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
       npm: 'Lihat di npm',
       clientTag: 'Kerja klien',
       moreLabel: 'Proyek lainnya',
+      moreNote: 'proyek klien, desktop & platform civic',
     },
     skills: { label: 'Skill', heading: 'Yang saya pakai bekerja' },
     education: { label: 'Pendidikan', heading: 'Pendidikan & bahasa', languages: 'Bahasa' },
@@ -130,6 +143,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
       heading: 'Ngobrol, yuk.',
       body: 'Terbuka untuk peran fullstack dan backend.',
       emailCta: 'Kirim email',
+      emailNote: 'Respons paling cepat · Terbuka untuk ngobrol langsung',
     },
     footer: { note: '', backToTop: 'Ke atas' },
     a11y: {

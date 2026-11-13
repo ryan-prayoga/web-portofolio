@@ -74,15 +74,15 @@
 
   <div class="mt-14">
     <div class="mb-3 flex items-center justify-between">
-      <span class="text-muted font-display text-xs font-semibold tracking-wider uppercase">Key Production Proofs</span>
-      <span class="text-muted/60 hidden font-display text-xs sm:inline">hover card to re-sketch ✎</span>
+      <span class="text-muted font-display text-xs font-semibold tracking-wider uppercase">{t.hero.proofsLabel}</span>
+      <span class="text-muted/60 hidden font-display text-xs sm:inline">{t.hero.resketchHint}</span>
     </div>
     <dl class="grid grid-cols-2 gap-4 sm:grid-cols-4">
       {#each facts as fact (fact.label)}
         <div
           use:drawCard={{ resketchOnHover: true }}
           class="group cursor-pointer p-4 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5"
-          title="Hover to re-sketch frame"
+          title={t.hero.resketchTitle}
         >
           <dt class="text-muted font-display text-xs sm:text-sm tracking-wider uppercase">{fact.label}</dt>
           <dd

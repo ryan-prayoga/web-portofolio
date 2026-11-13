@@ -1,7 +1,8 @@
 # ryanprayoga.dev
 
 Portfolio personal Ryan Prayoga — Fullstack Developer.
-Fully static, zero runtime dependency, dwibahasa (EN/ID).
+Fully static, dwibahasa (EN/ID): portofolio utama default Inggris,
+halaman freelance default Bahasa Indonesia (prerender per route).
 
 **Live:** https://ryanprayoga.dev
 
@@ -11,22 +12,25 @@ Fully static, zero runtime dependency, dwibahasa (EN/ID).
 - Tailwind CSS 4 (`@theme` tokens: paper/ink/rust, light-first + dark
   via `prefers-color-scheme`)
 - `adapter-static` — full prerender, tanpa server
-- Geist Sans + Geist Mono (variable, self-hosted, 51KB)
-- `dependencies: {}` — tidak ada runtime dep sama sekali
+- Font self-hosted: Patrick Hand, Shantell Sans, Hanken Grotesk,
+  JetBrains Mono (woff2 di `static/fonts/`)
+- Runtime dependency: `drawably` (goresan sketsa) dan `lenis` (smooth scroll)
+- CSP ditulis sebagai `<meta http-equiv>` lewat `kit.csp` di
+  `svelte.config.js` (hash untuk script inline)
 
 ## Struktur konten
 
 Semua konten hidup di `src/lib/data/` dan dijaga kontrak:
 
-| File                   | Isi                                                  |
-| ---------------------- | ---------------------------------------------------- |
-| `profile.ts`           | Identitas — WAJIB konsisten dengan CV ATS            |
-| `experience.ts`        | Riwayat kerja + bullet dampak (EN/ID)                |
-| `skills.ts`            | Matrix skill mengikuti struktur CV                   |
-| `projects.ts`          | Katalog 7 project terkurasi, 3 `featured`            |
-| `projectCopy.ts`       | Ringkasan per project (EN/ID)                        |
-| `caseStudies.ts`       | Case study penuh untuk project featured (EN/ID)      |
-| `portfolioContract.ts` | Invariant: 3 featured, case study lengkap, aset utuh |
+| File                   | Isi                                                |
+| ---------------------- | -------------------------------------------------- |
+| `profile.ts`           | Identitas — WAJIB konsisten dengan CV ATS          |
+| `experience.ts`        | Riwayat kerja + bullet dampak (EN/ID)              |
+| `skills.ts`            | Matrix skill mengikuti struktur CV                 |
+| `projects.ts`          | Katalog 8 project terkurasi, 4 `featured`          |
+| `projectCopy.ts`       | Ringkasan per project (EN/ID)                      |
+| `caseStudies.ts`       | Case study penuh untuk project featured (EN/ID)    |
+| `portfolioContract.ts` | Invariant: featured, case study lengkap, aset utuh |
 
 Drift (slug hilang, thumbnail hilang, case study bolong) gagal di
 `npm run test:unit`, bukan di production.

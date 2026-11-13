@@ -1,16 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html lang="%lang%">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbfaf8" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141618" />
-    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png?v=2" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-192.png?v=3" type="image/png" sizes="192x192" />
     <link rel="icon" href="/favicon.ico?v=2" sizes="48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/patrick-hand.woff2" crossorigin="anonymous" />
-    <link rel="preload" as="image" href="/photo/ryan-sketch-480.webp" type="image/webp" />
     <script>
       (function () {
         try {
@@ -19,12 +18,19 @@
             saved === 'dark' || (saved !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
           document.documentElement.classList.toggle('dark', dark);
 
-          var locale = localStorage.getItem('locale');
-          if (locale === 'id') {
-            document.documentElement.lang = 'id';
-            document.documentElement.classList.add('locale-id');
+          // HTML prerender memakai bahasa bawaan route (<html lang>). Kalau
+          // pilihan tersimpan berbeda, sembunyikan body sampai hidrasi selesai
+          // supaya tidak ada kilatan bahasa yang salah.
+          var root = document.documentElement;
+          var routeLocale = root.lang === 'id' ? 'id' : 'en';
+          var saved = localStorage.getItem('locale');
+          var locale = saved === 'en' || saved === 'id' ? saved : routeLocale;
+          root.classList.toggle('locale-id', locale === 'id');
+          if (locale !== routeLocale) {
+            root.lang = locale;
+            root.classList.add('locale-pending');
             setTimeout(function () {
-              document.documentElement.classList.add('hydrated');
+              root.classList.add('hydrated');
             }, 1000);
           }
         } catch (e) {}

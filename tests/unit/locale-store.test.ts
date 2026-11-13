@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { localeStore } from '../../src/lib/stores/locale.svelte';
 
 describe('locale store', () => {
@@ -48,5 +48,45 @@ describe('locale store', () => {
     localeStore.init();
 
     expect(localeStore.value).toBe('id');
+  });
+
+  describe('route default (visitor has not chosen a language yet)', () => {
+    async function freshStore() {
+      vi.resetModules();
+      localStorage.clear();
+      document.documentElement.lang = '';
+      const mod = await import('../../src/lib/stores/locale.svelte');
+      return mod.localeStore;
+    }
+
+    it('follows the route default so the freelance page renders Indonesian for new visitors', async () => {
+      const store = await freshStore();
+
+      store.setRouteDefault('id');
+
+      expect(store.value).toBe('id');
+      expect(document.documentElement.lang).toBe('id');
+      expect(localStorage.getItem('locale')).toBeNull();
+    });
+
+    it('switches back when navigating to a route with a different default', async () => {
+      const store = await freshStore();
+
+      store.setRouteDefault('id');
+      store.setRouteDefault('en');
+
+      expect(store.value).toBe('en');
+      expect(document.documentElement.lang).toBe('en');
+    });
+
+    it('never overrides an explicit choice with the route default', async () => {
+      const store = await freshStore();
+
+      store.set('en');
+      store.setRouteDefault('id');
+
+      expect(store.value).toBe('en');
+      expect(document.documentElement.lang).toBe('en');
+    });
   });
 });

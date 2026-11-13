@@ -79,8 +79,10 @@ test.describe('freelance landing page', () => {
   });
 
   test('renders pure English copy with no untranslated Indonesian strings', async ({ page }) => {
-    // Given a fresh visitor (default locale is English)
+    // Given a visitor who switched to English (freelance defaults to Indonesian)
+    await page.addInitScript(() => localStorage.setItem('locale', 'en'));
     await page.goto('/freelance');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
 
     // When reading everything the visitor can actually see
     const visibleText = await page.evaluate(() => document.body.innerText);
@@ -98,6 +100,27 @@ test.describe('freelance landing page', () => {
     ];
     const leaked = indonesianMarkers.filter((marker) => visibleText.includes(marker));
     expect(leaked, `Indonesian copy leaked into the English page: ${leaked.join(', ')}`).toEqual([]);
+  });
+
+  test('prerenders Indonesian copy so search engines index the local-market page', async ({ request }) => {
+    // Given the static HTML, before any JavaScript runs
+    const freelanceHtml = await (await request.get('/freelance')).text();
+    const homeHtml = await (await request.get('/')).text();
+
+    // Then the freelance page ships Indonesian markup and metadata
+    expect(freelanceHtml).toContain('<html lang="id">');
+    expect(freelanceHtml).toContain('<title>Jasa Pembuatan Web Portofolio');
+    expect(freelanceHtml).toContain('Konsultasi');
+
+    // And the recruiter-facing portfolio stays English
+    expect(homeHtml).toContain('<html lang="en">');
+  });
+
+  test('shows Indonesian to a first-time visitor without a saved language', async ({ page }) => {
+    await page.goto('/freelance');
+
+    await expect(page.locator('html')).toHaveAttribute('lang', 'id');
+    await expect(page).toHaveTitle(/Jasa Pembuatan Web/);
   });
 
   test('only links to business showcases that are verified live', async ({ page }) => {

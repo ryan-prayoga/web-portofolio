@@ -205,7 +205,7 @@ body::-webkit-scrollbar {
  * chose Indonesian, hold visibility until client hydration completes (~20-50ms)
  * to avoid flashing English text before switching to Indonesian.
  */
-html.locale-id:not(.hydrated) body {
+html.locale-pending:not(.hydrated) body {
   visibility: hidden;
 }
 
