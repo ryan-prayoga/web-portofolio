@@ -36,7 +36,8 @@ job `deploy` (self-hosted) merilisnya secara atomic ke
    ```
 
 4. **Pindahkan Caddy dari reverse_proxy ke file_server** — edit
-   `/etc/caddy/sites/ryanprayoga.dev.caddy` (atau blok terkait):
+   `/etc/caddy/sites/ryanprayoga-main.caddy` dan
+   `/etc/caddy/sites/freelance.ryanprayoga.dev.caddy`:
 
    ```caddy
    ryanprayoga.dev {
@@ -64,6 +65,9 @@ job `deploy` (self-hosted) merilisnya secara atomic ke
      }
      header /fonts/* Cache-Control "public, max-age=31536000, immutable"
      header /_app/immutable/* Cache-Control "public, max-age=31536000, immutable"
+     # HTML wajib divalidasi ulang tiap kunjungan (lihat tabel invariant).
+     @html path / /freelance /404 /work/* *.html
+     header @html Cache-Control "public, max-age=0, must-revalidate"
    }
 
    # ══════════════════════════════════════════════════════════
@@ -100,6 +104,9 @@ job `deploy` (self-hosted) merilisnya secara atomic ke
      }
      header /fonts/* Cache-Control "public, max-age=31536000, immutable"
      header /_app/immutable/* Cache-Control "public, max-age=31536000, immutable"
+     # HTML wajib divalidasi ulang tiap kunjungan (lihat tabel invariant).
+     @html path / /freelance /404 /work/* *.html
+     header @html Cache-Control "public, max-age=0, must-revalidate"
    }
    ```
 
@@ -141,11 +148,12 @@ sudo caddy validate --config /etc/caddy/Caddyfile && sudo systemctl reload caddy
 
 Invariant yang wajib dijaga di kedua blok:
 
-| Aturan                                            | Alasan                                     |
-| ------------------------------------------------- | ------------------------------------------ |
-| `try_files` tanpa fallback halaman                | fallback = soft-404 HTTP 200, racun SEO    |
-| `handle_errors` → `/404.html`                     | error tetap berstatus 404                  |
-| HSTS `max-age=31536000` tanpa `includeSubDomains` | subdomain lain belum tentu siap HTTPS-only |
+| Aturan                                              | Alasan                                                                    |
+| --------------------------------------------------- | ------------------------------------------------------------------------- |
+| `try_files` tanpa fallback halaman                  | fallback = soft-404 HTTP 200, racun SEO                                   |
+| `handle_errors` → `/404.html`                       | error tetap berstatus 404                                                 |
+| HSTS `max-age=31536000` tanpa `includeSubDomains`   | subdomain lain belum tentu siap HTTPS-only                                |
+| `Cache-Control: max-age=0, must-revalidate` di HTML | tanpa header, browser heuristic-cache HTML lama berjam-jam setelah deploy |
 
 ## Rollback
 
