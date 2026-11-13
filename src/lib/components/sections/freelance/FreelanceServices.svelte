@@ -2,16 +2,20 @@
   import Icon from '$lib/components/Icon.svelte';
   import { localeStore } from '$lib/stores/locale.svelte';
   import { freelanceCopy } from '$lib/data/freelanceCopy';
-  import { drawCard, drawBadge } from '$lib/actions/drawably';
+  import { roughCircle } from 'drawably';
+  import { drawBadge } from '$lib/actions/drawably';
+  import SketchRule from '$lib/components/ui/SketchRule.svelte';
 
   const t = $derived(freelanceCopy[localeStore.value]);
+  const loopPath = (index: number) => roughCircle(20, 20, 17, { seed: 151 + index * 11, roughness: 0.45 });
 </script>
 
-<section id="services" class="mx-auto max-w-5xl px-6 py-16 sm:py-24 border-t border-rule">
+<section id="services" class="relative mx-auto max-w-5xl px-6 py-16 sm:py-24">
+  <SketchRule seed={184} class="text-ink/40 absolute inset-x-6 -top-1" />
   <div class="inline-block">
     <span
       use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-      class="cursor-default px-3 py-1 font-display text-sm tracking-wide uppercase text-accent"
+      class="cursor-default px-3 py-1 font-display text-sm text-accent"
     >
       // {t.services.badge}
     </span>
@@ -24,27 +28,38 @@
     {t.services.subheading}
   </p>
 
-  <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-    {#each t.services.items as item (item.title)}
-      <div
-        use:drawCard={{ resketchOnHover: true }}
-        class="bg-paper p-6 transition-[transform,box-shadow] duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-1 flex flex-col justify-between"
-      >
-        <div>
-          <span class="text-accent mb-3 flex items-center gap-2">
-            <span class="border-accent/40 bg-accent-soft/30 border p-1.5">
-              <Icon name={item.icon} size={18} />
-            </span>
-            <span class="font-display text-sm font-semibold tracking-wide uppercase">{item.tag}</span>
+  <!-- Daftar catatan, bukan grid kartu seragam: ikon dilingkari pena, tanpa bingkai. -->
+  <ul class="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+    {#each t.services.items as item, index (item.title)}
+      <li>
+        <div class="text-accent flex items-center gap-2.5">
+          <span class="relative inline-flex size-10 shrink-0 items-center justify-center">
+            <svg
+              class="absolute inset-0 h-full w-full overflow-visible"
+              viewBox="0 0 40 40"
+              fill="none"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d={loopPath(index)}
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <Icon name={item.icon} size={18} class="relative" />
           </span>
-          <h3 class="mt-2 font-display text-lg font-semibold text-ink tracking-tight">
-            {item.title}
-          </h3>
-          <p class="mt-2 text-xs sm:text-sm leading-relaxed text-muted">
-            {item.description}
-          </p>
+          <span class="font-display text-base font-semibold">{item.tag}</span>
         </div>
-      </div>
+        <h3 class="mt-3 font-display text-lg font-semibold text-ink tracking-tight">
+          {item.title}
+        </h3>
+        <p class="mt-2 text-sm sm:text-base leading-relaxed text-muted">
+          {item.description}
+        </p>
+      </li>
     {/each}
-  </div>
+  </ul>
 </section>

@@ -3,15 +3,17 @@
   import { localeStore } from '$lib/stores/locale.svelte';
   import { freelanceCopy } from '$lib/data/freelanceCopy';
   import { drawCard, drawBadge } from '$lib/actions/drawably';
+  import SketchRule from '$lib/components/ui/SketchRule.svelte';
 
   const t = $derived(freelanceCopy[localeStore.value]);
 </script>
 
-<section id="why-us" class="mx-auto max-w-5xl px-6 py-16 sm:py-24 border-t border-rule">
+<section id="why-us" class="relative mx-auto max-w-5xl px-6 py-16 sm:py-24">
+  <SketchRule seed={107} class="text-ink/40 absolute inset-x-6 -top-1" />
   <div class="inline-block">
     <span
       use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-      class="cursor-default px-3 py-1 font-display text-sm tracking-wide uppercase text-accent"
+      class="cursor-default px-3 py-1 font-display text-sm text-accent"
     >
       // {t.comparison.badge}
     </span>
@@ -27,15 +29,15 @@
   <div class="mt-12 grid gap-8 md:grid-cols-2">
     <!-- Generic Builders Card -->
     <div use:drawCard={{ resketchOnHover: true }} class="bg-paper/40 p-6 opacity-90 sm:p-8">
-      <div class="flex items-center gap-2 font-display text-sm uppercase tracking-wide text-muted font-semibold">
-        <Icon name="close" size={15} strokeWidth={2.25} class="text-rose-500" />
+      <div class="flex items-center gap-2 font-display text-sm text-muted font-semibold">
+        <Icon name="close" size={15} strokeWidth={2.25} class="text-ink/70" />
         <h3>{t.comparison.genericTitle}</h3>
       </div>
 
-      <ul class="mt-6 flex flex-col gap-4 text-xs sm:text-sm text-muted">
+      <ul class="mt-6 flex flex-col gap-4 text-sm sm:text-base text-muted">
         {#each t.comparison.genericPoints as point, idx (idx)}
           <li class="flex items-start gap-2.5">
-            <Icon name="close" size={14} class="text-rose-500/80 mt-0.5 shrink-0" />
+            <Icon name="close" size={14} class="text-ink/60 mt-0.5 shrink-0" />
             <span>{point}</span>
           </li>
         {/each}
@@ -45,19 +47,17 @@
     <!-- Handcrafted Bespoke Card -->
     <div
       use:drawCard={{ resketchOnHover: true }}
-      class="bg-accent-soft/30 drawably-accent relative overflow-hidden p-6 shadow-sm sm:p-8"
+      class="bg-accent-soft/30 drawably-accent relative overflow-hidden p-6 sm:p-8"
     >
       <div class="flex items-center justify-between gap-2">
-        <div class="flex items-center gap-2 font-display text-sm uppercase tracking-wide text-accent font-semibold">
+        <div class="flex items-center gap-2 font-display text-sm text-accent font-semibold">
           <Icon name="check" size={15} strokeWidth={2.25} class="text-accent" />
           <h3>{t.comparison.customTitle}</h3>
         </div>
-        <span class="bg-accent text-paper font-display text-xs uppercase tracking-wide px-2.5 py-0.5 font-bold">
-          Recommended
-        </span>
+        <span class="bg-accent text-paper font-display text-sm px-2.5 py-0.5 font-bold"> Recommended </span>
       </div>
 
-      <ul class="mt-6 flex flex-col gap-4 text-xs sm:text-sm text-ink font-medium">
+      <ul class="mt-6 flex flex-col gap-4 text-sm sm:text-base text-ink font-medium">
         {#each t.comparison.customPoints as point, idx (idx)}
           <li class="flex items-start gap-2.5">
             <Icon name="check" size={14} strokeWidth={2.25} class="text-accent mt-0.5 shrink-0" />

@@ -15,7 +15,7 @@
   }
 </script>
 
-<footer class="text-muted mx-auto max-w-5xl px-6 font-display text-sm uppercase">
+<footer class="text-muted mx-auto max-w-5xl px-6 font-display text-sm">
   <SketchRule seed={53} class="text-ink/45" />
   <div class="flex flex-wrap justify-between gap-x-8 gap-y-2 py-8">
     <span>© 2026 {profile.name}</span>

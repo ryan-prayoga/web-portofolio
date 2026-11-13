@@ -777,7 +777,7 @@
   <button
     type="button"
     onclick={handleToggle}
-    class="no-print text-muted hover:text-accent hover:border-accent/40 bg-paper/90 border-ink/15 mt-2.5 inline-flex max-w-full cursor-pointer items-center justify-center gap-1.5 rounded-sm border px-2.5 py-1 font-display text-xs sm:text-sm tracking-wide uppercase shadow-xs transition-colors active:scale-95"
+    class="no-print text-muted hover:text-accent hover:border-accent/40 bg-paper/90 border-ink/15 mt-2.5 inline-flex max-w-full cursor-pointer items-center justify-center gap-1.5 rounded-sm border px-2.5 py-1 font-display text-xs sm:text-sm transition-colors active:scale-95"
     title={isRevealed
       ? isCoarse
         ? t.hero.sketchHintReset
@@ -793,7 +793,9 @@
       >
       <span class="truncate">{t.hero.sketchHintReset}</span>
     {:else}
-      <span class="text-accent inline-block animate-pulse font-bold" aria-hidden="true">✎</span>
+      <span class="text-accent inline-block animate-pulse font-bold motion-reduce:animate-none" aria-hidden="true"
+        >✎</span
+      >
       <span class="truncate">{isCoarse ? t.hero.sketchHintTap : t.hero.sketchHintHover}</span>
     {/if}
   </button>

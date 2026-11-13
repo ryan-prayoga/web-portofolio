@@ -25,24 +25,16 @@
 
   <div class="mt-8 grid gap-4 sm:grid-cols-2">
     {#each entries as entry (entry.school)}
-      <div
-        class="group cursor-pointer p-6 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5"
-        use:reveal
-        use:drawCard={{ resketchOnHover: true }}
-      >
-        <span class="text-accent font-display text-sm font-semibold uppercase">{formatNote(entry.note)}</span>
+      <div class="p-6" use:reveal use:drawCard={{ resketchOnHover: true }}>
+        <span class="text-accent font-display text-sm font-semibold">{formatNote(entry.note)}</span>
         <h3 class="mt-2 font-semibold tracking-tight text-lg">{entry.program}</h3>
         <p class="text-muted mt-1 font-display text-sm sm:text-base">{entry.school}</p>
       </div>
     {/each}
 
-    <div
-      class="group cursor-pointer p-6 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5 sm:col-span-2"
-      use:reveal
-      use:drawCard={{ resketchOnHover: true }}
-    >
-      <p class="text-accent font-display text-sm font-semibold tracking-wider uppercase">{t.education.languages}</p>
-      <p class="text-muted mt-2 text-sm">
+    <div class="p-6 sm:col-span-2" use:reveal use:drawCard={{ resketchOnHover: true }}>
+      <p class="text-accent font-display text-sm font-semibold">{t.education.languages}</p>
+      <p class="text-muted mt-2">
         {profile.languages.map((language) => `${language.name} (${language.level})`).join(' · ')}
       </p>
     </div>

@@ -8,6 +8,8 @@
   import { drawButton } from '$lib/actions/drawably';
   import ThemeToggle from '$lib/components/ThemeToggle.svelte';
   import Icon from '$lib/components/Icon.svelte';
+  import SketchTick from '$lib/components/ui/SketchTick.svelte';
+  import SketchRule from '$lib/components/ui/SketchRule.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -124,11 +126,7 @@
   }
 </script>
 
-<nav
-  class="nav bg-paper/85 fixed inset-x-0 top-0 z-60 flex items-center justify-between gap-4 border-b px-6 py-3 backdrop-blur transition-colors {scrolled
-    ? 'border-rule'
-    : 'border-transparent'}"
->
+<nav class="nav bg-paper fixed inset-x-0 top-0 z-60 flex items-center justify-between gap-4 px-6 py-3">
   <a
     href={onHome ? '#top' : '/'}
     class="brand font-display text-xl font-bold tracking-tight whitespace-nowrap"
@@ -143,7 +141,7 @@
       <a
         href={onHome ? item.href : `/${item.href}`}
         onclick={goTo(item.href.slice(1))}
-        class="text-muted hover:text-accent font-display text-sm tracking-wide uppercase transition-colors"
+        class="text-muted hover:text-accent font-display text-base transition-colors"
       >
         {item.label}
       </a>
@@ -151,7 +149,7 @@
   </div>
 
   <div class="nav-actions flex items-center gap-2 sm:gap-2.5">
-    <span class="status text-muted hidden items-center gap-2 font-display text-sm uppercase min-[900px]:inline-flex">
+    <span class="status text-muted hidden items-center gap-2 font-display text-sm min-[900px]:inline-flex">
       <i class="bg-accent inline-block h-1.5 w-1.5 rounded-full" aria-hidden="true"></i>{t.status}
     </span>
     <ThemeToggle />
@@ -171,7 +169,7 @@
       href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}
       download
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="nav-cv hidden sm:inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-2.5 !py-1 font-display text-sm uppercase transition-colors text-ink hover:text-accent active:scale-95"
+      class="nav-cv hidden sm:inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-2.5 !py-1 font-display text-sm transition-colors text-ink hover:text-accent active:scale-95"
     >
       CV <Icon name="arrowDown" size={12} class="ml-1 inline-block" />
     </a>
@@ -179,7 +177,7 @@
       id={toggleId}
       bind:this={toggleEl}
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="menu-btn sm:!hidden inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-3 !py-1 font-display text-sm uppercase transition-colors active:scale-95"
+      class="menu-btn sm:!hidden inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-3 !py-1 font-display text-sm transition-colors active:scale-95"
       type="button"
       onclick={() => {
         closeFocus = 'toggle';
@@ -192,6 +190,12 @@
       {menuOpen ? 'Close' : 'Menu'}
     </button>
   </div>
+  <SketchRule
+    seed={3}
+    class="text-ink/55 absolute inset-x-2 -bottom-1 transition-opacity duration-200 {scrolled
+      ? 'opacity-100'
+      : 'opacity-0'}"
+  />
 </nav>
 
 {#if menuOpen}
@@ -199,14 +203,13 @@
     id={menuId}
     bind:this={menuEl}
     transition:fade={{ duration: motionFlags.reduced ? 0 : 200, easing: cubicOut }}
-    class="bg-paper/98 fixed inset-0 z-55 flex flex-col justify-between px-6 pt-24 pb-8 backdrop-blur-md"
+    class="bg-paper fixed inset-0 z-55 flex flex-col justify-between px-6 pt-24 pb-8"
     role="dialog"
     aria-modal="true"
     aria-label={t.a11y.mobileNav}
   >
     <div class="mb-2">
-      <span class="text-muted font-display text-xs font-semibold tracking-widest uppercase">Navigation / Directory</span
-      >
+      <span class="text-muted font-display text-sm font-semibold">Navigation / Directory</span>
     </div>
 
     <div class="my-auto flex flex-col">
@@ -242,16 +245,16 @@
             >{t.hero.downloadCv}</span
           >
         </div>
-        <span class="text-accent/60 font-display text-sm tracking-wider uppercase" aria-hidden="true">[PDF]</span>
+        <span class="text-accent/60 font-display text-sm" aria-hidden="true">[PDF]</span>
       </a>
     </div>
 
     <div
-      class="pt-4 border-t border-rule/60 flex items-center justify-between text-muted font-display text-sm uppercase"
+      class="pt-4 border-t border-rule/60 flex items-center justify-between text-muted font-display text-sm"
       aria-hidden="true"
     >
       <span>Tangerang, ID · UTC+7</span>
-      <span class="text-accent font-semibold">[✓] OPEN TO WORK</span>
+      <span class="text-accent inline-flex items-center gap-1.5 font-semibold"><SketchTick seed={8} />{t.status}</span>
     </div>
   </div>
 {/if}

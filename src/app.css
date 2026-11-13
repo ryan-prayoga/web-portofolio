@@ -12,22 +12,13 @@
 
 /* ═══════════════════════════════════════════════
    SELF-HOSTED FONTS — The Engineering Sketchbook
-   - Patrick Hand: Natural handwritten architectural/pencil font (headings, brand, sketch notes)
-   - Hanken Grotesk: Warm, highly readable body & UI control grotesque
-   - JetBrains Mono: Developer monospace (code, technical metrics)
+   - Patrick Hand: Natural handwritten architectural/pencil font (headings, body, sketch notes)
+   - JetBrains Mono: Developer monospace (title-block labels, durations, technical metrics)
    ═══════════════════════════════════════════════ */
 @font-face {
   font-family: 'Patrick Hand';
   src: url('/fonts/patrick-hand.woff2') format('woff2');
   font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Hanken Grotesk';
-  src: url('/fonts/hanken-grotesk.woff2') format('woff2');
-  font-weight: 400 700;
   font-style: normal;
   font-display: swap;
 }
@@ -57,7 +48,6 @@
   --font-display: 'Patrick Hand', cursive, sans-serif;
   --font-hand: 'Patrick Hand', cursive, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
-  --font-grotesk: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
 }
 
 :root {
@@ -66,7 +56,7 @@
   --drawably-paper: var(--color-paper);
   --drawably-stroke: var(--color-ink);
   --drawably-width: 1.5;
-  --color-notebook-line: rgba(20, 22, 26, 0.05);
+  --color-notebook-line: rgba(20, 22, 26, 0.045);
 
   /* Motion tokens (transitions-polish) */
   --duration-stagger: 40ms;
@@ -81,8 +71,6 @@
   --ease-in-out: ease-in-out;
   --ease-out: ease-out;
   --ease-linear: linear;
-  --ease-bounce: cubic-bezier(0.34, 1.36, 0.64, 1);
-  --ease-bounce-strong: cubic-bezier(0.34, 3.85, 0.64, 1);
 
   --distance-micro: 4px;
   --distance-small: 6px;
@@ -112,7 +100,7 @@
   --drawably-ink: var(--color-ink);
   --drawably-paper: var(--color-paper);
   --drawably-stroke: var(--color-ink);
-  --color-notebook-line: rgba(242, 240, 236, 0.038);
+  --color-notebook-line: rgba(242, 240, 236, 0.034);
 }
 
 .drawably-host {
@@ -149,7 +137,7 @@
 
 /* ═══════════════════════════════════════════════
    VIEW TRANSITIONS (THEME REVEAL) — Kas Badminton style
-   Reveal lingkaran ber-blur dari pojok kanan atas
+   Reveal gumpalan tinta bertepi goresan tangan dari pojok kanan atas
    ═══════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),
@@ -172,7 +160,7 @@
 
 :root[data-theme-transition]::view-transition-new(root),
 :root[data-theme-transition].dark::view-transition-new(root) {
-  mask: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+PGRlZnM+PGZpbHRlciBpZD0iYmx1ciI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMiIvPjwvZmlsdGVyPjwvZGVmcz48Y2lyY2xlIGN4PSI0MCIgY3k9IjAiIHI9IjE4IiBmaWxsPSJ3aGl0ZSIgZmlsdGVyPSJ1cmwoI2JsdXIpIi8+PC9zdmc+')
+  mask: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZD0iTTU3LjE5IDAuOTVRNTUuNDggOC4xOSA1NC4wNiAxMS4wNFE1Mi42NSAxMy44OSA0OC43OSAxNi4wN1E0NC45MiAxOC4yNSA0MS4wMiAxOC4yNlEzNy4xMiAxOC4yNiAzNC4zMyAxNy4wNFEzMS41MyAxNS44MiAyOC4xOSAxMy43OVEyNC44NSAxMS43NiAyMy4zNCA4LjA2UTIxLjgyIDQuMzYgMjIuMzAgMC4xM1EyMi43OCAtNC4xMCAyNC4xNiAtNi44MFEyNS41MyAtOS41MSAyOC43NiAtMTIuNjFRMzEuOTkgLTE1LjcxIDM1LjU2IC0xNy4yMlEzOS4xMyAtMTguNzQgNDIuNTggLTE4LjE1UTQ2LjA0IC0xNy41NyA0OC40MyAtMTQuOTZRNTAuODIgLTEyLjM2IDUzLjI0IC05LjgxTDU1LjY1IC03LjI1Wk01Ny45OCAtMS42MVE1Ny43MSA4LjA5IDU0LjMwIDkuOTJRNTAuOTAgMTEuNzQgNDguMjEgMTQuMDdRNDUuNTIgMTYuNDAgNDIuMTIgMTYuNzZRMzguNzIgMTcuMTIgMzQuOTYgMTcuMjJRMzEuMjAgMTcuMzIgMjguNDUgMTMuMzFRMjUuNjkgOS4zMCAyNC4wOCA2LjE5UTIyLjQ2IDMuMDggMjIuNTAgMC4yNFEyMi41MyAtMi42MSAyNC4xMyAtNi4zOFEyNS43MyAtMTAuMTUgMjguNDMgLTEyLjU3UTMxLjEzIC0xNS4wMCAzNC42MiAtMTcuMDVRMzguMTEgLTE5LjExIDQyLjY1IC0xNy45M1E0Ny4xOSAtMTYuNzUgNDkuODggLTE0Ljk2UTUyLjU4IC0xMy4xOCA1NC44MSAtOS4zNEw1Ny4wNCAtNS41MFoiIGZpbGw9IndoaXRlIi8+PC9zdmc+')
     top right / 0 no-repeat;
   mask-origin: content-box;
   transform-origin: top right;
@@ -212,19 +200,22 @@ html.locale-pending:not(.hydrated) body {
   visibility: hidden;
 }
 
+/*
+ * Kertas grid ala buku catatan teknik (kotak 24px). Dipilih alih-alih kertas
+ * bergaris: garis buku menuntut tiap baris teks duduk di garis, sedangkan
+ * grid tetap terbaca benar berapa pun line-height kontennya.
+ */
 body {
+  --paper-vignette: rgba(20, 22, 26, 0.015);
   background-color: var(--color-paper);
   background-image:
-    radial-gradient(circle at 50% 50%, transparent 80%, rgba(20, 22, 26, 0.015) 100%),
-    repeating-linear-gradient(
-      transparent,
-      transparent 31px,
-      var(--color-notebook-line) 31px,
-      var(--color-notebook-line) 32px
-    );
+    radial-gradient(circle at 50% 50%, transparent 80%, var(--paper-vignette) 100%),
+    linear-gradient(var(--color-notebook-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-notebook-line) 1px, transparent 1px);
   background-size:
     100% 100%,
-    100% 32px;
+    24px 24px,
+    24px 24px;
   background-attachment: local;
   color: var(--color-ink);
   font-family: var(--font-sans);
@@ -234,14 +225,7 @@ body {
 }
 
 :root.dark body {
-  background-image:
-    radial-gradient(circle at 50% 50%, transparent 80%, rgba(0, 0, 0, 0.2) 100%),
-    repeating-linear-gradient(
-      transparent,
-      transparent 31px,
-      var(--color-notebook-line) 31px,
-      var(--color-notebook-line) 32px
-    );
+  --paper-vignette: rgba(0, 0, 0, 0.2);
 }
 
 h1,

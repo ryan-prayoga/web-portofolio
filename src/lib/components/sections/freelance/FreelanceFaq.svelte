@@ -4,6 +4,7 @@
   import { freelanceCopy } from '$lib/data/freelanceCopy';
   import { faqItems, getWhatsAppUrl } from '$lib/data/freelanceData';
   import { drawCard, drawBadge } from '$lib/actions/drawably';
+  import SketchRule from '$lib/components/ui/SketchRule.svelte';
 
   const t = $derived(freelanceCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -22,11 +23,12 @@
   );
 </script>
 
-<section id="faq" class="mx-auto max-w-5xl px-6 py-16 sm:py-24 border-t border-rule">
+<section id="faq" class="relative mx-auto max-w-5xl px-6 py-16 sm:py-24">
+  <SketchRule seed={128} class="text-ink/40 absolute inset-x-6 -top-1" />
   <div class="inline-block">
     <span
       use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-      class="cursor-default px-3 py-1 font-display text-sm tracking-wide uppercase text-accent"
+      class="cursor-default px-3 py-1 font-display text-sm text-accent"
     >
       // {t.faq.badge}
     </span>
@@ -67,7 +69,8 @@
 
         <div class="t-acc-panel">
           <div class="t-acc-panel-inner">
-            <div class="px-6 pb-6 pt-1 text-xs sm:text-sm leading-relaxed text-muted border-t border-rule/50">
+            <div class="relative px-6 pt-4 pb-6 text-sm sm:text-base leading-relaxed text-muted">
+              <SketchRule seed={135} class="text-ink/35 absolute inset-x-6 -top-1" />
               {item.answer[locale]}
             </div>
           </div>
@@ -77,14 +80,14 @@
   </div>
 
   <div class="mt-10 text-center">
-    <p class="font-display text-xs sm:text-sm text-muted">
+    <p class="font-display text-sm sm:text-base text-muted">
       {t.faq.helpText}
     </p>
     <a
       href={getWhatsAppUrl(faqWaMessage)}
       target="_blank"
       rel="noopener noreferrer"
-      class="text-accent mt-2 inline-flex items-center gap-1 font-display text-sm font-semibold tracking-wide uppercase hover:underline"
+      class="text-accent mt-2 inline-flex items-center gap-1 font-display text-sm font-semibold hover:underline"
     >
       {t.faq.helpCta}
       <Icon name="arrowUpRight" size={13} />

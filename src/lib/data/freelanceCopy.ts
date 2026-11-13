@@ -178,42 +178,42 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       items: [
         {
           icon: 'gallery',
-          tag: 'KATALOG',
+          tag: 'Katalog',
           title: 'Katalog Portofolio & Layanan',
           description:
             'Tampilkan galeri foto proyek, paket tour, unit armada rental, atau menu kuliner secara bersih, rapi, dan memikat pelanggan.',
         },
         {
           icon: 'message',
-          tag: 'WHATSAPP',
+          tag: 'WhatsApp',
           title: 'Direct Order & Chat WhatsApp',
           description:
             'Tombol pemesanan langsung membuka chat WhatsApp admin dengan pesan otomatis yang rapi sesuai paket atau layanan yang dipilih.',
         },
         {
           icon: 'bolt',
-          tag: 'PERFORMA',
+          tag: 'Performa',
           title: 'Kecepatan Buka Sub-Detik',
           description:
             'Dibangun dengan arsitektur modern ultra-ringan. Buka instan tanpa loading berputar sehingga calon pembeli tidak beralih ke kompetitor.',
         },
         {
           icon: 'mapPin',
-          tag: 'GOOGLE SEO',
+          tag: 'Google SEO',
           title: 'Optimasi Google & Peta Lokasi',
           description:
             'Integrasi alamat Google Maps, jam buka, dan optimasi SEO lokal agar bisnis Anda mudah ditemukan saat dicari di internet.',
         },
         {
           icon: 'globe',
-          tag: 'DOMAIN',
+          tag: 'Domain',
           title: 'Domain Nama Usaha & SSL Aman',
           description:
             'Menggunakan alamat domain bisnis Anda sendiri (seperti namabisnis.com atau .id) lengkap dengan sertifikat keamanan resmi HTTPS.',
         },
         {
           icon: 'phone',
-          tag: 'RESPONSIF',
+          tag: 'Responsif',
           title: 'Optimal di Layar Smartphone',
           description:
             'Lebih dari 80% calon pembeli membuka website melalui ponsel. Tampilan dirancang khusus agar nyaman digunakan satu tangan.',
@@ -392,42 +392,42 @@ export const freelanceCopy: Record<Locale, FreelanceCopy> = {
       items: [
         {
           icon: 'gallery',
-          tag: 'CATALOG',
+          tag: 'Catalog',
           title: 'Service & Portfolio Showcase',
           description:
             'Display your project gallery, tour packages, rental units, or dining menus in a clean, visual layout.',
         },
         {
           icon: 'message',
-          tag: 'WHATSAPP',
+          tag: 'WhatsApp',
           title: 'Direct WhatsApp Inquiries',
           description:
             'One-tap inquiry buttons that open WhatsApp with pre-formatted product or service details ready to send.',
         },
         {
           icon: 'bolt',
-          tag: 'PERFORMANCE',
+          tag: 'Performance',
           title: 'Sub-Second Page Loads',
           description:
             'Built on modern ultra-lightweight architecture so pages open instantaneously without spinning loaders.',
         },
         {
           icon: 'mapPin',
-          tag: 'GOOGLE SEO',
+          tag: 'Google SEO',
           title: 'Local SEO & Maps Integration',
           description:
             'Embedded Google Maps location, opening hours, and structured data to help customers find you on Google Search.',
         },
         {
           icon: 'globe',
-          tag: 'DOMAIN',
+          tag: 'Domain',
           title: 'Business Domain & SSL Security',
           description:
             'Operate under your official domain name (e.g. yourbusiness.com) complete with automatic HTTPS security.',
         },
         {
           icon: 'phone',
-          tag: 'RESPONSIVE',
+          tag: 'Responsive',
           title: 'Mobile-First Smartphone Layout',
           description:
             'Over 80% of local customers browse on mobile. Layouts are optimized for fluid, one-handed touch navigation.',

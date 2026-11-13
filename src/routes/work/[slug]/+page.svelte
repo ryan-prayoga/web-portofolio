@@ -57,7 +57,7 @@
 <main class="mx-auto max-w-3xl px-6 pt-28 pb-20">
   <a
     href="/#work"
-    class="text-muted hover:text-accent inline-flex items-center gap-1.5 font-display text-sm tracking-wide uppercase transition-colors"
+    class="text-muted hover:text-accent inline-flex items-center gap-1.5 font-display text-sm transition-colors"
   >
     <Icon name="arrowLeft" size={13} />
     {t.caseStudy.back}
@@ -65,7 +65,7 @@
 
   <header class="mt-8">
     <div class="flex items-center gap-2">
-      <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
+      <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm">
         {data.project.category}
       </span>
       <span class="text-rule font-display text-sm" aria-hidden="true">/</span>
@@ -81,7 +81,7 @@
         target="_blank"
         rel="noopener noreferrer"
         use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-        class="bg-accent text-paper inline-flex items-center gap-2 px-4 py-2 font-display text-base tracking-wide uppercase transition-opacity hover:opacity-90"
+        class="bg-accent text-paper inline-flex items-center gap-2 px-4 py-2 font-display text-base transition-opacity hover:opacity-90"
       >
         {externalLabel}
         <Icon name="arrowUpRight" size={13} />
@@ -120,49 +120,49 @@
   {/if}
 
   <section class="mt-12" aria-label={t.caseStudy.problem}>
-    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm">
       {t.caseStudy.problem}
     </span>
     <p class="mt-4 max-w-prose leading-relaxed text-base">{study.problem}</p>
   </section>
 
   <section class="mt-10" aria-label={t.caseStudy.role}>
-    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm">
       {t.caseStudy.role}
     </span>
     <p class="mt-4 max-w-prose leading-relaxed text-base">{study.role}</p>
   </section>
 
   <section class="mt-12" aria-label={t.caseStudy.architecture}>
-    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm">
       {t.caseStudy.architecture}
     </span>
     <SketchFlow class="mt-6" {diagram} caption="{t.fig} 02 — {t.caseStudy.architecture}" />
   </section>
 
   <section class="mt-12" aria-label={t.caseStudy.decisions}>
-    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm">
       {t.caseStudy.decisions}
     </span>
     <div class="mt-6 space-y-4">
       {#each study.decisions as decision (decision.title)}
         <div use:drawCard={{ resketchOnHover: true }} class="p-6">
           <h3 class="font-semibold tracking-tight text-lg">{decision.title}</h3>
-          <p class="text-muted mt-2 max-w-prose text-sm leading-relaxed">{decision.body}</p>
+          <p class="text-muted mt-2 max-w-prose leading-relaxed">{decision.body}</p>
         </div>
       {/each}
     </div>
   </section>
 
   <section class="mt-12" aria-label={t.caseStudy.results}>
-    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm">
       {t.caseStudy.results}
     </span>
     <div use:drawCard={{ resketchOnHover: true }} class="mt-6 p-6">
       <ul class="space-y-3">
         {#each study.results as result, resultIndex (result)}
-          <li class="flex max-w-prose gap-2.5 leading-relaxed text-sm">
-            <SketchTick seed={resultIndex + 21} class="text-accent mt-0.5 shrink-0" />
+          <li class="flex max-w-prose gap-2.5 leading-relaxed">
+            <SketchTick seed={resultIndex + 21} class="text-accent mt-1 shrink-0" />
             {result}
           </li>
         {/each}

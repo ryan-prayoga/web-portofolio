@@ -28,12 +28,12 @@
     {#each featured as project, index (project.slug)}
       {@const base = project.thumbnail?.replace('.webp', '')}
       <article
-        class="group grid overflow-hidden p-3 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]"
+        class="group grid overflow-hidden p-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]"
         use:reveal
         use:drawCard={{ resketchOnHover: true }}
       >
         <div class="flex min-w-0 flex-col p-5 sm:p-7">
-          <p class="text-muted font-display text-sm uppercase">
+          <p class="text-muted font-display text-sm">
             {project.category}
             <span class="text-rule mx-1" aria-hidden="true">/</span>
             {project.year}
@@ -45,7 +45,7 @@
             </a>
           </h3>
 
-          <p class="text-muted mt-3 max-w-prose text-sm leading-relaxed">{copy[project.slug].summary}</p>
+          <p class="text-muted mt-3 max-w-prose leading-relaxed">{copy[project.slug].summary}</p>
 
           <ul class="mt-4 flex flex-wrap gap-2">
             {#each project.stack as tech (tech)}
@@ -59,7 +59,7 @@
             <a
               href="/work/{project.slug}"
               use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-              class="bg-accent text-paper inline-flex items-center gap-2 px-4 py-1.5 font-display text-base tracking-wide uppercase transition-opacity hover:opacity-85"
+              class="bg-accent text-paper inline-flex items-center gap-2 px-4 py-1.5 font-display text-base transition-opacity hover:opacity-85"
             >
               {t.work.caseStudy}
               <Icon name="arrowRight" size={13} />
@@ -69,7 +69,7 @@
               href={project.destination.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-muted hover:text-accent -my-2.5 inline-flex items-center gap-1.5 py-2.5 font-display text-base uppercase underline-offset-4 hover:underline"
+              class="text-muted hover:text-accent -my-2.5 inline-flex items-center gap-1.5 py-2.5 font-display text-base underline-offset-4 hover:underline"
             >
               {project.destination.kind === 'site' ? t.work.visit : t.work.source}
               <Icon name="arrowUpRight" size={13} />
@@ -113,7 +113,7 @@
   </div>
 
   <div class="mt-16 flex items-center justify-between" use:reveal>
-    <p class="text-muted font-display text-sm font-semibold tracking-wider uppercase">{t.work.moreLabel}</p>
+    <p class="text-muted font-display text-sm font-semibold">{t.work.moreLabel}</p>
     <span class="text-muted/60 hidden font-display text-xs sm:inline">{t.work.moreNote}</span>
   </div>
 
@@ -126,7 +126,7 @@
         use:drawCard={{ resketchOnHover: true }}
         class="group flex min-w-0 flex-col p-6 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5"
       >
-        <p class="text-muted font-display text-sm uppercase">{project.category} / {project.year}</p>
+        <p class="text-muted font-display text-sm">{project.category} / {project.year}</p>
         <h3 class="group-hover:text-accent mt-2 font-semibold tracking-tight transition-colors">
           {project.name}
           <span
@@ -139,7 +139,7 @@
             ({project.destination.kind === 'source' ? t.work.source : t.work.visit})
           </span>
         </h3>
-        <p class="text-muted mt-2 text-sm leading-relaxed">{copy[project.slug].summary}</p>
+        <p class="text-muted mt-2 leading-relaxed">{copy[project.slug].summary}</p>
         <ul class="mt-4 flex flex-wrap gap-2">
           {#each project.stack as tech (tech)}
             <li use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm text-muted">

@@ -8,6 +8,7 @@
   import { FREELANCE_CONFIG, getWhatsAppUrl } from '$lib/data/freelanceData';
   import { drawButton, drawBadge } from '$lib/actions/drawably';
   import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+  import SketchRule from '$lib/components/ui/SketchRule.svelte';
 
   const t = $derived(freelanceCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -132,11 +133,7 @@
   );
 </script>
 
-<nav
-  class="freelance-nav bg-paper/90 fixed inset-x-0 top-0 z-60 flex items-center justify-between gap-4 border-b px-6 py-3 backdrop-blur transition-colors {scrolled
-    ? 'border-rule'
-    : 'border-transparent'}"
->
+<nav class="freelance-nav bg-paper fixed inset-x-0 top-0 z-60 flex items-center justify-between gap-4 px-6 py-3">
   <div class="flex items-center gap-3">
     <a
       href="#top"
@@ -148,7 +145,7 @@
     </a>
     <span
       use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-      class="hidden cursor-default font-display text-xs tracking-wider uppercase sm:inline-block px-2 py-0.5 text-accent"
+      class="hidden cursor-default font-display text-sm sm:inline-block px-2 py-0.5 text-accent"
     >
       Freelance
     </span>
@@ -159,7 +156,7 @@
       <a
         href={item.href}
         onclick={goTo(item.href.slice(1))}
-        class="text-muted hover:text-accent font-display text-sm tracking-wide uppercase transition-colors"
+        class="text-muted hover:text-accent font-display text-sm transition-colors"
       >
         {item.label}
       </a>
@@ -169,7 +166,7 @@
   <div class="nav-actions flex items-center gap-2">
     <a
       href={FREELANCE_CONFIG.mainPortfolioUrl}
-      class="text-muted hover:text-accent hidden font-display text-sm tracking-wide uppercase transition-colors min-[1280px]:inline-flex items-center gap-1"
+      class="text-muted hover:text-accent hidden font-display text-sm transition-colors min-[1280px]:inline-flex items-center gap-1"
       title="Lihat Portofolio Developer Utama"
     >
       {t.nav.personalPortfolio}
@@ -181,7 +178,7 @@
       target="_blank"
       rel="noopener noreferrer"
       use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-      class="bg-accent text-paper hidden items-center gap-1.5 px-3 py-1 font-display text-sm uppercase transition-opacity min-[720px]:inline-flex hover:opacity-90"
+      class="bg-accent text-paper hidden items-center gap-1.5 px-3 py-1 font-display text-sm transition-opacity min-[720px]:inline-flex hover:opacity-90"
     >
       <Icon name="message" size={13} />
       {t.nav.ctaConsultation}
@@ -206,7 +203,7 @@
       id={toggleId}
       bind:this={toggleEl}
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="menu-btn min-[1120px]:!hidden inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-3 !py-1 font-display text-sm uppercase transition-colors active:scale-95"
+      class="menu-btn min-[1120px]:!hidden inline-flex min-h-[36px] cursor-pointer items-center justify-center !px-3 !py-1 font-display text-sm transition-colors active:scale-95"
       type="button"
       onclick={() => {
         closeFocus = 'toggle';
@@ -219,6 +216,12 @@
       {menuOpen ? 'Close' : 'Menu'}
     </button>
   </div>
+  <SketchRule
+    seed={3}
+    class="text-ink/55 absolute inset-x-2 -bottom-1 transition-opacity duration-200 {scrolled
+      ? 'opacity-100'
+      : 'opacity-0'}"
+  />
 </nav>
 
 {#if menuOpen}
@@ -226,13 +229,13 @@
     id={menuId}
     bind:this={menuEl}
     transition:fade={{ duration: motionFlags.reduced ? 0 : 200, easing: cubicOut }}
-    class="bg-paper/98 fixed inset-0 z-55 flex flex-col justify-between px-6 pt-24 pb-8 backdrop-blur-md"
+    class="bg-paper fixed inset-0 z-55 flex flex-col justify-between px-6 pt-24 pb-8"
     role="dialog"
     aria-modal="true"
     aria-label="Freelance navigation menu"
   >
     <div class="flex flex-col gap-6">
-      <span class="text-muted font-display text-xs font-semibold tracking-wider uppercase">// Navigasi Freelance</span>
+      <span class="text-muted font-display text-sm font-semibold">// Navigasi Freelance</span>
       {#each navItems as item (item.href)}
         <a
           href={item.href}
@@ -244,7 +247,7 @@
       {/each}
       <a
         href={FREELANCE_CONFIG.mainPortfolioUrl}
-        class="text-accent border-rule flex items-center gap-1.5 border-t pt-2 font-display text-base font-semibold tracking-wide uppercase transition-colors"
+        class="text-accent border-rule flex items-center gap-1.5 border-t pt-2 font-display text-base font-semibold transition-colors"
       >
         {t.nav.personalPortfolio}
         <Icon name="arrowUpRight" size={14} />
@@ -257,7 +260,7 @@
         target="_blank"
         rel="noopener noreferrer"
         use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-        class="bg-accent text-paper flex items-center justify-center gap-2 py-3 font-display text-base tracking-wide uppercase"
+        class="bg-accent text-paper flex items-center justify-center gap-2 py-3 font-display text-base"
       >
         <Icon name="message" size={15} />
         {t.nav.ctaConsultation}

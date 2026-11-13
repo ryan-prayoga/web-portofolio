@@ -12,8 +12,8 @@ halaman freelance default Bahasa Indonesia (prerender per route).
 - Tailwind CSS 4 (`@theme` tokens: paper/ink/rust, light-first + dark
   via `prefers-color-scheme`)
 - `adapter-static` — full prerender, tanpa server
-- Font self-hosted: Patrick Hand, Shantell Sans, Hanken Grotesk,
-  JetBrains Mono (woff2 di `static/fonts/`)
+- Font self-hosted: Patrick Hand dan JetBrains Mono (woff2 di
+  `static/fonts/`)
 - Runtime dependency: `drawably` (goresan sketsa) dan `lenis` (smooth scroll)
 - CSP ditulis sebagai `<meta http-equiv>` lewat `kit.csp` di
   `svelte.config.js` (hash untuk script inline)

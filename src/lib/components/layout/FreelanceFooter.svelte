@@ -4,6 +4,7 @@
   import { freelanceCopy } from '$lib/data/freelanceCopy';
   import { FREELANCE_CONFIG, getWhatsAppUrl } from '$lib/data/freelanceData';
   import { profile } from '$lib/data/profile';
+  import SketchRule from '$lib/components/ui/SketchRule.svelte';
 
   const t = $derived(freelanceCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -21,8 +22,10 @@
   );
 </script>
 
-<footer class="border-rule text-muted mx-auto max-w-5xl border-t px-6 py-12 font-display text-sm">
-  <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-[2fr_1fr_1fr] pb-8 border-b border-rule">
+<footer class="relative text-muted mx-auto max-w-5xl px-6 py-12 font-display text-sm">
+  <SketchRule seed={205} class="text-ink/40 absolute inset-x-6 -top-1" />
+  <div class="relative grid gap-8 pb-8 sm:grid-cols-2 md:grid-cols-[2fr_1fr_1fr]">
+    <SketchRule seed={211} class="text-ink/35 absolute inset-x-0 -bottom-1" />
     <div>
       <a href="#top" onclick={toTop} class="font-display text-xl font-bold text-ink tracking-tight">
         Ryan Prayoga<span class="text-accent">.</span>
@@ -33,7 +36,7 @@
     </div>
 
     <div>
-      <span class="font-display text-sm font-semibold text-ink uppercase tracking-wide block mb-3">
+      <span class="font-display text-sm font-semibold text-ink block mb-3">
         {t.footer.linksHeading}
       </span>
       <ul class="flex flex-col gap-2">
@@ -47,7 +50,7 @@
     </div>
 
     <div>
-      <span class="font-display text-sm font-semibold text-ink uppercase tracking-wide block mb-3">
+      <span class="font-display text-sm font-semibold text-ink block mb-3">
         {t.footer.contactHeading}
       </span>
       <ul class="flex flex-col gap-2">
@@ -86,7 +89,7 @@
     </div>
   </div>
 
-  <div class="pt-6 flex flex-wrap justify-between items-center gap-4 uppercase font-display text-xs sm:text-sm">
+  <div class="pt-6 flex flex-wrap justify-between items-center gap-4 font-display text-sm sm:text-base">
     <span>© 2026 {profile.name}. {t.footer.rights}</span>
     <span class="flex items-center gap-1.5">
       <Icon name="mapPin" size={13} class="text-accent" />

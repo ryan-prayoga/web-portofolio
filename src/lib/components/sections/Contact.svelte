@@ -105,7 +105,7 @@
     use:drawCard={{ resketchOnHover: true }}
     class="group mt-8 block cursor-pointer p-8 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5 sm:p-10"
   >
-    <span class="text-accent inline-flex items-center gap-1 font-display text-sm font-semibold tracking-wide uppercase">
+    <span class="text-accent inline-flex items-center gap-1 font-display text-sm font-semibold">
       {t.contact.emailCta}
       <span
         class="inline-flex items-center transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -127,7 +127,7 @@
       target="_blank"
       rel="noopener noreferrer"
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-display text-base uppercase transition-colors active:scale-95"
+      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-display text-base transition-colors active:scale-95"
     >
       GitHub <Icon name="arrowUpRight" size={13} />
     </a>
@@ -136,7 +136,7 @@
       target="_blank"
       rel="noopener noreferrer"
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-display text-base uppercase transition-colors active:scale-95"
+      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-display text-base transition-colors active:scale-95"
     >
       LinkedIn <Icon name="arrowUpRight" size={13} />
     </a>
@@ -144,15 +144,18 @@
       href={locale === 'id' ? '/cv/cv-id.pdf' : '/cv/cv-en.pdf'}
       download
       use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-display text-base uppercase transition-colors active:scale-95"
+      class="text-ink hover:text-accent inline-flex items-center gap-1.5 px-4 py-2 font-display text-base transition-colors active:scale-95"
     >
       CV (PDF) <Icon name="arrowDown" size={13} />
     </a>
-    <div class="mt-4 flex w-full flex-col font-display text-sm uppercase sm:mt-0 sm:w-auto sm:ml-auto sm:items-end">
+    <div class="mt-4 flex w-full flex-col font-display text-sm sm:mt-0 sm:w-auto sm:ml-auto sm:items-end">
       <span class="text-muted">Tangerang, ID · UTC+7</span>
       {#if now}
         <div class="mt-1 flex items-center gap-1.5 tabular-nums text-ink">
-          <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true"></span>
+          <span
+            class="bg-accent inline-block h-1.5 w-1.5 rounded-full animate-pulse motion-reduce:animate-none"
+            aria-hidden="true"
+          ></span>
           <span>{tangerangTime} WIB</span>
         </div>
         {#if isDifferentTz}

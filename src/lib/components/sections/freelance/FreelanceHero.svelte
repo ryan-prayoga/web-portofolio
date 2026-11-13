@@ -3,7 +3,8 @@
   import { localeStore } from '$lib/stores/locale.svelte';
   import { freelanceCopy } from '$lib/data/freelanceCopy';
   import { getWhatsAppUrl } from '$lib/data/freelanceData';
-  import { drawCard, drawButton, drawBadge } from '$lib/actions/drawably';
+  import { drawButton, drawBadge } from '$lib/actions/drawably';
+  import TitleBlock from '$lib/components/ui/TitleBlock.svelte';
 
   const t = $derived(freelanceCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -20,7 +21,7 @@
     <div class="inline-block">
       <span
         use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-        class="cursor-pointer px-3.5 py-1 font-display text-sm tracking-wide uppercase inline-flex items-center gap-1.5"
+        class="cursor-default px-3.5 py-1 font-display text-sm inline-flex items-center gap-1.5"
       >
         <Icon name="check" size={14} strokeWidth={2.25} class="text-accent" />
         {t.hero.status}
@@ -44,7 +45,7 @@
         target="_blank"
         rel="noopener noreferrer"
         use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-        class="bg-accent text-paper inline-flex items-center gap-2 px-6 py-2.5 font-display text-base tracking-wide uppercase transition-opacity hover:opacity-90"
+        class="bg-accent text-paper inline-flex items-center gap-2 px-6 py-2.5 font-display text-base transition-opacity hover:opacity-90"
       >
         <Icon name="message" size={15} />
         {t.hero.ctaWhatsapp}
@@ -53,7 +54,7 @@
       <a
         href="#packages"
         use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-        class="hover:text-accent inline-flex items-center gap-2 px-6 py-2.5 font-display text-base tracking-wide uppercase transition-colors"
+        class="hover:text-accent inline-flex items-center gap-2 px-6 py-2.5 font-display text-base transition-colors"
       >
         {t.hero.ctaPackages}
         <Icon name="arrowDown" size={14} />
@@ -61,23 +62,5 @@
     </div>
   </div>
 
-  <!-- Proof Metrics Grid -->
-  <div class="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-4">
-    {#each t.hero.metrics as metric, idx (idx)}
-      <div
-        use:drawCard={{ resketchOnHover: true }}
-        class="bg-paper p-5 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5"
-      >
-        <p class="font-display text-2xl sm:text-3xl font-bold text-accent tracking-tight">
-          {metric.value}
-        </p>
-        <p class="mt-1 font-display text-xs sm:text-sm tracking-wider uppercase text-ink">
-          {metric.label}
-        </p>
-        <p class="mt-1 font-display text-xs text-muted">
-          {metric.note}
-        </p>
-      </div>
-    {/each}
-  </div>
+  <TitleBlock items={t.hero.metrics} class="mt-16" />
 </section>

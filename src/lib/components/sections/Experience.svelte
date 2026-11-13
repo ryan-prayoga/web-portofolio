@@ -5,8 +5,8 @@
   import { experience } from '$lib/data/experience';
   import { reveal } from '$lib/actions/reveal';
   import HandDrawnUnderline from '$lib/components/ui/HandDrawnUnderline.svelte';
-  import SketchRule from '$lib/components/ui/SketchRule.svelte';
   import SketchTick from '$lib/components/ui/SketchTick.svelte';
+  import SketchRule from '$lib/components/ui/SketchRule.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
   const roles = $derived(experience[localeStore.value]);
@@ -79,8 +79,8 @@
           <p class="mt-3.5 max-w-prose leading-relaxed">{role.summary}</p>
           <ul class="mt-4 space-y-2.5">
             {#each role.bullets as bullet, bulletIndex (bullet)}
-              <li class="text-muted flex max-w-prose gap-2.5 text-sm leading-relaxed">
-                <SketchTick seed={index * 31 + bulletIndex + 3} class="text-accent mt-0.5 shrink-0" />
+              <li class="text-muted flex max-w-prose gap-2.5 leading-relaxed">
+                <SketchTick seed={index * 31 + bulletIndex + 3} class="text-accent mt-1 shrink-0" />
                 {bullet}
               </li>
             {/each}

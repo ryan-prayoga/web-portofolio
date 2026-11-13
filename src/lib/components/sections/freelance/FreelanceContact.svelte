@@ -4,6 +4,7 @@
   import { freelanceCopy } from '$lib/data/freelanceCopy';
   import { FREELANCE_CONFIG, getWhatsAppUrl } from '$lib/data/freelanceData';
   import { drawCard, drawButton, drawBadge } from '$lib/actions/drawably';
+  import SketchRule from '$lib/components/ui/SketchRule.svelte';
 
   const t = $derived(freelanceCopy[localeStore.value]);
   const locale = $derived(localeStore.value);
@@ -15,7 +16,8 @@
   );
 </script>
 
-<section id="contact" class="mx-auto max-w-5xl px-6 py-16 sm:py-24 border-t border-rule">
+<section id="contact" class="relative mx-auto max-w-5xl px-6 py-16 sm:py-24">
+  <SketchRule seed={114} class="text-ink/40 absolute inset-x-6 -top-1" />
   <div
     use:drawCard={{ resketchOnHover: true }}
     class="bg-accent-soft/25 drawably-accent relative overflow-hidden p-8 text-center sm:p-14"
@@ -23,7 +25,7 @@
     <div class="inline-block">
       <span
         use:drawBadge={{ variant: 'outline', resketchOnHover: true }}
-        class="cursor-default px-3 py-1 font-display text-sm tracking-wide uppercase text-accent"
+        class="cursor-default px-3 py-1 font-display text-sm text-accent"
       >
         // {t.cta.badge}
       </span>
@@ -45,7 +47,7 @@
         target="_blank"
         rel="noopener noreferrer"
         use:drawButton={{ variant: 'solid', resketchOnHover: true }}
-        class="bg-accent text-paper inline-flex items-center gap-2 px-8 py-3 font-display text-base font-bold tracking-wide uppercase shadow-sm transition-all hover:opacity-90"
+        class="bg-accent text-paper inline-flex items-center gap-2 px-8 py-3 font-display text-base font-bold transition-opacity hover:opacity-90"
       >
         <Icon name="message" size={16} />
         {t.cta.whatsappButton}
@@ -54,16 +56,15 @@
       <a
         href="mailto:{FREELANCE_CONFIG.email}?subject=Inquiry%20Pembuatan%20Web%20Bisnis"
         use:drawButton={{ variant: 'outline', resketchOnHover: true }}
-        class="hover:text-accent inline-flex items-center gap-2 px-6 py-3 font-display text-base tracking-wide uppercase transition-colors"
+        class="hover:text-accent inline-flex items-center gap-2 px-6 py-3 font-display text-base transition-colors"
       >
         <Icon name="mail" size={16} />
         {t.cta.emailButton}
       </a>
     </div>
 
-    <div
-      class="mt-12 pt-8 border-t border-rule/60 flex flex-wrap justify-center items-center gap-6 font-display text-sm text-muted"
-    >
+    <div class="relative mt-12 pt-8 flex flex-wrap justify-center items-center gap-6 font-display text-sm text-muted">
+      <SketchRule seed={121} class="text-ink/35 absolute inset-x-0 -top-1" />
       <span class="flex items-center gap-1.5">
         <Icon name="mapPin" size={14} class="text-accent" />
         Tangerang, Indonesia (WIB · UTC+7)
