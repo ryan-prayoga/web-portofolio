@@ -6,6 +6,7 @@
   import { reveal } from '$lib/actions/reveal';
   import { drawCard, drawBadge, drawButton } from '$lib/actions/drawably';
   import HandDrawnUnderline from '$lib/components/ui/HandDrawnUnderline.svelte';
+  import TapedPhoto from '$lib/components/ui/TapedPhoto.svelte';
   import Icon from '$lib/components/Icon.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
@@ -32,15 +33,11 @@
         use:drawCard={{ resketchOnHover: true }}
       >
         <div class="flex min-w-0 flex-col p-5 sm:p-7">
-          <div class="flex items-center gap-2">
-            <span class="text-accent font-display text-sm font-bold" aria-hidden="true">0{index + 1}</span>
-            <span class="text-rule" aria-hidden="true">/</span>
-            <p class="text-muted font-display text-sm uppercase">
-              {project.category}
-              <span class="text-rule mx-1" aria-hidden="true">/</span>
-              {project.year}
-            </p>
-          </div>
+          <p class="text-muted font-display text-sm uppercase">
+            {project.category}
+            <span class="text-rule mx-1" aria-hidden="true">/</span>
+            {project.year}
+          </p>
 
           <h3 class="mt-3 text-xl font-semibold tracking-tight sm:text-2xl">
             <a href="/work/{project.slug}" class="hover:text-accent transition-colors">
@@ -81,31 +78,35 @@
         </div>
 
         {#if base}
-          <a
-            href="/work/{project.slug}"
-            class="relative block w-full aspect-[1100/688] overflow-hidden rounded-lg border border-rule/40 md:aspect-auto md:min-h-full"
-            aria-hidden="true"
-            tabindex="-1"
-          >
-            <picture>
-              <source
-                type="image/avif"
-                srcset="{base}-sm.avif 700w, {base}.avif 1100w"
-                sizes="(max-width: 768px) 92vw, 44vw"
-              />
-              <img
-                src={project.thumbnail}
-                srcset="{base}-sm.webp 700w, {base}.webp 1100w"
-                sizes="(max-width: 768px) 92vw, 44vw"
-                alt=""
-                width="1100"
-                height="688"
-                loading="lazy"
-                decoding="async"
-                class="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
-              />
-            </picture>
-          </a>
+          <div class="flex min-w-0 items-center p-4 pt-6 sm:p-7">
+            <TapedPhoto
+              class="w-full"
+              tilt={index % 2 === 0 ? 1.1 : -1.3}
+              caption="{t.fig} 0{index + 1} — {project.name}"
+              decorativeCaption
+            >
+              <a href="/work/{project.slug}" class="block overflow-hidden" aria-hidden="true" tabindex="-1">
+                <picture>
+                  <source
+                    type="image/avif"
+                    srcset="{base}-sm.avif 700w, {base}.avif 1100w"
+                    sizes="(max-width: 768px) 92vw, 44vw"
+                  />
+                  <img
+                    src={project.thumbnail}
+                    srcset="{base}-sm.webp 700w, {base}.webp 1100w"
+                    sizes="(max-width: 768px) 92vw, 44vw"
+                    alt=""
+                    width="1100"
+                    height="688"
+                    loading="lazy"
+                    decoding="async"
+                    class="block h-auto w-full"
+                  />
+                </picture>
+              </a>
+            </TapedPhoto>
+          </div>
         {/if}
       </article>
     {/each}

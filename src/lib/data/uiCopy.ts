@@ -4,6 +4,8 @@ export type Locale = (typeof locales)[number];
 export interface UiCopy {
   nav: { experience: string; work: string; skills: string; contact: string };
   status: string;
+  /** Singkatan label gambar bernomor, mis. "fig. 01" */
+  fig: string;
   hero: {
     positioning: string;
     downloadCv: string;
@@ -39,6 +41,7 @@ export interface UiCopy {
     back: string;
     problem: string;
     role: string;
+    architecture: string;
     decisions: string;
     results: string;
     stack: string;
@@ -51,6 +54,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
   en: {
     nav: { experience: 'Experience', work: 'Work', skills: 'Skills', contact: 'Contact' },
     status: 'Open to work',
+    fig: 'fig.',
     hero: {
       positioning:
         'I build and ship production web, mobile, and tooling systems. 4+ years across enterprise, government, and my own shipped products.',
@@ -99,6 +103,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
       back: 'All work',
       problem: 'Problem',
       role: 'My role',
+      architecture: 'How it fits together',
       decisions: 'Technical decisions',
       results: 'Results',
       stack: 'Stack',
@@ -109,6 +114,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
   id: {
     nav: { experience: 'Pengalaman', work: 'Karya', skills: 'Skill', contact: 'Kontak' },
     status: 'Terbuka untuk peluang',
+    fig: 'gbr.',
     hero: {
       positioning:
         'Saya membangun dan merilis sistem web, mobile, dan tooling production. 4+ tahun di enterprise, government, dan produk rilisan sendiri.',
@@ -157,6 +163,7 @@ export const uiCopy: Record<Locale, UiCopy> = {
       back: 'Semua karya',
       problem: 'Masalah',
       role: 'Peran saya',
+      architecture: 'Cara kerjanya',
       decisions: 'Keputusan teknis',
       results: 'Hasil',
       stack: 'Stack',

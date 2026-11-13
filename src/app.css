@@ -50,6 +50,8 @@
   --color-rule: #e4e0d9;
   --color-accent: #a33b14;
   --color-accent-soft: #f4e9e3;
+  /* Kertas foto cetak yang ditempel ke halaman (TapedPhoto) */
+  --color-print: #ffffff;
 
   --font-sans: 'Patrick Hand', cursive, system-ui, -apple-system, sans-serif;
   --font-display: 'Patrick Hand', cursive, sans-serif;
@@ -106,6 +108,7 @@
   --color-rule: #2a2d31;
   --color-accent: #e8703a;
   --color-accent-soft: #26201c;
+  --color-print: #1d1f23;
   --drawably-ink: var(--color-ink);
   --drawably-paper: var(--color-paper);
   --drawably-stroke: var(--color-ink);
@@ -333,6 +336,7 @@ h4 {
     --color-rule: #dddddd;
     --color-accent: #8a3110;
     --color-accent-soft: #ffffff;
+    --color-print: #ffffff;
   }
   body {
     font-size: 11pt;

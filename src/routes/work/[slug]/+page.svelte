@@ -2,9 +2,13 @@
   import { localeStore } from '$lib/stores/locale.svelte';
   import { uiCopy } from '$lib/data/uiCopy';
   import { caseStudies } from '$lib/data/caseStudies';
+  import { caseDiagrams } from '$lib/data/caseDiagrams';
   import { projectCopy } from '$lib/data/projectCopy';
   import { drawCard, drawBadge, drawButton } from '$lib/actions/drawably';
   import Icon from '$lib/components/Icon.svelte';
+  import SketchFlow from '$lib/components/ui/SketchFlow.svelte';
+  import SketchTick from '$lib/components/ui/SketchTick.svelte';
+  import TapedPhoto from '$lib/components/ui/TapedPhoto.svelte';
   import type { FeaturedSlug } from '$lib/data/projects';
 
   let { data } = $props();
@@ -14,6 +18,7 @@
   const t = $derived(uiCopy[localeStore.value]);
   const slug = $derived(data.project.slug as FeaturedSlug);
   const study = $derived(caseStudies[localeStore.value][slug]);
+  const diagram = $derived(caseDiagrams[localeStore.value][slug]);
   const copy = $derived(projectCopy[localeStore.value][slug]);
   const base = $derived(data.project.thumbnail?.replace('.webp', ''));
 
@@ -93,7 +98,7 @@
   </header>
 
   {#if base}
-    <div use:drawCard={{ resketchOnHover: true }} class="mt-10 overflow-hidden p-2">
+    <TapedPhoto class="group mt-12 px-1" tilt={-0.8} caption="{t.fig} 01 — {data.project.name}">
       <picture class="block overflow-hidden">
         <source
           type="image/avif"
@@ -111,7 +116,7 @@
           fetchpriority="high"
         />
       </picture>
-    </div>
+    </TapedPhoto>
   {/if}
 
   <section class="mt-12" aria-label={t.caseStudy.problem}>
@@ -126,6 +131,13 @@
       {t.caseStudy.role}
     </span>
     <p class="mt-4 max-w-prose leading-relaxed text-base">{study.role}</p>
+  </section>
+
+  <section class="mt-12" aria-label={t.caseStudy.architecture}>
+    <span use:drawBadge={{ variant: 'outline' }} class="px-3 py-1 font-display text-sm tracking-wide uppercase">
+      {t.caseStudy.architecture}
+    </span>
+    <SketchFlow class="mt-6" {diagram} caption="{t.fig} 02 — {t.caseStudy.architecture}" />
   </section>
 
   <section class="mt-12" aria-label={t.caseStudy.decisions}>
@@ -148,9 +160,9 @@
     </span>
     <div use:drawCard={{ resketchOnHover: true }} class="mt-6 p-6">
       <ul class="space-y-3">
-        {#each study.results as result (result)}
-          <li class="flex max-w-prose gap-3 leading-relaxed text-sm">
-            <span class="text-accent font-bold select-none" aria-hidden="true">✓</span>
+        {#each study.results as result, resultIndex (result)}
+          <li class="flex max-w-prose gap-2.5 leading-relaxed text-sm">
+            <SketchTick seed={resultIndex + 21} class="text-accent mt-0.5 shrink-0" />
             {result}
           </li>
         {/each}

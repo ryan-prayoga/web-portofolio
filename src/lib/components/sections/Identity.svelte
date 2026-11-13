@@ -6,6 +6,7 @@
   import { socials } from '$lib/data/socials';
   import { drawCard, drawButton } from '$lib/actions/drawably';
   import SketchRevealAvatar from '$lib/components/sections/SketchRevealAvatar.svelte';
+  import SketchRule from '$lib/components/ui/SketchRule.svelte';
   import Icon from '$lib/components/Icon.svelte';
 
   const t = $derived(uiCopy[localeStore.value]);
@@ -77,24 +78,37 @@
       <span class="text-muted font-display text-xs font-semibold tracking-wider uppercase">{t.hero.proofsLabel}</span>
       <span class="text-muted/60 hidden font-display text-xs sm:inline">{t.hero.resketchHint}</span>
     </div>
-    <dl class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-      {#each facts as fact (fact.label)}
-        <div
-          use:drawCard={{ resketchOnHover: true }}
-          class="group cursor-pointer p-4 transition-transform duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)] hover:-translate-y-0.5"
-          title={t.hero.resketchTitle}
-        >
-          <dt class="text-muted font-display text-xs sm:text-sm tracking-wider uppercase">{fact.label}</dt>
-          <dd
-            class="text-accent mt-1 {fact.value.length > 6
-              ? 'text-lg sm:text-xl leading-snug'
-              : 'text-2xl sm:text-3xl'} font-bold tracking-tight font-display"
-          >
-            {fact.value}
-          </dd>
-          <p class="text-muted/75 mt-1 font-display text-xs sm:text-sm">{fact.note}</p>
-        </div>
-      {/each}
-    </dl>
+    <!-- Title block ala gambar teknik: satu bingkai, sekat digambar tangan -->
+    <div use:drawCard={{ resketchOnHover: true }} class="title-block p-1 sm:p-2" title={t.hero.resketchTitle}>
+      <dl class="grid grid-cols-2 sm:grid-cols-4">
+        {#each facts as fact, index (fact.label)}
+          <div class="relative min-w-0 px-3 py-4 sm:px-5">
+            {#if index > 0}
+              <SketchRule
+                orientation="vertical"
+                seed={11 + index}
+                class="text-ink/70 absolute inset-y-2 -left-1 {index === 2 ? 'hidden sm:block' : ''}"
+              />
+            {/if}
+            {#if index >= 2}
+              <SketchRule seed={31 + index} class="text-ink/70 absolute inset-x-2 -top-1 sm:hidden" />
+            {/if}
+            <dt class="text-muted min-h-8 font-mono text-[0.6875rem] leading-4 tracking-[0.04em] uppercase sm:min-h-0">
+              {fact.label}
+            </dt>
+            <dd class="mt-1.5">
+              <span
+                class="text-accent block font-display font-bold tracking-tight {fact.value.length > 6
+                  ? 'text-lg leading-8 sm:text-xl sm:leading-9'
+                  : 'text-2xl leading-8 sm:text-3xl sm:leading-9'}"
+              >
+                {fact.value}
+              </span>
+              <span class="text-muted mt-0.5 block font-display text-sm">{fact.note}</span>
+            </dd>
+          </div>
+        {/each}
+      </dl>
+    </div>
   </div>
 </header>
