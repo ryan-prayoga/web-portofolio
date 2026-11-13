@@ -132,4 +132,26 @@ test.describe('SketchRevealAvatar interactivity', () => {
       });
     }
   });
+
+  for (const deviceScaleFactor of [1, 1.25, 2]) {
+    test(`downloads a single sketch size at DPR ${deviceScaleFactor}`, async ({ browser, baseURL }) => {
+      // Given a screen whose pixel ratio may sit between the 1x and 2x srcset candidates
+      const context = await browser.newContext({ baseURL, deviceScaleFactor });
+      const page = await context.newPage();
+      const sketchFiles = new Set<string>();
+      page.on('request', (request) => {
+        const match = request.url().match(/ryan-sketch-\d+\.(?:webp|jpg)/);
+        if (match) sketchFiles.add(match[0]);
+      });
+
+      // When the avatar finishes handing over from the static sketch to the canvas
+      await page.goto('/');
+      await expect(page.locator('header picture[aria-hidden="true"]')).toHaveCount(1);
+      await page.waitForLoadState('networkidle');
+
+      // Then preload, <picture>, and the canvas all agree on one file
+      expect([...sketchFiles]).toHaveLength(1);
+      await context.close();
+    });
+  }
 });
